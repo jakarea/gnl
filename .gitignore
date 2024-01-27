@@ -9,7 +9,7 @@
 composer.lock
 .circleci
 .DS_Store
-/storage
+
 # Ignore user-specific files
 Homestead.yaml
 Homestead.json
