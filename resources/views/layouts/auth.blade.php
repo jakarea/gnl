@@ -10,6 +10,7 @@
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
     <meta name="theme-color" content="#fff" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Bootstrap CSS start -->
     <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}" />
@@ -24,7 +25,7 @@
     <!-- custom CSS start -->
     <link rel="stylesheet" href="{{ url('assets/css/style.css') }}" />
     <link rel="stylesheet" href="{{ url('assets/css/responsive.css') }}" />
-    <link rel="stylesheet" href="{{ url('assets/css/customer.css') }}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- custom CSS end -->
     @yield("style")
 

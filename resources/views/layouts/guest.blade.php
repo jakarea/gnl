@@ -11,6 +11,9 @@
         <meta property="og:url" content="">
         <meta property="og:image" content="">
         <meta name="theme-color" content="#fff">
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
         <!-- Bootstrap CSS start -->
         <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
