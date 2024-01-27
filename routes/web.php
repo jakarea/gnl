@@ -13,6 +13,8 @@ use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\API\ForgotPasswordController;
 use Illuminate\Support\Facades\Artisan;
+
+use App\Http\Controllers\ProjectsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,7 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
     // analytics route
     Route::get('/analytics', [AnalyticsController::class, 'analytics']);
     // earning route
-    Route::get('/earning', [EarningController::class, 'index']);
+    Route::get('/earnings', [EarningController::class, 'index']);
     Route::get('/earning/{id}', [EarningController::class, 'show']);
     // package subscription route
     Route::get('/packages', [PackageController::class, 'index'])->name('pricing.packages');
@@ -82,6 +84,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit-address', 'editAddress')->name('admin.profile.address.edit');
         Route::post('/edit-address', 'updateAddress')->name('admin.profile.address.update');
     });
+
+    Route::prefix('projects')->controller(ProjectsController::class)->group(function () {
+        Route::get('/', 'index')->name('projects.index');
+        Route::get('/{id}', 'show')->name('projects.single');
+        Route::get('/edit-profile', 'edit')->name('admin.profile.edit');
+        Route::post('/edit-profile', 'update')->name('admin.profile.update');
+        Route::get('/edit-address', 'editAddress')->name('admin.profile.address.edit');
+        Route::post('/edit-address', 'updateAddress')->name('admin.profile.address.update');
+    });
+
+
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

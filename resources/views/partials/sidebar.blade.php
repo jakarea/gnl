@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{url('/earning')}}" class="{{ Request::is('earning*') ? 'active' : ''}}">
+                <a href="{{url('/earnings')}}" class="{{ Request::is('earnings*') ? 'active' : ''}}">
                     <img src="{{ asset('public/assets/images/icons/earnings.svg') }}" alt="I" class="img-fluid">
                      Earning
                 </a>
