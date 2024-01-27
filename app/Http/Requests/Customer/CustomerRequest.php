@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Customer;
 
-use App\Http\Requests\BaseFormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 
-
-class CustomerRequest extends BaseFormRequest
+class CustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

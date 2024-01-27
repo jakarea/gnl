@@ -104,26 +104,23 @@ Route::post('forgot-password', [ForgotPasswordController::class, 'forgotPassword
 // Route::middleware(['auth:sanctum'])->group(function () {
 
     // Customers Controllers
-    Route::prefix('customer')->name('api.customer.')->group(function () {
+    // Route::prefix('customers')->name('api.customer.')->group(function () {
 
 
-        Route::get('/', [ApiCustomerControlller::class, 'index']);
+    //     Route::get('/', [ApiCustomerControlller::class, 'index']);
 
-        Route::post('/store', [ApiCustomerControlller::class, 'store']);
+    //     Route::post('/store', [ApiCustomerControlller::class, 'store']);
 
-        Route::get('/status', [ApiCustomerControlller::class, 'searchCustomerQuery']);
+    //     Route::get('/status', [ApiCustomerControlller::class, 'searchCustomerQuery']);
 
-        Route::get('/{id}', [ApiCustomerControlller::class, 'show']);
+    //     Route::get('/{id}', [ApiCustomerControlller::class, 'show']);
 
-        Route::put('/{id}/update', [ApiCustomerControlller::class, 'update']);
+    //     Route::put('/{id}/update', [ApiCustomerControlller::class, 'update']);
 
-        Route::delete('/{id}/delete', [ApiCustomerControlller::class, 'destroy']);
-
-
+    //     Route::delete('/{id}/delete', [ApiCustomerControlller::class, 'destroy']);
 
 
-
-    });
+    // });
 
     // Projects Controllers
     Route::prefix('project')->name('api.project.')->group(function () {

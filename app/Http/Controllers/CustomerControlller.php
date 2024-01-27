@@ -10,15 +10,10 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Customer\CustomerRequest;
 
-class ApiCustomerControlller extends ApiController
+class CustomerControlller extends ApiController
 {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index():JsonResponse
+    public function index()
     {
         // Get count current month
         $data['customers'] = Customer::orderByDesc('customer_id')->paginate(1);
@@ -36,7 +31,7 @@ class ApiCustomerControlller extends ApiController
         $data['newCustomerInc'] = round($this->calculatePercentageIncrease($data['newCustomer'], $previousMonthNewCustomers), 2);
         $data['repeatCustomerInc'] =round($this->calculatePercentageIncrease($data['repeatedCustomer'], $previousMonthRepeatedCustomers), 2);
 
-        return $this->jsonResponse(false, $this->success,$data,$this->emptyArray, JsonResponse::HTTP_OK);
+        return view('customer.index',$data);
     }
 
     /**
@@ -47,15 +42,8 @@ class ApiCustomerControlller extends ApiController
      */
     public function store(CustomerService $addCustomer, CustomerRequest $request)
     {
-        try {
-
-            $customer = $addCustomer->addCustomer($request);
-            return $this->jsonResponse(false, 'Customer created successfully', $customer, [], JsonResponse::HTTP_CREATED);
-
-        }catch (\Exception $e) {
-
-            return $this->jsonResponse(true, 'Failed to create customer', $request->all(), [$e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        $customer = $addCustomer->addCustomer($request);
+        return redirect()->route('customers.index')->withSuccess('Customers Created Successfuly!');
     }
 
     /**
@@ -73,8 +61,8 @@ class ApiCustomerControlller extends ApiController
      */
     public function show($customer_id)
     {
-       $customer = Customer::findOrFail( $customer_id);
-        return $this->jsonResponse(false, $this->success, $customer, $this->emptyArray, JsonResponse::HTTP_OK);
+       $data['customer'] = Customer::findOrFail( $customer_id);
+       return view('customer.show',$data);
     }
 
     /**
