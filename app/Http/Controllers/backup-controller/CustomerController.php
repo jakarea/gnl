@@ -27,7 +27,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::
         orderBy('customer_id', 'desc')
-        ->paginate(16);
+        ->paginate(1);
 
         return view('customer/index',compact('customers'));
     }
