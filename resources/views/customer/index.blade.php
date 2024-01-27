@@ -2,6 +2,10 @@
 
 @section('title', 'Customer List Page')
 
+@section('style')
+<link rel="stylesheet" href="{{ url('assets/css/customer.css') }}" />
+@endsection
+
 @section('content')
     <section class="main-page-wrapper customer-page-wrapper">
         <!-- page title -->
@@ -215,7 +219,7 @@
             <!-- Pagination Section -->
             <div class="pagination-section">
                 <nav class="mt-4" aria-label="...">
-                    {!! $customers->links('pagination::bootstrap-5') !!}
+                    {!! $customers->links('pagination::gnl-pagination') !!}
                 </nav>
                 {{-- <div class="pagination-text">
                     <p>Showing {{ $customers->firstItem() }} to {{ $customers->lastItem() }} of {{ $customers->total() }} entries</p>

@@ -5,8 +5,8 @@ Project Version: 1.0.0
 Developer: Jakarea Parvez
 Agency: GIOPIO
 URL: https://www.giopio.com
-Theme Primary color: #ffffff; 
-Theme Secondary color: #194BFB;  
+Theme Primary color: #ffffff;
+Theme Secondary color: #194BFB;
 Theme Primary Font Family: 'Manrope', sans-serif;
 ******************************************** */
 /* *******************************************
@@ -24,14 +24,14 @@ B. Helpers
 C. Components
     --- # Home page # ---
   -- Header
-  -- Hero 
+  -- Hero
 
 D. Plugins Styles
 
 
 E. Utility Styles
   -- Back to Top Button
-  -- Other 
+  -- Other
 
 ******************************************** */
 /* *******************************************
@@ -849,3 +849,313 @@ body {
   line-height: 150%;
   margin-left: auto;
 }
+
+
+.auth-page-wrapper {
+    height: 100vh;
+  }
+  .auth-page-wrapper .ftr-txt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 5%;
+    z-index: 999;
+  }
+  .auth-page-wrapper .ftr-txt p {
+    color: var(--greyscale-500, #A0AEC0);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+  }
+  .auth-page-wrapper .ftr-txt p a {
+    color: var(--greyscale-500, #A0AEC0);
+  }
+  .auth-page-wrapper .ftr-txt ul {
+    display: flex;
+    align-items: center;
+  }
+  .auth-page-wrapper .ftr-txt ul li a {
+    color: var(--greyscale-900, #111827);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+    display: block;
+    margin-left: 0.5rem;
+  }
+
+  .auth-image-box {
+    position: relative;
+    height: 100vh;
+  }
+  .auth-image-box img {
+    display: block;
+    width: 100%;
+    height: 80vh;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .auth-image-box .img-txt {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 20%;
+    z-index: 999;
+    border-top: 5px solid var(--Yellow, #D3FFEF);
+    background: var(--greyscale-900, #111827);
+    padding: 2rem;
+  }
+  .auth-image-box .img-txt h5 {
+    color: var(--others-white, #FFF);
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+    margin-bottom: 1rem;
+  }
+  .auth-image-box .img-txt p {
+    color: var(--others-white, #FFF);
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+  }
+
+  .auth-txt-box {
+    width: 100%;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .auth-txt-box .auth-form-wrap {
+    width: 30rem;
+  }
+  .auth-txt-box .title h1 {
+    color: var(--greyscale-900, #111827);
+    text-align: center;
+    font-size: 1.75rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%;
+    margin-bottom: 2rem;
+    margin-top: 1.75rem;
+  }
+  .auth-txt-box .auth-form-wrap .form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .auth-txt-box .auth-form-wrap .form-group label {
+    color: var(--greyscale-900, #111827);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+    margin-bottom: 0.5rem;
+  }
+  .auth-txt-box .auth-form-wrap .form-group label span {
+    color: #E03137;
+  }
+  .auth-txt-box .auth-form-wrap .form-group .form-control {
+    border-radius: 0.625rem;
+    border: 1px solid var(--greyscale-300, #E9EAEC);
+    padding: 1rem 1.25rem;
+    color: var(--greyscale-500, #111827);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+  }
+  .auth-txt-box .auth-form-wrap .form-group .form-control:focus-within {
+    border-color: #0F172A;
+  }
+  .auth-txt-box .auth-form-wrap .form-group .fields-icons {
+    position: absolute;
+    right: 17px;
+    top: 49px;
+    z-index: 99;
+  }
+  .auth-txt-box .auth-form-wrap .form-group .fields-icons a {
+    display: inline-block;
+  }
+  .auth-txt-box .auth-form-wrap .form-group .fields-icons a i {
+    color: #111827;
+    font-size: 1.25rem;
+  }
+  .auth-txt-box .auth-form-wrap .remember-me-box {
+    align-items: center;
+    justify-content: space-between;
+  }
+  .auth-txt-box .auth-form-wrap .remember-me-box .form-check .form-check-label {
+    color: var(--greyscale-600, #687588);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+  }
+  .auth-txt-box .auth-form-wrap .remember-me-box a {
+    color: var(--greyscale-600, #687588);
+    text-align: right;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+  }
+  .auth-txt-box .auth-form-wrap .remember-me-box .form-check-input:checked {
+    background-color: #111827;
+    border-color: #111827;
+  }
+  .auth-txt-box .auth-form-wrap .form-submit {
+    margin-top: 2rem;
+  }
+  .auth-txt-box .auth-form-wrap .form-submit .btn-submit {
+    border-radius: 0.625rem;
+    background: var(--greyscale-200, #F1F2F4);
+    display: block;
+    text-align: center;
+    width: 100%;
+    height: 3.5rem;
+    padding: 1.3125rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--greyscale-500, #A0AEC0);
+    text-align: center;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    letter-spacing: 0.01875rem;
+    transition: ease-in-out 0.3s;
+  }
+  .auth-txt-box .auth-form-wrap .form-submit .btn-submit:hover {
+    background-color: #111827;
+    color: #fff;
+  }
+  .auth-txt-box .auth-form-wrap .options {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .auth-txt-box .auth-form-wrap .options hr {
+    border: 0;
+    background: var(--greyscale-200, #d3d4d6);
+    height: 0.0625rem;
+    width: 100%;
+  }
+  .auth-txt-box .auth-form-wrap .options p {
+    color: var(--greyscale-600, #687588);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+    background-color: #fff;
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    top: -15px;
+    transform: translateX(-50%);
+    padding: 3px 14px;
+  }
+  .auth-txt-box .auth-form-wrap .login-with-social {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  .auth-txt-box .auth-form-wrap .login-with-social .bttn {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    border: 1px solid var(--greyscale-300, #E9EAEC);
+    color: var(--greyscale-900, #111827);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: 0.0125rem;
+    height: 3.5rem;
+    padding: 1rem 1.5rem;
+    transition: ease-in-out 0.3s;
+  }
+  .auth-txt-box .auth-form-wrap .login-with-social .bttn img {
+    margin-right: 0.7rem;
+  }
+  .auth-txt-box .auth-form-wrap .login-with-social .bttn:hover {
+    border-color: #111827;
+  }
+  .auth-txt-box .auth-form-wrap .already-have {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .auth-txt-box .auth-form-wrap .already-have p {
+    color: var(--greyscale-500, #A0AEC0);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+  }
+  .auth-txt-box .auth-form-wrap .already-have p a {
+    color: #FF9F29;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 160%;
+  }
+
+  .register-auth-txt .title h1 {
+    margin-bottom: 1rem;
+  }
+  .register-auth-txt .title h6 {
+    color: var(--greyscale-900, #111827);
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    margin-bottom: 2rem;
+  }
+
+  .auth-register-image-box {
+    background-color: #FF9F29;
+    padding: 3.5rem 0 0 6.25rem;
+    height: 100vh;
+    position: relative;
+    background-image: url(../images/auth/star.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+  }
+  .auth-register-image-box img {
+    display: block;
+    width: 88.5%;
+    height: 78%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius: 1rem 0 0 0;
+  }
+  .auth-register-image-box .img-txt h5 {
+    color: var(--others-white, #FFF);
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+    margin-bottom: 1rem;
+  }
+  .auth-register-image-box .img-txt p {
+    color: var(--others-white, #FFF);
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+  }

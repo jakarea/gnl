@@ -13,37 +13,13 @@ use App\Mail\VerificationMail;
 use App\Models\Role;
 use App\Models\Product;
 use App\Models\Category;
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 class AnalyticsController extends Controller
 {
     public function analytics(){
 
-        // total users
-        $totalUsersByMonths = [];
-        $totalUsersByMonths = $this->getUserCountPerMonth(); 
-
-        // total and active draft products
-        $totalProducts = Product::count();
-        $activeProducts = 0;
-        $draftProducts = 0;
-        $products = Product::get();
-        if ($products) {
-            foreach ($products as $product) { 
-                if ($product->status == 0) {
-                    $draftProducts++;
-                } elseif ($product->status == 1) {
-                    $activeProducts++;
-                }
-            }
-        }
- 
-        // company users
-        $activeCompanyUsers = [];
-        $activeCompanyUsers = $this->getTopActiveCompanyUsers();
-        $activeInactiveCompanyUserCurrentMonth = [];
-        $activeInactiveCompanyUserCurrentMonth = $this->getActiveInactiveCompanyUserbyMonth(); 
 
         return view('analytics/index',compact('totalUsersByMonths','totalProducts','activeProducts','draftProducts','activeCompanyUsers','activeInactiveCompanyUserCurrentMonth'));
     }
@@ -90,18 +66,18 @@ class AnalyticsController extends Controller
     // total user by months
     public function getUserCountPerMonth()
     {
-        $userCounts = []; 
-        $currentMonth = Carbon::now()->month; 
+        $userCounts = [];
+        $currentMonth = Carbon::now()->month;
         for ($i = 0; $i < 12; $i++) {
             $month = ($currentMonth - $i) % 12;
-            $month = $month == 0 ? 12 : $month; 
+            $month = $month == 0 ? 12 : $month;
             $userCount = User::whereMonth('created_at', $month)
                 ->whereYear('created_at', Carbon::now()->year)
-                ->count(); 
+                ->count();
             $userCounts[] = $userCount;
         }
         $userCounts = array_reverse($userCounts);
 
         return $userCounts;
-    } 
+    }
 }
