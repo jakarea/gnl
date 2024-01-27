@@ -1,0 +1,59 @@
+# Ignore the vendor directory, as it contains composer dependencies
+/vendor
+
+# Ignore the node_modules directory, as it contains npm dependencies
+/node_modules
+
+# Ignore environment configuration files
+.env
+composer.lock
+.circleci
+.DS_Store
+/storage
+# Ignore user-specific files
+Homestead.yaml
+Homestead.json
+/.vagrant
+/.idea
+/.vscode
+/.DS_Store
+
+# Ignore log files
+/storage/logs/*.log
+
+# Ignore compiled and optimized files
+/public/css
+/public/js
+/public/mix-manifest.json
+/public/web
+
+# Ignore Laravel Mix temporary files
+/public/hot
+/public/mix-manifest.json
+/public/mix.js
+
+# Ignore the public storage directory
+/public/storage
+
+# Ignore configuration environment file
+/config/.env
+
+# Ignore SQLite database files
+/database/*.sqlite
+/database/*.sqlite3
+/database/*.db
+
+# Ignore testing directories
+/tests
+
+# Ignore the phpunit configuration file
+/phpunit.xml
+
+# Ignore the Laravel Dusk screenshots directory
+/storage/app/dusk-snapshots
+
+# Ignore the Homestead directory
+/Homestead.yaml
+
+# Ignore the Valet directory
+/.valet

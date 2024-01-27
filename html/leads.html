@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="D&D is a Ecommerce Platform">
+  <meta property="og:title" content="D&D">
+  <meta property="og:type" content="E-Commerce">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta name="theme-color" content="#fff">
+
+  <!-- Bootstrap CSS start -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!-- Bootstrap CSS end -->
+
+  <!-- plugin CSS start -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- plugin CSS end -->
+
+  <!-- custom CSS start -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/project.css">
+  <link rel="stylesheet" href="assets/css/leads.css">
+  <!-- custom CSS end -->
+
+  <title>Leads Page</title>
+</head>
+
+<body>
+
+  <!-- dashboard page wrapper start -->
+  <main class="root-main-wrapper">
+    <!-- sidebar wrapper start -->
+    <aside class="sidebar-wrap custom-scroll-bar">
+      <!-- logo -->
+      <div class="logo-box">
+        <a href="dashboard.html">
+          <img src="./assets/images/logo.svg" alt="Logo" class="img-fluid">
+        </a>
+      </div>
+      <!-- logo -->
+
+      <!-- navbar -->
+      <div class="side-navbar-wrap">
+        <ul class="side-nav">
+          <li class="side-item">
+            <a href="#" class="active side-link"><img src="./assets/images/icons/sidebar/dashboard.svg" alt="I"
+                class="img-fluid">
+              Dashboard
+            </a>
+          </li>
+          <li class="side-item"><a href="#" class="side-link"><img src="./assets/images/icons/sidebar/analytics.svg"
+                alt="I" class="img-fluid">
+              Analytics
+            </a>
+          </li>
+          <li class="side-item"><a href="#" class="side-link"><img src="./assets/images/icons/sidebar/customer.svg"
+                alt="I" class="img-fluid"> Customer</a>
+          </li>
+          <li class="side-item">
+            <a href="#" class="side-link">
+              <img src="./assets/images/icons/sidebar/calendar.svg" alt="I" class="img-fluid"> To Do
+              List
+            </a>
+          </li>
+          <li class="side-item"><a href="#" class="side-link"><img src="./assets/images/icons/sidebar/project.svg"
+                alt="I" class="img-fluid"> Project</a></li>
+          <li class="side-item side-subitem">
+            <a class="side-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+              aria-controls="collapseExample">
+              <img src="./assets/images/icons/sidebar/leads.svg" alt="I" class="img-fluid"> Leads
+              <i class="fas fa-angle-down"></i>
+            </a>
+            <div class="collapse" id="collapseExample">
+              <ul class="sub-nav">
+                <li><a href="#" class="sub-link active">Hosting Leads</a></li>
+                <li><a href="#" class="sub-link">Marketing Leads</a></li>
+                <li><a href="#" class="sub-link">Project Leads</a></li>
+                <li><a href="#" class="sub-link">Website Leads</a></li>
+                <li><a href="#" class="sub-link">Lost Leads</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="side-item side-subitem">
+            <a class="side-link" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false"
+              aria-controls="collapseExample2">
+              <img src="./assets/images/icons/sidebar/earnings.svg" alt="I" class="img-fluid"> Earning
+              <i class="fas fa-angle-down"></i>
+            </a>
+            <div class="collapse" id="collapseExample2">
+              <ul class="sub-nav">
+                <li><a href="#" class="sub-link active">Total</a></li>
+                <li><a href="#" class="sub-link">Hosting</a></li>
+                <li><a href="#" class="sub-link">Marketing</a></li>
+                <li><a href="#" class="sub-link">Website</a></li>
+                <li><a href="#" class="sub-link">Project</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="side-item"><a href="#" class="side-link">
+              <img src="./assets/images/icons/sidebar/expense.svg" alt="I" class="img-fluid"> Expenses</a>
+          </li>
+          <li class="side-item">
+            <a href="#" class="side-link">
+              <i class="fas fa-sign-out me-3"></i>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- navbar -->
+    </aside>
+    <!-- sidebar wrapper end -->
+
+    <!-- header part start -->
+    <header class="header-area">
+      <!-- search box start -->
+      <div class="header-search-box">
+        <img src="./assets/images/icons/search.svg" alt="S" class="img-fluid search">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+      <!-- search box end -->
+
+      <!-- header icons start -->
+      <div class="header-icons-box">
+        <ul class="main">
+          <li class="head-item">
+            <a href="#" class="head-link">
+              <span></span>
+              <img src="./assets/images/icons/bell.svg" alt="B" class="img-fluid">
+            </a>
+          </li>
+          <li class="head-item">
+            <div class="dropdown p-0 header-dropdown">
+              <a class="p-0 user head-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="./uploads/users/avatar-2.png" alt="A" class="img-fluid">
+                <!-- <span class="no-avatar nva-sm">{!! strtoupper(auth()->user()->name[0]) !!}</span> -->
+              </a>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#">
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item " href="#">
+                    Profile Setting
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="head-item">
+            <a href="#" class="d-lg-none head-link" id="menuToggle">
+              <i class="fas fa-bars"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- header icons end -->
+    </header>
+    <!-- header part end -->
+
+    <!-- main page wrapper start -->
+    <section class="main-page-wrapper leads-page-wrapper">
+      <!-- page title -->
+      <div class="page-title leads-page-title">
+        <h1>Hosting Leads</h1>
+        <!-- bttn -->
+        <div class="common-bttn">
+          <a href="#" class="add">View All</a>
+        </div>
+        <!-- bttn -->
+      </div>
+      <div class="leads-main-wrapper">
+        <div class="row">
+          <!--New Leads Start-->
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="leads-section">
+              <div class="leads-title">
+                <h3>News Leads</h3>
+                <a href="" type="button" class="add" data-bs-toggle="modal" data-bs-target="#staticBackdropFour"><img
+                    src="assets/images/icons/plus-circle.svg" class="img-fluid" alt=""></a>
+              </div>
+              <!--leads collection start-->
+              <div class="leads-collection">
+                <!--leads item start-->
+                <div class="lead-item-section">
+                  <div class="leads-items">
+                    <img src="uploads/users/avatar-13.png" class="avatar" alt="">
+                    <div class="leads-social">
+                      <h4>Harold Gaylord</h4>
+                      <ul>
+                        <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                              src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                        <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                              src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                        <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                              src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                        <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                      </ul>
+                    </div>
+                    <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                  </div>
+                  <div class="leads-item-address">
+                    <div class="leads-item-avatar">
+                      <img src="uploads/users/avatar-1.png" class="avatar" alt="">
+                      <h3>Harold Gaylord</h3>
+                    </div>
+                    <div class="leads-item-social">
+                      <span><img src="assets/images/icons/calling-one.svg" alt="">741-210-5031</span>
+                      <span><img src="assets/images/icons/envelope.svg" alt="">austen.Ernser@hotmail.com</span>
+                      <span><img src="assets/images/icons/instagram.svg" alt="">harold35/instagram.com</span>
+                      <span><img src="assets/images/icons/linkedln.svg" alt="">harold912/linkedin.com</span>
+                    </div>
+                    <hr>
+                    <div class="leads-item-designation">
+                      <p>Company: <span>The Star Place</span></p>
+                      <p>Website: <span>thestarplace</span></p>
+                      <p>KVK: <span>Z002458</span></p>
+                    </div>
+                    <hr>
+                    <p>Note: <span>Voluptas voluptas quaerat qui.</span></p>
+                  </div>
+                </div>
+                <!--leads item end-->
+                <!--leads item start-->
+                <div class="leads-items">
+                  <img src="uploads/users/avatar-2.png" class="avatar" alt="">
+                  <div class="leads-social">
+                    <h4>Harold Gaylord</h4>
+                    <ul>
+                      <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                </div>
+                <!--leads item end-->
+                <!--leads item start-->
+                <div class="leads-items">
+                  <img src="uploads/users/avatar-17.png" class="avatar" alt="">
+                  <div class="leads-social">
+                    <h4>Harold Gaylord</h4>
+                    <ul>
+                      <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                </div>
+                <!--leads item end-->
+                <!--leads item start-->
+                <div class="leads-items">
+                  <img src="uploads/users/avatar-16.png" class="avatar" alt="">
+                  <div class="leads-social">
+                    <h4>Harold Gaylord</h4>
+                    <ul>
+                      <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                </div>
+                <!--leads item end-->
+                <!--leads item start-->
+                <div class="leads-items">
+                  <img src="uploads/users/avatar-19.png" class="avatar" alt="">
+                  <div class="leads-social">
+                    <h4>Harold Gaylord</h4>
+                    <ul>
+                      <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                </div>
+                <!--leads item end-->
+                <!--leads item start-->
+                <div class="leads-items">
+                  <img src="uploads/users/avatar-11.png" class="avatar" alt="">
+                  <div class="leads-social">
+                    <h4>Harold Gaylord</h4>
+                    <ul>
+                      <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                </div>
+                <!--leads item end-->
+                <!--leads item start-->
+                <div class="leads-items">
+                  <img src="uploads/users/avatar-12.png" class="avatar" alt="">
+                  <div class="leads-social">
+                    <h4>Harold Gaylord</h4>
+                    <ul>
+                      <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                </div>
+                <!--leads item end-->
+                <!--leads item start-->
+                <div class="leads-items">
+                  <img src="uploads/users/avatar-12.png" class="avatar" alt="">
+                  <div class="leads-social">
+                    <h4>Harold Gaylord</h4>
+                    <ul>
+                      <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                </div>
+                <!--leads item end-->
+                <!--leads item start-->
+                <div class="leads-items">
+                  <img src="uploads/users/avatar-12.png" class="avatar" alt="">
+                  <div class="leads-social">
+                    <h4>Harold Gaylord</h4>
+                    <ul>
+                      <li><a href=""><img src="assets/images/icons/calling-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/gmail-one.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/instagram.svg" alt=""><img
+                            src="assets/images/icons/Line-14.svg" class="line" alt=""></a></li>
+                      <li><a href=""><img src="assets/images/icons/linkedln.svg" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <img src="assets/images/icons/arrow-move.svg" class="arrow" alt="">
+                </div>
+                <!--leads item end-->
+              </div>
+              <!--leads collection end-->
+            </div>
+          </div>
+          <!--New Leads End--> 
+        </div>
+      </div>
+
+      <!-- leads add modal start --> 
+      <div class="custom-modal custom-modal-leads">
+        <div class="modal fade" id="staticBackdropFour" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropFourLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-leads">
+              <div class="modal-header modal-header-leads">
+                <h1 class="modal-title fs-5" id="staticBackdropFourLabel">Add Leads</h1>
+                <button type="button" class="btn" data-bs-dismiss="modal">
+                  <i class="fas fa-close"></i>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="" class="common-form">
+                  <div class="add-customer-form">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="">Profile Image</label>
+                          <input type="file" name="avatar" id="avatar" class="d-none">
+                          <!-- upload avatar -->
+                          <div class="d-flex">
+                            <label for="avatar" class="avatar">
+                              <img src="./uploads/users/avatar-13.png" alt="avatar" class="img-fluid">
+                              <span class="avatar-ol">
+                                <img src="./assets/images/icons/camera.svg" alt="camera" class="img-fluid">
+                              </span>
+                            </label>
+                            <p><img src="./assets/images/icons/anchor.svg" alt="anchor" class="img-fluid"> Upload</p>
+                          </div>
+                          <!-- upload avatar -->
+                        </div>
+                      </div>
+                      <div class="col-xl-12">
+                        <div class="form-group form-error">
+                          <label for="name">Name</label>
+                          <input type="text" placeholder="Enter Name" id="name" name="name" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-group form-error">
+                          <label for="phone">Phone</label>
+                          <input type="text" placeholder="Enter Phone number" id="phone" name="phone"
+                            class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-group form-error">
+                          <label for="email">E-mail</label>
+                          <input type="email" placeholder="Enter email address" id="email" name="email"
+                            class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-group form-error">
+                          <label for="instagram">Instagram</label>
+                          <input type="text" placeholder="Enter Instagram" id="instagram" name="instagram"
+                            class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-group form-error">
+                          <label for="linkedin">Linkedin</label>
+                          <input type="text" placeholder="Enter location" id="linkedin" name="linkedin"
+                            class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-group form-error">
+                          <label for="company">Company</label>
+                          <input type="text" placeholder="Enter company name" id="company" name="company"
+                            class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-group form-error">
+                          <label for="website">Website</label>
+                          <input type="text" placeholder="Enter website" id="website" name="website"
+                            class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-group form-error">
+                          <label for="kvk">KVK</label>
+                          <input type="text" placeholder="Enter kvk number" id="kvk" name="kvk" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-group form-error">
+                          <label for="website">Type of Lead</label>
+                          <div class="common-dropdown common-dropdown-two">
+                            <div class="dropdown dropdown-two dropdown-three">
+                              <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Enter website<i class="fas fa-angle-down"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-two">
+                                <li><a class="dropdown-item dropdown-item-two" href="#">Hosting Lead<i
+                                      class="fas fa-check"></i></a></li>
+                                <li><a class="dropdown-item dropdown-item-two" href="#">Marketing Lead</a></li>
+                                <li><a class="dropdown-item dropdown-item-two" href="#">Project Lead</a></li>
+                                <li><a class="dropdown-item dropdown-item-two" href="#">Website Lead</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group form-error">
+                          <label for="details">Notes</label>
+                          <textarea name="details" id="details" rows="7" class="form-control"
+                            placeholder="Enter details"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-bttn">
+                          <button type="button" class="btn btn-cancel">Cancel</button>
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <div class="form-bttn">
+                          <button type="submit" class="btn btn-submit">Submit</button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- leads add modal end -->
+    </section>
+    <!-- main page wrapper end -->
+  </main>
+  <!-- dashboard page wrapper end -->
+
+  <!-- Bootstrap Bundle with Popper JS start -->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <!-- Bootstrap Bundle with Popper JS end -->
+
+</body>
+
+</html>
