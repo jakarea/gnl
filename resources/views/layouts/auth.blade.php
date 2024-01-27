@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -190,6 +189,7 @@
     <script src="{{ url('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url('assets/js/custom.js') }}"></script>
     <!-- Bootstrap Bundle with Popper JS end -->
+    @yield('script')
 </body>
 
 </html>

@@ -1,20 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\CustomerControlller;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketPlaceController;
 use App\Http\Controllers\AdvertisementController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\API\ForgotPasswordController;
+
 use Illuminate\Support\Facades\Artisan;
 
 use App\Http\Controllers\ProjectsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
     // company route
     Route::resource('/company', CompanyController::class);
     // customer route
-    Route::resource('/users', CustomerController::class);
+    // Route::resource('/users', CustomerController::class);
     Route::get('/users/{id}/edit/address', [CustomerController::class, 'editAddress'])->name('users.editAddress');
     Route::post('/users/{id}/edit/address', [CustomerController::class, 'updateAddress'])->name('users.updateAddress');
     // analytics route
@@ -75,16 +79,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/packages-update/{id}', [PackageController::class, 'update'])->name('pricing.package.update');
     // advertisment route
     Route::get('/advertisement', [AdvertisementController::class, 'index'])->name('advertise.products');
-    // admin profile route
-    Route::prefix('customers')->controller(CustomerController::class)->group(function () {
-        Route::get('/', 'index')->name('customers.index');
-        Route::get('/my-profile', 'index')->name('admin.profile');
-        Route::get('/edit-profile', 'edit')->name('admin.profile.edit');
-        Route::post('/edit-profile', 'update')->name('admin.profile.update');
-        Route::get('/edit-address', 'editAddress')->name('admin.profile.address.edit');
-        Route::post('/edit-address', 'updateAddress')->name('admin.profile.address.update');
+   
+    Route::prefix('customers')->name('customers.')->group(function () {
+        Route::get('/', [CustomerControlller::class, 'index'])->name('index');
+        Route::post('/store', [CustomerControlller::class, 'store'])->name('store');
+        Route::get('/{id}', [CustomerControlller::class, 'show'])->name('show');
+        Route::put('/{id}/update', [CustomerControlller::class, 'update'])->name('update');
+        Route::delete('/{id}/delete', [CustomerControlller::class, 'destroy'])->name('destroy');
     });
-
+  
     Route::prefix('projects')->controller(ProjectsController::class)->group(function () {
         Route::get('/', 'index')->name('projects.index');
         Route::get('/{id}', 'show')->name('projects.single');
@@ -93,7 +96,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit-address', 'editAddress')->name('admin.profile.address.edit');
         Route::post('/edit-address', 'updateAddress')->name('admin.profile.address.update');
     });
-
 
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
