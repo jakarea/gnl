@@ -110,6 +110,8 @@ Route::get('/clear-cache', function () {
         Route::get('/', [CustomerControlller::class, 'index'])->name('index');
         Route::post('/store', [CustomerControlller::class, 'store'])->name('store');
         Route::get('/{id}', [CustomerControlller::class, 'show'])->name('show');
+        Route::post('/edit', [CustomerControlller::class, 'edit'])->name('edit');
         Route::put('/{id}/update', [CustomerControlller::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [CustomerControlller::class, 'destroy'])->name('destroy');
+        Route::post('/details/modal', [CustomerControlller::class, 'showCustomerWithModal'])->name('details.modal');
     });

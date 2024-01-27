@@ -171,9 +171,14 @@
 
                             <div class="text">
                                 <span class="new">New Customer</span>
-                                <h4><a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                        aria-controls="offcanvasRight" data-customer-id="{{ $customer->id }}"
-                                        className="details customerModalDetails">{{ $customer->name }}</a></h4>
+                                <h4>
+                                    <a href="javascript:;" data-customer-id="{{ $customer->customer_id }}"
+                                        class="details customerModalDetails">{{ $customer->name }}</a>
+                                </h4>
+
+                                {{-- <h4><a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                            aria-controls="offcanvasRight" data-customer-id="{{ $customer->customer_id }}"
+                                            class="details customerModalDetails">{{ $customer->name }}</a></h4> --}}
                                 <h6>Assistant</h6>
                                 <hr />
                                 <p>
@@ -271,7 +276,7 @@
                                                 <input type="text" placeholder="Enter Name" id="name"
                                                     name="name" class="form-control" />
                                                 @error('name')
-                                                    <div class="error">{{ $message }}</div>
+                                                    <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -280,6 +285,10 @@
                                                 <label for="designation">Designation</label>
                                                 <input type="text" placeholder="Enter Designation" id="designation"
                                                     name="designation" class="form-control" />
+
+                                                @error('designation')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -287,6 +296,9 @@
                                                 <label for="email">E-mail</label>
                                                 <input type="email" placeholder="Enter email address" id="email"
                                                     name="email" class="form-control" />
+                                                @error('email')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -294,6 +306,10 @@
                                                 <label for="phone">Phone</label>
                                                 <input type="number" placeholder="Enter phone number" id="phone"
                                                     name="phone" class="form-control" />
+
+                                                @error('phone')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -301,6 +317,9 @@
                                                 <label for="location">Location</label>
                                                 <input type="text" placeholder="Enter location" id="location"
                                                     name="location" class="form-control" />
+                                                @error('location')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -331,6 +350,9 @@
                                                 <label for="company">KVK</label>
                                                 <input type="text" placeholder="Enter kvk number" id="kvk"
                                                     name="kvk" class="form-control" />
+                                                @error('kvk')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -338,6 +360,9 @@
                                                 <label for="service">Service</label>
                                                 <input type="text" placeholder="Enter service" id="service"
                                                     name="service" class="form-control" />
+                                                @error('service')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -345,6 +370,9 @@
                                                 <label for="company">Company</label>
                                                 <input type="text" placeholder="Enter company name" id="company"
                                                     name="company" class="form-control" />
+                                                @error('company')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -352,12 +380,18 @@
                                                 <label for="website">Website</label>
                                                 <input type="text" placeholder="Enter website" id="website"
                                                     name="website" class="form-control" />
+                                                @error('website')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group form-error">
                                                 <label for="details">Details</label>
                                                 <textarea name="details" id="details" rows="7" class="form-control" placeholder="Enter details"></textarea>
+                                                @error('details')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -387,283 +421,89 @@
 
         <!-- customer add modal end -->
         <!-- add comapny modal form start -->
+
         <div class="add-company-modal-from">
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+            <div class="offcanvas offcanvas-end customerDetailsModal" tabindex="-1" id="offcanvasRight"
                 aria-labelledby="offcanvasRightLabel">
-                <div class="offcanvas-body offcanvas-body-details">
-                    <!-- payment from company user start -->
-                    <div class="payment-from-copany-user payment-from-offcanvas">
-                        <!--customer profile header start-->
-                        <div class="customer-details-title">
-                            <h3>Customer Detail</h3>
-                            <button type="button" class="btn" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight">
-                                <i class="fas fa-close"></i>
-                            </button>
-                        </div>
-                        <div class="profile-header profile-header-address">
-                            <img src="uploads/users/avatar-9.png" alt="" />
-                            <div class="profile-box profile-box-address">
-                                <div class="profile-text profile-text-address">
-                                    <div class="profile-text-box">
-                                        <h3>Melinda Keebler</h3>
-                                        <p>Facilitator</p>
-                                    </div>
-                                    <span href="#" class="active inactive">Active</span>
-                                </div>
-                                <div class="profile-edit-box profile-edit-details-box">
-                                    <img class="img-fluid pen-tools" src="./assets/images/icons/edit-1.svg"
-                                        alt="pen-images" />
-                                    <img class="img-fluid trash-tools" src="./assets/images/icons/trash-1.svg"
-                                        alt="trash-images" />
-                                </div>
-                            </div>
-                        </div>
-                        <!--customer profile header end-->
-                        <!--address info start-->
-                        <div class="address-info">
-                            <div class="adress-info-text">
-                                <p>Email</p>
-                                <a href="#"><img src="./assets/images/icons/envelope.svg"
-                                        alt="" />Dolly30@yahoo.com</a>
-                            </div>
-                            <div class="adress-info-text">
-                                <p>Phone</p>
-                                <a href="#"><img src="./assets/images/icons/call.svg"
-                                        alt="" />817-291-2029</a>
-                            </div>
-                            <div class="adress-info-text">
-                                <p>Location</p>
-                                <a href="#"><img src="./assets/images/icons/location.svg" alt="" />47946
-                                    Mitchel Circles</a>
-                            </div>
-                        </div>
-                        <!--address info end-->
-                        <!--service part start-->
-                        <div class="service-profile service-profile-details">
-                            <div class="service-text service-text-details">
-                                <p>Service:</p>
-                                <span>Dashboard Design</span>
-                            </div>
-                            <div class="service-text service-text-details">
-                                <p>Company:</p>
-                                <span>The Star Place</span>
-                            </div>
-                        </div>
-                        <div class="service-profile service-profile-details">
-                            <div class="service-text service-text-details">
-                                <p>Website:</p>
-                                <span>www.thestarplace.net</span>
-                            </div>
-                            <div class="service-text service-text-details">
-                                <p>KVK:</p>
-                                <span href="">Z005484</span>
-                            </div>
-                        </div>
-                        <!--service part end-->
-                        <!--details page start-->
-                        <div class="details details-two">
-                            <h3>Details</h3>
-                            <p>
-                                Ut qui vel libero labore quidem aut veniam. Distinctio et
-                                doloremque velit iusto amet aut. Qui praesentium consequatur
-                                sint atque. Aut iure aut possimus libero nisi molestias in
-                                et consequatur. Cumque soluta beatae dolor enim nostrum est.
-                                Rem minus dicta et quia. Ut delectus minima commodi. Neque
-                                veritatis sunt quaerat quasi quo maiores impedit. Dolor
-                                sequi fuga rerum delectus in necessitatibus non quam.
-                                Doloribus molestiae qui esse.
-                            </p>
-                        </div>
-                        <!--details page end-->
-                        <div class="header header-details">
-                            <h3>Customer History</h3>
-                        </div>
-                        <div class="user-payment-table">
-                            <table>
-                                <tr>
-                                    <th width="3%">No</th>
-                                    <th class="d-flex justify-content-between">
-                                        <span>Service</span>
-                                        <div class="filter-sort-box">
-                                            <div class="dropdown">
-                                                <button class="btn p-0" type="button" data-bs-toggle="dropdown"
-                                                    aria-expanded="false" id="dropdownBttn"></button>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a class="dropdown-item filterItem" href="#"
-                                                            data-value="asc">In order A-Z</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item filterItem" href="#"
-                                                            data-value="desc">In order Z-A</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>Payment Date</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                </tr>
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>Dashboard Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$1,290</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-pending">Pending</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>App Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$2,640</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-view btn-export">Paid</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>3</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>Landing Page Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$1,290</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-view btn-export">Paid</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>4</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>Logo Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$2,609</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-view btn-export">Paid</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>5</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>Dashboard Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$2,608</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-view btn-export">Paid</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                            </table>
-                        </div>
-                    </div>
-                    <!-- payment from company user end -->
+                <div class="offcanvas-body offcanvas-body-details customerDetailsModalData">
                 </div>
             </div>
         </div>
-        <!-- add comapny modal form end -->
+
+        <div class="showEditCustomerModal"></div>
+
+
     </section>
 
 @section('script')
+
     <script>
-        $('.customerModalDetails').on('click', function(e) {
+        $(document).on('click', '.customerModalDetails', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-
             const customerId = $(this).data('customer-id');
-            const modalContentContainer = $('.offcanvas-body-details');
-
-            console.log(customerId);
-
             $.ajax({
-                url: `/customer/${customerId}`,
-                type: 'GET',
-                success: function(html) {
-                    modalContentContainer.html(html);
-                    $('#offcanvasRight').offcanvas('show');
+                url: '{{ route('customers.details.modal') }}',
+                type: 'post',
+                data: {
+                    customerId: customerId
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                success: function(data) {
+                    $(".customerDetailsModalData").html(data);
+                    $('.customerDetailsModal').offcanvas('show');
                 },
                 error: function(error) {
-                    console.error('Error fetching customer details:', error);
+                    console.error('AJAX request error:', status, error);
                 }
             });
         });
+
+        function editCustomerModal(customerId) {
+            $.ajax({
+                url: '{{ route('customers.edit') }}',
+                type: 'post',
+                data: {
+                    customerId: customerId
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                success: function(data) {
+                    $(".showEditCustomerModal").html(data);
+                    $('.customerDetailsModal').offcanvas('hide');
+                    $("#customerEdit").modal('show');
+                },
+                error: function(error) {
+                    console.error('AJAX request error:', status, error);
+                }
+            });
+        }
+
+        function deleteCustomer(customerUrl) {
+            $.ajax({
+                url: customerUrl,
+                type: 'post',
+                data: {
+                    _mehode: "delete"
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                success: function(data) {
+                    $(".showEditCustomerModal").html(data);
+                    $('.customerDetailsModal').offcanvas('hide');
+                    $("#customerEdit").modal('show');
+                },
+                error: function(error) {
+                    console.error('AJAX request error:', status, error);
+                }
+            });
+        }
     </script>
 @endsection
 

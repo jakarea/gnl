@@ -72,8 +72,14 @@ class CustomerControlller extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(CustomerRequest $request, $customer_id)
-    // {
+
+
+    public function edit( Request $request ){
+        if( $request->ajax() ){
+            $data['customer'] = Customer::findOrFail( $request->customerId );
+            return view('components.customer-edit-modal',$data);
+        }
+    }
 
     public function update(CustomerRequest $request, $customer_id) {
 
@@ -92,8 +98,7 @@ class CustomerControlller extends ApiController
             $customer->update(['avatar' => $avatarPath]);
         }
 
-        $customerInfo = $customer;
-        return $this->jsonResponse(false, $this->success, $customerInfo, $this->emptyArray, JsonResponse::HTTP_OK);
+        return redirect()->route('customers.index')->withSuccess('Customers update successfuly!');
     }
 
     /**
@@ -104,9 +109,10 @@ class CustomerControlller extends ApiController
      */
     public function destroy($customer_id)
     {
+        return $customer_id;
         $customerInfo = Customer::findOrFail( $customer_id);
         if( $customerInfo->delete() ){
-            return $this->jsonResponse(false, $this->success, $customerInfo, $this->emptyArray, JsonResponse::HTTP_OK);
+            return redirect()->route('customers.index')->withSuccess('Customers deleted successfuly!');
         }
 
     }
@@ -115,17 +121,10 @@ class CustomerControlller extends ApiController
         return $previousCount !== 0 ? (($currentCount - $previousCount) / $previousCount) * 100 : 0;
     }
 
-    function searchCustomerQuery( Request $request) {
-
-        $status = $request->input('status', 'all');
-        $query = Customer::query();
-
-        if ($status !== 'all') {
-            $query->where('status', $status);
+    function showCustomerWithModal( Request $request) {
+        if( $request->ajax() ){
+            $data['customer'] = Customer::findOrFail( $request->customerId );
+            return view('components.customer-details-modal',$data);
         }
-
-        $customers = $query->get();
-
-        return $this->jsonResponse(false, $this->success, $customers, $this->emptyArray, JsonResponse::HTTP_OK);
     }
 }

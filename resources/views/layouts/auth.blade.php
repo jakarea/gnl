@@ -11,6 +11,9 @@
         <meta property="og:url" content="" />
         <meta property="og:image" content="" />
         <meta name="theme-color" content="#fff" />
+            <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
         <!-- Bootstrap CSS start -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
@@ -23,9 +26,9 @@
         <!-- plugin CSS end -->
 
         <!-- custom CSS start -->
-        <link rel="stylesheet" href="assets/css/style.css" />
-        <link rel="stylesheet" href="assets/css/responsive.css" />
-        <link rel="stylesheet" href="assets/css/customer.css" />
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/customer.css') }}" />
         <!-- custom CSS end -->
 
         <title>Customer List - Page</title>
@@ -186,8 +189,8 @@
         <!-- dashboard page wrapper end -->
 
         <!-- Bootstrap Bundle with Popper JS start -->
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/custom.js"></script>
+        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('assets/js/custom.js') }}"></script>
         <!-- Bootstrap Bundle with Popper JS end -->
 
         @yield('script')
