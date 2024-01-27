@@ -164,16 +164,13 @@
 
                             <div class="text">
                                 <span class="new">New Customer</span>
-
-
-
-
                                 <h4><a
                                     href="#"
                                     data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasRight"
                                     aria-controls="offcanvasRight"
-                                    className="details"
+                                    data-customer-id="{{ $customer->id }}"
+                                    className="details customerModalDetails"
 
                                 >{{ $customer->name}}</a></h4>
                                 <h6>Assistant</h6>
@@ -360,7 +357,7 @@
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="form-bttn">
-                                                <button type="button" class="btn btn-cancel">
+                                                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">
                                                     Cancel
                                                 </button>
                                             </div>
@@ -638,5 +635,33 @@
         </div>
         <!-- add comapny modal form end -->
     </section>
+
+@section('script')
+    <script>
+        $('.customerModalDetails').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const customerId = $(this).data('customer-id');
+            const modalContentContainer = $('.offcanvas-body-details');
+
+            console.log(customerId);
+
+            $.ajax({
+                url: `/customer/${customerId}`,
+                type: 'GET',
+                success: function (html) {
+                    modalContentContainer.html(html);
+                    $('#offcanvasRight').offcanvas('show');
+                },
+                error: function (error) {
+                    console.error('Error fetching customer details:', error);
+                }
+            });
+        });
+
+    </script>
+@endsection
+
 @endsection
 {{-- add custmer form end --}}
