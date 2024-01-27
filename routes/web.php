@@ -15,8 +15,6 @@ use App\Http\Controllers\MarketPlaceController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\API\ForgotPasswordController;
 
-use Illuminate\Support\Facades\Artisan;
-
 use App\Http\Controllers\ProjectsController;
 
 /*
@@ -79,7 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/packages-update/{id}', [PackageController::class, 'update'])->name('pricing.package.update');
     // advertisment route
     Route::get('/advertisement', [AdvertisementController::class, 'index'])->name('advertise.products');
-   
+
     Route::prefix('customers')->name('customers.')->group(function () {
         Route::get('/', [CustomerControlller::class, 'index'])->name('index');
         Route::post('/store', [CustomerControlller::class, 'store'])->name('store');
@@ -87,7 +85,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [CustomerControlller::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [CustomerControlller::class, 'destroy'])->name('destroy');
     });
-  
+
     Route::prefix('projects')->controller(ProjectsController::class)->group(function () {
         Route::get('/', 'index')->name('projects.index');
         Route::get('/{id}', 'show')->name('projects.single');

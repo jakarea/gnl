@@ -11,8 +11,9 @@
       <h1>Projects Details</h1>
       <!-- bttn -->
       <div class="common-bttn">
-        <a href="#" class="add"><i class="fas fa-plus"></i> Add Project</a>
-      </div>
+        <a href="#" class="add" data-bs-toggle="modal" data-bs-target="#staticBackdropProject"><i class="fas fa-plus"></i>
+            Add Project</a>
+    </div>
       <!-- bttn -->
     </div>
     <div class="project-details-root-wrap">
@@ -206,7 +207,7 @@
                 <div class="commment-reply-box">
                   <p class="mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate veniam odio eligendi delectus iste consequuntur eveniet. Dicta consequuntur quam illo.</p>
                   <textarea class="form-control" placeholder="Reply"></textarea>
-                  <button class="btn btn-submit" type="button"><img src="./assets/images/icons/reply-icon.svg" alt="a" class="img-fluid"></button>
+                  <button class="btn btn-submit" type="button"><img src="{{ url('assets/images/icons/reply-icon.svg') }}" alt="a" class="img-fluid"></button>
 
                 </div>
                 <!-- reply box end -->
@@ -337,12 +338,12 @@
                                                                 <h3>Project Thumbnail</h4>
                                                                     <div class="d-flex">
                                                                         <div class="thumbnail-preview">
-                                                                            <img src="{{ url('/uploads/projects/project-01.png')}}"
+                                                                            <img src="{{ url('/uploads/projects/project-01.png') }}"
                                                                                 alt="a" class="img-fluid">
                                                                         </div>
                                                                         <label for="thumbnail"
                                                                             class="thumbnail-upload-icon">
-                                                                            <img src="./assets/images/icons/anchor.svg"
+                                                                            <img src="{{ url('/assets/images/icons/anchor.svg') }}"
                                                                                 alt="Upload" class="img-fluid">
                                                                             <p> Upload </p>
                                                                         </label>
@@ -440,7 +441,7 @@
                                                     <!-- customer search form start -->
                                                     <div class="form-group search-by-name">
                                                         <div class="search-item">
-                                                            <img src="assets/images/icons/search-ic.svg" alt="a"
+                                                            <img src="{{ url('assets/images/icons/search-ic.svg') }}" alt="a"
                                                                 class="img-fluid">
                                                             <input type="text" placeholder="Search by name"
                                                                 name="search" class="form-control">
@@ -449,7 +450,7 @@
                                                             <a data-bs-toggle="collapse" href="#collapseTwo"
                                                                 role="button" aria-expanded="false"
                                                                 aria-controls="collapseTwo" type="button">
-                                                                <img src="./assets/images/icons/user-add-two.svg"
+                                                                <img src="{{ url('/assets/images/icons/user-add-two.svg') }}"
                                                                     alt="a" class="img-fluid">Add Manually</a>
                                                         </div>
                                                     </div>
@@ -461,14 +462,14 @@
                                                         <div class="col-lg-6">
                                                             <div class="selected-profile-box">
                                                                 <div class="media">
-                                                                    <img src="uploads/users/avatar-19.png')}}"
+                                                                    <img src="{{ url('uploads/users/avatar-19.png')}}"
                                                                         class="img-fluid avatar" alt="avatar">
                                                                     <div class="media-body">
                                                                         <h3>Glenda Miller</h3>
                                                                         <p>Manager</p>
                                                                     </div>
                                                                     <a href="#">
-                                                                        <img src="./assets/images/icons/close-2.svg"
+                                                                        <img src="{{ url('/assets/images/icons/close-2.svg') }}"
                                                                             alt="a" class="img-fluid">
                                                                     </a>
                                                                 </div>
@@ -479,14 +480,14 @@
                                                         <div class="col-lg-6">
                                                             <div class="selected-profile-box">
                                                                 <div class="media">
-                                                                    <img src="uploads/users/avatar-12.png')}}"
+                                                                    <img src="{{ url('uploads/users/avatar-12.png') }}"
                                                                         class="img-fluid avatar" alt="avatar">
                                                                     <div class="media-body">
                                                                         <h3>Glenda Miller</h3>
                                                                         <p>CEO</p>
                                                                     </div>
                                                                     <a href="#">
-                                                                        <img src="./assets/images/icons/close-2.svg"
+                                                                        <img src="{{ url('/assets/images/icons/close-2.svg') }}"
                                                                             alt="a" class="img-fluid">
                                                                     </a>
                                                                 </div>
@@ -514,17 +515,17 @@
                                                                                     <div class="d-flex">
                                                                                         <label for="avatar"
                                                                                             class="avatar">
-                                                                                            <img src="{{ url('/uploads/users/avatar-9.png')}}"
+                                                                                            <img src="{{ url('/uploads/users/avatar-9.png') }}"
                                                                                                 alt="avatar"
                                                                                                 class="img-fluid">
                                                                                             <span class="avatar-ol">
-                                                                                                <img src="./assets/images/icons/camera.svg"
+                                                                                                <img src="{{ url('/assets/images/icons/camera.svg') }}"
                                                                                                     alt="camera"
                                                                                                     class="img-fluid">
                                                                                             </span>
                                                                                         </label>
                                                                                         <label for="avatar">
-                                                                                            <p><img src="./assets/images/icons/anchor.svg"
+                                                                                            <p><img src="{{ url('/assets/images/icons/anchor.svg') }}"
                                                                                                     alt="anchor"
                                                                                                     class="img-fluid">
                                                                                                 Upload</p>
