@@ -180,16 +180,16 @@
           <!-- user one start -->
           <div class="media">
 
-            @if ($activeCompanyUser->personalInfo && $activeCompanyUser->personalInfo->avatar) 
+            @if ($activeCompanyUser->personalInfo && $activeCompanyUser->personalInfo->avatar)
             <img src="{{ $activeCompanyUser->personalInfo->avatar }}" alt="A" class="img-fluid">
-            @else 
+            @else
             <span class="no-avatar nva-sm me-3" style="width: 2.75rem; height: 2.75rem;">{!! strtoupper(auth()->user()->name[0]) !!}</span>
-            @endif 
+            @endif
 
             <div class="media-body">
               <h5><a href="{{ route('company.show', $activeCompanyUser->company) }}">{{ $activeCompanyUser->name }}</a></h5>
               <p>{{ $activeCompanyUser->email }}</p>
-            </div> 
+            </div>
 
             @if ($index == 0)
             <img src="{{ asset('/public/assets/images/icons/trophy-01.svg') }}" alt="T" class="img-fluid">
@@ -197,9 +197,9 @@
                 <img src="{{ asset('/public/assets/images/icons/trophy-02.svg') }}" alt="T" class="img-fluid">
             @else
                 <img src="{{ asset('/public/assets/images/icons/trophy-03.svg') }}" alt="T" class="img-fluid">
-            @endif 
+            @endif
           </div>
-          <!-- user one end --> 
+          <!-- user one end -->
           @endforeach
         </div>
       </div>
@@ -585,7 +585,7 @@ document.getElementById("legend").innerHTML = legendHtml;
 
 <!-- company user graph js start -->
 <script>
- 
+
  const data = @json($activeInactiveCompanyUserCurrentMonth);
 
   var options = {
