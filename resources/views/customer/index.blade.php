@@ -5,6 +5,13 @@
 @section('content')
     <section class="main-page-wrapper customer-page-wrapper">
         <!-- page title -->
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        @endif
+
         <div class="page-title">
             <h1 class="pb-0">Customer</h1>
 
@@ -164,15 +171,9 @@
 
                             <div class="text">
                                 <span class="new">New Customer</span>
-                                <h4><a
-                                    href="#"
-                                    data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight"
-                                    data-customer-id="{{ $customer->id }}"
-                                    className="details customerModalDetails"
-
-                                >{{ $customer->name}}</a></h4>
+                                <h4><a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight" data-customer-id="{{ $customer->id }}"
+                                        className="details customerModalDetails">{{ $customer->name }}</a></h4>
                                 <h6>Assistant</h6>
                                 <hr />
                                 <p>
@@ -180,7 +181,8 @@
                                 </p>
                             </div>
                             <div class="actions">
-                                <a href="{{ route('customers.show', $customer->customer_id) }}" class="details">View Details</a>
+                                <a href="{{ route('customers.show', $customer->customer_id) }}" class="details">View
+                                    Details</a>
 
                                 <div class="btn-group dropstart">
                                     <a href="#" type="button" class="ellipse dropdown-toggle"
@@ -268,6 +270,9 @@
                                                 <label for="name">Name</label>
                                                 <input type="text" placeholder="Enter Name" id="name"
                                                     name="name" class="form-control" />
+                                                @error('name')
+                                                    <div class="error">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
@@ -638,7 +643,7 @@
 
 @section('script')
     <script>
-        $('.customerModalDetails').on('click', function (e) {
+        $('.customerModalDetails').on('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -650,16 +655,15 @@
             $.ajax({
                 url: `/customer/${customerId}`,
                 type: 'GET',
-                success: function (html) {
+                success: function(html) {
                     modalContentContainer.html(html);
                     $('#offcanvasRight').offcanvas('show');
                 },
-                error: function (error) {
+                error: function(error) {
                     console.error('Error fetching customer details:', error);
                 }
             });
         });
-
     </script>
 @endsection
 
