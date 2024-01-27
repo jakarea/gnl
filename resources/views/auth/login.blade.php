@@ -10,7 +10,7 @@
             <div class="col-12 col-xl-6 ps-lg-0">
                 <!-- auth image start-->
                 <div class="auth-image-box d-none d-xl-block">
-                    <img src="./assets/images/auth/side-image.png" alt="Sidebar Image" class="img-fluid">
+                    <img src="/assets/images/auth/side-image.png" alt="Sidebar Image" class="img-fluid">
                     <div class="img-txt">
                         <h5>We're always ready for you</h5>
                         <p>We help to complete all your conveyancing needs easily</p>

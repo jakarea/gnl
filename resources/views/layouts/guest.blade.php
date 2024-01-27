@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#fff">
 
     <!-- Bootstrap CSS start -->
-    <link rel="stylesheet" href="{{ url('/assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
     <!-- Bootstrap CSS end -->
 
     <!-- plugin CSS start -->
