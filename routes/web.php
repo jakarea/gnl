@@ -30,53 +30,30 @@ use App\Http\Controllers\ProjectsController;
 
 Route::group(['middleware' => ['guest']], function () {
     // Registration
-    Route::get('/register', [AuthController::class,'showRegistrationForm'])->name('register');
-    Route::post('/register', [AuthController::class,'register']);
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
     // Login
-    Route::get('/login', [AuthController::class,'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class,'login']);
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
 
     // forgot password handle routes for mobile app user
     Route::get('api/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::get('api/reset-update', [ForgotPasswordController::class, 'showStatusPage'])->name('password.status');
     Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
-
 });
 
 // initial redirection route
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', function () { return redirect('/dashboard'); });
-    Route::get('/home', function () { return redirect('/dashboard'); });
+    Route::get('/', function () {
+        return redirect('/dashboard');
+    });
+    Route::get('/home', function () {
+        return redirect('/dashboard');
+    });
     Route::get('/dashboard',  [DashboardController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    // category route
-    Route::resource('/category', CategoryController::class);
-    // marketplace route
-    Route::prefix('marketplace')->controller(MarketPlaceController::class)->group(function () {
-        Route::get('/', 'index')->name('product.list');
-        Route::get('/{slug}', 'show')->name('product.show');
-        Route::get('/{slug}/edit', 'edit')->name('product.edit');
-        Route::post('/{slug}/edit', 'update')->name('product.update');
-    });
-    // company route
-    Route::resource('/company', CompanyController::class);
-    // customer route
-    // Route::resource('/users', CustomerController::class);
-    Route::get('/users/{id}/edit/address', [CustomerController::class, 'editAddress'])->name('users.editAddress');
-    Route::post('/users/{id}/edit/address', [CustomerController::class, 'updateAddress'])->name('users.updateAddress');
-    // analytics route
-    Route::get('/analytics', [AnalyticsController::class, 'analytics']);
-    // earning route
-    Route::get('/earnings', [EarningController::class, 'index']);
-    Route::get('/earning/{id}', [EarningController::class, 'show']);
-    // package subscription route
-    Route::get('/packages', [PackageController::class, 'index'])->name('pricing.packages');
-    Route::get('/packages-update', [PackageController::class, 'edit'])->name('pricing.package.edit');
-    Route::post('/packages-update/{id}', [PackageController::class, 'update'])->name('pricing.package.update');
-    // advertisment route
-    Route::get('/advertisement', [AdvertisementController::class, 'index'])->name('advertise.products');
 
     Route::prefix('customers')->name('customers.')->group(function () {
         Route::get('/', [CustomerControlller::class, 'index'])->name('index');
@@ -91,16 +68,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('projects')->controller(ProjectsController::class)->group(function () {
         Route::get('/', 'index')->name('projects.index');
         Route::get('/{id}', 'show')->name('projects.single');
-        Route::get('/edit-profile', 'edit')->name('admin.profile.edit');
-        Route::post('/edit-profile', 'update')->name('admin.profile.update');
-        Route::get('/edit-address', 'editAddress')->name('admin.profile.address.edit');
-        Route::post('/edit-address', 'updateAddress')->name('admin.profile.address.update');
+        Route::post('/store', 'store')->name('projects.store');
+        Route::post('/destroy', 'destroy')->name('projects.destroy');
     });
 
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
 });
 
 

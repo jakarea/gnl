@@ -10,6 +10,6 @@ class CustomerProject extends Model
     use HasFactory;
 
     protected $fillable = [
-        'customer_id','project_id'
+        'customer_id', 'project_id'
     ];
 }
