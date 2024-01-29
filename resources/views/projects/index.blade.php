@@ -17,6 +17,16 @@
         </div>
         <!-- bttn -->
     </div>
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="project-root-wrap">
         <div class="row align-items-center mb-4">
             <div class="col-lg-6">
@@ -27,7 +37,14 @@
                     <div class="common-dropdown project-dropdown text-end">
                         <div class="dropdown dropdown-porject-item">
                             <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                All Project <i class="fas fa-angle-down"></i>
+                                @if ($selectedStatus == 'in_progress')
+                                In progress
+                                @elseif ($selectedStatus == 'completed')
+                                Completed
+                                @else
+                                All Project
+                                @endif
+                                <i class="fas fa-angle-down"></i>
                             </button>
                             <ul class="dropdown-menu project-dropdown-menu">
                                 <li>
@@ -58,10 +75,11 @@
                                 </li>
                             </ul>
                         </div>
+                        <input type="hidden" name="status" id="inputField">
                     </div>
                 </form>
             </div>
-            <input type="hidden" name="status" id="inputField">
+
         </div>
         <div class="row">
             @foreach ($projects as $project)
@@ -82,9 +100,9 @@
                     </div>
                     <div class="thumbnail">
                         @if ($project->thumbnail)
-                        <img src="{{ $project->thumbnail }}" alt="a" class="img-fluid">
+                        <img src="{{ asset('storage/'.$project->thumbnail) }}" alt="a" class="img-fluid">
                         @else
-                        <img src="./uploads/projects/project-01.png" alt="a" class="img-fluid">
+                        <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a" class="img-fluid">
                         @endif
                     </div>
 
@@ -112,9 +130,9 @@
                         @foreach ($project->customers->slice(0,1) as $customer)
                         <div class="media">
                             @if ($customer->avatar)
-                            <img src="{{ $customer->avatar }}" alt="a" class="img-fluid">
+                            <img src="{{ asset('storage/'.$customer->avatar) }}" alt="a" class="img-fluid avatar">
                             @else
-                            <img src="./uploads/users/avatar-18.png" alt="a" class="img-fluid avatar">
+                            <img src="{{ asset('uploads/users/avatar-18.png') }}" alt="a" class="img-fluid avatar">
                             @endif
                             <div class="media-body">
                                 <h5>{{ $customer->name }}</h5>
@@ -129,19 +147,25 @@
             <!--project single box end-->
             @endforeach
         </div>
+
+
     </div>
 </section>
+
+
+
 
 <!-- project add modal start -->
 @include('projects/create')
 <!-- project add modal end -->
-
 @endsection
 {{-- add custmer form end --}}
 
 @section('script')
 <script>
+    // console.log("submit");
     document.addEventListener("DOMContentLoaded", function() {
+
         let inputField = document.getElementById("inputField");
         let dropdownItems = document.querySelectorAll(".filterItems");
         let form = document.getElementById("myForm");
@@ -150,6 +174,7 @@
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 inputField.value = this.getAttribute("data-value");
+               
                 form.submit();
             });
         });
