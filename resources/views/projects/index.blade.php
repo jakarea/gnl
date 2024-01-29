@@ -23,20 +23,45 @@
                 <h2 class="inner-title">All Project</h2>
             </div>
             <div class="col-lg-6">
-                <div class="common-dropdown project-dropdown text-end">
-                    <div class="dropdown dropdown-porject-item">
-                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            All Project<i class="fas fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu project-dropdown-menu">
-                            <li><a class="dropdown-item project-dropdown-item" href="#">All Projects<i
-                                        class="fas fa-check"></i></a></li>
-                            <li><a class="dropdown-item project-dropdown-item" href="#">In Progress</a></li>
-                            <li><a class="dropdown-item project-dropdown-item" href="#">Completed</a></li>
-                        </ul>
+                <form action="" id="myForm" method="GET">
+                    <div class="common-dropdown project-dropdown text-end">
+                        <div class="dropdown dropdown-porject-item">
+                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                All Project <i class="fas fa-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu project-dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item project-dropdown-item filterItems" href="#"
+                                        data-value="">All Projects
+
+                                        @if ($selectedStatus == '')
+                                        <i class="fas fa-check"></i>
+                                        @endif
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item project-dropdown-item filterItems" href="#"
+                                        data-value="in_progress">
+                                        In Progress
+                                        @if ($selectedStatus && $selectedStatus == 'in_progress')
+                                        <i class="fas fa-check"></i>
+                                        @endif
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item project-dropdown-item filterItems" href="#"
+                                        data-value="completed">Completed
+                                        @if ($selectedStatus && $selectedStatus == 'completed')
+                                        <i class="fas fa-check"></i>
+                                        @endif
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
+            <input type="hidden" name="status" id="inputField">
         </div>
         <div class="row">
             @foreach ($projects as $project)
@@ -113,3 +138,21 @@
 
 @endsection
 {{-- add custmer form end --}}
+
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropdownItems = document.querySelectorAll(".filterItems");
+        let form = document.getElementById("myForm");
+
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                form.submit();
+            });
+        });
+    });
+</script>
+@endsection
