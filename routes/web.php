@@ -66,18 +66,18 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('projects')->name('projects.')->group(function () {
+        Route::get('/search-customers', [ProjectsController::class, 'search'])->name('search.customers');
+
         Route::get('/', [ProjectsController::class, 'index'])->name('index');
         Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
         Route::post('/store', [ProjectsController::class, 'store'])->name('store');
-        Route::get('/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
-        Route::get('/search-customers/{name}', [ProjectsController::class, 'search'])->name('search.customers');
+        Route::post('{id}/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
     });
 
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
-
 
 // all cache clear route
 Route::get('/clear-cache', function () {

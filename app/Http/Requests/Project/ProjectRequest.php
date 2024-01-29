@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Project;
 
+use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\BaseFormRequest;
-class ProjectRequest extends BaseFormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class ProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +28,14 @@ class ProjectRequest extends BaseFormRequest
 
         $rules = [
             'manualyCustomer' => 'boolean',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
 
         $fieldRules = [
             'title' => ['required'],
-            'priority' => ['in:Basic,Important,Priority'],
-            'amount' => ['required','numeric'],
-            'tax' => ['required','numeric','lt:amount'],
+            'priority' => ['in:basic,important,priority'],
+            'amount' => ['required', 'numeric'],
+            'tax' => ['required', 'numeric', 'lt:amount'],
             'start_date' => ['required'],
             'end_date' => ['required'],
         ];
@@ -43,7 +46,7 @@ class ProjectRequest extends BaseFormRequest
             $rules['email'] = 'required|unique:customers,email';
         }
 
-        if ( $this->filled('customer_id')) {
+        if ($this->filled('customer_id')) {
             unset($fieldRules['name']);
             unset($fieldRules['email']);
             unset($fieldRules['designation']);
@@ -71,5 +74,4 @@ class ProjectRequest extends BaseFormRequest
             'manualyCustomer' => filter_var($this->input('manualyCustomer'), FILTER_VALIDATE_BOOLEAN),
         ]);
     }
-
 }

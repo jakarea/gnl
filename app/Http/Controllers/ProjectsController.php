@@ -50,45 +50,42 @@ class ProjectsController extends Controller
         return view("projects/single", compact("project"));
     }
 
-    public function store(Request $request)
+    public function store(CustomerService $addCustomer, ProjectRequest $request)
     {
-        // return $request->all();
-
-        $validatedData = $request->validate([
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'title' => 'required|string|max:255',
-            'amount' => 'required|numeric',
-            'tax' => 'nullable|numeric',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'note' => 'nullable|string',
-            'priority' => 'required|in:basic,important,priority',
-            'description' => 'nullable|string'
-            // 'status' => 'required|in:in_progress,completed',
-        ]);
-
-        $project = Project::create($validatedData);
 
 
-
-        // Process thumbnail upload if present
-        if ($request->hasFile('thumbnail')) {
-            $thumbnail = $request->file('thumbnail');
-            $filename = substr(md5(time()), 0, 10) . '.' . $thumbnail->getClientOriginalExtension();
-            $thumbnailPath = $thumbnail->storeAs('projects', $filename, 'public');
-            $project->update(['thumbnail' => $thumbnailPath]);
+        if ($request->customer_id) {
+            $customerIds = explode(",", $request->customer_id);
+        } else if ($request->manualyCustomer == true || $request->manualyCustomer == "true") {
+            $customer = $addCustomer->addCustomer($request);
+            $customerIds = $customer->customer_id;
         }
 
-        // Sync customers with the project
-        $project->customers()->sync($validatedData['customer_id']);
+        $data = $request->except(['thumbnail']);
+        $data['status'] = $request->project_status;
+
+        $project = Project::create($data);
+
+        if ($request->hasFile('thumbnail')) {
+            $avatar = $request->file('thumbnail');
+            $filename = substr(md5(time()), 0, 10) . '.' . $avatar->getClientOriginalExtension();
+            $avatarPath = $avatar->storeAs('projects', $filename, 'public');
+            $project->update(['thumbnail' => $avatarPath]);
+        }
+
+        $project->customers()->sync($customerIds);
 
         return redirect()->back()->with('success', 'Project created successfully');
     }
 
-    public function search(Request $request, $searchTerm)
+    public function search(Request $request)
     {
-        $searchTerms = $searchTerm;
-        $customers = Customer::where('name', 'like', '%' . $searchTerms . '%')->get();
+
+        $name = $request->name;
+        $customers = [];
+        if ($name) {
+            $customers = Customer::where('name', 'like', '%' . $name . '%')->get();
+        }
 
         return response()->json(['message' => $customers]);
     }
@@ -96,8 +93,9 @@ class ProjectsController extends Controller
     public function destroy($project_id)
     {
         $projectInfo = Project::findOrFail($project_id);
+
         if ($projectInfo->delete()) {
-            return redirect()->back()->with('success', 'Project deleted successfully');
+            return redirect('/projects')->with('success', 'Project deleted successfully');
         }
     }
 }
