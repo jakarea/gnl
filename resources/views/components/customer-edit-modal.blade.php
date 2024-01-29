@@ -16,7 +16,7 @@
                         class="common-form" enctype="multipart/form-data">
                         @csrf
                         @method('put')
-                        <input type="text" name="status" id="statusEdit" value="active">
+                        {{-- <input type="hidden" name="status" id="statusEdit" value="active"> --}}
                         <div class="add-customer-form">
                             <div class="row">
                                 <div class="col-12">

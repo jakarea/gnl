@@ -3,19 +3,20 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CustomerControlller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketPlaceController;
+
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\API\ForgotPasswordController;
-
-use App\Http\Controllers\ProjectsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
         Route::post('/store', [ProjectsController::class, 'store'])->name('store');
         Route::post('{id}/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
+    });
+
+
+    Route::prefix('to-do-list')->name('task.')->group(function () {
+        Route::get('/', [TaskController::class, 'index']);
+        Route::post('/store', [TaskController::class, 'store']);
+        Route::get('/{id}', [TaskController::class, 'show']);
+        Route::put('/{id}/update', [TaskController::class, 'update']);
+        Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
+        Route::get('/project/search', [TaskController::class, 'projectSearch'])->name('projectsearch');
     });
 
     // logout route

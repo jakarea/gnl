@@ -11,7 +11,7 @@ use App\Http\Requests\Task\TaskRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 
-class ApiTaskController extends ApiController
+class TaskController extends ApiController
 {
 
     /**
@@ -19,11 +19,11 @@ class ApiTaskController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index():JsonResponse
+    public function index()
     {
         $tasks = Task::orderByDesc('task_id')->get();
 
-        return $this->jsonResponse(false, $this->success,$tasks,$this->emptyArray, JsonResponse::HTTP_OK);
+        return view('to-do-list.index');
     }
 
     /**
@@ -32,8 +32,10 @@ class ApiTaskController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CustomerService $addCustomer,TaskRequest $request)
-    {
+    // public function store(CustomerService $addCustomer,TaskRequest $request){
+    public function store(CustomerService $addCustomer,Request $request){
+
+        return $request->dd();
         try {
 
             $data = $request->except(['file_upload', 'schedule']);
