@@ -16,7 +16,7 @@
                         class="common-form" enctype="multipart/form-data">
                         @csrf
                         @method('put')
-                        <input type="text" name="status" id="status" value="active">
+                        <input type="text" name="status" id="statusEdit" value="active">
                         <div class="add-customer-form">
                             <div class="row">
                                 <div class="col-12">
@@ -110,10 +110,10 @@
                                             <div class="dropdown dropdown-two dropdown-three">
                                                 <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                    <div id="setStatus">{{ Str::ucfirst($customer->status) }}</div><i
+                                                    <div id="setEditStatus">{{ Str::ucfirst($customer->status) }}</div><i
                                                         class="fas fa-angle-down"></i>
                                                 </button>
-                                                <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                {{-- <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
                                                     <li>
                                                         <a onclick="updateStatus('active')"class="dropdown-item dropdown-item-two"
                                                             href="javascript:;">Active<i class="fas fa-check"></i></a>
@@ -123,7 +123,20 @@
                                                             class="dropdown-item dropdown-item-two"
                                                             href="javascript:;">Inactive</a>
                                                     </li>
+                                                </ul> --}}
+
+
+
+                                                <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                    <li>
+                                                        <a class="dropdown-item dropdown-item-two status-update" data-status="active" href="#">Active<i class="fas fa-check"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item dropdown-item-two status-update" data-status="inactive" href="#">Inactive</a>
+                                                    </li>
                                                 </ul>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -213,14 +226,15 @@
 </div>
 
 
-<script>
-    $( document ).ready(function() {
-        // Set status in input hidden field
-        function updateStatus(newStatus) {
 
-            document.getElementById('status').value = newStatus;
-            capitalizeStatus = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
-            document.getElementById('setStatus').innerHTML = capitalizeStatus;
-        }
+
+<script>
+    $(document).on('click', '.status-update', function(event) {
+        event.preventDefault();
+        var newStatus = $(this).data('status');
+        $("#statusEdit").val(newStatus);
+        var capitalizeStatus = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+        $("#setEditStatus").html(capitalizeStatus);
     });
 </script>
+
