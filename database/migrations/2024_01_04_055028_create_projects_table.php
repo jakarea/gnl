@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('note')->nullable();
             $table->string('priority');
             $table->longText('description')->nullable();
+            $table->string('status')->default('in_progress');
             $table->timestamps();
         });
     }
