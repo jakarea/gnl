@@ -79,6 +79,12 @@
 
 }
 
+#avatarPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .project-single-box .thumbnail img {
   display: block;
   width: 100%;
@@ -196,6 +202,7 @@
   align-items: center;
 }
 
+.project-details-root-wrap .project-details-txt .header .actions button,
 .project-details-root-wrap .project-details-txt .header .actions a {
   border-radius: var(--8, 0.5rem);
   border: 1px solid var(--grey-100-primary-outline-color, #F0F1F3);
@@ -840,4 +847,48 @@
 .search-suggestions-box .select-customer .media:hover {
   background-color: #F9F9FC !important;
   border-radius: 10px;
+}
+
+.dropdown-toggle::before {
+  display: none !important;
+}
+
+.dropdown-menu-start {
+  padding: var(--8, 8px);
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 6px;
+  border: none;
+  background: var(--white-100, #FFF);
+  box-shadow: -20px 20px 40px -4px rgba(145, 158, 171, 0.15), 0px 0px 2px 0px rgba(145, 158, 171, 0.15);
+  transform: translate(-42px, -15px) !important;
+}
+
+.dropdown-menu-start li {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.dropdown-menu-start li a {
+  overflow: hidden;
+  color: var(--Neutral-600, #687588);
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%;
+  transition: 0.4s ease-in-out;
+  padding: 4px 8px;
+}
+
+.dropdown-menu-start li :hover {
+  background-color: #F9F9FC;
+  border-radius: 6px;
+}
+
+.dropdown-menu-start li :active {
+  background-color: transparent;
 }

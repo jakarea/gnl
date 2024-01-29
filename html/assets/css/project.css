@@ -787,7 +787,6 @@
 
 .custom-modal .modal-xl {
   max-width: 76% !important;
-  <<<<<<<< HEAD: html-raw/assets/css/project.css
 }
 
 .project-add-scrollbar {
@@ -795,5 +794,4 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 0.75rem;
-  ========>>>>>>>>d4b4d02 (latest page updated): html/assets/css/project.css
 }

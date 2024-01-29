@@ -93,7 +93,23 @@
                         <span><i class="fas fa-circle"></i> Completed</span>
                         @endif
 
-                        <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                        <div class="btn-group dropstart">
+                            <a href="#" type="button" class="ellipse dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-start">
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ url('project/'.$project->project_id.'/edit') }}">Edit Project</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ url('project/'.$project->project_id.'/destroy') }}">Delete Project</a>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                     <div class="title">
                         <h3><a href="{{ url('projects/'.$project->project_id) }}">{{ $project->title }}</a></h3>
@@ -147,12 +163,8 @@
             <!--project single box end-->
             @endforeach
         </div>
-
-
     </div>
 </section>
-
-
 
 
 <!-- project add modal start -->

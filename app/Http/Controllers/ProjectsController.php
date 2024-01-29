@@ -93,8 +93,9 @@ class ProjectsController extends Controller
     public function destroy($project_id)
     {
         $projectInfo = Project::findOrFail($project_id);
+
         if ($projectInfo->delete()) {
-            return redirect()->back()->with('success', 'Project deleted successfully');
+            return redirect('/projects')->with('success', 'Project deleted successfully');
         }
     }
 }

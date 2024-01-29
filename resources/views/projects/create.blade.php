@@ -28,13 +28,14 @@
                                                         <hr>
                                                         <input type="file" name="thumbnail" id="thumbnail"
                                                             class="d-none">
-                                                        <!-- upload avatar -->
+                                                        <!-- upload thumbnail -->
                                                         <div class="project-thumbnail-upload">
                                                             <h3>Project Thumbnail</h4>
                                                                 <div class="d-flex">
                                                                     <div class="thumbnail-preview"
                                                                         id="thumbnail-container">
-
+                                                                        <img src="{{ url('uploads/projects/project-01.png') }}"
+                                                                            alt="Upload" class="img-fluid">
                                                                     </div>
                                                                     <label for="thumbnail"
                                                                         class="thumbnail-upload-icon">
@@ -44,7 +45,7 @@
                                                                     </label>
                                                                 </div>
                                                         </div>
-                                                        <!-- upload avatar -->
+                                                        <!-- upload thumbnail -->
                                                     </div>
                                                 </div>
 
@@ -278,10 +279,12 @@
                                                                                     id="avatar" class="d-none">
                                                                                 <!-- upload avatar -->
                                                                                 <div class="d-flex">
-                                                                                    <label for="avatar" class="avatar">
+                                                                                    <label for="avatar" class="avatar"
+                                                                                        id="avatarLabel">
                                                                                         <img src="{{ url('/uploads/users/avatar-9.png') }}"
                                                                                             alt="avatar"
-                                                                                            class="img-fluid">
+                                                                                            class="img-fluid"
+                                                                                            id="avatarPreview">
                                                                                         <span class="avatar-ol">
                                                                                             <img src="{{ url('/assets/images/icons/camera.svg') }}"
                                                                                                 alt="camera"
@@ -297,6 +300,8 @@
                                                                                 </div>
                                                                                 <!-- upload avatar -->
                                                                             </div>
+
+
                                                                         </div>
                                                                         {{-- add manual and seletd customer --}}
                                                                         <input type="hidden" name="manualyCustomer"
@@ -528,7 +533,8 @@
                                 <!--modal button start-->
                                 <div class="col-xl-6">
                                     <div class="form-bttn">
-                                        <button type="button" class="btn btn-cancel">Cancel</button>
+                                        <button type="button" class="btn btn-cancel"
+                                            data-bs-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
@@ -583,22 +589,22 @@
 {{-- thumbnail upload preview js --}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var avatarContainer = document.getElementById('thumbnail-container');
+        var thumbnailContainer = document.getElementById('thumbnail-container');
         
         document.getElementById('thumbnail').addEventListener('change', function (e) {
             var input = e.target;
             var file = input.files[0];
   
-            var avatarPreview = document.getElementById('thumbnail-preview');
+            var thumbnailPreview = document.getElementById('thumbnail-preview');
             var closeIcon = document.getElementById('close-icon');
   
             if (file) { 
-                if (!avatarPreview) {
-                    avatarPreview = document.createElement('img');
-                    avatarPreview.id = 'thumbnail-preview';
-                    avatarPreview.className = 'img-fluid proThumb';
-                    avatarContainer.innerHTML = '';
-                    avatarContainer.appendChild(avatarPreview);
+                if (!thumbnailPreview) {
+                    thumbnailPreview = document.createElement('img');
+                    thumbnailPreview.id = 'thumbnail-preview';
+                    thumbnailPreview.className = 'img-fluid proThumb';
+                    thumbnailContainer.innerHTML = '';
+                    thumbnailContainer.appendChild(thumbnailPreview);
                 }
   
                 if (!closeIcon) {
@@ -607,21 +613,21 @@
                     closeIcon.className = 'fas fa-close close-icon';
                     closeIcon.style.cursor = 'pointer';
                     closeIcon.addEventListener('click', function () { 
-                        avatarPreview.src = '';
-                        avatarContainer.removeChild(closeIcon);
+                        thumbnailPreview.src = '';
+                        thumbnailContainer.removeChild(closeIcon);
                         document.getElementById('thumbnail').value = ''; 
                     });
-                    avatarContainer.appendChild(closeIcon);
+                    thumbnailContainer.appendChild(closeIcon);
                 }
   
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    avatarPreview.src = e.target.result;
+                    thumbnailPreview.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             } else { 
                 if (closeIcon) {
-                    avatarContainer.removeChild(closeIcon);
+                    thumbnailContainer.removeChild(closeIcon);
                 }
             }
         });
@@ -761,4 +767,34 @@
             });
         });
     });
+</script>
+
+<script>
+    // Get references to elements
+const avatarInput = document.getElementById('avatar');
+const avatarPreview = document.getElementById('avatarPreview');
+const avatarLabel = document.getElementById('avatarLabel');
+
+// Add event listener to file input
+avatarInput.addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Get the first file selected by the user
+
+    // Check if a file is selected
+    if (file) {
+        // Read the file as a data URL
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Update the preview image source with the data URL
+            avatarPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Optional: Add event listener to reset the file input
+avatarLabel.addEventListener('click', function() {
+    avatarInput.value = ''; // Clear the file input
+    avatarPreview.src = '{{ url('/uploads/users/avatar-9.png') }}'; // Reset the preview image to default
+});
+
 </script>
