@@ -17,9 +17,25 @@ class ProjectsController extends Controller
 {
     public function index()
     {
-        $projects = Project::orderByDesc('project_id')->get();
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
 
-        return view("projects/index", compact("projects"));
+        $projects = Project::orderByDesc('project_id');
+
+        $selectedStatus = '';
+        if (!empty($status)) {
+            $selectedStatus = $status;
+            if ($status == 'in_progress') {
+                $projects->where('status', 'in_progress');
+            } elseif ($status == 'completed') {
+                $projects->where('status', 'completed');
+            } else {
+                $projects->whereIn('status', ['in_progress', 'completed']);
+            }
+        }
+
+        $projects = $projects->paginate(16);
+
+        return view("projects/index", compact("projects", 'selectedStatus'));
     }
 
     /**
@@ -34,19 +50,28 @@ class ProjectsController extends Controller
         return view("projects/single", compact("project"));
     }
 
-    public function store(CustomerService $addCustomer, ProjectRequest $request)
+    public function store(Request $request)
     {
-        if ($request->customer_id) {
-            $customerIds = explode(",", $request->customer_id);
-        } else if ($request->manualyCustomer == true || $request->manualyCustomer == "true") {
-            $customer = $addCustomer->addCustomer($request);
-            $customerIds = $customer->customer_id;
-        }
+        // return $request->all();
 
-        $data = $request->except(['thumbnail']);
+        $validatedData = $request->validate([
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title' => 'required|string|max:255',
+            'amount' => 'required|numeric',
+            'tax' => 'nullable|numeric',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'note' => 'nullable|string',
+            'priority' => 'required|in:basic,important,priority',
+            'description' => 'nullable|string'
+            // 'status' => 'required|in:in_progress,completed',
+        ]);
 
-        $project = Project::create($data);
+        $project = Project::create($validatedData);
 
+
+
+        // Process thumbnail upload if present
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $filename = substr(md5(time()), 0, 10) . '.' . $thumbnail->getClientOriginalExtension();
@@ -54,9 +79,18 @@ class ProjectsController extends Controller
             $project->update(['thumbnail' => $thumbnailPath]);
         }
 
-        $project->customers()->sync($customerIds);
+        // Sync customers with the project
+        $project->customers()->sync($validatedData['customer_id']);
 
         return redirect()->back()->with('success', 'Project created successfully');
+    }
+
+    public function search(Request $request, $searchTerm)
+    {
+        $searchTerms = $searchTerm;
+        $customers = Customer::where('name', 'like', '%' . $searchTerms . '%')->get();
+
+        return response()->json(['message' => $customers]);
     }
 
     public function destroy($project_id)

@@ -1,6 +1,6 @@
 <div class="custom-modal">
-    <div class="modal fade show d-block" id="staticBackdropProject" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdropProject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header modal-header-two">
@@ -10,7 +10,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('projects.store') }}" class="common-form another-form">
+                    <form action="{{ route('projects.store') }}" class="common-form another-form" method="POST">
+                        @csrf
                         <div class="add-customer-form">
                             <div class="row">
                                 <div class="col-xl-12">
@@ -48,49 +49,90 @@
 
                                                 <div class="col-xl-12">
                                                     <div class="form-group form-error">
-                                                        <label for="name">Project Name</label>
-                                                        <input type="text" placeholder="Enter Name" id="title"
-                                                            name="name" class="form-control">
+                                                        <label for="title">Project Name</label>
+                                                        <input type="text" placeholder="Enter Title" id="title"
+                                                            name="title" value="{{ old('title') }}"
+                                                            class="form-control @error('title') is-invalid @enderror">
+
+                                                        @error('title')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group form-error">
+                                                        <label for="amount">Amount</label>
+                                                        <input type="number" placeholder="€0000" id="amount"
+                                                            name="amount"
+                                                            class="form-control @error('amount') is-invalid @enderror">
+
+                                                        @error('amount')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
-                                                        <label for="email">Amount</label>
-                                                        <input type="amount" placeholder="$0000" id="amount"
-                                                            name="amount" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-6">
-                                                    <div class="form-group form-error">
-                                                        <label for="phone">Tax</label>
-                                                        <input type="tax" placeholder="$0000" id="tax" name="tax"
-                                                            class="form-control">
+                                                        <label for="tax">Tax</label>
+                                                        <input type="number" placeholder="€0000" id="tax" name="tax"
+                                                            class="form-control @error('tax') is-invalid @enderror">
+
+                                                        @error('tax')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
                                                         <label for="start_date">Start Date</label>
-                                                        <input type="date" placeholder="dd-mm-yyyy" id="start_date"
-                                                            name="start_date" class="form-control">
+                                                        <input type="date" id="start_date" name="start_date"
+                                                            class="form-control @error('start_date') is-invalid @enderror">
+
+                                                        @error('start_date')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
                                                         <label for="end_date">End Date</label>
-                                                        <input type="date" placeholder="dd-mm-yyyy" id="end_date"
-                                                            name="end_date" class="form-control">
+                                                        <input type="date" id="end_date" name="end_date"
+                                                            class="form-control @error('end_date') is-invalid @enderror">
+
+                                                        @error('end_date')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
                                                         <label for="note">Note</label>
-                                                        <input type="note" placeholder="Write note" id="note"
-                                                            name="note" class="form-control">
+                                                        <input type="text" placeholder="Write note" id="note"
+                                                            name="note"
+                                                            class="form-control @error('note') is-invalid @enderror">
+
+                                                        @error('note')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
-                                                        <label for="website">Priority</label>
+                                                        <label for="priority">Priority</label>
+                                                        <input type="hidden" value="" id="priority" name="priority">
                                                         <div class="common-dropdown common-dropdown-two">
                                                             <div class="dropdown dropdown-two">
                                                                 <button class="btn" type="button"
@@ -98,14 +140,17 @@
                                                                     Select Priority<i class="fas fa-angle-down"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu dropdown-menu-two">
-                                                                    <li><a class="text-primary dropdown-item dropdown-item-two"
-                                                                            href="#">Basic<i
-                                                                                class="fas fa-check"></i></a></li>
-                                                                    <li><a class="text-warning dropdown-item dropdown-item-two"
-                                                                            href="#">Important</a>
+                                                                    <li>
+                                                                        <a class="text-primary dropdown-item dropdown-item-two filterItem"
+                                                                            href="#" data-value="basic">Basic<i
+                                                                                class="fas fa-check"></i></a>
                                                                     </li>
-                                                                    <li><a class="text-danger dropdown-item dropdown-item-two"
-                                                                            href="#">Priority</a>
+                                                                    <li><a class="text-warning dropdown-item dropdown-item-two filterItem"
+                                                                            href="#"
+                                                                            data-value="important">Important</a>
+                                                                    </li>
+                                                                    <li><a class="text-danger dropdown-item dropdown-item-two filterItem"
+                                                                            href="#" data-value="priority">Priority</a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -116,7 +161,14 @@
                                                     <div class="form-group form-error">
                                                         <label for="description">Description</label>
                                                         <textarea name="description" id="description" rows="7"
-                                                            class="form-control" placeholder="Enter details"></textarea>
+                                                            class="form-control @error('description') is-invalid @enderror"
+                                                            placeholder="Enter details"></textarea>
+
+                                                        @error('description')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -136,8 +188,11 @@
                                                     <div class="search-item">
                                                         <img src="{{ url('assets/images/icons/search-ic.svg') }}"
                                                             alt="a" class="img-fluid">
-                                                        <input type="text" placeholder="Search by name" name="search"
+
+                                                        <input type="text" placeholder="Search by name" id="search"
                                                             class="form-control">
+                                                        <ul id="suggestions"></ul>
+
                                                     </div>
                                                     <div class="avatar-btn">
                                                         <a data-bs-toggle="collapse" href="#collapseTwo" role="button"
@@ -231,7 +286,8 @@
                                                                                 <label for="name">Name</label>
                                                                                 <input type="text"
                                                                                     placeholder="Enter Name" id="name"
-                                                                                    name="name" class="form-control">
+                                                                                    name="name"
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
 
@@ -243,7 +299,7 @@
                                                                                 <input type="text"
                                                                                     placeholder="Enter Designation"
                                                                                     id="designation" name="designation"
-                                                                                    class="form-control">
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-xl-6">
@@ -252,7 +308,7 @@
                                                                                 <input type="email"
                                                                                     placeholder="Enter email address"
                                                                                     id="email" name="email"
-                                                                                    class="form-control">
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-xl-6">
@@ -261,7 +317,7 @@
                                                                                 <input type="number"
                                                                                     placeholder="Enter phone number"
                                                                                     id="phone" name="phone"
-                                                                                    class="form-control">
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-xl-6">
@@ -270,7 +326,7 @@
                                                                                 <input type="text"
                                                                                     placeholder="Enter location"
                                                                                     id="location" name="location"
-                                                                                    class="form-control">
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-xl-6">
@@ -308,7 +364,7 @@
                                                                                 <input type="text"
                                                                                     placeholder="Enter kvk number"
                                                                                     id="kvk" name="kvk"
-                                                                                    class="form-control">
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-xl-6">
@@ -317,7 +373,7 @@
                                                                                 <input type="text"
                                                                                     placeholder="Enter service"
                                                                                     id="service" name="service"
-                                                                                    class="form-control">
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-xl-6">
@@ -326,7 +382,7 @@
                                                                                 <input type="text"
                                                                                     placeholder="Enter company name"
                                                                                     id="company" name="company"
-                                                                                    class="form-control">
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-xl-6">
@@ -335,14 +391,15 @@
                                                                                 <input type="text"
                                                                                     placeholder="Enter website"
                                                                                     id="website" name="website"
-                                                                                    class="form-control">
+                                                                                    class="form-control @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12">
                                                                             <div class="form-group form-error">
                                                                                 <label for="details">Details</label>
                                                                                 <textarea name="details" id="details"
-                                                                                    rows="7" class="form-control"
+                                                                                    rows="7"
+                                                                                    class="form-control @error('name') is-invalid @enderror"
                                                                                     placeholder="Enter details"></textarea>
                                                                             </div>
                                                                         </div>
@@ -377,3 +434,74 @@
         </div>
     </div>
 </div>
+
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let priorityInput = document.getElementById("priority");
+        let dropdownItemsFilter = document.querySelectorAll(".filterItem"); 
+
+        dropdownItemsFilter.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                priorityInput.value = this.getAttribute("data-value"); 
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {  
+        let searchInput = document.getElementById("search");
+
+        searchInput.addEventListener('input', function() {
+            var search = searchInput.value.trim();
+            fetchSearchResults(search);
+        });
+
+        function fetchSearchResults(searchTerm) {
+            let currentURL = window.location.href;
+            const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+
+            fetch(`${baseUrl}/projects/search-customers/${searchTerm}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                displaySearchResults(data.message);
+            })
+            .catch(error => {
+                selectedProfileBox.innerHTML = '';
+                console.error('Error fetching search results:', error);
+            });
+        }
+
+        function displaySearchResults(customers) {
+            var selectedProfileBox = document.querySelector('.selected-profile-box');
+            selectedProfileBox.innerHTML = '';
+
+            customers.forEach(function(customer) {
+                var profileMarkup = `
+                    <div class="media">
+                        <img src="${customer.avatar ? customer.avatar : '{{ url('uploads/users/avatar-19.png')}}'}" class="img-fluid avatar" alt="avatar">
+                        <div class="media-body">
+                            <h3>${customer.name}</h3>
+                            <p>${customer.designation}</p>
+                        </div>
+                        <a href="#">
+                            <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
+                        </a>
+                    </div>
+                `;
+                selectedProfileBox.insertAdjacentHTML('beforeend', profileMarkup);
+            });
+        }
+
+    });
+</script>
+
+@endsection

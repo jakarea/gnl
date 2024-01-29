@@ -65,11 +65,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/details/modal', [CustomerControlller::class, 'showCustomerWithModal'])->name('details.modal');
     });
 
-    Route::prefix('projects')->controller(ProjectsController::class)->group(function () {
-        Route::get('/', 'index')->name('projects.index');
-        Route::get('/{id}', 'show')->name('projects.single');
-        Route::post('/store', 'store')->name('projects.store');
-        Route::post('/destroy', 'destroy')->name('projects.destroy');
+    Route::prefix('projects')->name('projects.')->group(function () {
+        Route::get('/', [ProjectsController::class, 'index'])->name('index');
+        Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
+        Route::post('/store', [ProjectsController::class, 'store'])->name('store');
+        Route::get('/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
+        Route::get('/search-customers/{name}', [ProjectsController::class, 'search'])->name('search.customers');
     });
 
     // logout route
