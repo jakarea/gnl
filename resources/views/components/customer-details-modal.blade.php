@@ -3,7 +3,8 @@
     <!--customer profile header start-->
     <div class="customer-details-title">
         <h3>Customer Detail</h3>
-        <button type="button" class="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+        <button type="button" class="btn" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRight">
             <i class="fas fa-close"></i>
         </button>
     </div>
@@ -24,7 +25,9 @@
             <div class="profile-edit-box profile-edit-details-box">
                 <img class="img-fluid pen-tools" src="./assets/images/icons/edit-1.svg" alt="pen-images"
                     onclick="editCustomerModal('{{ $customer->customer_id }}')" />
-                <img class="img-fluid trash-tools" src="./assets/images/icons/trash-1.svg" alt="trash-images" onclick="deleteCustomer('{{ route('customers.destroy', $customer->customer_id ) }}')"/>
+
+                <img class="img-fluid trash-tools" src="./assets/images/icons/trash-1.svg" alt="trash-images"
+                    onclick="deleteCustomer()" />
             </div>
         </div>
     </div>
@@ -269,5 +272,6 @@
         </table>
     </div>
 
-
 </div>
+
+

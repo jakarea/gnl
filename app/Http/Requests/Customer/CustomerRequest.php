@@ -35,7 +35,16 @@ class CustomerRequest extends FormRequest
         $fieldRules = [
             'name'        => ['required', 'string'],
             'designation' => ['required'],
+            'service_type_id'=>['required','int','exists:service_types,service_type_id'],
         ];
+
+
+        // $customMessages = [
+        //     'service_type_id.required' => 'Please select a service type.',
+        //     'service_type_id.int' => 'Service type must be an integer.',
+        //     'service_type_id.exists' => 'The selected service type does not exist.',
+        // ];
+
 
         if ($this->isMethod('post')) {
             $rules += $fieldRules;

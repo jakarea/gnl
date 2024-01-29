@@ -9,27 +9,53 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Customer\CustomerRequest;
+use App\Models\LeadType;
+use App\Models\ServiceType;
 
 class CustomerControlller extends ApiController
 {
 
     public function index()
     {
-        // Get count current month
-        $data['customers'] = Customer::orderByDesc('customer_id')->paginate(1);
+        $status = request()->input('status', 'all');
+        $serviceTypeId = request()->input('searchTypeId');
+        $leadTypeId = request()->input('leadTypeId');
+        $query = Customer::query();
 
-        $data['totalCustomer'] = Customer::count();
-        $data['newCustomer'] = Customer::where('created_at', '>=', now()->subDays(7))->count();
-        $data['repeatedCustomer'] = Customer::whereColumn('updated_at', '>', 'created_at')->count();
+        if ($status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        if ($leadTypeId) {
+            $query->where('lead_type_id', $leadTypeId);
+        }
+
+        if ($serviceTypeId) {
+            $query->where('service_type_id', $serviceTypeId);
+        }
+
+        $customers = $query->orderByDesc('customer_id')->paginate(1);
+        $customers->appends(['leadTypeId' => $leadTypeId, 'searchTypeId' => $serviceTypeId, 'status' => $status]);
+
+        $data['customers'] = $customers;
+
+        // Get count current month
+        $data['totalCustomer'] = $query->count();
+        $data['newCustomer'] = $query->where('created_at', '>=', now()->subDays(7))->count();
+        $data['repeatedCustomer'] = $query->whereColumn('updated_at', '>', 'created_at')->count();
 
         // Get counts for the previous month
-        $previousMonthTotalCustomers = Customer::whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
-        $previousMonthNewCustomers = Customer::whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
-        $previousMonthRepeatedCustomers = Customer::whereBetween('updated_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+        $previousMonthTotalCustomers = $query->whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+        $previousMonthNewCustomers = $query->whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+        $previousMonthRepeatedCustomers = $query->whereBetween('updated_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
 
         $data['totalCustomerInc'] = round($this->calculatePercentageIncrease($data['totalCustomer'], $previousMonthTotalCustomers), 2);
         $data['newCustomerInc'] = round($this->calculatePercentageIncrease($data['newCustomer'], $previousMonthNewCustomers), 2);
-        $data['repeatCustomerInc'] =round($this->calculatePercentageIncrease($data['repeatedCustomer'], $previousMonthRepeatedCustomers), 2);
+        $data['repeatCustomerInc'] = round($this->calculatePercentageIncrease($data['repeatedCustomer'], $previousMonthRepeatedCustomers), 2);
+
+        $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
+        $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
+
 
         return view('customer.index',$data);
     }
@@ -76,6 +102,7 @@ class CustomerControlller extends ApiController
 
     public function edit( Request $request ){
         if( $request->ajax() ){
+            $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
             $data['customer'] = Customer::findOrFail( $request->customerId );
             return view('components.customer-edit-modal',$data);
         }
@@ -107,9 +134,8 @@ class CustomerControlller extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($customer_id)
+    public function destroy(Request $request, $customer_id)
     {
-        return $customer_id;
         $customerInfo = Customer::findOrFail( $customer_id);
         if( $customerInfo->delete() ){
             return redirect()->route('customers.index')->withSuccess('Customers deleted successfuly!');

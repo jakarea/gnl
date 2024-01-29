@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id('customer_id')->autoIncrement();
+            $table->foreignId('lead_type_id')->nullable()->constrained('lead_types', 'lead_type_id')->cascadeOnDelete();
+            $table->foreignId('service_type_id')->nullable()->constrained('service_types', 'service_type_id')->cascadeOnDelete();
             $table->string('name');
             $table->string('avatar')->nullable();
             $table->string('designation')->nullable();

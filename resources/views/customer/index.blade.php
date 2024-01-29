@@ -3,7 +3,7 @@
 @section('title', 'Customer List Page')
 
 @section('style')
-<link rel="stylesheet" href="{{ url('assets/css/customer.css') }}" />
+    <link rel="stylesheet" href="{{ url('assets/css/customer.css') }}" />
 @endsection
 
 @section('content')
@@ -87,47 +87,53 @@
                             <!-- filter item -->
                             <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    All Leads <i class="fas fa-angle-down"></i>
+                                    @php
+                                        $leadTypeId = request()->input('leadTypeId');
+                                        $leadType = App\Models\LeadType::find($leadTypeId);
+                                        $leadTypeName = optional($leadType)->name;
+                                    @endphp
+                                    {{ Str::ucfirst($leadTypeName ?? "All Leads") }} <i class="fas fa-angle-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item active" href="#">All Leads <i
                                                 class="fas fa-check"></i></a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Hosting Leads</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Marketing Leads</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Project Leads</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Website Leads</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Lost Leads</a></li>
+                                    @if (count($lead_types) > 0)
+                                        @foreach ($lead_types as $leadType)
+                                            <li class="{{ request()->input('leadTypeId') === $leadType ? 'active' : '' }}">
+                                                <a class="dropdown-item" href="{{ route('customers.index', ['leadTypeId' => $leadType]) }}">{{ $leadType->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    @endif
                                 </ul>
+
+
                             </div>
                             <!-- filter item -->
 
                             <!-- filter item -->
                             <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    All Service <i class="fas fa-angle-down"></i>
+                                    @php
+                                        $searchTypeId = request()->input('searchTypeId');
+                                        $serviceType = App\Models\ServiceType::find($searchTypeId);
+                                        $serviceName = optional($serviceType)->name;
+                                    @endphp
+                                    {{ Str::ucfirst($serviceName ?? "All Service") }} <i class="fas fa-angle-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item active" href="#">All Service <i
                                                 class="fas fa-check"></i></a>
                                     </li>
-                                    <li><a class="dropdown-item" href="#">App Design</a></li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Dashboard Design</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Landing Page Design</a>
-                                    </li>
+                                    @if (count($services_types) > 0)
+                                        @foreach ($services_types as $serviceType)
+                                            <li class="{{ request()->input('searchTypeId') === $serviceType ? 'active' : '' }}">
+                                                <a class="dropdown-item" href="{{ route('customers.index', ['searchTypeId' => $serviceType]) }}">{{ $serviceType->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    @endif
                                 </ul>
                             </div>
                             <!-- filter item -->
@@ -135,18 +141,22 @@
                             <!-- filter item -->
                             <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    All Customer <i class="fas fa-angle-down"></i>
+                                    {{ Str::ucfirst(request()->input('status')) ?? "All" }} Customer <i class="fas fa-angle-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item active" href="#">All Customer <i
-                                                class="fas fa-check"></i></a>
+                                        <a class="dropdown-item {{ request()->input('status') === 'all' ? 'active' : '' }}"
+                                            href="{{ route('customers.index', ['status' => 'all']) }}">All Customer</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Active Customer</a>
+                                        <a class="dropdown-item {{ request()->input('status') === 'active' ? 'active' : '' }}"
+                                            href="{{ route('customers.index', ['status' => 'active']) }}">Active
+                                            Customer</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Inactive Customer</a>
+                                        <a class="dropdown-item {{ request()->input('status') === 'inactive' ? 'active' : '' }}"
+                                            href="{{ route('customers.index', ['status' => 'inactive']) }}">Inactive
+                                            Customer</a>
                                     </li>
                                 </ul>
                             </div>
@@ -158,10 +168,12 @@
             <!-- customer header filter end -->
 
             <!-- list start -->
-            <div class="row">
+            <div class="row" id="customerWraper">
                 @foreach ($customers as $customer)
                     <!-- customer start -->
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mt-15">
+                        <div data-delete-url="{{ route('customers.destroy', $customer->customer_id) }}"
+                            data-customer-id="{{ $customer->customer_id }}"></div>
                         <div class="customer-person-box-wrap">
                             <div class="avatar">
                                 @if ($customer->avatar)
@@ -199,10 +211,13 @@
                                             class="fa-solid fa-ellipsis-vertical"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-start">
                                         <li>
-                                            <a class="dropdown-item" href="#">Edit Customer</a>
+                                            <a class="dropdown-item" href="javascript:;"
+                                                onclick="editCustomerModal('{{ $customer->customer_id }}')">Edit
+                                                Customer</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Delete Customer</a>
+                                            <a class="dropdown-item" href="javascript:;"
+                                                onclick="deleteCustomer()">Delete Customer</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -246,8 +261,9 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="post" action="{{ route('customers.store') }}" class="common-form"
-                                enctype="multipart/form-data">
+                            <form method="post" action="{{ route('customers.store') }}" class="common-form" enctype="multipart/form-data">
+                                <input placeholder="Select Lead Type" type="text" name="lead_type_id" value="2">
+                                <input type="hidden" name="status" id="status" value="active">
                                 @csrf
                                 <div class="add-customer-form">
                                     <div class="row">
@@ -278,7 +294,7 @@
                                             <div class="form-group form-error">
                                                 <label for="name">Name</label>
                                                 <input type="text" placeholder="Enter Name" id="name"
-                                                    name="name" class="form-control" />
+                                                    name="name" class="form-control" value="{{ old('name') }}" />
                                                 @error('name')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -288,7 +304,8 @@
                                             <div class="form-group form-error">
                                                 <label for="designation">Designation</label>
                                                 <input type="text" placeholder="Enter Designation" id="designation"
-                                                    name="designation" class="form-control" />
+                                                    name="designation" class="form-control"
+                                                    value="{{ old('designation') }}" />
 
                                                 @error('designation')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -299,7 +316,7 @@
                                             <div class="form-group form-error">
                                                 <label for="email">E-mail</label>
                                                 <input type="email" placeholder="Enter email address" id="email"
-                                                    name="email" class="form-control" />
+                                                    name="email" class="form-control" value="{{ old('email') }}" />
                                                 @error('email')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -309,7 +326,7 @@
                                             <div class="form-group form-error">
                                                 <label for="phone">Phone</label>
                                                 <input type="number" placeholder="Enter phone number" id="phone"
-                                                    name="phone" class="form-control" />
+                                                    name="phone" class="form-control" value="{{ old('phone') }}" />
 
                                                 @error('phone')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -320,7 +337,8 @@
                                             <div class="form-group form-error">
                                                 <label for="location">Location</label>
                                                 <input type="text" placeholder="Enter location" id="location"
-                                                    name="location" class="form-control" />
+                                                    name="location" class="form-control"
+                                                    value="{{ old('location') }}" />
                                                 @error('location')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -333,16 +351,16 @@
                                                     <div class="dropdown dropdown-two dropdown-three">
                                                         <button class="btn" type="button" data-bs-toggle="dropdown"
                                                             aria-expanded="false">
-                                                            Active<i class="fas fa-angle-down"></i>
+                                                            <div id="setStatus">Active</div><i class="fas fa-angle-down"></i>
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
                                                             <li>
-                                                                <a class="dropdown-item dropdown-item-two"
-                                                                    href="#">Active<i class="fas fa-check"></i></a>
+                                                                <a onclick="updateStatus('active')"class="dropdown-item dropdown-item-two"
+                                                                    href="javascript:;">Active<i class="fas fa-check"></i></a>
                                                             </li>
                                                             <li>
-                                                                <a class="dropdown-item dropdown-item-two"
-                                                                    href="#">Inactive</a>
+                                                                <a onclick="updateStatus('inactive')" class="dropdown-item dropdown-item-two"
+                                                                    href="javascript:;">Inactive</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -353,7 +371,7 @@
                                             <div class="form-group form-error">
                                                 <label for="company">KVK</label>
                                                 <input type="text" placeholder="Enter kvk number" id="kvk"
-                                                    name="kvk" class="form-control" />
+                                                    name="kvk" class="form-control" value="{{ old('kvk') }}" />
                                                 @error('kvk')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -362,9 +380,20 @@
                                         <div class="col-xl-6">
                                             <div class="form-group form-error">
                                                 <label for="service">Service</label>
-                                                <input type="text" placeholder="Enter service" id="service"
-                                                    name="service" class="form-control" />
-                                                @error('service')
+                                                {{-- <input type="text" placeholder="Enter service" id="service"ˇ
+                                                    name="service" class="form-control" /> --}}
+                                                <select class="form-control" name="service_type_id" id="">
+                                                    <option value="">-- Select Service --</option>
+                                                    @if (count($services_types) > 0)
+                                                        @foreach ($services_types as $serviceType)
+                                                            <option value="{{ $serviceType->service_type_id }}"
+                                                                {{ old('service_type_id') == $serviceType->service_type_id ? 'selected' : '' }}>
+                                                                {{ $serviceType->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                @error('service_type_id')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -373,7 +402,7 @@
                                             <div class="form-group form-error">
                                                 <label for="company">Company</label>
                                                 <input type="text" placeholder="Enter company name" id="company"
-                                                    name="company" class="form-control" />
+                                                    name="company" class="form-control" value="{{ old('company') }}" />
                                                 @error('company')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -383,7 +412,7 @@
                                             <div class="form-group form-error">
                                                 <label for="website">Website</label>
                                                 <input type="text" placeholder="Enter website" id="website"
-                                                    name="website" class="form-control" />
+                                                    name="website" class="form-control" value="{{ old('website') }}" />
                                                 @error('website')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -392,7 +421,7 @@
                                         <div class="col-12">
                                             <div class="form-group form-error">
                                                 <label for="details">Details</label>
-                                                <textarea name="details" id="details" rows="7" class="form-control" placeholder="Enter details"></textarea>
+                                                <textarea name="details" id="details" rows="7" class="form-control" placeholder="Enter details">{{ old('details') }}</textarea>
                                                 @error('details')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -429,7 +458,8 @@
         <div class="add-company-modal-from">
             <div class="offcanvas offcanvas-end customerDetailsModal" tabindex="-1" id="offcanvasRight"
                 aria-labelledby="offcanvasRightLabel">
-                <div class="offcanvas-body offcanvas-body-details customerDetailsModalData">
+                <div class="offcanvas-body offcanvas-body-details">
+                    <div class="customerDetailsModalData"></div>
                 </div>
             </div>
         </div>
@@ -438,6 +468,7 @@
 
 
     </section>
+
 
 @section('script')
 
@@ -465,7 +496,7 @@
             });
         });
 
-        function editCustomerModal(customerId) {
+        const editCustomerModal = (customerId) => {
             $.ajax({
                 url: '{{ route('customers.edit') }}',
                 type: 'post',
@@ -487,26 +518,49 @@
             });
         }
 
-        function deleteCustomer(customerUrl) {
+        const deleteCustomer = () => {
+            const customerUrl = $('div[data-customer-id]').data('delete-url');
+            const customerId = $('div[data-customer-id]').data('customer-id');
+
+            const isConfirmed = confirm("Are you sure you want to delete this customer?");
+
+            if (!isConfirmed) {
+                return;
+            }
+
             $.ajax({
                 url: customerUrl,
                 type: 'post',
                 data: {
-                    _mehode: "delete"
+                    _method: "delete",
+                    customer_id: customerId
                 },
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                 },
 
                 success: function(data) {
-                    $(".showEditCustomerModal").html(data);
-                    $('.customerDetailsModal').offcanvas('hide');
-                    $("#customerEdit").modal('show');
+                    $("#customerWraper").load(location.href + " #customerWraper>*", "");
+                    window.location.href = '{{ route('customers.index') }}';
                 },
                 error: function(error) {
                     console.error('AJAX request error:', status, error);
                 }
             });
+        }
+
+
+        // Set status in input hidden field
+        function updateStatus(newStatus) {
+            document.getElementById('status').value = newStatus;
+            capitalizeStatus = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+            document.getElementById('setStatus').innerHTML = capitalizeStatus;
+        }
+
+
+        const closeCustomerDetailsModalOff = (e) => {
+            e.preventDefault();
+            $('.customerDetailsModal').offcanvas('hide');
         }
     </script>
 @endsection
