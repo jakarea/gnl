@@ -12,7 +12,7 @@ class Customer extends Model
     protected $primaryKey = 'customer_id';
 
     protected $fillable = ['lead_type_id','service_type_id',
-        'name','avatar','designation','email','phone','location','status','kvk','service','company','website','details'
+        'name','avatar','designation','email','phone','location','status','kvk','company','website','details'
     ];
 
     public function projects(){

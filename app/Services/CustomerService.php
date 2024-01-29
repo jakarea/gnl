@@ -18,7 +18,7 @@ class CustomerService
             $avatar = $request->file('avatar');
             $filename = substr(md5(time()), 0, 10) . '.' . $avatar->getClientOriginalExtension();
             $avatarPath = $avatar->storeAs('customers', $filename, 'public');
-            $customer->update(['avatar' => $avatarPath]);
+            $customer->update(['avatar' => 'storage/' . $avatarPath]);
         }
 
         return $customer;

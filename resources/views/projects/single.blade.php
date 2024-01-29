@@ -27,11 +27,11 @@
             <span><i class="fas fa-circle"></i> Completed</span>
             @endif
             <div class="actions">
-              <a href="{{ url('project/'.$project->project_id.'/edit') }}"><img
+              <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#staticBackdropProject"><img
                   src="{{ url('assets/images/icons/pen.svg') }}" alt="a" class="img-fluid" /></a>
-              <form action="{{ url('project/'.$project->project_id.'/destroy') }}" class="d-inline" method="POST">
+              <form action="{{ url('projects/'.$project->project_id.'/destroy') }}" class="d-inline" method="POST">
                 @csrf
-                <button type="submit" class="btn"><img src="{{ url('/assets/images/icons/bin.svg') }}" alt="a"
+                <button type="submit" class="btn"><img src="{{ url('assets/images/icons/bin.svg') }}" alt="a"
                     class="img-fluid" /></button>
               </form>
             </div>
@@ -44,7 +44,7 @@
           </div>
           <div class="thumbnail">
             @if ($project->thumbnail)
-            <img src="{{ asset('storage/'.$project->thumbnail) }}" alt="a" class="img-fluid">
+            <img src="{{ asset($project->thumbnail) }}" alt="a" class="img-fluid">
             @else
             <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a" class="img-fluid">
             @endif
@@ -74,7 +74,7 @@
             @foreach ($project->customers->slice(0,1) as $customer)
             <div class="media">
               @if ($customer->avatar)
-              <img src="{{ asset('storage/'.$customer->avatar) }}" alt="a" class="img-fluid avatar">
+              <img src="{{ asset($customer->avatar) }}" alt="a" class="img-fluid avatar">
               @else
               <img src="{{ asset('uploads/users/avatar-18.png') }}" alt="a" class="img-fluid avatar">
               @endif
@@ -255,5 +255,8 @@
   </div>
 </section>
 
+<!-- project edit modal start -->
+@include('projects/edit');
+<!-- project edit modal end -->
+
 @endsection
-{{-- add custmer form end --}}

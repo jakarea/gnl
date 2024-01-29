@@ -12,7 +12,7 @@ class Project extends Model
     protected $primaryKey = 'project_id';
 
     protected $fillable = [
-        'title', 'thumbnail', 'amount', 'tax', 'start_date', 'end_date', 'priority', 'description', 'status'
+        'title', 'thumbnail', 'amount', 'tax', 'start_date', 'note', 'end_date', 'priority', 'description', 'status'
     ];
 
     public function customers()

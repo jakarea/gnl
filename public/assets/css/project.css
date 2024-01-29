@@ -49,11 +49,13 @@
   color: var(--Warning-Dark, #F89B2E);
 }
 
+.project-single-box .project-status button,
 .project-single-box .project-status a {
   display: block;
   padding-left: 1rem;
 }
 
+.project-single-box .project-status button i,
 .project-single-box .project-status a i {
   font-size: 1rem;
 }
@@ -811,6 +813,12 @@
   position: relative !important;
 }
 
+#thumbnail-container img{
+   width: 210px;
+   height: 130px;
+   border-radius: 10px;
+}
+
 .close-icon {
   position: absolute;
   right: 0;
@@ -872,6 +880,7 @@
   background: #fff;
 }
 
+.dropdown-menu-start li button,
 .dropdown-menu-start li a {
   overflow: hidden;
   color: var(--Neutral-600, #687588);

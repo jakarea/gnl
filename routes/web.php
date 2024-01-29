@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [ProjectsController::class, 'index'])->name('index');
         Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
         Route::post('/store', [ProjectsController::class, 'store'])->name('store');
+        Route::post('{id}/update', [ProjectsController::class, 'update'])->name('update');
         Route::post('{id}/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
     });
 
