@@ -21,12 +21,12 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="">Profile Image</label>
+                                        <label for="avatar">Profile Image</label>
                                         <input type="file" name="avatar" id="avatar" class="d-none">
                                         <!-- upload avatar -->
                                         <div class="d-flex">
                                             <label for="avatar" class="avatar" id="avatarLabel2">
-                                                <img src="{{ $customer->avatar ? $customer->avatar : 'uploads/users/avatar-9.png' }}"
+                                                <img src="{{ $customer->avatar ? asset($customer->avatar) : 'uploads/users/avatar-9.png' }}"
                                                     alt="avatar" class="img-fluid" id="avatarPreview2">
                                                 <span class="avatar-ol">
                                                     <img src="{{ url('/assets/images/icons/camera.svg') }}" alt="camera"
@@ -40,6 +40,9 @@
                                             </label>
                                         </div>
                                         <!-- upload avatar -->
+                                        @error('avatar')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
@@ -149,19 +152,19 @@
 
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
-                                        <label for="service">Service</label>
-                                        <input type="hidden" name="service_type_id" id="service_type_id2">
+                                        <label for="service_type_id2">Service</label>
+                                        <input type="hidden" name="service_type_id" id="service_type_id2" value="{{ $customer->service_type_id }}">
                                         <div class="common-dropdown common-dropdown-two common-dropdown-three">
                                             <div class="dropdown dropdown-two dropdown-three">
                                                 <button class="btn" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                    <div id="setType2">Select Below</div><i
-                                                        class="fas fa-angle-down"></i>
+                                                    <div id="setType2">Select Below</div>
+                                                    <i class="fas fa-angle-down"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
                                                     @foreach ($services_types as $serviceType)
                                                     <li>
-                                                        <a class="dropdown-item dropdown-item-two service-type2"
+                                                        <a class="dropdown-item dropdown-item-two select-serv"
                                                             href="javascript:;"
                                                             data-id="{{ $serviceType->service_type_id }}">{{
                                                             $serviceType->name }}
@@ -208,7 +211,7 @@
                                 <div class="col-xl-12">
                                     <div class="form-group form-error">
                                         <label for="lead_type_id">Leads Type</label>
-                                        <input type="hidden" name="lead_type_id" id="lead_type_id2">
+                                        <input type="hidden" name="lead_type_id" id="lead_type_id2" value="{{ $customer->lead_type_id }}">
                                         <div class="common-dropdown common-dropdown-two common-dropdown-three">
                                             <div class="dropdown dropdown-two dropdown-three">
                                                 <button class="btn" type="button" data-bs-toggle="dropdown"
@@ -318,24 +321,23 @@
 
 {{-- select services type js --}}
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+       
         let serviceTypeId2 = document.getElementById("service_type_id2"); 
         let setType2 = document.getElementById("setType2"); 
-        let serviceTypes2 = document.querySelectorAll(".service-type2"); 
+        let selectServ = document.querySelectorAll(".select-serv"); 
 
-        serviceTypes2.forEach(item => {
+        selectServ.forEach(item => {
             item.addEventListener("click", function(e) {
-                e.preventDefault();
+                e.preventDefault(); 
                 setType2.innerHTML = this.innerHTML;
                 serviceTypeId2.value = this.getAttribute("data-id"); 
             });
-        });
-    });
+        }); 
 </script>
 
 {{-- select leads type js --}}
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    // document.addEventListener("DOMContentLoaded", function() {
         let leadTypeId2 = document.getElementById("lead_type_id2"); 
         let setLeadType2 = document.getElementById("setLeadType2"); 
         let leadTypes2 = document.querySelectorAll(".lead-type2"); 
@@ -347,5 +349,5 @@
                 leadTypeId2.value = this.getAttribute("data-id"); 
             });
         });
-    });
+    // });
 </script>

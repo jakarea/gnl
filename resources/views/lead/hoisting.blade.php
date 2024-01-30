@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Website Leads')
+@section('title', 'Hosting Leads')
 
 @section('style')
 <link rel="stylesheet" href="{{ url('assets/css/leads.css') }}" />
@@ -10,7 +10,7 @@
 <section class="main-page-wrapper leads-page-wrapper">
     <!-- page title -->
     <div class="page-title leads-page-title">
-        <h1>Website Leads</h1>
+        <h1>Hosting Leads</h1>
         <!-- bttn -->
         <div class="common-bttn">
             <a href={{ url('all-leads') }} class="add">View All</a>

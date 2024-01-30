@@ -89,16 +89,26 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/project/search', [TaskController::class, 'projectSearch'])->name('projectsearch');
     });
 
+    // all lead actions route
+    Route::get('/all-leads', [LeadController::class, 'allLeads'])->name('lead.all-leads');
+    Route::post('/leads-store', [LeadController::class, 'store'])->name('lead.store');
+    Route::get('/lead-details/{id}', [LeadController::class, 'details'])->name('lead.details');
+    Route::post('/leads-update', [LeadController::class, 'update'])->name('lead.update');
+    Route::post('{id}/destroy', [LeadController::class, 'destroy'])->name('lead.destroy');
+
+    // category leads route
     Route::get('/hosting-leads', [LeadController::class, 'hosting'])->name('lead.hosting-leads');
-    Route::get('/hosting-leads/all', [LeadController::class, 'hostingAll'])->name('lead.hosting-leads-all');
     Route::get('/marketing-leads', [LeadController::class, 'marketing'])->name('lead.marketing-leads');
     Route::get('/project-leads', [LeadController::class, 'project'])->name('lead.project-leads');
     Route::get('/website-leads', [LeadController::class, 'website'])->name('lead.website-leads');
     Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lead.lost-leads');
+
+    
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+ 
 
 // all cache clear route
 Route::get('/clear-cache', function () {

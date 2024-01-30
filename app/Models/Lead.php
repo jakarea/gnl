@@ -13,7 +13,7 @@ class Lead extends Model
 
     protected $fillable = [
         'avatar', 'name', 'lead_type_id', 'phone', 'email', 'linkedin',
-        'instagram', 'socials', 'company', 'website', 'kvk', 'note'
+        'instagram', 'company', 'website', 'kvk', 'state','lead_order','status','note'
     ];
 
     public function leadType()
