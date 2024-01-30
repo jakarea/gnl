@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\Project;
+use App\Models\Customer;
 use App\Models\LeadType;
 use App\Models\ServiceType;
 use Illuminate\Http\Request;
@@ -23,8 +24,6 @@ class TaskController extends ApiController
      */
     public function index()
     {
-
-        $data['tasks'] = Task::orderByDesc('task_id')->get();
 
         $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
         $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
@@ -100,6 +99,19 @@ class TaskController extends ApiController
         return $this->jsonResponse(false, $this->success, $task, $this->emptyArray, JsonResponse::HTTP_OK);
     }
 
+
+    public function edit(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
+            $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
+
+            $data['task'] = Task::findOrFail($request->taskId);
+            return view('components.task-edit-modal', $data);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -107,31 +119,32 @@ class TaskController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TaskRequest $request, $taks_id)
+    public function update(CustomerService $addCustomer, TaskRequest $request, $taks_id)
     {
 
         $task = Task::findOrFail( $taks_id );
 
-        $times = explode('-', $request->schedule);
-
         $data = $request->except(['file_upload', 'schedule']);
-        $data['start_time'] = trim($times[0]);
-        $data['end_time'] = trim($times[1]);
+
+        if($request->customer_id){
+            $customerId = $request->customer_id;
+        }elseif($request->manualyCustomer == true || $request->manualyCustomer == "true"){
+            $customer =  $addCustomer->addCustomer($request);
+            $customerId = $customer->customer_id;
+        }
+
+        $data['customer_id'] = $customerId;
+
+        // $times = explode('-', $request->schedule);
+        // $data['start_time'] = trim($times[0]);
+        // $data['end_time'] = trim($times[1]);
+
+        $data['start_time'] = $request->schedule;
+        $data['end_time'] = '18:50';
         $data['created_by'] = auth()->user()->full_name;
+
+
         $task->update( $data );
-
-        // use it if image is 64 bits
-        // $file    = explode(';', $request->image);
-        // $file    = explode('/', $file[0]);
-        // $file_ex = end($file);
-        // $filename = substr(md5(time()), 0, 10) . '.' . $file_ex;
-
-        // or
-
-        // $strpos      = strpos($request->image, ';');
-        // $substr      = substr($request->image, 0, $strpos);
-        // $file_ext    = explode('/', $substr)[1];
-        // $filename    = substr(md5(time()), 0, 10) . "." . $file_ext;
 
         if ($request->hasFile('file_upload')) {
             if ($task->file) {
@@ -143,8 +156,7 @@ class TaskController extends ApiController
             $task->update(['file' => $avatarPath]);
         }
 
-        $taskInfo = $task;
-        return $this->jsonResponse(false, $this->success, $taskInfo, $this->emptyArray, JsonResponse::HTTP_OK);
+        return redirect('/to-do-list')->withSuccess('Task Update Successfuly!');
     }
 
     /**

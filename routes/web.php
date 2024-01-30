@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('to-do-list')->name('task.')->group(function () {
 
+        Route::post('/edit', [TaskController::class, 'edit']);
         Route::get('/', [TaskController::class, 'index']);
         Route::post('/store', [TaskController::class, 'store']);
         Route::get('/{id}', [TaskController::class, 'show']);

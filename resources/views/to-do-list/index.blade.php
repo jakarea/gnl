@@ -27,14 +27,32 @@
                     </div>
 
                     <!-- task list -->
-                    <div class="task-list-area custom-scroll-bar">
+                    <div class="task-list-area custom-scroll-bar" id="task-list-area">
                         <!-- task item start -->
                         @if (count($tasks) > 0)
                             @foreach ($tasks as $task)
+                            <div data-delete-url="{{ url("/to-do-list/" .$task->task_id. "/delete") }}" data-task-id="{{ $task->task_id }}"></div>
                                 <div class="task-item">
                                     <div class="top">
                                         <span><i class="fas fa-circle"></i> {{ ucfirst($task->priority) }}</span>
-                                        <a href="#"><i class="fas fa-ellipsis-vertical"></i></a>
+                                        {{-- <a href="#"><i class="fas fa-ellipsis-vertical"></i></a> --}}
+
+                                        <div class="btn-group dropstart">
+                                            <a href="#" type="button" class="ellipse dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false" aria-expanded="false"><i
+                                                    class="fa-solid fa-ellipsis-vertical"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-start">
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        onclick="editTaskModal('{{ $task->task_id }}')">Edit
+                                                        Task</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;" onclick="deleteTask()">Delete
+                                                        Task</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                     <h4><img src="assets/images/icons/camera-2.svg" alt="a" class="img-fluid">
                                         {{ $task->title }}</h4>
@@ -125,7 +143,7 @@
                         <form method="post" action="{{ url('/to-do-list/store') }}" class="common-form another-form"
                             enctype="multipart/form-data">
                             <input class="setCustomerId" type="hidden" name="project_id">
-                            <input type="hidden" name="priority" id="priority">
+                            <input type="hidden" name="priority" class="priority">
                             <input type="hidden" name="manualyCustomer" id="manualyCustomer" value="false">
                             <input type="hidden" name="status" id="status" value="active">
                             <input type="hidden" name="service_type_id" id="service_type_id">
@@ -166,7 +184,7 @@
                                                                 <div class="dropdown dropdown-two">
                                                                     <button class="btn" type="button"
                                                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <div id="setPriority">Select Priority</div>
+                                                                        <div class="setPriority">Select Priority</div>
                                                                         <i class="fas fa-angle-down"></i>
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-two">
@@ -595,6 +613,9 @@
     </div>
     <!-- task add modal end -->
 
+
+    <div class="showEditTaskModal"></div>
+
 @endsection
 
 @section('script')
@@ -649,9 +670,9 @@
 
         const updatePriority = (priority) => {
             console.log(priority)
-            document.getElementById('priority').value = priority;
+            $('.priority').val(priority);
             capitalizeStatus = priority.charAt(0).toUpperCase() + priority.slice(1);
-            document.getElementById('setPriority').innerHTML = capitalizeStatus;
+            $('.setPriority').html(capitalizeStatus);
         }
 
         const addManualyCustomer = () => {
@@ -672,6 +693,63 @@
             $("#setLeadLabel").html(leadLabel)
             $("#lead_type_id").val(leadTypeId)
         }
+
+
+        // Show edit task modal
+        const editTaskModal = (taskId) => {
+            $.ajax({
+                url: '/to-do-list/edit',
+                type: 'post',
+                data: {
+                    taskId: taskId
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                success: function(data) {
+                    $(".showEditTaskModal").html(data);
+                    $("#taskEdit").modal('show');
+                },
+                error: function(error) {
+                    console.error('AJAX request error:', status, error);
+                }
+            });
+        }
+
+        const deleteTask = () => {
+            console.log('id')
+            const taskUrl = $('div[data-task-id]').data('delete-url');
+            const taskId = $('div[data-task-id]').data('task-id');
+
+            const isConfirmed = confirm("Are you sure you want to delete this task?");
+
+            if (!isConfirmed) {
+                return;
+            }
+
+            $.ajax({
+                url: taskUrl,
+                type: 'post',
+                data: {
+                    _method: "delete",
+                    customer_id: taskId
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                success: function(data) {
+                    $("#task-list-area").load(location.href + " #task-list-area>*", "");
+                    window.location.href = "{{ url('/to-do-list') }}";
+                },
+                error: function(error) {
+                    console.error('AJAX request error:', status, error);
+                }
+            });
+        }
+
+
     </script>
 
     {{-- customer get by search ajax req --}}
