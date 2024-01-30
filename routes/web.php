@@ -46,6 +46,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('search-customers', [ProjectsController::class, 'search'])->name('search.customers');
+    Route::get('project/search', [TaskController::class, 'projectSearch'])->name('projectsearch');
+    Route::get('get/project', [TaskController::class, 'getProjectById'])->name('getProjectById');
+
+
     Route::prefix('customers')->name('customers.')->group(function () {
         Route::get('/', [CustomerControlller::class, 'index'])->name('index');
         Route::post('/store', [CustomerControlller::class, 'store'])->name('store');
@@ -57,7 +62,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('projects')->name('projects.')->group(function () {
+
         Route::get('/search-customers', [ProjectsController::class, 'search'])->name('search.customers');
+
         Route::get('/', [ProjectsController::class, 'index'])->name('index');
         Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
         Route::post('/store', [ProjectsController::class, 'store'])->name('store');
@@ -67,12 +74,13 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::prefix('to-do-list')->name('task.')->group(function () {
+
+        Route::post('/edit', [TaskController::class, 'edit']);
         Route::get('/', [TaskController::class, 'index']);
         Route::post('/store', [TaskController::class, 'store']);
         Route::get('/{id}', [TaskController::class, 'show']);
         Route::put('/{id}/update', [TaskController::class, 'update']);
         Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
-        Route::get('/project/search', [TaskController::class, 'projectSearch'])->name('projectsearch');
     });
 
     // all lead actions route

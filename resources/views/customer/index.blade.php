@@ -642,15 +642,15 @@
 {{-- select services type js --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let serviceTypeId = document.getElementById("service_type_id"); 
-        let setType = document.getElementById("setType"); 
-        let serviceTypes = document.querySelectorAll(".service-type"); 
+        let serviceTypeId = document.getElementById("service_type_id");
+        let setType = document.getElementById("setType");
+        let serviceTypes = document.querySelectorAll(".service-type");
 
         serviceTypes.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setType.innerHTML = this.innerHTML;
-                serviceTypeId.value = this.getAttribute("data-id"); 
+                serviceTypeId.value = this.getAttribute("data-id");
             });
         });
     });
@@ -659,15 +659,15 @@
 {{-- select leads type js --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let leadTypeId = document.getElementById("lead_type_id"); 
-        let setLeadType = document.getElementById("setLeadType"); 
-        let leadTypes = document.querySelectorAll(".lead-type"); 
+        let leadTypeId = document.getElementById("lead_type_id");
+        let setLeadType = document.getElementById("setLeadType");
+        let leadTypes = document.querySelectorAll(".lead-type");
 
         leadTypes.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setLeadType.innerHTML = this.innerHTML;
-                leadTypeId.value = this.getAttribute("data-id"); 
+                leadTypeId.value = this.getAttribute("data-id");
             });
         });
     });

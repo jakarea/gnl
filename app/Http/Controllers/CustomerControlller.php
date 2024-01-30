@@ -67,6 +67,7 @@ class CustomerControlller extends ApiController
      */
     public function store(CustomerService $addCustomer, CustomerRequest $request)
     {
+
         $customer = $addCustomer->addCustomer($request);
         return redirect()->route('customers.index')->withSuccess('Customers Created Successfuly!');
     }

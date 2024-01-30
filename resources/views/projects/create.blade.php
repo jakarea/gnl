@@ -454,7 +454,7 @@
                                                                                 </span>
                                                                                 @enderror
                                                                             </div>
-                                                                        </div> 
+                                                                        </div>
                                                                         <div class="col-xl-6">
                                                                             <div class="form-group form-error">
                                                                                 <label for="company">Company</label>
@@ -486,7 +486,7 @@
                                                                                 </span>
                                                                                 @enderror
                                                                             </div>
-                                                                        </div> 
+                                                                        </div>
 
                                                                         <div class="col-xl-6">
                                                                             <div class="form-group form-error">
@@ -551,7 +551,7 @@
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
-                                    
+
                                                                                 @error('lead_type_id')
                                                                                 <div class="text-danger">{{ $message }}</div>
                                                                                 @enderror
@@ -611,13 +611,13 @@
     document.addEventListener("DOMContentLoaded", function() {
         let priorityInput = document.getElementById("priority");
         let priorityy = document.querySelector(".priorityy");
-        let dropdownItemsFilter = document.querySelectorAll(".filterItem"); 
+        let dropdownItemsFilter = document.querySelectorAll(".filterItem");
 
         dropdownItemsFilter.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
-                priorityy.innerHTML = this.getAttribute("data-value"); 
-                priorityInput.value = this.getAttribute("data-value"); 
+                priorityy.innerHTML = this.getAttribute("data-value");
+                priorityInput.value = this.getAttribute("data-value");
             });
         });
     });
@@ -628,13 +628,13 @@
     document.addEventListener("DOMContentLoaded", function() {
         let project_statuss = document.getElementById("project_status");
         let project_statusss = document.querySelector(".project_statuss");
-        let filterProjectStatus = document.querySelectorAll(".filterProjectStatus"); 
+        let filterProjectStatus = document.querySelectorAll(".filterProjectStatus");
 
         filterProjectStatus.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 project_statusss.innerHTML = this.getAttribute("data-value");
-                project_statuss.value = this.getAttribute("data-value"); 
+                project_statuss.value = this.getAttribute("data-value");
             });
         });
     });
@@ -644,15 +644,15 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var thumbnailContainer = document.getElementById('thumbnail-container');
-        
+
         document.getElementById('thumbnail').addEventListener('change', function (e) {
             var input = e.target;
             var file = input.files[0];
-  
+
             var thumbnailPreview = document.getElementById('thumbnail-preview');
             var closeIcon = document.getElementById('close-icon');
-  
-            if (file) { 
+
+            if (file) {
                 if (!thumbnailPreview) {
                     thumbnailPreview = document.createElement('img');
                     thumbnailPreview.id = 'thumbnail-preview';
@@ -660,26 +660,26 @@
                     thumbnailContainer.innerHTML = '';
                     thumbnailContainer.appendChild(thumbnailPreview);
                 }
-  
+
                 if (!closeIcon) {
                     closeIcon = document.createElement('i');
                     closeIcon.id = 'close-icon';
                     closeIcon.className = 'fas fa-close close-icon';
                     closeIcon.style.cursor = 'pointer';
-                    closeIcon.addEventListener('click', function () { 
+                    closeIcon.addEventListener('click', function () {
                         thumbnailPreview.src = '';
                         thumbnailContainer.removeChild(closeIcon);
-                        document.getElementById('thumbnail').value = ''; 
+                        document.getElementById('thumbnail').value = '';
                     });
                     thumbnailContainer.appendChild(closeIcon);
                 }
-  
+
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     thumbnailPreview.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
-            } else { 
+            } else {
                 if (closeIcon) {
                     thumbnailContainer.removeChild(closeIcon);
                 }
@@ -690,27 +690,27 @@
 
 {{-- customer search ajax request --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {  
-        var searchSuggestionsBox = document.querySelector('.search-suggestions-box'); 
+    document.addEventListener('DOMContentLoaded', function () {
+        var searchSuggestionsBox = document.querySelector('.search-suggestions-box');
         let searchInput = document.getElementById("search");
 
         searchInput.addEventListener('input', function() {
             var search = searchInput.value.trim();
             if (search.length === 0) {
-                searchSuggestionsBox.innerHTML = '';  
+                searchSuggestionsBox.innerHTML = '';
             }
             fetchSearchResults(search);
         });
 
         function fetchSearchResults(searchTerm) {
             let currentURL = window.location.href;
-            const baseUrl = currentURL.split('/').slice(0, 3).join('/'); 
+            const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
-            fetch(`${baseUrl}/projects/search-customers?name=${searchTerm}`, {
+            fetch(`${baseUrl}/search-customers?name=${searchTerm}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
                 },
             })
             .then(response => response.json())
@@ -724,9 +724,9 @@
         }
 
         function displaySearchResults(customers) {
-            
+
             searchSuggestionsBox.innerHTML = '';
-            const baseUrl2 = window.location.href.split('/').slice(0, 3).join('/'); 
+            const baseUrl2 = window.location.href.split('/').slice(0, 3).join('/');
 
             customers.forEach(function(customer) {
                 var profileMarkup = `
@@ -737,14 +737,14 @@
                             <div class="media-body">
                                 <h3>${customer.name}</h3>
                                 <p>${customer.designation}</p>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     </a>
                 `;
                 searchSuggestionsBox.insertAdjacentHTML('beforeend', profileMarkup);
             });
- 
+
             // select customer from suggest
             let selectedCustomerUi = document.getElementById('selectedCustomerUi');
             let customer_id = document.getElementById('customer_id');
@@ -757,8 +757,8 @@
             selectCustomers.forEach(customer => {
                 customer.addEventListener('click', function(event) {
                     var customerId = this.getAttribute('data-id');
-            
-                    if (!selectedCustomers.includes(customerId)) { 
+
+                    if (!selectedCustomers.includes(customerId)) {
                         selectedCustomers.push(customerId);
 
                         var avatar = this.querySelector('.media img').getAttribute('src');
@@ -802,7 +802,7 @@
 <script>
     document.getElementById('addManualBttn').addEventListener('click', function(e) {
     var addManualInput = document.getElementById('addManual');
-     
+
     addManualInput.value = addManualInput.value == '0' ? '1' : '0';
 });
 </script>
@@ -812,13 +812,13 @@
     document.addEventListener("DOMContentLoaded", function() {
         let customer_status = document.getElementById("customer_status");
         let customer_statusss = document.querySelector(".customer_statuss");
-        let statusFilterCustomer = document.querySelectorAll(".statusFilterCustomer"); 
+        let statusFilterCustomer = document.querySelectorAll(".statusFilterCustomer");
 
         statusFilterCustomer.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 customer_statusss.innerHTML = this.getAttribute("data-value");
-                customer_status.value = this.getAttribute("data-value"); 
+                customer_status.value = this.getAttribute("data-value");
             });
         });
     });
@@ -859,15 +859,15 @@ avatarLabel.addEventListener('click', function() {
 {{-- select services type js --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let serviceTypeId = document.getElementById("service_type_id"); 
-        let setType = document.getElementById("setType"); 
-        let serviceTypes = document.querySelectorAll(".service-type"); 
+        let serviceTypeId = document.getElementById("service_type_id");
+        let setType = document.getElementById("setType");
+        let serviceTypes = document.querySelectorAll(".service-type");
 
         serviceTypes.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setType.innerHTML = this.innerHTML;
-                serviceTypeId.value = this.getAttribute("data-id"); 
+                serviceTypeId.value = this.getAttribute("data-id");
             });
         });
     });
@@ -876,15 +876,15 @@ avatarLabel.addEventListener('click', function() {
 {{-- select leads type js --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let leadTypeId = document.getElementById("lead_type_id"); 
-        let setLeadType = document.getElementById("setLeadType"); 
-        let leadTypes = document.querySelectorAll(".lead-type"); 
+        let leadTypeId = document.getElementById("lead_type_id");
+        let setLeadType = document.getElementById("setLeadType");
+        let leadTypes = document.querySelectorAll(".lead-type");
 
         leadTypes.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setLeadType.innerHTML = this.innerHTML;
-                leadTypeId.value = this.getAttribute("data-id"); 
+                leadTypeId.value = this.getAttribute("data-id");
             });
         });
     });
