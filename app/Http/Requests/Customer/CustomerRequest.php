@@ -29,13 +29,14 @@ class CustomerRequest extends FormRequest
 
         $rules = [
             'email' => 'required|unique:customers,email,' . $this->route('id') . ',customer_id',
-            'avatar' => 'file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'avatar' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'lead_type_id' => 'required',
+            // 'service_type_id' => 'required',
         ];
 
         $fieldRules = [
             'name'        => ['required', 'string'],
             'designation' => ['required'],
-            'service_type_id'=>['required','int','exists:service_types,service_type_id'],
         ];
 
 

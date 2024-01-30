@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\Project;
+use App\Models\Customer;
+use App\Models\LeadType;
+use App\Models\ServiceType;
 use Illuminate\Http\Request;
 use App\Services\CustomerService;
 use Illuminate\Http\JsonResponse;
@@ -21,9 +24,12 @@ class TaskController extends ApiController
      */
     public function index()
     {
-        $tasks = Task::orderByDesc('task_id')->get();
 
-        return view('to-do-list.index');
+        $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
+        $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
+        $data['tasks'] = Task::with('customer')->orderByDesc('task_id')->get();
+
+        return view('to-do-list.index', $data);
     }
 
     /**
@@ -32,10 +38,8 @@ class TaskController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(CustomerService $addCustomer,TaskRequest $request){
-    public function store(CustomerService $addCustomer,Request $request){
+    public function store(CustomerService $addCustomer,TaskRequest $request){
 
-        return $request->dd();
         try {
 
             $data = $request->except(['file_upload', 'schedule']);
@@ -47,18 +51,16 @@ class TaskController extends ApiController
                 $customerId = $request->customer_id;
             }
 
-
             // $times = explode('-', $request->schedule);
             // $data['start_time'] = trim($times[0]);
             // $data['end_time'] = trim($times[1]);
-            // $data['created_by'] = auth()->user()->name;
-
 
             $data['start_time'] = $request->schedule;
             $data['end_time'] = '18:50';
-            $data['created_by'] = "Admin";
 
 
+
+            $data['created_by'] = auth()->user()->full_name;
             $data['customer_id'] = $customerId;
 
             $taks = Task::create($data);
@@ -67,15 +69,14 @@ class TaskController extends ApiController
                 $avatar = $request->file('file_upload');
                 $filename = substr(md5(time()), 0 , 10) .'.' . $avatar->getClientOriginalExtension();
                 $avatarPath = $avatar->storeAs('tasks', $filename, 'public');
-                $taks->update(['file' => $avatarPath]);
+                $taks->update(['file' => 'storage/' . $avatarPath]);
             }
 
-
-            return $this->jsonResponse(false, 'Task created successfully', $taks, [], JsonResponse::HTTP_CREATED);
+            return redirect('/to-do-list')->withSuccess('Task Created Successfuly!');
 
         }catch (\Exception $e) {
 
-            return $this->jsonResponse(true, 'Failed to create task', $request->all(), [$e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return redirect('/to-do-list')->withErrors('Failed to create task!!');
         }
     }
 
@@ -98,6 +99,19 @@ class TaskController extends ApiController
         return $this->jsonResponse(false, $this->success, $task, $this->emptyArray, JsonResponse::HTTP_OK);
     }
 
+
+    public function edit(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
+            $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
+
+            $data['task'] = Task::findOrFail($request->taskId);
+            return view('components.task-edit-modal', $data);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -105,31 +119,32 @@ class TaskController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TaskRequest $request, $taks_id)
+    public function update(CustomerService $addCustomer, TaskRequest $request, $taks_id)
     {
 
         $task = Task::findOrFail( $taks_id );
 
-        $times = explode('-', $request->schedule);
-
         $data = $request->except(['file_upload', 'schedule']);
-        $data['start_time'] = trim($times[0]);
-        $data['end_time'] = trim($times[1]);
+
+        if($request->customer_id){
+            $customerId = $request->customer_id;
+        }elseif($request->manualyCustomer == true || $request->manualyCustomer == "true"){
+            $customer =  $addCustomer->addCustomer($request);
+            $customerId = $customer->customer_id;
+        }
+
+        $data['customer_id'] = $customerId;
+
+        // $times = explode('-', $request->schedule);
+        // $data['start_time'] = trim($times[0]);
+        // $data['end_time'] = trim($times[1]);
+
+        $data['start_time'] = $request->schedule;
+        $data['end_time'] = '18:50';
         $data['created_by'] = auth()->user()->full_name;
+
+
         $task->update( $data );
-
-        // use it if image is 64 bits
-        // $file    = explode(';', $request->image);
-        // $file    = explode('/', $file[0]);
-        // $file_ex = end($file);
-        // $filename = substr(md5(time()), 0, 10) . '.' . $file_ex;
-
-        // or
-
-        // $strpos      = strpos($request->image, ';');
-        // $substr      = substr($request->image, 0, $strpos);
-        // $file_ext    = explode('/', $substr)[1];
-        // $filename    = substr(md5(time()), 0, 10) . "." . $file_ext;
 
         if ($request->hasFile('file_upload')) {
             if ($task->file) {
@@ -141,8 +156,7 @@ class TaskController extends ApiController
             $task->update(['file' => $avatarPath]);
         }
 
-        $taskInfo = $task;
-        return $this->jsonResponse(false, $this->success, $taskInfo, $this->emptyArray, JsonResponse::HTTP_OK);
+        return redirect('/to-do-list')->withSuccess('Task Update Successfuly!');
     }
 
     /**
@@ -162,15 +176,22 @@ class TaskController extends ApiController
 
 
     public function projectSearch(Request $request){
-
-        $query = $request->input('query');
-        if ($query === null || $query === '') {
-            return $this->jsonResponse(false, $this->success,[],$this->emptyArray, JsonResponse::HTTP_OK);
+        if( $request->ajax() ){
+            $query = $request->input('query');
+            if ($query === null || $query === '') {
+                $data['projects'] = Project::all();
+            }
+            $data['projects'] = Project::where('title', 'like', "%$query%")->get();
+            return view('components.load-project', $data);
         }
-        $projects = Project::where('title', 'like', "%$query%")->get();
-        return $this->jsonResponse(false, $this->success,$projects,$this->emptyArray, JsonResponse::HTTP_OK);
     }
 
+    public function getProjectById(Request $request){
+        if( $request->ajax() ){
+            $data['project'] = Project::findOrFail( $request->projectId);
+            return view( 'components.load-project-by-id' , $data);
+        }
+    }
 
 }
 
