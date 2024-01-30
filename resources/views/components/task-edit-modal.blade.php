@@ -16,8 +16,8 @@
                         <input type="hidden" name="priority" class="priority" value="{{ $task->priority }}">
                         <input type="hidden" name="manualyCustomer" id="manualyCustomer" value="false">
                         <input type="hidden" name="status" id="status" value="active">
-                        <input type="hidden" name="service_type_id" id="service_type_id">
-                        <input type="hidden" name="lead_type_id" id="lead_type_id">
+                        <input type="hidden" name="service_type_id" class="service_type_id">
+                        <input type="hidden" name="lead_type_id" class="lead_type_id">
                         @csrf
                         @method('put')
 
@@ -184,12 +184,12 @@
                                                             <img src="assets/images/icons/search-ic.svg"
                                                                 alt="a" class="img-fluid search">
                                                             <input type="text" placeholder="Search by name"
-                                                                id="search" class="form-control"
+                                                                id="search1" class="form-control"
                                                                 autocomplete="off">
                                                             <div class="search-suggestions-box"></div>
 
                                                             <input type="hidden" name="customer_id"
-                                                                value="{{ $task->customer_id }}" id="customer_id">
+                                                                value="{{ $task->customer_id }}" id="customer_id1">
                                                         </div>
                                                         <div class="avatar-btn">
                                                             <a onclick="addManualyCustomer()"
@@ -200,7 +200,7 @@
                                                                     alt="a" class="img-fluid">Add Manually</a>
                                                         </div>
                                                     </div>
-                                                    <div class="row" id="selectedCustomerUi">
+                                                    <div class="row" id="selectedCustomerUi1">
                                                         @if ($task->customer_id)
                                                             <a href="javascript:;" class="select-customer mt-2">
                                                                 <div
@@ -404,7 +404,7 @@
                                                                                                 data-bs-toggle="dropdown"
                                                                                                 aria-expanded="false">
                                                                                                 <div
-                                                                                                    id="setServiceLabel">
+                                                                                                    class="setServiceLabel">
                                                                                                     Select Below</div><i
                                                                                                     class="fas fa-angle-down"></i>
                                                                                             </button>
@@ -469,7 +469,7 @@
                                                                                                 type="button"
                                                                                                 data-bs-toggle="dropdown"
                                                                                                 aria-expanded="false">
-                                                                                                <div id="setLeadLabel">
+                                                                                                <div class="setLeadLabel">
                                                                                                     Select Below</div><i
                                                                                                     class="fas fa-angle-down"></i>
                                                                                             </button>
@@ -534,3 +534,113 @@
 </div>
 
 
+<script>
+    // document.addEventListener('DOMContentLoaded', function() {
+        var searchSuggestionsBox = document.querySelector('.search-suggestions-box');
+        let searchInput = document.getElementById("search1");
+        console.log(searchInput)
+
+        searchInput.addEventListener('input', function() {
+            var search = searchInput.value.trim();
+            if (search.length === 0) {
+                searchSuggestionsBox.innerHTML = '';
+            }
+            fetchSearchResults(search);
+        });
+
+        function fetchSearchResults(searchTerm) {
+            let currentURL = window.location.href;
+            const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+
+            fetch(`${baseUrl}/search-customers?name=${searchTerm}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    displaySearchResults(data.message);
+                })
+                .catch(error => {
+                    searchSuggestionsBox.innerHTML = '';
+                    console.error('Error fetching search results:', error);
+                });
+        }
+
+        function displaySearchResults(customers) {
+
+            searchSuggestionsBox.innerHTML = '';
+            const baseUrl2 = window.location.href.split('/').slice(0, 3).join('/');
+
+            customers.forEach(function(customer) {
+                var profileMarkup = `
+                <a href="#" class="select-customer" data-customer-id="${customer.customer_id}">
+                    <div class="selected-profile-box mt-0 bg-white border-0 p-0">
+                    <div class="media">
+                        <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-19.png') }}'}" class="img-fluid avatar" alt="avatar">
+                        <div class="media-body">
+                            <h3>${customer.name}</h3>
+                            <p>${customer.designation}</p>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            `;
+                searchSuggestionsBox.insertAdjacentHTML('beforeend', profileMarkup);
+            });
+
+            // select customer from suggest
+            let selectedCustomerUi = document.getElementById('selectedCustomerUi1');
+            let customer_id = document.getElementById('customer_id1');
+            let selectCustomers = document.querySelectorAll('.select-customer');
+
+            // Store selected customer IDs
+            var selectedCustomers = [];
+
+            // Loop through each customer
+            selectCustomers.forEach(customer => {
+                customer.addEventListener('click', function(event) {
+                    var customerId = this.getAttribute('data-customer-id');
+
+                    if (!selectedCustomers.includes(customerId)) {
+                        selectedCustomers.push(customerId);
+
+                        var avatar = this.querySelector('.media img').getAttribute('src');
+                        var name = this.querySelector('.media-body h3').textContent;
+                        var designation = this.querySelector('.media-body p').textContent;
+
+                        let customerHTML = `
+                        <div class="col-lg-6 prfile-box">
+                            <div class="selected-profile-box">
+                                <div class="media">
+                                    <img src="${avatar}" class="img-fluid avatar" alt="avatar">
+                                    <div class="media-body">
+                                        <h3>${name}</h3>
+                                        <p>${designation}</p>
+                                    </div>
+                                    <a href="#" class="close-customer">
+                                        <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                        // Append the customer HTML to the selectedCustomerUi
+                        selectedCustomerUi.innerHTML += customerHTML;
+
+                        // Update the value of the input field
+                        if (customer_id.value !== '') {
+                            customer_id.value += ',' + customerId;
+                        } else {
+                            customer_id.value = customerId;
+                        }
+                    }
+                });
+            });
+
+        }
+    // });
+</script>

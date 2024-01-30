@@ -146,8 +146,8 @@
                             <input type="hidden" name="priority" class="priority">
                             <input type="hidden" name="manualyCustomer" id="manualyCustomer" value="false">
                             <input type="hidden" name="status" id="status" value="active">
-                            <input type="hidden" name="service_type_id" id="service_type_id">
-                            <input type="hidden" name="lead_type_id" id="lead_type_id">
+                            <input type="hidden" name="service_type_id" class="service_type_id">
+                            <input type="hidden" name="lead_type_id" class="lead_type_id">
                             @csrf
 
                             <div class="add-customer-form">
@@ -483,7 +483,7 @@
                                                                                                     data-bs-toggle="dropdown"
                                                                                                     aria-expanded="false">
                                                                                                     <div
-                                                                                                        id="setServiceLabel">
+                                                                                                        class="setServiceLabel">
                                                                                                         Select Below</div><i
                                                                                                         class="fas fa-angle-down"></i>
                                                                                                 </button>
@@ -548,7 +548,7 @@
                                                                                                     type="button"
                                                                                                     data-bs-toggle="dropdown"
                                                                                                     aria-expanded="false">
-                                                                                                    <div id="setLeadLabel">
+                                                                                                    <div class="setLeadLabel">
                                                                                                         Select Below</div><i
                                                                                                         class="fas fa-angle-down"></i>
                                                                                                 </button>
@@ -685,13 +685,13 @@
         }
 
         const setServiceypeId = (serviceTypeId, serviceLabel) => {
-            $("#setServiceLabel").html(serviceLabel)
-            $("#service_type_id").val(serviceTypeId)
+            $(".setServiceLabel").html(serviceLabel)
+            $(".service_type_id").val(serviceTypeId)
         }
 
         const setLeaTypeId = (leadTypeId, leadLabel) => {
-            $("#setLeadLabel").html(leadLabel)
-            $("#lead_type_id").val(leadTypeId)
+            $(".setLeadLabel").html(leadLabel)
+            $(".lead_type_id").val(leadTypeId)
         }
 
 
@@ -757,7 +757,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             var searchSuggestionsBox = document.querySelector('.search-suggestions-box');
             let searchInput = document.getElementById("search");
-
             searchInput.addEventListener('input', function() {
                 var search = searchInput.value.trim();
                 if (search.length === 0) {
