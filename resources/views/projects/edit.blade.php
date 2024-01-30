@@ -34,7 +34,7 @@
                                                                 <div class="d-flex">
                                                                     <div class="thumbnail-preview"
                                                                         id="thumbnail-container">
-                                                                        <img src="{{ $project->thumbnail ? $project->thumbnail : asset('uploads/projects/project-01.png') }}"
+                                                                        <img src="{{ $project->thumbnail ? asset($project->thumbnail) : asset('uploads/projects/project-01.png') }}"
                                                                             alt="Upload" class="img-fluid">
                                                                     </div>
                                                                     <label for="thumbnail"
@@ -143,8 +143,7 @@
                                                             <div class="dropdown dropdown-two">
                                                                 <button class="btn" type="button"
                                                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <span class="priorityy text-capitalize">Select
-                                                                        Priority</span>
+                                                                    <span class="priorityy text-capitalize">{{ $project->priority }}</span>
                                                                     <i class="fas fa-angle-down"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu dropdown-menu-two">
@@ -194,8 +193,7 @@
                                                             <div class="dropdown dropdown-two">
                                                                 <button class="btn" type="button"
                                                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <span class="project_statuss text-capitalize">Select
-                                                                        Status</span>
+                                                                    <span class="project_statuss text-capitalize">{{ $project->status }}</span>
                                                                     <i class="fas fa-angle-down"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu dropdown-menu-two">
