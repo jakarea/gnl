@@ -16,32 +16,28 @@
                         class="common-form" enctype="multipart/form-data">
                         @csrf
                         @method('put')
-                        {{-- <input type="hidden" name="status" id="statusEdit" value="active"> --}}
+                        <input type="hidden" name="status" id="statusEdit" value="active">
                         <div class="add-customer-form">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="">Profile Image</label>
-                                        <input type="file" name="avatar" id="avatar" class="d-none" />
+                                        <input type="file" name="avatar" id="avatar" class="d-none">
                                         <!-- upload avatar -->
                                         <div class="d-flex">
-                                            <label for="avatar" class="avatar">
-                                                @if ($customer->avatar)
-                                                    <img src="{{ asset('storage/' . $customer->avatar) }}"
-                                                        alt="avatar" class="img-fluid" />
-                                                @else
-                                                    <span class="avatar-ol">
-                                                        <img src="/assets/images/icons/camera.svg" alt="camera"
-                                                            class="img-fluid" />
-                                                    </span>
-                                                @endif
-
+                                            <label for="avatar" class="avatar" id="avatarLabel2">
+                                                <img src="{{ $customer->avatar ? $customer->avatar : 'uploads/users/avatar-9.png' }}"
+                                                    alt="avatar" class="img-fluid" id="avatarPreview2">
+                                                <span class="avatar-ol">
+                                                    <img src="{{ url('/assets/images/icons/camera.svg') }}" alt="camera"
+                                                        class="img-fluid">
+                                                </span>
                                             </label>
-                                            <p>
-                                                <img src="/assets/images/icons/anchor.svg" alt="anchor"
-                                                    class="img-fluid" />
-                                                Upload
-                                            </p>
+                                            <label for="avatar">
+                                                <p><img src="{{ url('/assets/images/icons/anchor.svg') }}" alt="anchor"
+                                                        class="img-fluid">
+                                                    Upload</p>
+                                            </label>
                                         </div>
                                         <!-- upload avatar -->
                                     </div>
@@ -53,7 +49,7 @@
                                             class="form-control"
                                             value="{{ $customer->name ? $customer->name : old('designation') }}" />
                                         @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -65,41 +61,41 @@
                                             value="{{ $customer->designation ? $customer->designation : old('designation') }}" />
 
                                         @error('designation')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="email">E-mail</label>
-                                        <input type="email" placeholder="Enter email address" id="email"
-                                            name="email" class="form-control"
+                                        <input type="email" placeholder="Enter email address" id="email" name="email"
+                                            class="form-control"
                                             value="{{ $customer->email ? $customer->email : old('email') }}" />
                                         @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="phone">Phone</label>
-                                        <input type="number" placeholder="Enter phone number" id="phone"
-                                            name="phone" class="form-control"
+                                        <input type="number" placeholder="Enter phone number" id="phone" name="phone"
+                                            class="form-control"
                                             value="{{ $customer->phone ? $customer->phone : old('phone') }}" />
 
                                         @error('phone')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="location">Location</label>
-                                        <input type="text" placeholder="Enter location" id="location"
-                                            name="location" class="form-control"
+                                        <input type="text" placeholder="Enter location" id="location" name="location"
+                                            class="form-control"
                                             value="{{ $customer->location ? $customer->location : old('location') }}" />
                                         @error('location')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -110,32 +106,30 @@
                                             <div class="dropdown dropdown-two dropdown-three">
                                                 <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                    <div id="setEditStatus">{{ Str::ucfirst($customer->status) }}</div><i
-                                                        class="fas fa-angle-down"></i>
+                                                    <div id="setEditStatus">{{ Str::ucfirst($customer->status) }}</div>
+                                                    <i class="fas fa-angle-down"></i>
                                                 </button>
-                                                {{-- <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
-                                                    <li>
-                                                        <a onclick="updateStatus('active')"class="dropdown-item dropdown-item-two"
-                                                            href="javascript:;">Active<i class="fas fa-check"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a onclick="updateStatus('inactive')"
-                                                            class="dropdown-item dropdown-item-two"
-                                                            href="javascript:;">Inactive</a>
-                                                    </li>
-                                                </ul> --}}
-
-
 
                                                 <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
                                                     <li>
-                                                        <a class="dropdown-item dropdown-item-two status-update" data-status="active" href="#">Active<i class="fas fa-check"></i></a>
+                                                        <a class="dropdown-item dropdown-item-two status-update"
+                                                            data-status="active" href="#">Active
+
+                                                            @if ($customer->status == 'active')
+                                                            <i class="fas fa-check"></i>
+                                                            @endif
+                                                        </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item dropdown-item-two status-update" data-status="inactive" href="#">Inactive</a>
+                                                        <a class="dropdown-item dropdown-item-two status-update"
+                                                            data-status="inactive" href="#">Inactive
+
+                                                            @if ($customer->status == 'inactive')
+                                                            <i class="fas fa-check"></i>
+                                                            @endif
+                                                        </a>
                                                     </li>
                                                 </ul>
-
 
                                             </div>
                                         </div>
@@ -144,61 +138,116 @@
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="company">KVK</label>
-                                        <input type="text" placeholder="Enter kvk number" id="kvk"
-                                            name="kvk" class="form-control"
+                                        <input type="text" placeholder="Enter kvk number" id="kvk" name="kvk"
+                                            class="form-control"
                                             value="{{ $customer->kvk ? $customer->kvk : old('kvk') }}" />
                                         @error('kvk')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="service">Service</label>
-                                        <select class="form-control" name="service_type_id" id="">
-                                            <option value="">-- Select Service --</option>
-                                            @if (count($services_types) > 0)
-                                                @foreach ($services_types as $serviceType)
-                                                    <option value="{{ $serviceType->service_type_id }}"
-                                                        {{ $customer->service_type_id == $serviceType->service_type_id ? 'selected' : '' }}>
-                                                        {{ $serviceType->name }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                        @error('service')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <input type="hidden" name="service_type_id" id="service_type_id2">
+                                        <div class="common-dropdown common-dropdown-two common-dropdown-three">
+                                            <div class="dropdown dropdown-two dropdown-three">
+                                                <button class="btn" type="button" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <div id="setType2">Select Below</div><i
+                                                        class="fas fa-angle-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                    @foreach ($services_types as $serviceType)
+                                                    <li>
+                                                        <a class="dropdown-item dropdown-item-two service-type2"
+                                                            href="javascript:;"
+                                                            data-id="{{ $serviceType->service_type_id }}">{{
+                                                            $serviceType->name }}
+
+                                                            @if ($customer->service_type_id ==
+                                                            $serviceType->service_type_id)
+                                                            <i class="fas fa-check"></i>
+                                                            @endif
+                                                        </a>
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        @error('service_type_id')
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="company">Company</label>
-                                        <input type="text" placeholder="Enter company name" id="company"
-                                            name="company" class="form-control"
+                                        <input type="text" placeholder="Enter company name" id="company" name="company"
+                                            class="form-control"
                                             value="{{ $customer->company ? $customer->company : old('company') }}" />
                                         @error('company')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="website">Website</label>
-                                        <input type="text" placeholder="Enter website" id="website"
-                                            name="website" class="form-control"
+                                        <input type="text" placeholder="Enter website" id="website" name="website"
+                                            class="form-control"
                                             value="{{ $customer->website ? $customer->website : old('website') }}" />
                                         @error('website')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-xl-12">
+                                    <div class="form-group form-error">
+                                        <label for="lead_type_id">Leads Type</label>
+                                        <input type="hidden" name="lead_type_id" id="lead_type_id2">
+                                        <div class="common-dropdown common-dropdown-two common-dropdown-three">
+                                            <div class="dropdown dropdown-two dropdown-three">
+                                                <button class="btn" type="button" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <div id="setLeadType2">Select Below</div><i
+                                                        class="fas fa-angle-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                    @foreach ($lead_types as $leadType)
+                                                    <li>
+                                                        <a class="dropdown-item dropdown-item-two lead-type2"
+                                                            href="javascript:;"
+                                                            data-id="{{ $leadType->lead_type_id }}">{{
+                                                            $leadType->name }}
+
+                                                            @if ($customer->lead_type_id ==
+                                                            $leadType->lead_type_id)
+                                                            <i class="fas fa-check"></i>
+                                                            @endif
+                                                        </a>
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        @error('lead_type_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="form-group form-error">
                                         <label for="details">Details</label>
-                                        <textarea name="details" id="details" rows="7" class="form-control" placeholder="Enter details">{{ $customer->details ? $customer->details : old('details') }}</textarea>
+                                        <textarea name="details" id="details" rows="7" class="form-control"
+                                            placeholder="Enter details">{{ $customer->details ? $customer->details : old('details') }}</textarea>
                                         @error('details')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -212,7 +261,7 @@
                                 <div class="col-xl-6">
                                     <div class="form-bttn">
                                         <button type="submit" class="btn btn-submit">
-                                            Submit
+                                            Update
                                         </button>
                                     </div>
                                 </div>
@@ -226,8 +275,6 @@
 </div>
 
 
-
-
 <script>
     $(document).on('click', '.status-update', function(event) {
         event.preventDefault();
@@ -238,3 +285,67 @@
     });
 </script>
 
+{{-- customer avatar js --}}
+<script>
+    // Get references to elements
+    const avatarInput2 = document.getElementById('avatar');
+    const avatarPreview2 = document.getElementById('avatarPreview2');
+    const avatarLabel2 = document.getElementById('avatarLabel2');
+
+    // Add event listener to file input
+    avatarInput2.addEventListener('change', function(event) {
+    const file2 = event.target.files[0]; // Get the first file selected by the user
+
+    // Check if a file is selected
+    if (file2) {
+        // Read the file as a data URL
+        const reader2 = new FileReader();
+        reader2.onload = function(e) {
+            // Update the preview image source with the data URL
+            avatarPreview2.src = e.target.result;
+        };
+        reader2.readAsDataURL(file2);
+    }
+    });
+
+    // Optional: Add event listener to reset the file input
+    avatarLabel2.addEventListener('click', function() {
+    avatarInput2.value = ''; // Clear the file input
+    avatarPreview2.src = '{{ url('/uploads/users/avatar-9.png') }}'; // Reset the preview image to default
+    });
+
+</script>
+
+{{-- select services type js --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let serviceTypeId2 = document.getElementById("service_type_id2"); 
+        let setType2 = document.getElementById("setType2"); 
+        let serviceTypes2 = document.querySelectorAll(".service-type2"); 
+
+        serviceTypes2.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                setType2.innerHTML = this.innerHTML;
+                serviceTypeId2.value = this.getAttribute("data-id"); 
+            });
+        });
+    });
+</script>
+
+{{-- select leads type js --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let leadTypeId2 = document.getElementById("lead_type_id2"); 
+        let setLeadType2 = document.getElementById("setLeadType2"); 
+        let leadTypes2 = document.querySelectorAll(".lead-type2"); 
+
+        leadTypes2.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                setLeadType2.innerHTML = this.innerHTML;
+                leadTypeId2.value = this.getAttribute("data-id"); 
+            });
+        });
+    });
+</script>

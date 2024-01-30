@@ -57,7 +57,7 @@ class CustomerControlller extends ApiController
         $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
 
 
-        return view('customer.index',$data);
+        return view('customer.index', $data);
     }
 
     /**
@@ -87,8 +87,8 @@ class CustomerControlller extends ApiController
      */
     public function show($customer_id)
     {
-       $data['customer'] = Customer::findOrFail( $customer_id);
-       return view('customer.show',$data);
+        $data['customer'] = Customer::findOrFail($customer_id);
+        return view('customer.show', $data);
     }
 
     /**
@@ -100,27 +100,30 @@ class CustomerControlller extends ApiController
      */
 
 
-    public function edit( Request $request ){
-        if( $request->ajax() ){
+    public function edit(Request $request)
+    {
+        if ($request->ajax()) {
             $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
-            $data['customer'] = Customer::findOrFail( $request->customerId );
-            return view('components.customer-edit-modal',$data);
+            $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
+            $data['customer'] = Customer::findOrFail($request->customerId);
+            return view('components.customer-edit-modal', $data);
         }
     }
 
-    public function update(CustomerRequest $request, $customer_id) {
+    public function update(CustomerRequest $request, $customer_id)
+    {
 
-        $customer = Customer::findOrFail( $customer_id );
+        $customer = Customer::findOrFail($customer_id);
         $data = $request->except(['avatar']);
 
-        $customer->update( $data );
+        $customer->update($data);
 
         if ($request->hasFile('avatar')) {
             if ($customer->avatar) {
                 Storage::disk('public')->delete("customers/{$customer->avatar}");
             }
             $avatar = $request->file('avatar');
-            $filename = substr(md5(time()), 0 , 10) .'.' . $avatar->getClientOriginalExtension();
+            $filename = substr(md5(time()), 0, 10) . '.' . $avatar->getClientOriginalExtension();
             $avatarPath = $avatar->storeAs('customers', $filename, 'public');
             $customer->update(['avatar' => $avatarPath]);
         }
@@ -136,21 +139,22 @@ class CustomerControlller extends ApiController
      */
     public function destroy(Request $request, $customer_id)
     {
-        $customerInfo = Customer::findOrFail( $customer_id);
-        if( $customerInfo->delete() ){
+        $customerInfo = Customer::findOrFail($customer_id);
+        if ($customerInfo->delete()) {
             return redirect()->route('customers.index')->withSuccess('Customers deleted successfuly!');
         }
-
     }
 
-    function calculatePercentageIncrease($currentCount, $previousCount): float {
+    function calculatePercentageIncrease($currentCount, $previousCount): float
+    {
         return $previousCount !== 0 ? (($currentCount - $previousCount) / $previousCount) * 100 : 0;
     }
 
-    function showCustomerWithModal( Request $request) {
-        if( $request->ajax() ){
-            $data['customer'] = Customer::findOrFail( $request->customerId );
-            return view('components.customer-details-modal',$data);
+    function showCustomerWithModal(Request $request)
+    {
+        if ($request->ajax()) {
+            $data['customer'] = Customer::findOrFail($request->customerId);
+            return view('components.customer-details-modal', $data);
         }
     }
 }

@@ -18,7 +18,7 @@
         <!-- bttn -->
     </div>
 
-    @if ($errors->any())
+    {{-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -26,7 +26,7 @@
             @endforeach
         </ul>
     </div>
-    @endif
+    @endif --}}
     <div class="project-root-wrap">
         <div class="row align-items-center mb-4">
             <div class="col-lg-6">
@@ -101,11 +101,13 @@
                             <ul class="dropdown-menu dropdown-menu-start">
                                 <li>
                                     <a class="dropdown-item"
-                                        href="{{ url('project/'.$project->project_id.'/edit') }}">Edit Project</a>
+                                        href="{{ url('projects/'.$project->project_id.'/edit') }}">Edit Project</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item"
-                                        href="{{ url('project/'.$project->project_id.'/destroy') }}">Delete Project</a>
+                                    <form action="{{ url('projects/'.$project->project_id.'/destroy') }}" class="d-inline" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn dropdown-item">Delete Project</button>
+                                      </form> 
                                 </li>
                             </ul>
                         </div>
@@ -116,7 +118,7 @@
                     </div>
                     <div class="thumbnail">
                         @if ($project->thumbnail)
-                        <img src="{{ asset('storage/'.$project->thumbnail) }}" alt="a" class="img-fluid">
+                        <img src="{{ asset($project->thumbnail) }}" alt="a" class="img-fluid">
                         @else
                         <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a" class="img-fluid">
                         @endif
@@ -146,7 +148,7 @@
                         @foreach ($project->customers->slice(0,1) as $customer)
                         <div class="media">
                             @if ($customer->avatar)
-                            <img src="{{ asset('storage/'.$customer->avatar) }}" alt="a" class="img-fluid avatar">
+                            <img src="{{ asset($customer->avatar) }}" alt="a" class="img-fluid avatar">
                             @else
                             <img src="{{ asset('uploads/users/avatar-18.png') }}" alt="a" class="img-fluid avatar">
                             @endif
@@ -162,20 +164,19 @@
             </div>
             <!--project single box end-->
             @endforeach
+ 
         </div>
     </div>
 </section>
 
-
 <!-- project add modal start -->
-@include('projects/create')
+@include('projects/create');
 <!-- project add modal end -->
 @endsection
 {{-- add custmer form end --}}
 
 @section('script')
-<script>
-    // console.log("submit");
+<script> 
     document.addEventListener("DOMContentLoaded", function() {
 
         let inputField = document.getElementById("inputField");

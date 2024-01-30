@@ -4,13 +4,13 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header modal-header-two">
-                    <h1 class="modal-title" id="staticBackdropLabel">Add New Project</h1>
+                    <h1 class="modal-title" id="staticBackdropLabel">Update Project</h1>
                     <button type="button" class="btn" data-bs-dismiss="modal">
                         <i class="fas fa-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('projects.store') }}" class="common-form another-form" method="POST"
+                    <form action="{{ route('projects.update',$project->project_id) }}" class="common-form another-form" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="add-customer-form">
@@ -34,7 +34,7 @@
                                                                 <div class="d-flex">
                                                                     <div class="thumbnail-preview"
                                                                         id="thumbnail-container">
-                                                                        <img src="{{ url('uploads/projects/project-01.png') }}"
+                                                                        <img src="{{ $project->thumbnail ? $project->thumbnail : asset('uploads/projects/project-01.png') }}"
                                                                             alt="Upload" class="img-fluid">
                                                                     </div>
                                                                     <label for="thumbnail"
@@ -53,8 +53,7 @@
                                                     <div class="form-group form-error">
                                                         <label for="title">Project Name</label>
                                                         <input type="text" placeholder="Enter Title" id="title"
-                                                            name="title" value="{{ old('title') }}"
-                                                            value="{{ old('title') }}"
+                                                            name="title" value="{{ $project->title }}" 
                                                             class="form-control @error('title') is-invalid @enderror">
 
                                                         @error('title')
@@ -69,7 +68,7 @@
                                                     <div class="form-group form-error">
                                                         <label for="amount">Amount</label>
                                                         <input type="number" placeholder="€0000" id="amount"
-                                                            name="amount" value="{{ old('amount') }}"
+                                                            name="amount" value="{{ $project->amount }}"
                                                             class="form-control @error('amount') is-invalid @enderror">
 
                                                         @error('amount')
@@ -83,7 +82,7 @@
                                                     <div class="form-group form-error">
                                                         <label for="tax">Tax</label>
                                                         <input type="number" placeholder="€0000" id="tax" name="tax"
-                                                            value="{{ old('tax') }}"
+                                                            value="{{ $project->tax }}"
                                                             class="form-control @error('tax') is-invalid @enderror">
 
                                                         @error('tax')
@@ -97,7 +96,7 @@
                                                     <div class="form-group form-error">
                                                         <label for="start_date">Start Date</label>
                                                         <input type="date" id="start_date" name="start_date"
-                                                            value="{{ old('start_date') }}"
+                                                            value="{{ $project->start_date }}"
                                                             class="form-control @error('start_date') is-invalid @enderror">
 
                                                         @error('start_date')
@@ -111,7 +110,7 @@
                                                     <div class="form-group form-error">
                                                         <label for="end_date">End Date</label>
                                                         <input type="date" id="end_date" name="end_date"
-                                                            value="{{ old('end_date') }}"
+                                                            value="{{ $project->end_date }}"
                                                             class="form-control @error('end_date') is-invalid @enderror">
 
                                                         @error('end_date')
@@ -125,7 +124,7 @@
                                                     <div class="form-group form-error">
                                                         <label for="note">Note</label>
                                                         <input type="text" placeholder="Write note" id="note"
-                                                            name="note" value="{{ old('note') }}"
+                                                            name="note" value="{{ $project->note }}"
                                                             class="form-control @error('note') is-invalid @enderror">
 
                                                         @error('note')
@@ -151,15 +150,28 @@
                                                                 <ul class="dropdown-menu dropdown-menu-two">
                                                                     <li>
                                                                         <a class="text-primary dropdown-item dropdown-item-two filterItem"
-                                                                            href="#" data-value="basic">Basic<i
-                                                                                class="fas fa-check"></i></a>
+                                                                            href="#" data-value="basic">Basic
+                                                                            @if ($project->priority == 'basic')
+                                                                            <i class="fas fa-check"></i>
+                                                                            @endif
+                                                                            
+                                                                            </a>
                                                                     </li>
                                                                     <li><a class="text-warning dropdown-item dropdown-item-two filterItem"
                                                                             href="#"
-                                                                            data-value="important">Important</a>
+                                                                            data-value="important">Important
+
+                                                                            @if ($project->priority == 'important')
+                                                                            <i class="fas fa-check"></i>
+                                                                            @endif
+                                                                        </a>
                                                                     </li>
                                                                     <li><a class="text-danger dropdown-item dropdown-item-two filterItem"
-                                                                            href="#" data-value="priority">Priority</a>
+                                                                            href="#" data-value="priority">Priority
+                                                                            @if ($project->priority == 'priority')
+                                                                            <i class="fas fa-check"></i>
+                                                                            @endif
+                                                                        </a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -189,12 +201,23 @@
                                                                 <ul class="dropdown-menu dropdown-menu-two">
                                                                     <li>
                                                                         <a class="text-warning dropdown-item dropdown-item-two filterProjectStatus"
-                                                                            href="#" data-value="in_progress">In
-                                                                            Progress<i class="fas fa-check"></i></a>
+                                                                            href="#" data-value="in_progress">In Progress
+
+                                                                            @if ($project->status == 'in_progress')
+                                                                            <i class="fas fa-check"></i>
+                                                                            @endif
+                                                                        </a>
                                                                     </li>
-                                                                    <li><a class="text-primary dropdown-item dropdown-item-two filterProjectStatus"
+                                                                    <li>
+                                                                        <a class="text-primary dropdown-item dropdown-item-two filterProjectStatus"
                                                                             href="#"
-                                                                            data-value="completed">Completed</a>
+                                                                            data-value="completed">Completed
+
+                                                                            @if ($project->status == 'completed')
+                                                                            <i class="fas fa-check"></i>
+                                                                            @endif
+
+                                                                        </a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -213,7 +236,7 @@
                                                         <label for="description">Description</label>
                                                         <textarea name="description" id="description" rows="7"
                                                             class="form-control @error('description') is-invalid @enderror"
-                                                            placeholder="Enter details">{{ old('description') }}</textarea>
+                                                            placeholder="Enter details">{{ $project->description }}</textarea>
 
                                                         @error('description')
                                                         <span class="invalid-feedback" role="alert">
@@ -245,7 +268,9 @@
 
                                                         <div class="search-suggestions-box"></div>
 
-                                                        <input type="hidden" name="customer_id" value=""
+                                                        
+
+                                                        <input type="hidden" name="customer_id" value="{{ implode(', ', $project->customers->pluck('customer_id')->toArray()) }}"
                                                             id="customer_id">
 
                                                     </div>
@@ -259,8 +284,37 @@
                                                 </div>
                                                 <!-- customer search form end -->
 
+                                                @php
+                                                    $assignedCustomersId = $project->customers->pluck('customer_id');
+                                                    $assignedCustomers = App\Models\Customer::whereIn('customer_id',$assignedCustomersId)->get();
+                                                @endphp 
+
                                                 <!-- selected customer start  -->
-                                                <div class="row" id="selectedCustomerUi"></div>
+                                                <div class="row" id="selectedCustomerUi">
+                                                    @foreach ($assignedCustomers as $assignedCustomer) 
+                                                    {{-- selected customer --}}
+                                                    <div class="col-lg-6 prfile-box">
+                                                        <div class="selected-profile-box">
+                                                            <div class="media">
+                                                                @if ($assignedCustomer->avatar)
+                                                                <img src="{{ asset($assignedCustomer->avatar) }}" class="img-fluid avatar" alt="avatar">
+                                                                @else
+                                                                <img src="{{ asset('uploads/users/avatar-18.png') }}" alt="a" class="img-fluid avatar">
+                                                                @endif
+                                                                
+                                                                <div class="media-body">
+                                                                    <h3>{{ $assignedCustomer->name }}</h3>
+                                                                    <p>{{ $assignedCustomer->designation }}</p>
+                                                                </div>
+                                                                <a href="#" class="close-customer">
+                                                                    <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
+
+                                                </div>
                                                 <!-- selected customer end  -->
 
                                                 <!--collapse part start-->
@@ -330,8 +384,7 @@
                                                                                 <label
                                                                                     for="designation">Designation</label>
                                                                                 <input type="text"
-                                                                                    placeholder="Enter Designation" {{
-                                                                                    old('designation') }}
+                                                                                    placeholder="Enter Designation"  value="{{ old('designation') }}"
                                                                                     id="designation" name="designation"
                                                                                     class="form-control @error('designation') is-invalid @enderror">
 
@@ -349,7 +402,7 @@
                                                                                 <label for="email">E-mail</label>
                                                                                 <input type="email"
                                                                                     placeholder="Enter email address"
-                                                                                    id="email" name="email"
+                                                                                    id="email" name="email" value="{{ old('email') }}"
                                                                                     class="form-control @error('email') is-invalid @enderror">
 
                                                                                 @error('email')
@@ -366,7 +419,7 @@
                                                                                 <label for="phone">Phone</label>
                                                                                 <input type="number"
                                                                                     placeholder="Enter phone number"
-                                                                                    id="phone" name="phone"
+                                                                                    id="phone" name="phone" value="{{ old('phone') }}"
                                                                                     class="form-control @error('phone') is-invalid @enderror">
 
                                                                                 @error('phone')
@@ -397,8 +450,7 @@
                                                                         <div class="col-xl-6">
                                                                             <div class="form-group form-error">
                                                                                 <label for="customer_status">
-                                                                                    Active
-                                                                                    Status
+                                                                                    Active Status
                                                                                 </label>
                                                                                 <input type="hidden" value="inactive"
                                                                                     id="customer_status"
