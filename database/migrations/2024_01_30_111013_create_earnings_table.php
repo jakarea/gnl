@@ -14,10 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('earnings', function (Blueprint $table) {
-            $table->id();
+            $table->id('earning_id')->autoIncrement();
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount', 8, 2);
+            $table->decimal('tax', 8, 2);
+            $table->string('pay_status');
+            $table->string('pay_services');
+            $table->string('pay_date');
+            $table->string('pay_type');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

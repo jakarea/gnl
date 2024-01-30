@@ -1,13 +1,8 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="money-recive">
-<g id="vuesax/linear/money-recive">
-<g id="Group">
-<path id="Vector" d="M9.5 13.7502C9.5 14.7202 10.25 15.5002 11.17 15.5002H13.05C13.85 15.5002 14.5 14.8202 14.5 13.9702C14.5 13.0602 14.1 12.7302 13.51 12.5202L10.5 11.4702C9.91 11.2602 9.51001 10.9402 9.51001 10.0202C9.51001 9.18023 10.16 8.49023 10.96 8.49023H12.84C13.76 8.49023 14.51 9.27023 14.51 10.2402" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_2" d="M12 7.5V16.5" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-<path id="Vector_3" d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_4" d="M17 3V7H21" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_5" d="M22 2L17 7" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-</g>
+<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="16.332" cy="16" r="16" fill="#F9F9FC"/>
+<path d="M13.832 17.7502C13.832 18.7202 14.582 19.5002 15.502 19.5002H17.382C18.182 19.5002 18.832 18.8202 18.832 17.9702C18.832 17.0602 18.432 16.7302 17.842 16.5202L14.832 15.4702C14.242 15.2602 13.842 14.9402 13.842 14.0202C13.842 13.1802 14.492 12.4902 15.292 12.4902H17.172C18.092 12.4902 18.842 13.2702 18.842 14.2402" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.332 11.5V20.5" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M26.332 16C26.332 21.52 21.852 26 16.332 26C10.812 26 6.33203 21.52 6.33203 16C6.33203 10.48 10.812 6 16.332 6" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M26.332 10V6H22.332" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.332 11L26.332 6" stroke="#194BFB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
