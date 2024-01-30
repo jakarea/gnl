@@ -55,15 +55,14 @@ class TaskController extends ApiController
             // $times = explode('-', $request->schedule);
             // $data['start_time'] = trim($times[0]);
             // $data['end_time'] = trim($times[1]);
-            // $data['created_by'] = auth()->user()->name;
 
             $data['start_time'] = $request->schedule;
             $data['end_time'] = '18:50';
-            $data['created_by'] = "Admin";
 
+
+
+            $data['created_by'] = auth()->user()->full_name;
             $data['customer_id'] = $customerId;
-
-            // dd($data);
 
             $taks = Task::create($data);
 
