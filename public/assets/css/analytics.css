@@ -1,163 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap");
-/* *******************************************
-Project Name: GNL-CRM
-Project Version: 1.0.0
-Developer: Jakarea Parvez
-Agency: GIOPIO
-URL: https://www.giopio.com
-Theme Primary color: #ffffff; 
-Theme Secondary color: #194BFB;  
-Theme Primary Font Family: 'Manrope', sans-serif;
-******************************************** */
-/* *******************************************
-
-[Table of contents]
-
-A. Reset Styling
-  -- Styling
-
-B. Helpers
-  -- Common Header
-  -- Common Button
-  -- Common Paragraph
-
-C. Components
-    --- # Home page # ---
-  -- Header
-  -- Hero 
-
-D. Plugins Styles
-
-
-E. Utility Styles
-  -- Back to Top Button
-  -- Other 
-
-******************************************** */
-/* *******************************************
-A. Reset Styling Start
-******************************************** */
-* {
-  padding: 0;
-  margin: 0;
-  outline: none;
-  list-style-type: none;
-  text-decoration: none;
-  box-sizing: border-box;
-}
-
-ol,
-ul,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-a,
-p,
-i,
-button,
-strong,
-u,
-sub,
-sup,
-span,
-textarea,
-table tr td,
-select,
-input {
-  padding: 0;
-  margin: 0;
-}
-
-select:focus-within,
-textarea:focus-within,
-input:focus-within,
-.form-control:focus-within,
-button:focus-within {
-  box-shadow: none !important;
-}
-
-a,
-a:hover {
-  color: #000;
-  text-decoration: none;
-}
-
-ol,
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.media {
-  display: flex;
-  align-items: flex-start;
-}
-
-.media-body {
-  flex: 1;
-}
-
-hr {
-  border: none;
-  display: block;
-  width: 100%;
-  height: 1px;
-  background-color: #000000;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #000000;
-}
-
-h1,
-h2 {
-  font-size: 3.5rem;
-  line-height: 130%;
-}
-
-h3,
-h4 {
-  font-size: 2.6rem;
-  line-height: 120%;
-}
-
-h5,
-h6 {
-  font-size: 2rem;
-  line-height: 120%;
-}
-
-p {
-  font-size: 1rem;
-  line-height: 120%;
-}
-
-body {
-  background-color: #ffffff;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-family: Arial, Helvetica, sans-serif;
-  font-family: "Manrope", sans-serif;
-}
-
 .chart-box-wrap {
   border-radius: 1rem;
   background: var(--White, #FFF);
   padding: 1.5rem 1.25rem;
 }
+
 .chart-box-wrap .graph-head {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+
 .chart-box-wrap .graph-head h5 {
   color: var(--neutral-black-black-500, #1D1F2C);
   font-size: 1.25rem;
@@ -167,6 +19,7 @@ body {
   letter-spacing: 0.0125rem;
   margin-right: 1rem;
 }
+
 .chart-box-wrap .graph-head p {
   color: var(--gray-500, #667085);
   font-size: 0.875rem;
@@ -177,6 +30,7 @@ body {
   justify-content: flex-start;
   line-height: 1.25rem;
 }
+
 .chart-box-wrap .graph-head p span {
   color: #12B76A;
   margin-right: 0.5rem;
@@ -190,6 +44,7 @@ body {
   padding: 1rem 1.5rem;
   min-height: 100%;
 }
+
 .top-active-company-user h4 {
   color: var(--neutral-black-black-500, #1D1F2C);
   font-size: 1.25rem;
@@ -198,18 +53,21 @@ body {
   line-height: 1.875rem;
   letter-spacing: 0.0125rem;
 }
+
 .top-active-company-user .user-list .media {
   align-items: center;
-  margin-top: 1rem;
+  margin-bottom: 1.2rem;
 }
+
 .top-active-company-user .user-list .media img {
   margin-right: 1rem;
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
+
 .top-active-company-user .user-list .media h5 {
   color: var(--greyscale-900, #111827);
   font-size: 0.875rem;
@@ -217,10 +75,258 @@ body {
   font-weight: 500;
   line-height: 160%;
 }
+
 .top-active-company-user .user-list .media p {
   color: var(--neutral-color-neutral-60, #66768E);
   font-size: 0.625rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1.125rem;
+}
+
+.chart-box-wrap {
+  border-radius: 1rem;
+  background: var(--White, #FFF);
+  padding: 1.5rem 1.25rem;
+}
+
+.chart-box-wrap .graph-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.chart-box-wrap .graph-head h5 {
+  color: var(--neutral-black-black-500, #1D1F2C);
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.875rem;
+  letter-spacing: 0.0125rem;
+  margin-right: 1rem;
+}
+
+.chart-box-wrap .graph-head p {
+  color: var(--gray-500, #667085);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  line-height: 1.25rem;
+}
+
+.chart-box-wrap .graph-head p span {
+  color: #12B76A;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+#legend {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  position: relative;
+  top: -4.5rem;
+}
+
+#legend ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#legend ul li {
+  position: relative;
+}
+
+#legend ul li:before {
+  position: absolute;
+  content: "";
+  right: -1rem;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+#legend ul li:last-child:before {
+  width: 0;
+  height: 0;
+}
+
+#legend ul li p {
+  color: var(--text-light-secondary, #637381);
+  font-size: 0.85rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.125rem;
+  display: flex;
+  align-items: center;
+}
+
+#legend ul li p span {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+#legend ul li h6 {
+  color: var(--text-light-primary, #212B36);
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+  padding-left: 1.1rem;
+}
+
+.center-legend ul {
+  justify-content: center !important;
+}
+
+.center-legend ul li {
+  margin: 0 1.5rem;
+}
+
+.center-legend ul li:before {
+  right: -1.5rem !important;
+}
+
+.product-progress-box {
+  position: relative;
+  margin-top: -7rem;
+  top: 4rem;
+}
+
+.product-progress-box .txt {
+  position: absolute;
+  left: 0;
+  top: -1rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.product-progress-box .txt h5 {
+  color: var(--text-light-primary, #212B36);
+  text-align: center;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.product-progress-box .txt p {
+  color: var(--text-light-secondary, #637381);
+  text-align: center;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem;
+}
+
+.header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header-flex div {
+  color: var(--text-light-primary, #212B36);
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.125rem;
+  margin-left: 2rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-flex div span {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.custom-flex {
+  justify-content: space-between !important;
+  width: 100%;
+}
+
+.top-active-company-user {
+  border-radius: 0.5rem;
+  background: var(--background-light-paper, #FFF);
+  box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+  padding: 1rem 1.5rem;
+  min-height: 100%;
+}
+
+.top-active-company-user h4 {
+  color: var(--neutral-black-black-500, #1D1F2C);
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.875rem;
+  letter-spacing: 0.0125rem;
+}
+
+.top-active-company-user .user-list .media {
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.top-active-company-user .user-list .media img {
+  margin-right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.top-active-company-user .user-list .media h5 {
+  color: var(--greyscale-900, #111827);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%;
+}
+
+.top-active-company-user .user-list .media p {
+  color: var(--neutral-color-neutral-60, #66768E);
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.125rem;
+}
+
+.dropdown-menu {
+  border-radius: 0.375rem;
+  background: var(--background-light-paper, #FFF);
+  box-shadow: -20px 20px 40px -4px rgba(145, 158, 171, 0.15), 0px 0px 2px 0px rgba(145, 158, 171, 0.15);
+  padding: 0.5rem;
+  border: 0;
+}
+
+.dropdown-menu li a {
+  border-radius: 0.375rem;
+  overflow: hidden;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  text-overflow: ellipsis;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem;
+}
+
+.dropdown-menu li a:hover {
+  background: var(--neutral-color-neutral-20, #F1F4F9);
 }

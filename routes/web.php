@@ -3,23 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\EarningController;
-use App\Http\Controllers\PackageController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ProjectsController;
-use App\Http\Controllers\AnalyticsController;
-use App\Http\Controllers\CustomerControlller;
-use App\Http\Controllers\LeadControlller;
+use App\Http\Controllers\TaskController;    
+use App\Http\Controllers\ProjectsController; 
+use App\Http\Controllers\CustomerControlller; 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\MarketPlaceController;
-
-use App\Http\Controllers\AdvertisementController;
-use App\Http\Controllers\API\ForgotPasswordController;
+use App\Http\Controllers\EarningController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LeadController;
-use App\Models\Lead;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,11 +30,6 @@ Route::group(['middleware' => ['guest']], function () {
     // Login
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-
-    // forgot password handle routes for mobile app user
-    Route::get('api/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::get('api/reset-update', [ForgotPasswordController::class, 'showStatusPage'])->name('password.status');
-    Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
 // initial redirection route
@@ -55,6 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
         return redirect('/dashboard');
     });
     Route::get('/dashboard',  [DashboardController::class, 'index']);
+    Route::get('/analytics',  [DashboardController::class, 'analytics']);
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -71,7 +58,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('projects')->name('projects.')->group(function () {
         Route::get('/search-customers', [ProjectsController::class, 'search'])->name('search.customers');
-
         Route::get('/', [ProjectsController::class, 'index'])->name('index');
         Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
         Route::post('/store', [ProjectsController::class, 'store'])->name('store');
@@ -103,6 +89,19 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/website-leads', [LeadController::class, 'website'])->name('lead.website-leads');
     Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lead.lost-leads');
 
+    // earning route 
+    Route::get('/total-earnings', [EarningController::class, 'index'])->name('earning.total-earnings');
+
+
+    // expense route 
+    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expense.total-expense');
+
+    // admin profile
+    Route::prefix('account')->name('account.')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'index']); 
+        Route::get('/settings', [ProfileController::class, 'settings']); 
+        Route::get('/settings/address', [ProfileController::class, 'address']); 
+    });
     
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -1,14 +1,16 @@
 @extends('layouts.auth')
 
-@section('title','Admin Profile')
+@section('title', 'Admin Profile')
+
+@section('style')
+<link rel="stylesheet" href="{{ url('assets/css/profile.css') }}" />
+@endsection
 
 @section('content')
-<!-- main page wrapper start -->
-<section class="main-page-wrapper marketplace-page-wrapper">
-
+<section class="main-page-wrapper">
     <!-- page title -->
     <div class="page-title">
-        <h1>Admin Profile</h1>
+        <h1>Profile</h1>
     </div>
     <!-- page title -->
 
@@ -17,43 +19,26 @@
         <div class="col-12 col-md-4 col-xl-3">
             <!-- customer about start -->
             <div class="company-about-box">
-                 
-                @if ($profile->personalInfo && $profile->personalInfo->avatar)
-                <img src="{{ $profile->personalInfo->avatar }}" alt="A" class="img-fluid main-avatar" id="avatar-preview">
-                @else
-                <span class="no-avatar nva-lg">{!! strtoupper($profile->name[0]) !!}</span>
-                @endif
-
+                <div class="avatar-wrap">
+                    <img src="./uploads/users/avatar-11.png" alt="U" class="img-fluid">
+                </div>
                 <div class="txt">
-                    <h1>{{ $profile->name }}</h1>
-                    @if ($profile->roles)
-                    @foreach ($profile->roles as $role)
-                    <p>{{ $role->name ? $role->name : '--' }}</p>
-                    @endforeach
-                    @endif
+                    <h1>Yvette Schmitt</h1>
+                    <p>Engineer</p>
+
                     <hr>
+
                     <ul>
                         <li>
-                            <p><img src="{{ asset('/public/assets/images/icons/envelope.svg') }}" alt="I"
-                                    class="img-fluid">
-                                {{ $profile->email }}</p>
+                            <p><img src="./assets/images/icons/envelope.svg" alt="I" class="img-fluid">
+                                macejkovic@yahoo.com</p>
                         </li>
-                        @if ($profile->personalInfo)
                         <li>
-                            <p><img src="{{ asset('/public/assets/images/icons/call.svg') }}" alt="I" class="img-fluid">
-                                {{ optional($profile->personalInfo)->phone }}
-                            </p>
+                            <p><img src="./assets/images/icons/call.svg" alt="I" class="img-fluid"> 294-528-6776</p>
                         </li>
-                        @endif
-                        @if ($profile->address)
                         <li>
-                            <p><img src="{{ asset('/public/assets/images/icons/global.svg') }}" alt="I"
-                                    class="img-fluid">
-                                {{ optional($profile->address)->country }}
-                            </p>
+                            <p><img src="./assets/images/icons/global.svg" alt="I" class="img-fluid">Bedfordsh</p>
                         </li>
-                        @endif
-
                     </ul>
                 </div>
             </div>
@@ -66,13 +51,12 @@
                 <div class="form-box">
                     <div class="title">
                         <h3>Personal Info</h3>
-                        <a href="{{ route('admin.profile.edit') }}">
-                            <img src="{{ asset('/public/assets/images/icons/pen.svg') }}" alt="I" class="img-fluid">
+                        <a href="profile-edit">
+                            <img src="./assets/images/icons/pen.svg" alt="I" class="img-fluid">
                         </a>
                     </div>
 
                     <!-- table start -->
-                    @if ($profile->personalInfo)
                     <div class="personal-info-table-wrap">
                         <table>
                             <tr>
@@ -80,13 +64,13 @@
                                     <p>Full Name</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->personalInfo)->name }}</h6>
+                                    <h6>Yvette Schmitt</h6>
                                 </td>
                                 <td>
                                     <p>Gender</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->personalInfo)->gender }}</h6>
+                                    <h6>Female</h6>
                                 </td>
                             </tr>
                             <tr>
@@ -94,13 +78,13 @@
                                     <p>Designation</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->personalInfo)->designation }} </h6>
+                                    <h6>Engineer</h6>
                                 </td>
                                 <td>
                                     <p>Marital Status</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->personalInfo)->maritual_status }}</h6>
+                                    <h6>Unmarried</h6>
                                 </td>
                             </tr>
                             <tr>
@@ -108,13 +92,13 @@
                                     <p>Date of Birth</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->personalInfo)->dob }}</h6>
+                                    <h6>21 Oct 1995</h6>
                                 </td>
                                 <td>
                                     <p>Phone Number</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->personalInfo)->phone }}</h6>
+                                    <h6>294-528-6776</h6>
                                 </td>
                             </tr>
                             <tr>
@@ -122,28 +106,17 @@
                                     <p>Nationality</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->personalInfo)->nationality }}</h6>
+                                    <h6>Bedfordshire</h6>
                                 </td>
                                 <td>
                                     <p>Email Address</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->personalInfo)->email }}</h6>
+                                    <h6>macejkovic@yahoo.com</h6>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    @else
-                    <div class="personal-info-table-wrap">
-                        <table>
-                            <tr>
-                                <td colspan="4" class="text-center">
-                                    <p>No Personal Information Found!</p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    @endif
                     <!-- table end -->
                 </div>
                 <!-- customer personal info end -->
@@ -151,13 +124,11 @@
                 <div class="form-box mt-4">
                     <div class="title">
                         <h3>Address</h3>
-                        <a href="{{ route('admin.profile.address.edit') }}">
-                            <img src="{{ asset('/public/assets/images/icons/pen.svg') }}" alt="I" class="img-fluid">
+                        <a href="profile-edit-address">
+                            <img src="./assets/images/icons/pen.svg" alt="I" class="img-fluid">
                         </a>
                     </div>
-
                     <!-- table start -->
-                    @if ($profile->address)
                     <div class="personal-info-table-wrap">
                         <table>
                             <tr>
@@ -165,7 +136,7 @@
                                     <p>Primary addresss</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->address)->primary_address }}</h6>
+                                    <h6>4383 Prosacco Mission</h6>
                                 </td>
                             </tr>
                             <tr>
@@ -173,7 +144,7 @@
                                     <p>Country</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->address)->country }}</h6>
+                                    <h6>Bedfordsh</h6>
                                 </td>
                             </tr>
                             <tr>
@@ -181,7 +152,7 @@
                                     <p>State</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->address)->state }}</h6>
+                                    <h6>Maryland</h6>
                                 </td>
                             </tr>
                             <tr>
@@ -189,7 +160,7 @@
                                     <p>City</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->address)->city }}</h6>
+                                    <h6>North Marquise</h6>
                                 </td>
                             </tr>
                             <tr>
@@ -197,22 +168,11 @@
                                     <p>Post Code</p>
                                 </td>
                                 <td>
-                                    <h6>{{ optional($profile->address)->post_code }}</h6>
+                                    <h6>42068</h6>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    @else
-                    <div class="personal-info-table-wrap">
-                        <table>
-                            <tr>
-                                <td colspan="4" class="text-center">
-                                    <p>No Address Found!</p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    @endif
                     <!-- table end -->
                 </div>
                 <!-- customer address info end -->
@@ -220,7 +180,8 @@
             <!-- customer info end -->
         </div>
     </div>
-
 </section>
-<!-- main page wrapper end -->
+@endsection
+
+@section('script')
 @endsection

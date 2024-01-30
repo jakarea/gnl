@@ -52,50 +52,7 @@
         <!-- sidebar wrapper end -->
 
         <!-- header part start -->
-        <header class="header-area">
-            <!-- search box start -->
-            <div class="header-search-box">
-                <img src="{{ url('assets/images/icons/search.svg') }}" alt="S" class="img-fluid search" />
-                <input type="text" class="form-control" placeholder="Search" />
-            </div>
-            <!-- search box end -->
-
-            <!-- header icons start -->
-            <div class="header-icons-box">
-                <ul class="main">
-                    <li class="head-item">
-                        <a href="#" class="head-link">
-                            <span></span>
-                            <img src="{{ url('assets/images/icons/bell.svg') }}" alt="B" class="img-fluid" />
-                        </a>
-                    </li>
-                    <li class="head-item">
-                        <div class="dropdown p-0 header-dropdown">
-                            <a class="p-0 user head-link" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <img src="{{ url('/uploads/users/avatar-2.png') }}" alt="A" class="img-fluid" />
-
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="#"> Profile </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#"> Profile Setting </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="head-item">
-                        <a href="#" class="d-lg-none head-link" id="menuToggle">
-                            <i class="fas fa-bars"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- header icons end -->
-        </header>
+        @include("partials/header")
         <!-- header part end -->
 
         <!-- main page wrapper start -->

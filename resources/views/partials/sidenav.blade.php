@@ -58,9 +58,9 @@
                 Earning
                 <i class="fas fa-angle-down"></i>
             </a>
-            <div class="collapse" id="collapseExample2">
+            <div class="collapse show" id="collapseExample2">
                 <ul class="sub-nav">
-                    <li><a href="#" class="sub-link active">Total</a></li>
+                    <li><a href="{{ url("total-earnings") }}" class="sub-link active">Total</a></li>
                     <li><a href="#" class="sub-link">Hosting</a></li>
                     <li><a href="#" class="sub-link">Marketing</a></li>
                     <li><a href="#" class="sub-link">Website</a></li>
