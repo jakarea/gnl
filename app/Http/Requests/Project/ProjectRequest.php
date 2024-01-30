@@ -28,7 +28,7 @@ class ProjectRequest extends FormRequest
 
         $rules = [
             'manualyCustomer' => 'boolean',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ];
 
         $fieldRules = [

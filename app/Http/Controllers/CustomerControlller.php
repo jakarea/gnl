@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Services\CustomerService;
-use Illuminate\Http\JsonResponse;
+use App\Services\CustomerService; 
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Customer\CustomerRequest;

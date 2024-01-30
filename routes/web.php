@@ -12,11 +12,14 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CustomerControlller;
+use App\Http\Controllers\LeadControlller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketPlaceController;
 
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\API\ForgotPasswordController;
+use App\Http\Controllers\LeadController;
+use App\Models\Lead;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,10 +94,26 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
     });
 
+    // all lead actions route
+    Route::get('/all-leads', [LeadController::class, 'allLeads'])->name('lead.all-leads');
+    Route::post('/leads-store', [LeadController::class, 'store'])->name('lead.store');
+    Route::get('/lead-details/{id}', [LeadController::class, 'details'])->name('lead.details');
+    Route::post('/leads-update', [LeadController::class, 'update'])->name('lead.update');
+    Route::post('{id}/destroy', [LeadController::class, 'destroy'])->name('lead.destroy');
+
+    // category leads route
+    Route::get('/hosting-leads', [LeadController::class, 'hosting'])->name('lead.hosting-leads');
+    Route::get('/marketing-leads', [LeadController::class, 'marketing'])->name('lead.marketing-leads');
+    Route::get('/project-leads', [LeadController::class, 'project'])->name('lead.project-leads');
+    Route::get('/website-leads', [LeadController::class, 'website'])->name('lead.website-leads');
+    Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lead.lost-leads');
+
+    
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+ 
 
 // all cache clear route
 Route::get('/clear-cache', function () {
