@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Services\CustomerService;
-use Illuminate\Http\JsonResponse;
+use App\Services\CustomerService; 
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Customer\CustomerRequest;
@@ -34,7 +33,7 @@ class CustomerControlller extends ApiController
             $query->where('service_type_id', $serviceTypeId);
         }
 
-        $customers = $query->orderByDesc('customer_id')->paginate(1);
+        $customers = $query->orderByDesc('customer_id')->paginate(12);
         $customers->appends(['leadTypeId' => $leadTypeId, 'searchTypeId' => $serviceTypeId, 'status' => $status]);
 
         $data['customers'] = $customers;

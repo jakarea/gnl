@@ -357,6 +357,20 @@
   height: 25px;
 }
 
+.table-dropdown .dot-bttn{
+  background-color: #fff;
+  border-radius: 16px;
+  width: 34px;
+  height: 34px;
+  padding: 5px;
+  border: 1px solid var(--Neutral-200, #F1F2F4);
+  display: flex;
+}
+
+.table-dropdown .dot-bttn img{
+
+}
+
 .leads-page-wrapper .leads-page-title {
   background-color: transparent;
   padding: 0 0 1.5rem;
