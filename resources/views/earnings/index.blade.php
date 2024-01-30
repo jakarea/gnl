@@ -71,33 +71,20 @@
           <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
           <p>Total Earning</p>
         </div>
-        <h4>$30,000</h4>
+        <h4>€{{ $status['totalEarning'] }}</h4>
         <div class="bottom-text">
           <h5>+1.48%</h5>
           <p>Higher than last month</p>
         </div>
       </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
-      <div class="analytics-card-box">
-        <div class="top">
-          <img src="./assets/images/icons/money-recive-down.svg" alt="I" class="img-fluid money-recive">
-          <p>Total Expenses</p>
-        </div>
-        <h4>$10,000</h4>
-        <div class="bottom-text">
-          <h5 class="red">-0.12%</h5>
-          <p>Less than last month</p>
-        </div>
-      </div>
-    </div>
+    </div> 
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
           <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
           <p>Total VAT</p>
         </div>
-        <h4>$5000</h4>
+        <h4>€{{ $status['totalTax'] }}</h4>
         <div class="bottom-text">
           <h5>+1.48%</h5>
           <p>Higher than last month</p>
@@ -110,7 +97,7 @@
           <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
           <p>Total Profit</p>
         </div>
-        <h4>$15,000</h4>
+        <h4>€{{ $status['totalProfit'] }}</h4>
         <div class="bottom-text">
           <h5>+1.48%</h5>
           <p>Higher than last month</p>
@@ -121,9 +108,9 @@
       <div class="analytics-card-box">
         <div class="top">
           <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
-          <p>Total Earning</p>
+          <p>Earning Today</p>
         </div>
-        <h4>$12,000</h4>
+        <h4>€{{ $status['totalEarningToday'] }}</h4>
         <div class="bottom-text">
           <h5>+1.48%</h5>
           <p>Higher than last month</p>
@@ -134,9 +121,9 @@
       <div class="analytics-card-box">
         <div class="top">
           <img src="./assets/images/icons/money-recive-down.svg" alt="I" class="img-fluid money-recive">
-          <p>Earning Today</p>
+          <p>Hoisting Earning</p>
         </div>
-        <h4>$6,000</h4>
+        <h4>€{{ $status['totalEarningHosting'] }}</h4>
         <div class="bottom-text">
           <h5 class="red">-0.12%</h5>
           <p>Less than last month</p>
@@ -147,9 +134,9 @@
       <div class="analytics-card-box">
         <div class="top">
           <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
-          <p>Website Earning</p>
+          <p>Marketing Earning</p>
         </div>
-        <h4>$8,000</h4>
+        <h4>€{{ $status['totalEarningMarketing'] }}</h4>
         <div class="bottom-text">
           <h5>+1.48%</h5>
           <p>Higher than last month</p>
@@ -162,7 +149,20 @@
           <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
           <p>Project Earning</p>
         </div>
-        <h4>$4,000</h4>
+        <h4>€{{ $status['totalEarningProject'] }}</h4>
+        <div class="bottom-text">
+          <h5>+1.48%</h5>
+          <p>Higher than last month</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
+      <div class="analytics-card-box">
+        <div class="top">
+          <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+          <p>Website Earning</p>
+        </div>
+        <h4>€{{ $status['totalEarningWebsite'] }}</h4>
         <div class="bottom-text">
           <h5>+1.48%</h5>
           <p>Higher than last month</p>
@@ -187,7 +187,7 @@
           </div>
           <div class="earning">
             <a href="#"><i class="fas fa-circle"></i> Earning</a>
-            <h5>$10,000.00</h5>
+            <h5>€{{ $status['totalEarning'] }}</h5>
           </div>
         </div>
         <div id="totalEarning"></div>
@@ -221,14 +221,14 @@
           <th>Payment Date</th>
           <th>Service</th>
           <th>Amount</th>
-          <th>Payment Status</th>
+          <th class="text-center">Payment Status</th>
           <th></th>
         </tr>
         @foreach ($earnings as $earning)
         <!-- payment single item start -->
         <tr>
           <td>
-            1
+            {{ ($earnings->currentPage() - 1) * $earnings->perPage() + $loop->iteration }}
           </td>
           <td>
             <div class="media">
@@ -257,7 +257,7 @@
             <p>{{ $earning->pay_date}}</p>
           </td>
           <td>
-            <p>{{ $earning->pay_services }}</p>
+            <p class="text-capitalize">{{ $earning->pay_services }}</p>
           </td>
           <td>
             <p>€{{ $earning->amount }}</p>
@@ -283,8 +283,8 @@
                 <img src="{{ url('/assets/images/icons/dots-horizontal.svg')}}" class="img-fluid" alt="">
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item lead-edit" href="#" data-bs-toggle="modal" data-id="{{ $earning->earning_id }}"
-                  data-bs-target="#staticBackdropFive">Edit Payment</a>
+                {{-- <a class="dropdown-item lead-edit" href="#" data-bs-toggle="modal" data-id="{{ $earning->earning_id }}"
+                  data-bs-target="#staticBackdropFive">Edit Payment</a> --}}
 
                 <form action="{{ route('earning.destroy-earnings',$earning->earning_id) }}" class="d-inline" method="POST">
                   @csrf

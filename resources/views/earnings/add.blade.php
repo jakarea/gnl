@@ -16,32 +16,32 @@
                             <div class="row">
                                 <div class="col-xl-12 mt-4">
                                     <label for="name" class="select-client-hosting">Select Client</label>
-                                    
-                                    <div class="form-group search-by-name">
+
+                                    <div class="form-group search-by-name" style="grid-template-columns: 65% 35%!important">
                                         <div class="search-item">
-                                            <img src="{{ url('assets/images/icons/search-ic.svg') }}"
-                                                alt="a" class="img-fluid search">
+                                            <img src="{{ url('assets/images/icons/search-ic.svg') }}" alt="a"
+                                                class="img-fluid search">
 
                                             <input type="text" placeholder="Search client" id="search"
                                                 class="form-control" autocomplete="off">
 
                                             <div class="search-suggestions-box"></div>
 
-                                            <input type="hidden" name="customer_id" value=""
-                                                id="customer_id">
+                                            <input type="hidden" name="customer_id" value="" id="customer_id">
 
                                         </div>
                                         <div class="avatar-btn">
                                             <a data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
-                                            aria-expanded="false" aria-controls="multiCollapseExample1" id="addManualBttn">
-                                                <img src="{{ url('/assets/images/icons/user-add-two.svg') }}"
-                                                    alt="a" class="img-fluid">Add Manually</a>
+                                                aria-expanded="false" aria-controls="multiCollapseExample1"
+                                                id="addManualBttn">
+                                                <img src="{{ url('/assets/images/icons/user-add-two.svg') }}" alt="a"
+                                                    class="img-fluid">Add Manually</a>
                                         </div>
                                     </div>
 
-                                   <!-- selected customer start  -->
-                                   <div class="row" id="selectedCustomerUi"></div>
-                                   <!-- selected customer end  -->
+                                    <!-- selected customer start  -->
+                                    <div class="row" id="selectedCustomerUi"></div>
+                                    <!-- selected customer end  -->
 
                                     <!--data collpase start-->
                                     <div class="row">
@@ -61,34 +61,33 @@
                                                                             <label for="avatar" class="avatar"
                                                                                 id="avatarLabel">
                                                                                 <img src="{{ url('/uploads/users/avatar-9.png') }}"
-                                                                                    alt="avatar"
-                                                                                    class="img-fluid"
+                                                                                    alt="avatar" class="img-fluid"
                                                                                     id="avatarPreview">
                                                                                 <span class="avatar-ol">
                                                                                     <img src="{{ url('/assets/images/icons/camera.svg') }}"
-                                                                                        alt="camera"
-                                                                                        class="img-fluid">
+                                                                                        alt="camera" class="img-fluid">
                                                                                 </span>
                                                                             </label>
                                                                             <label for="avatar">
                                                                                 <p><img src="{{ url('/assets/images/icons/anchor.svg') }}"
-                                                                                        alt="anchor"
-                                                                                        class="img-fluid">
+                                                                                        alt="anchor" class="img-fluid">
                                                                                     Upload</p>
                                                                             </label>
                                                                         </div>
                                                                         <!-- upload avatar -->
                                                                     </div>
                                                                 </div>
-                                                                <input type="hidden" name="manualyCustomer" value="0" id="addManual">
+                                                                <input type="hidden" name="manualyCustomer" value="0"
+                                                                    id="addManual">
                                                                 <div class="col-xl-6">
                                                                     <div class="form-group form-error">
                                                                         <label for="name">Name</label>
                                                                         <input type="text" placeholder="Enter Name"
-                                                                            id="name" name="name" class="form-control @error('name') is-invalid @enderror">
-                                                                            @error('name')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
+                                                                            id="name" name="name"
+                                                                            class="form-control @error('name') is-invalid @enderror">
+                                                                        @error('name')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
@@ -98,9 +97,9 @@
                                                                             placeholder="Enter Designation"
                                                                             id="designation" name="designation"
                                                                             class="form-control @error('designation') is-invalid @enderror">
-                                                                            @error('designation')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
+                                                                        @error('designation')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
@@ -108,10 +107,11 @@
                                                                         <label for="email">E-mail</label>
                                                                         <input type="email"
                                                                             placeholder="Enter email address" id="email"
-                                                                            name="email" class="form-control @error('email') is-invalid @enderror">
-                                                                            @error('email')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
+                                                                            name="email"
+                                                                            class="form-control @error('email') is-invalid @enderror">
+                                                                        @error('email')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
@@ -119,10 +119,11 @@
                                                                         <label for="phone">Phone</label>
                                                                         <input type="number"
                                                                             placeholder="Enter phone number" id="phone"
-                                                                            name="phone" class="form-control @error('phone') is-invalid @enderror">
-                                                                            @error('phone')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
+                                                                            name="phone"
+                                                                            class="form-control @error('phone') is-invalid @enderror">
+                                                                        @error('phone')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
@@ -131,9 +132,9 @@
                                                                         <input type="text" placeholder="Enter location"
                                                                             id="location" name="location"
                                                                             class="form-control @error('location') is-invalid @enderror">
-                                                                            @error('location')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
+                                                                        @error('location')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
@@ -142,24 +143,28 @@
                                                                         <input type="hidden" name="status" id="status">
                                                                         <div class="common-dropdown">
                                                                             <div class="dropdown">
-                                                                                <button class="btn w-100" type="button" data-bs-toggle="dropdown"
+                                                                                <button class="btn w-100" type="button"
+                                                                                    data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">
-                                                                                    <div id="setStatusType">Select Below</div><i
+                                                                                    <div id="setStatusType">Select Below
+                                                                                    </div><i
                                                                                         class="fas fa-angle-down"></i>
                                                                                 </button>
                                                                                 <ul class="dropdown-menu w-100">
                                                                                     <li>
                                                                                         <a class="dropdown-item dropdown-item-two status-type-bttn"
-                                                                                            href="javascript:;" data-status="active">Active</a>
+                                                                                            href="javascript:;"
+                                                                                            data-status="active">Active</a>
                                                                                     </li>
                                                                                     <li>
                                                                                         <a class="dropdown-item dropdown-item-two status-type-bttn"
-                                                                                            href="javascript:;" data-status="inactive">Inactive</a>
+                                                                                            href="javascript:;"
+                                                                                            data-status="inactive">Inactive</a>
                                                                                     </li>
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
-                                
+
                                                                         @error('status')
                                                                         <div class="text-danger">{{ $message }}</div>
                                                                         @enderror
@@ -170,10 +175,11 @@
                                                                         <label for="kvk">KVK</label>
                                                                         <input type="text"
                                                                             placeholder="Enter kvk number" id="kvk"
-                                                                            name="kvk" class="form-control @error('kvk') is-invalid @enderror">
-                                                                            @error('kvk')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
+                                                                            name="kvk"
+                                                                            class="form-control @error('kvk') is-invalid @enderror">
+                                                                        @error('kvk')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
@@ -181,10 +187,11 @@
                                                                         <label for="company">Company</label>
                                                                         <input type="text"
                                                                             placeholder="Enter comany name" id="company"
-                                                                            name="company" class="form-control @error('company') is-invalid @enderror">
-                                                                            @error('company')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
+                                                                            name="company"
+                                                                            class="form-control @error('company') is-invalid @enderror">
+                                                                        @error('company')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
@@ -194,23 +201,27 @@
                                                                             placeholder="Enter website name"
                                                                             id="website" name="website"
                                                                             class="form-control @error('website') is-invalid @enderror">
-                                                                            @error('website')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
-                                                                </div>
+                                                                        @error('website')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <div class="form-group form-error">
                                                                         <label for="lead_type_id">Service Type</label>
-                                                                        <input type="hidden" name="lead_type_id" id="lead_type_id">
+                                                                        <input type="hidden" name="lead_type_id"
+                                                                            id="lead_type_id">
                                                                         <div class="common-dropdown">
                                                                             <div class="dropdown">
-                                                                                <button class="btn w-100" type="button" data-bs-toggle="dropdown"
+                                                                                <button class="btn w-100" type="button"
+                                                                                    data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">
-                                                                                    <div id="setLeadType">Select Below</div><i
+                                                                                    <div id="setLeadType">Select Below
+                                                                                    </div><i
                                                                                         class="fas fa-angle-down"></i>
                                                                                 </button>
-                                                                                <ul class="dropdown-menu w-100 dropdown-menu-two dropdown-menu-three">
+                                                                                <ul
+                                                                                    class="dropdown-menu w-100 dropdown-menu-two dropdown-menu-three">
                                                                                     @foreach ($lead_types as $leadType)
                                                                                     <li>
                                                                                         <a class="dropdown-item dropdown-item-two lead-type"
@@ -234,9 +245,9 @@
                                                                         <input type="text" name="details" id="details"
                                                                             class="form-control @error('details') is-invalid @enderror"
                                                                             placeholder="Enter details">
-                                                                            @error('details')
-                                                                            <div class="text-danger">{{ $message }}</div>
-                                                                            @enderror
+                                                                        @error('details')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                        @enderror
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -263,14 +274,15 @@
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="tax">Tax</label>
-                                        <input type="number" placeholder="€0000" id="tax" name="tax" class="form-control @error('tax') is-invalid @enderror">
+                                        <input type="number" placeholder="€0000" id="tax" name="tax"
+                                            class="form-control @error('tax') is-invalid @enderror">
                                         @error('tax')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="pay_status">Payment Status</label>
@@ -315,8 +327,7 @@
                                                     @foreach ($lead_types as $leadType)
                                                     <li>
                                                         <a class="dropdown-item dropdown-item-two serv-lead-type"
-                                                            href="javascript:;"
-                                                            data-id="{{ $leadType->slug }}">{{
+                                                            href="javascript:;" data-id="{{ $leadType->slug }}">{{
                                                             $leadType->name }}</a>
                                                     </li>
                                                     @endforeach
@@ -355,11 +366,13 @@
                                                 <ul class="dropdown-menu w-100">
                                                     <li>
                                                         <a class="dropdown-item dropdown-item-two payment-type-bttn"
-                                                            href="javascript:;" data-type="one_time">One time payment</a>
+                                                            href="javascript:;" data-type="one_time">One time
+                                                            payment</a>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item dropdown-item-two payment-type-bttn"
-                                                            href="javascript:;" data-type="repeated">Repeated payment</a>
+                                                            href="javascript:;" data-type="repeated">Repeated
+                                                            payment</a>
                                                     </li>
                                                 </ul>
                                             </div>
