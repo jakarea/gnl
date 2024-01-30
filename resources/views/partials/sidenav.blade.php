@@ -43,11 +43,11 @@
             </a>
             <div class="collapse" id="collapseExample">
                 <ul class="sub-nav">
-                    <li><a href="#" class="sub-link active">Hosting Leads</a></li>
-                    <li><a href="#" class="sub-link">Marketing Leads</a></li>
-                    <li><a href="#" class="sub-link">Project Leads</a></li>
-                    <li><a href="#" class="sub-link">Website Leads</a></li>
-                    <li><a href="#" class="sub-link">Lost Leads</a></li>
+                    <li><a href="{{ url("hosting-leads") }}" class="sub-link active">Hosting Leads</a></li>
+                    <li><a href="{{ url("marketing-leads") }}" class="sub-link">Marketing Leads</a></li>
+                    <li><a href="{{ url("project-leads") }}" class="sub-link">Project Leads</a></li>
+                    <li><a href="{{ url("website-leads") }}" class="sub-link">Website Leads</a></li>
+                    <li><a href="{{ url("lost-leads") }}" class="sub-link">Lost Leads</a></li>
                 </ul>
             </div>
         </li>
