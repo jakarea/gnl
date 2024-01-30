@@ -133,14 +133,14 @@ Route::post('forgot-password', [ForgotPasswordController::class, 'forgotPassword
     });
 
     // Task Controller
-    Route::prefix('task')->name('api.task.')->group(function () {
-        Route::get('/', [ApiTaskController::class, 'index']);
-        Route::post('/store', [ApiTaskController::class, 'store']);
-        Route::get('/{id}', [ApiTaskController::class, 'show']);
-        Route::put('/{id}/update', [ApiTaskController::class, 'update']);
-        Route::delete('/{id}/delete', [ApiTaskController::class, 'destroy']);
-        Route::get('/project/search', [ApiTaskController::class, 'projectSearch']);
-    });
+    // Route::prefix('task')->name('api.task.')->group(function () {
+    //     Route::get('/', [ApiTaskController::class, 'index']);
+    //     Route::post('/store', [ApiTaskController::class, 'store']);
+    //     Route::get('/{id}', [ApiTaskController::class, 'show']);
+    //     Route::put('/{id}/update', [ApiTaskController::class, 'update']);
+    //     Route::delete('/{id}/delete', [ApiTaskController::class, 'destroy']);
+    //     Route::get('/project/search', [ApiTaskController::class, 'projectSearch']);
+    // });
 
     // Service Type Controllers
     Route::prefix('service-type')->name('api.project.')->group(function () {
