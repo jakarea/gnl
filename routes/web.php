@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TaskController;    
-use App\Http\Controllers\ProjectsController; 
-use App\Http\Controllers\CustomerControlller; 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LeadController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\ExpenseController;
-use App\Http\Controllers\LeadController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\CustomerControlller;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,15 +72,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('{id}/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
     });
 
-
     Route::prefix('to-do-list')->name('task.')->group(function () {
-
         Route::post('/edit', [TaskController::class, 'edit']);
         Route::get('/', [TaskController::class, 'index']);
         Route::post('/store', [TaskController::class, 'store']);
         Route::get('/{id}', [TaskController::class, 'show']);
         Route::put('/{id}/update', [TaskController::class, 'update']);
         Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
+    });
+
+    Route::prefix('expenses')->name('expense.')->group(function () {
+        Route::get('/', [ExpenseController::class, 'index'])->name('expense.index');
+        Route::post('/store', [ExpenseController::class, 'store'])->name('expense.store');
+        Route::get('/{id}', [ExpenseController::class, 'show'])->name('expense.show');
+        Route::put('/{id}', [ExpenseController::class, 'update'])->name('expense.update');
+        Route::delete('/{id}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
     });
 
     // all lead actions route
@@ -97,25 +103,25 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/website-leads', [LeadController::class, 'website'])->name('lead.website-leads');
     Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lead.lost-leads');
 
-    // earning route 
+    // earning route
     Route::get('/total-earnings', [EarningController::class, 'index'])->name('earning.total-earnings');
 
 
-    // expense route 
-    Route::get('/expenses', [ExpenseController::class, 'index'])->name('expense.total-expense');
+    // expense route
+    // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expense.total-expense');
 
     // admin profile
     Route::prefix('account')->name('account.')->group(function () {
-        Route::get('/profile', [ProfileController::class, 'index']); 
-        Route::get('/settings', [ProfileController::class, 'settings']); 
-        Route::get('/settings/address', [ProfileController::class, 'address']); 
+        Route::get('/profile', [ProfileController::class, 'index']);
+        Route::get('/settings', [ProfileController::class, 'settings']);
+        Route::get('/settings/address', [ProfileController::class, 'address']);
     });
-    
+
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
- 
+
 
 // all cache clear route
 Route::get('/clear-cache', function () {

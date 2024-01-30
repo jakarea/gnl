@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id('expense_id')->autoIncrement();
+            $table->foreignId('lead_type_id')->nullable()->constrained('expenses', 'lead_type_id')->cascadeOnDelete();
             $table->string('title');
             $table->string('pay_date');
             $table->string('service_type');

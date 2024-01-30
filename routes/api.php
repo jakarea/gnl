@@ -176,12 +176,12 @@ Route::post('forgot-password', [ForgotPasswordController::class, 'forgotPassword
     });
 
 
-    Route::prefix('expense')->name('api.expense.')->group(function () {
-        Route::get('/', [ApiExpenseController::class, 'index']);
-        Route::post('/store', [ApiExpenseController::class, 'store']);
-        Route::get('/{id}', [ApiExpenseController::class, 'show']);
-        Route::put('/{id}', [ApiExpenseController::class, 'update']);
-        Route::delete('/{id}', [ApiExpenseController::class, 'destroy']);
-    });
+    // Route::prefix('expense')->name('api.expense.')->group(function () {
+    //     Route::get('/', [ApiExpenseController::class, 'index']);
+    //     Route::post('/store', [ApiExpenseController::class, 'store']);
+    //     Route::get('/{id}', [ApiExpenseController::class, 'show']);
+    //     Route::put('/{id}', [ApiExpenseController::class, 'update']);
+    //     Route::delete('/{id}', [ApiExpenseController::class, 'destroy']);
+    // });
 
 // });

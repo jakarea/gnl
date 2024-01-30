@@ -12,6 +12,6 @@ class Expense extends Model
     protected $primaryKey = 'expense_id';
 
     protected $fillable = [
-        'title','pay_date','service_type','amount','tax','type','description','file'
+        'title','pay_date','lead_type_id','amount','tax','type','description','file'
     ];
 }
