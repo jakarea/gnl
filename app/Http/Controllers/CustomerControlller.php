@@ -34,7 +34,7 @@ class CustomerControlller extends ApiController
             $query->where('service_type_id', $serviceTypeId);
         }
 
-        $customers = $query->orderByDesc('customer_id')->paginate(1);
+        $customers = $query->orderByDesc('customer_id')->paginate(12);
         $customers->appends(['leadTypeId' => $leadTypeId, 'searchTypeId' => $serviceTypeId, 'status' => $status]);
 
         $data['customers'] = $customers;
@@ -68,6 +68,7 @@ class CustomerControlller extends ApiController
      */
     public function store(CustomerService $addCustomer, CustomerRequest $request)
     {
+
         $customer = $addCustomer->addCustomer($request);
         return redirect()->route('customers.index')->withSuccess('Customers Created Successfuly!');
     }

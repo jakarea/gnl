@@ -153,9 +153,14 @@
                                         <input type="hidden" name="service_type_id" id="service_type_id2">
                                         <div class="common-dropdown common-dropdown-two common-dropdown-three">
                                             <div class="dropdown dropdown-two dropdown-three">
-                                                <button class="btn" type="button" data-bs-toggle="dropdown"
+                                                @php
+                                                    $serviceTypeId = $customer->service_type_id;
+                                                    $serviceType = App\Models\ServiceType::find($serviceTypeId);
+                                                    $serviceTypeTitle = $serviceType->name;
+                                                @endphp
+                                                <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                    <div id="setType2">Select Below</div><i
+                                                    <div id="setType2">{{ $serviceTypeTitle ?? "Select Below"}}</div><i
                                                         class="fas fa-angle-down"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
@@ -319,15 +324,15 @@
 {{-- select services type js --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let serviceTypeId2 = document.getElementById("service_type_id2"); 
-        let setType2 = document.getElementById("setType2"); 
-        let serviceTypes2 = document.querySelectorAll(".service-type2"); 
+        let serviceTypeId2 = document.getElementById("service_type_id2");
+        let setType2 = document.getElementById("setType2");
+        let serviceTypes2 = document.querySelectorAll(".service-type2");
 
         serviceTypes2.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setType2.innerHTML = this.innerHTML;
-                serviceTypeId2.value = this.getAttribute("data-id"); 
+                serviceTypeId2.value = this.getAttribute("data-id");
             });
         });
     });
@@ -336,15 +341,15 @@
 {{-- select leads type js --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let leadTypeId2 = document.getElementById("lead_type_id2"); 
-        let setLeadType2 = document.getElementById("setLeadType2"); 
-        let leadTypes2 = document.querySelectorAll(".lead-type2"); 
+        let leadTypeId2 = document.getElementById("lead_type_id2");
+        let setLeadType2 = document.getElementById("setLeadType2");
+        let leadTypes2 = document.querySelectorAll(".lead-type2");
 
         leadTypes2.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setLeadType2.innerHTML = this.innerHTML;
-                leadTypeId2.value = this.getAttribute("data-id"); 
+                leadTypeId2.value = this.getAttribute("data-id");
             });
         });
     });
