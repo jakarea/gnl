@@ -355,7 +355,7 @@
                                                                                                 type="button"
                                                                                                 data-bs-toggle="dropdown"
                                                                                                 aria-expanded="false">
-                                                                                                <div id="setStatus">
+                                                                                                <div class="setStatus">
                                                                                                     Active</div><i
                                                                                                     class="fas fa-angle-down"></i>
                                                                                             </button>

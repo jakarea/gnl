@@ -434,7 +434,7 @@
                                                                                                     type="button"
                                                                                                     data-bs-toggle="dropdown"
                                                                                                     aria-expanded="false">
-                                                                                                    <div id="setStatus">
+                                                                                                    <div class="setStatus">
                                                                                                         Active</div><i
                                                                                                         class="fas fa-angle-down"></i>
                                                                                                 </button>
@@ -664,7 +664,7 @@
         const updateStatus = (newStatus) => {
             document.getElementById('status').value = newStatus;
             capitalizeStatus = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
-            document.getElementById('setStatus').innerHTML = capitalizeStatus;
+            $('.setStatus').html(capitalizeStatus);
         }
 
 
