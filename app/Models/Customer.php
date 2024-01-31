@@ -28,6 +28,12 @@ class Customer extends Model
     {
         return $this->hasOne(Earning::class, 'customer_id');
     }
+
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class, 'customer_id');
+    }
+
 }
 
 

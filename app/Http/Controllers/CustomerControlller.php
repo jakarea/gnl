@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Services\CustomerService; 
+use App\Services\CustomerService;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Customer\CustomerRequest;
@@ -87,7 +87,7 @@ class CustomerControlller extends ApiController
      */
     public function show($customer_id)
     {
-        $data['customer'] = Customer::findOrFail($customer_id);
+        $data['customer'] = Customer::with('earnings')->findOrFail($customer_id);
         return view('customer.show', $data);
     }
 
@@ -105,7 +105,7 @@ class CustomerControlller extends ApiController
         if ($request->ajax()) {
             $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
             $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
-            $data['customer'] = Customer::findOrFail($request->customerId);
+            $data['customer'] = Customer::with('earnings')->findOrFail($request->customerId);
             return view('components.customer-edit-modal', $data);
         }
     }
