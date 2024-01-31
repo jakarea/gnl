@@ -208,7 +208,7 @@
         document.getElementById('note2').value = editingLead.note;
 
         if (editingLead.lead_type_id == 1) {
-            document.getElementById('setLeadType2').innerHTML = 'Hoisting Lead';
+            document.getElementById('setLeadType2').innerHTML = 'Hosting Lead';
         }else if (editingLead.lead_type_id == 2) {
             document.getElementById('setLeadType2').innerHTML = 'Marketing Lead';
         }else if (editingLead.lead_type_id == 3) {
