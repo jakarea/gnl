@@ -15,38 +15,38 @@
     <h1>Earnings</h1>
     <!-- bttn -->
     <div class="page-bttn">
+      <form action="" method="GET" id="myForm">
       <div class="dropdown">
         <a class="bttn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="./assets/images/icons/calendar-2.svg" alt="">This Month<i class="fas fa-angle-down"></i>
+          <img src="./assets/images/icons/calendar-2.svg" alt="icon" class="img-fluid">
+          <span id="currentQuery">This Month</span>
+          <i class="fas fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu">
           <li>
-            <a class="dropdown-item" href="profile">
-              Today
+            <a class="dropdown-item filter-item" href="#" data-value="this_month">
+              This Month 
             </a>
           </li>
           <li>
-            <a class="dropdown-item" href="profile">
-              Yesterday
+            <a class="dropdown-item filter-item" href="#" data-value="last_month">
+              Last Month 
             </a>
           </li>
           <li>
-            <a class="dropdown-item" href="profile">
-              Last 7 days
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item " href="profile-edit">
-              This Month
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item " href="#">
+            <a class="dropdown-item filter-item" href="#" data-value="this_year">
               This Year
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item filter-item" href="#" data-value="last_year">
+              Last Year
             </a>
           </li>
         </ul>
       </div>
+      <input type="hidden" name="query" id="filterQuery">
+      </form>
     </div>
     <!-- bttn -->
   </div>
@@ -382,4 +382,18 @@
     chart.render();
 </script>
 <!-- total user graph js end -->
+
+{{-- sort top card query js --}} 
+<script> 
+  document.addEventListener("DOMContentLoaded", function() {
+
+      document.querySelectorAll(".filter-item").forEach(item => {
+          item.addEventListener("click", function(e) {
+              e.preventDefault();
+              document.getElementById("filterQuery").value = this.getAttribute("data-value");
+              document.getElementById("myForm").submit();
+          });
+      });
+  });
+</script>
 @endsection
