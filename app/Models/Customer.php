@@ -21,7 +21,7 @@ class Customer extends Model
 
     public function serviceTypes()
     {
-        return $this->belongsTo(ServiceType::class, 'service_type_id','customer_id');
+        return $this->belongsTo(ServiceType::class, 'service_type_id');
     }
 
     public function earning()

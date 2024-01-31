@@ -514,7 +514,7 @@
             e.preventDefault();
             const customerId = $(this).data('customer-id');
             $.ajax({
-                url: '{{ route('customers.details.modal') }}',
+                url: "{{ route('customers.details.modal') }}",
                 type: 'post',
                 data: {
                     customerId: customerId
@@ -535,7 +535,7 @@
 
         const editCustomerModal = (customerId) => {
             $.ajax({
-                url: '{{ route('customers.edit') }}',
+                url: "{{ route('customers.edit') }}",
                 type: 'post',
                 data: {
                     customerId: customerId
