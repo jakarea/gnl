@@ -10,6 +10,14 @@
 
 @section('content')
     <section class="main-page-wrapper">
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        @endif
+
+
         <!-- page title -->
         <div class="page-title">
             <h1 class="pb-0">To Do List</h1>
@@ -27,113 +35,91 @@
                     </div>
 
                     <!-- task list -->
-                    <div class="task-list-area custom-scroll-bar">
+                    <div class="task-list-area custom-scroll-bar" id="task-list-area">
                         <!-- task item start -->
-                        <div class="task-item">
-                            <div class="top">
-                                <span><i class="fas fa-circle"></i> Priority</span>
-                                <a href="#"><i class="fas fa-ellipsis-vertical"></i></a>
-                            </div>
-                            <h4><img src="./assets/images/icons/camera-2.svg" alt="a" class="img-fluid"> Meeting</h4>
-                            <p>Let us know what is the our new project updates.</p>
-                            <hr />
+                        @if (count($tasks) > 0)
+                            @foreach ($tasks as $task)
+                                <div data-delete-url="{{ url('/to-do-list/' . $task->task_id . '/delete') }}"
+                                    data-task-id="{{ $task->task_id }}"></div>
+                                <div class="task-item">
+                                    <div class="top">
+                                        <span><i class="fas fa-circle"></i> {{ ucfirst($task->priority) }}</span>
+                                        {{-- <a href="#"><i class="fas fa-ellipsis-vertical"></i></a> --}}
 
-                            <div class="media">
-                                <img src="./uploads/users/avatar-10.png" alt="a" class="img-fluid avatar">
-                                <div class="media-body">
-                                    <h5>Louise Schuppe</h5>
-                                    <span>Strategist</span>
+                                        <div class="btn-group dropstart">
+                                            <a href="#" type="button" class="ellipse dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false" aria-expanded="false"><i
+                                                    class="fa-solid fa-ellipsis-vertical"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-start">
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        onclick="editTaskModal('{{ $task->task_id }}')">Edit
+                                                        Task</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        onclick="deleteTask()">Delete
+                                                        Task</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <h4><img src="assets/images/icons/camera-2.svg" alt="a" class="img-fluid">
+                                        {{ $task->title }}</h4>
+                                    <p>{{ Str::substr($task->description, 0, 48) }}</p>
+                                    <hr />
+
+                                    @if ($task->customer)
+                                        <div class="media">
+                                            @if ($task->customer->avatar)
+                                                <img src="{{ asset($task->customer->avatar) }}" alt="avatar"
+                                                    class="img-fluid avatar" />
+                                            @else
+                                                <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar"
+                                                    class="img-fluid avatar" />
+                                            @endif
+                                            <div class="media-body">
+                                                <h5>{{ $task->customer->name }}</h5>
+                                                <span>{{ $task->customer->designation }}</span>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    @endif
+
+                                    @if ($task->project)
+                                        <div class="media">
+                                            @if ($task->project->thumbnail)
+                                                <img src="{{ asset($task->project->thumbnail) }}" alt="avatar"
+                                                    class="img-fluid avatar" />
+                                            @else
+                                                <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a"
+                                                    class="img-fluid avatar">
+                                            @endif
+
+                                            <div class="media-body">
+                                                <h5>{{ $task->project->title }}</h5>
+                                                <span><img src="/assets/images/icons/close-3.svg" alt="a"
+                                                        class="img-fluid "> {{ $task->project->remaining_days }} Days
+                                                    Remaining</span>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    @endif
+
+
+                                    <div class="ftr">
+                                        <p><img src="assets/images/icons/calendar.svg" alt="a" class="img-fluid">
+                                            {{ $task->created_at->diffForHumans() }}</p>
+                                        <p><img src="assets/images/icons/clock.svg" alt="a" class="img-fluid">
+                                            {{ $task->created_at->format('g:i A') }}
+
+                                        </p>
+                                    </div>
+
                                 </div>
-                            </div>
-                            <hr />
-                            <div class="media">
-                                <img src="./uploads/users/avatar-10.png" alt="a" class="img-fluid avatar">
-                                <div class="media-body">
-                                    <h5>Dashboard Design</h5>
-                                    <span><img src="./assets/images/icons/close-3.svg" alt="a" class="img-fluid "> 4
-                                        Days Remaining</span>
-                                </div>
-                            </div>
-                            <hr />
-
-                            <div class="ftr">
-                                <p><img src="./assets/images/icons/calendar.svg" alt="a" class="img-fluid"> Today</p>
-                                <p><img src="./assets/images/icons/clock.svg" alt="a" class="img-fluid"> 12:30 PM</p>
-                            </div>
-
-                        </div>
-                        <!-- task item end -->
-                        <!-- task item start -->
-                        <div class="task-item">
-                            <div class="top">
-                                <span class="important"><i class="fas fa-circle"></i> Important</span>
-                                <a href="#"><i class="fas fa-ellipsis-vertical"></i></a>
-                            </div>
-                            <h4><img src="./assets/images/icons/camera-2.svg" alt="a" class="img-fluid"> Meeting</h4>
-                            <p>Let us know what is the our new project updates.</p>
-                            <hr />
-
-                            <div class="media">
-                                <img src="./uploads/users/avatar-10.png" alt="a" class="img-fluid avatar">
-                                <div class="media-body">
-                                    <h5>Louise Schuppe</h5>
-                                    <span>Strategist</span>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="media">
-                                <img src="./uploads/users/avatar-10.png" alt="a" class="img-fluid avatar">
-                                <div class="media-body">
-                                    <h5>Dashboard Design</h5>
-                                    <span><img src="./assets/images/icons/close-3.svg" alt="a" class="img-fluid "> 4
-                                        Days Remaining</span>
-                                </div>
-                            </div>
-                            <hr />
-
-                            <div class="ftr">
-                                <p><img src="./assets/images/icons/calendar.svg" alt="a" class="img-fluid"> Today</p>
-                                <p><img src="./assets/images/icons/clock.svg" alt="a" class="img-fluid"> 12:30 PM</p>
-                            </div>
-
-                        </div>
-                        <!-- task item end -->
-                        <!-- task item start -->
-                        <div class="task-item">
-                            <div class="top">
-                                <span class="basic"><i class="fas fa-circle"></i> Basic</span>
-                                <a href="#"><i class="fas fa-ellipsis-vertical"></i></a>
-                            </div>
-                            <h4><img src="./assets/images/icons/camera-2.svg" alt="a" class="img-fluid"> Meeting</h4>
-                            <p>Let us know what is the our new project updates.</p>
-                            <hr />
-
-                            <div class="media">
-                                <img src="./uploads/users/avatar-10.png" alt="a" class="img-fluid avatar">
-                                <div class="media-body">
-                                    <h5>Louise Schuppe</h5>
-                                    <span>Strategist</span>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="media">
-                                <img src="./uploads/users/avatar-10.png" alt="a" class="img-fluid avatar">
-                                <div class="media-body">
-                                    <h5>Dashboard Design</h5>
-                                    <span><img src="./assets/images/icons/close-3.svg" alt="a" class="img-fluid "> 4
-                                        Days Remaining</span>
-                                </div>
-                            </div>
-                            <hr />
-
-                            <div class="ftr">
-                                <p><img src="./assets/images/icons/calendar.svg" alt="a" class="img-fluid"> Today</p>
-                                <p><img src="./assets/images/icons/clock.svg" alt="a" class="img-fluid"> 12:30 PM
-                                </p>
-                            </div>
-
-                        </div>
-                        <!-- task item end -->
+                                <!-- task item end -->
+                            @endforeach
+                        @endif
                     </div>
                     <!-- task list -->
                 </div>
@@ -166,9 +152,16 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="{{ url('to-do-list/store') }}" class="common-form another-form"
+                        <form method="post" action="{{ url('/to-do-list/store') }}" class="common-form another-form"
                             enctype="multipart/form-data">
+                            <input class="setCustomerId" type="hidden" name="project_id">
+                            <input type="hidden" name="priority" class="priority">
+                            <input type="hidden" name="manualyCustomer" id="manualyCustomer" value="false">
+                            <input type="hidden" name="status" id="status" value="active">
+                            <input type="hidden" name="service_type_id" class="service_type_id">
+                            <input type="hidden" name="lead_type_id" class="lead_type_id">
                             @csrf
+
                             <div class="add-customer-form">
                                 <div class="row">
 
@@ -203,21 +196,28 @@
                                                                 <div class="dropdown dropdown-two">
                                                                     <button class="btn" type="button"
                                                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        Select Priority<i class="fas fa-angle-down"></i>
+                                                                        <div class="setPriority">Select Priority</div>
+                                                                        <i class="fas fa-angle-down"></i>
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-two">
-                                                                        <li><a class="text-primary dropdown-item dropdown-item-two"
-                                                                                href="#">Basic<i
+                                                                        <li><a onclick="updatePriority('basic')"
+                                                                                class="text-primary dropdown-item dropdown-item-two"
+                                                                                href="javascript:;">Basic<i
                                                                                     class="fas fa-check"></i></a></li>
-                                                                        <li><a class="text-warning dropdown-item dropdown-item-two"
-                                                                                href="#">Important</a>
+                                                                        <li><a onclick="updatePriority('important')"
+                                                                                class="text-warning dropdown-item dropdown-item-two"
+                                                                                href="javascript:;">Important</a>
                                                                         </li>
-                                                                        <li><a class="text-danger dropdown-item dropdown-item-two"
-                                                                                href="#">Priority</a>
+                                                                        <li><a onclick="updatePriority('priority')"
+                                                                                class="text-danger dropdown-item dropdown-item-two"
+                                                                                href="javascript:;">Priority</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
+                                                            @error('priority')
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
@@ -269,13 +269,20 @@
                                                         <!-- customer search form start -->
                                                         <div class="form-group search-by-name mt-2 grid-100">
                                                             <div class="search-item">
-                                                                <img src="assets/images/icons/search-ic.svg"
+                                                                <img src="./assets/images/icons/search-ic.svg"
                                                                     alt="a" class="img-fluid search">
                                                                 <input oninput="searchProject(event)" type="text"
                                                                     placeholder="Search Project" name="search"
-                                                                    class="form-control projectSearch">
+                                                                    class="form-control">
                                                             </div>
+                                                            <div class="projectSearch"></div>
+                                                            @error('project_id')
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
                                                         </div>
+
+
+                                                        <div class="row loadProjectById"></div>
 
                                                         <div class="customer-modal-title">
                                                             <h3>Customer Information</h3>
@@ -291,58 +298,28 @@
                                                             <div class="search-item">
                                                                 <img src="assets/images/icons/search-ic.svg"
                                                                     alt="a" class="img-fluid search">
-                                                                <input type="text" placeholder="Search Customer"
-                                                                    name="search" class="form-control customerSearch">
+                                                                <input type="text" placeholder="Search by name"
+                                                                    id="search" class="form-control"
+                                                                    autocomplete="off">
+                                                                <div class="search-suggestions-box"></div>
+
+                                                                <input type="hidden" name="customer_id" value=""
+                                                                    id="customer_id">
                                                             </div>
                                                             <div class="avatar-btn">
-                                                                <a data-bs-toggle="collapse" href="#collapseTwo"
+                                                                <a onclick="addManualyCustomer()"
+                                                                    data-bs-toggle="collapse" href="#collapseTwo"
                                                                     role="button" aria-expanded="false"
                                                                     aria-controls="collapseTwo" type="button">
                                                                     <img src="./assets/images/icons/user-add-two.svg"
                                                                         alt="a" class="img-fluid">Add Manually</a>
                                                             </div>
                                                         </div>
+                                                        <div class="row" id="selectedCustomerUi"></div>
                                                         <!-- customer search form end -->
 
                                                         <!-- selected customer start  -->
-                                                        <div class="row">
-                                                            <!-- person -->
-                                                            <div class="col-lg-6">
-                                                                <div class="selected-profile-box">
-                                                                    <div class="media">
-                                                                        <img src="uploads/users/avatar-19.png"
-                                                                            class="img-fluid avatar" alt="avatar">
-                                                                        <div class="media-body">
-                                                                            <h3>Glenda Miller</h3>
-                                                                            <p>Manager</p>
-                                                                        </div>
-                                                                        <a href="#">
-                                                                            <img src="assets/images/icons/close-2.svg"
-                                                                                alt="a" class="img-fluid">
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- person -->
-                                                            <!-- person -->
-                                                            <div class="col-lg-6">
-                                                                <div class="selected-profile-box">
-                                                                    <div class="media">
-                                                                        <img src="uploads/users/avatar-12.png"
-                                                                            class="img-fluid avatar" alt="avatar">
-                                                                        <div class="media-body">
-                                                                            <h3>Glenda Miller</h3>
-                                                                            <p>CEO</p>
-                                                                        </div>
-                                                                        <a href="#">
-                                                                            <img src="assets/images/icons/close-2.svg"
-                                                                                alt="a" class="img-fluid">
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- person -->
-                                                        </div>
+                                                        <div class="row" id="selectedCustomerUi"></div>
                                                         <!-- selected customer end  -->
 
                                                         <!--collapse part start-->
@@ -407,7 +384,7 @@
                                                                                             name="designation"
                                                                                             class="form-control"
                                                                                             value="{{ old('designation') }}">
-                                                                                        @error('name')
+                                                                                        @error('designation')
                                                                                             <div class="text-danger">
                                                                                                 {{ $message }}</div>
                                                                                         @enderror
@@ -469,17 +446,22 @@
                                                                                                     type="button"
                                                                                                     data-bs-toggle="dropdown"
                                                                                                     aria-expanded="false">
-                                                                                                    Active<i
+                                                                                                    <div class="setStatus">
+                                                                                                        Active</div><i
                                                                                                         class="fas fa-angle-down"></i>
                                                                                                 </button>
                                                                                                 <ul
                                                                                                     class="dropdown-menu dropdown-menu-two dropdown-menu-three">
-                                                                                                    <li><a class="dropdown-item dropdown-item-two"
-                                                                                                            href="#">Active<i
+                                                                                                    <li>
+                                                                                                        <a onclick="updateStatus('active')"
+                                                                                                            class="dropdown-item dropdown-item-two"
+                                                                                                            href="javascript:;">Active<i
                                                                                                                 class="fas fa-check"></i></a>
                                                                                                     </li>
-                                                                                                    <li><a class="dropdown-item dropdown-item-two"
-                                                                                                            href="#">Inactive</a>
+                                                                                                    <li>
+                                                                                                        <a onclick="updateStatus('inactive')"
+                                                                                                            class="dropdown-item dropdown-item-two"
+                                                                                                            href="javascript:;">Inactive</a>
                                                                                                     </li>
                                                                                                 </ul>
                                                                                             </div>
@@ -504,12 +486,33 @@
                                                                                     <div class="form-group form-error">
                                                                                         <label
                                                                                             for="service">Service</label>
-                                                                                        <input type="text"
-                                                                                            placeholder="Enter service"
-                                                                                            id="service" name="service"
-                                                                                            class="form-control"
-                                                                                            value="{{ old('service') }}">
-                                                                                        @error('service')
+                                                                                        <div
+                                                                                            class="common-dropdown common-dropdown-two common-dropdown-three">
+                                                                                            <div
+                                                                                                class="dropdown dropdown-two dropdown-three">
+                                                                                                <button class="btn"
+                                                                                                    type="button"
+                                                                                                    data-bs-toggle="dropdown"
+                                                                                                    aria-expanded="false">
+                                                                                                    <div
+                                                                                                        class="setServiceLabel">
+                                                                                                        Select Below</div><i
+                                                                                                        class="fas fa-angle-down"></i>
+                                                                                                </button>
+                                                                                                <ul
+                                                                                                    class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                                                                    @foreach ($services_types as $serviceType)
+                                                                                                        <li>
+                                                                                                            <a onclick="setServiceypeId('{{ $serviceType->service_type_id }}', '{{ $serviceType->name }}')"
+                                                                                                                class="dropdown-item dropdown-item-two service-type"
+                                                                                                                href="javascript:;">{{ $serviceType->name }}</a>
+                                                                                                        </li>
+                                                                                                    @endforeach
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        @error('service_type_id')
                                                                                             <div class="text-danger">
                                                                                                 {{ $message }}</div>
                                                                                         @enderror
@@ -540,6 +543,42 @@
                                                                                             class="form-control"
                                                                                             value="{{ old('website') }}">
                                                                                         @error('website')
+                                                                                            <div class="text-danger">
+                                                                                                {{ $message }}</div>
+                                                                                        @enderror
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xl-12">
+                                                                                    <div class="form-group form-error">
+                                                                                        <label for="lead_type_id">Leads
+                                                                                            Type</label>
+                                                                                        <div
+                                                                                            class="common-dropdown common-dropdown-two common-dropdown-three">
+                                                                                            <div
+                                                                                                class="dropdown dropdown-two dropdown-three">
+                                                                                                <button class="btn"
+                                                                                                    type="button"
+                                                                                                    data-bs-toggle="dropdown"
+                                                                                                    aria-expanded="false">
+                                                                                                    <div
+                                                                                                        class="setLeadLabel">
+                                                                                                        Select Below</div><i
+                                                                                                        class="fas fa-angle-down"></i>
+                                                                                                </button>
+                                                                                                <ul
+                                                                                                    class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                                                                    @foreach ($lead_types as $leadType)
+                                                                                                        <li>
+                                                                                                            <a onclick="setLeaTypeId('{{ $leadType->lead_type_id }}', '{{ $leadType->name }}')"
+                                                                                                                class="dropdown-item dropdown-item-two lead-type"
+                                                                                                                href="javascript:;">{{ $leadType->name }}</a>
+                                                                                                        </li>
+                                                                                                    @endforeach
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        @error('lead_type_id')
                                                                                             <div class="text-danger">
                                                                                                 {{ $message }}</div>
                                                                                         @enderror
@@ -587,6 +626,9 @@
     </div>
     <!-- task add modal end -->
 
+
+    <div class="showEditTaskModal"></div>
+
 @endsection
 
 @section('script')
@@ -594,21 +636,241 @@
         const searchProject = (e) => {
             const searchTerm = e.target.value;
 
-            console.log(searchTerm)
             $.ajax({
                 type: 'get',
-                url: "{{ route('task.projectsearch') }}",
+                url: "{{ route('projectsearch') }}",
                 data: {
                     query: searchTerm
                 },
                 success: function(data) {
-                    console.log(data);
+                    $(".projectSearch").html(data)
                 },
                 error: function(error) {
                     console.error('Ajax request failed: ', error);
                 }
             });
         }
+
+        const getProjectId = (projectId) => {
+            $.ajax({
+                type: 'get',
+                url: "{{ route('getProjectById') }}",
+                data: {
+                    projectId: projectId
+                },
+                success: function(data) {
+                    $(".setCustomerId").val(projectId);
+                    $(".projectSearch").empty();
+                    $(".loadProjectById").html(data);
+                },
+                error: function(error) {
+                    console.error('Ajax request failed: ', error);
+                }
+            });
+        }
+
+        const removeProjectById = (projectId) => {
+            $(".setCustomerId").val('');
+            $(".loadProjectById").empty();
+        }
+
+        const updateStatus = (newStatus) => {
+            document.getElementById('status').value = newStatus;
+            capitalizeStatus = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+            $('.setStatus').html(capitalizeStatus);
+        }
+
+
+        const updatePriority = (priority) => {
+            console.log(priority)
+            $('.priority').val(priority);
+            capitalizeStatus = priority.charAt(0).toUpperCase() + priority.slice(1);
+            $('.setPriority').html(capitalizeStatus);
+        }
+
+        const addManualyCustomer = () => {
+            const manualyCustomerInput = document.getElementById('manualyCustomer');
+            const currentValue = manualyCustomerInput.value;
+            const newValue = (currentValue === 'true') ? 'false' : 'true';
+            manualyCustomerInput.value = newValue;
+            const button = document.querySelector('button');
+            button.classList.toggle('manualy-customer-active', newValue === 'true');
+        }
+
+        const setServiceypeId = (serviceTypeId, serviceLabel) => {
+            $(".setServiceLabel").html(serviceLabel)
+            $(".service_type_id").val(serviceTypeId)
+        }
+
+        const setLeaTypeId = (leadTypeId, leadLabel) => {
+            $(".setLeadLabel").html(leadLabel)
+            $(".lead_type_id").val(leadTypeId)
+        }
+
+
+        // Show edit task modal
+        const editTaskModal = (taskId) => {
+            $.ajax({
+                url: '/to-do-list/edit',
+                type: 'post',
+                data: {
+                    taskId: taskId
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                success: function(data) {
+                    $(".showEditTaskModal").html(data);
+                    $("#taskEdit").modal('show');
+                },
+                error: function(error) {
+                    console.error('AJAX request error:', status, error);
+                }
+            });
+        }
+
+        const deleteTask = () => {
+            console.log('id')
+            const taskUrl = $('div[data-task-id]').data('delete-url');
+            const taskId = $('div[data-task-id]').data('task-id');
+
+            const isConfirmed = confirm("Are you sure you want to delete this task?");
+
+            if (!isConfirmed) {
+                return;
+            }
+
+            $.ajax({
+                url: taskUrl,
+                type: 'post',
+                data: {
+                    _method: "delete",
+                    customer_id: taskId
+                },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+
+                success: function(data) {
+                    $("#task-list-area").load(location.href + " #task-list-area>*", "");
+                    window.location.href = "{{ url('/to-do-list') }}";
+                },
+                error: function(error) {
+                    console.error('AJAX request error:', status, error);
+                }
+            });
+        }
+    </script>
+
+    {{-- customer get by search ajax req --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var searchSuggestionsBox = document.querySelector('.search-suggestions-box');
+            let searchInput = document.getElementById("search");
+            searchInput.addEventListener('input', function() {
+                var search = searchInput.value.trim();
+                if (search.length === 0) {
+                    searchSuggestionsBox.innerHTML = '';
+                }
+                fetchSearchResults(search);
+            });
+
+            function fetchSearchResults(searchTerm) {
+                let currentURL = window.location.href;
+                const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+
+                fetch(`${baseUrl}/search-customers?name=${searchTerm}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        displaySearchResults(data.message);
+                    })
+                    .catch(error => {
+                        searchSuggestionsBox.innerHTML = '';
+                        console.error('Error fetching search results:', error);
+                    });
+            }
+
+            function displaySearchResults(customers) {
+
+                searchSuggestionsBox.innerHTML = '';
+                const baseUrl2 = window.location.href.split('/').slice(0, 3).join('/');
+
+                customers.forEach(function(customer) {
+                    var profileMarkup = `
+                    <a href="#" class="select-customer" data-id="${customer.customer_id}">
+                        <div class="selected-profile-box mt-0 bg-white border-0 p-0">
+                        <div class="media">
+                            <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-19.png') }}'}" class="img-fluid avatar" alt="avatar">
+                            <div class="media-body">
+                                <h3>${customer.name}</h3>
+                                <p>${customer.designation}</p>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                `;
+                    searchSuggestionsBox.insertAdjacentHTML('beforeend', profileMarkup);
+                });
+
+                // select customer from suggest
+                let selectedCustomerUi = document.getElementById('selectedCustomerUi');
+                let customer_id = document.getElementById('customer_id');
+                let selectCustomers = document.querySelectorAll('.select-customer');
+
+                // Store selected customer IDs
+                var selectedCustomers = [];
+
+                // Loop through each customer
+                selectCustomers.forEach(customer => {
+                    customer.addEventListener('click', function(event) {
+                        var customerId = this.getAttribute('data-id');
+
+                        if (!selectedCustomers.includes(customerId)) {
+                            selectedCustomers.push(customerId);
+
+                            var avatar = this.querySelector('.media img').getAttribute('src');
+                            var name = this.querySelector('.media-body h3').textContent;
+                            var designation = this.querySelector('.media-body p').textContent;
+
+                            let customerHTML = `
+                            <div class="col-lg-6 prfile-box">
+                                <div class="selected-profile-box">
+                                    <div class="media">
+                                        <img src="${avatar}" class="img-fluid avatar" alt="avatar">
+                                        <div class="media-body">
+                                            <h3>${name}</h3>
+                                            <p>${designation}</p>
+                                        </div>
+                                        <a href="#" class="close-customer">
+                                            <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                            // Append the customer HTML to the selectedCustomerUi
+                            selectedCustomerUi.innerHTML += customerHTML;
+
+                            // Update the value of the input field
+                            if (customer_id.value !== '') {
+                                customer_id.value += ',' + customerId;
+                            } else {
+                                customer_id.value = customerId;
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
     </script>
 
 @endsection

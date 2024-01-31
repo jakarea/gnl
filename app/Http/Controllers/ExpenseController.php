@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Models\LeadType;
 use App\Traits\SlugTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Expense\ExpenseRequest;
 
-class ApiExpenseController extends ApiController
+class ExpenseController extends ApiController
 {
     use SlugTrait;
 
@@ -19,10 +20,11 @@ class ApiExpenseController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index():JsonResponse
+    public function index()
     {
-        $expenses = Expense::orderByDesc('expense_id')->get();
-        return $this->jsonResponse(false, $this->success,$expenses,$this->emptyArray, JsonResponse::HTTP_OK);
+        $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
+        $data['expenses'] = Expense::orderByDesc('expense_id')->get();
+        return view('expenses.index', $data);
     }
 
     /**
@@ -35,38 +37,20 @@ class ApiExpenseController extends ApiController
     {
         try {
 
-            // return $request->all();
-
-            // use it if image is 64 bits
-            // $file    = explode(';', $request->image);
-            // $file    = explode('/', $file[0]);
-            // $file_ex = end($file);
-            // $filename = substr(md5(time()), 0, 10) . '.' . $file_ex;
-
-            // or
-
-            // $strpos      = strpos($request->image, ';');
-            // $substr      = substr($request->image, 0, $strpos);
-            // $file_ext    = explode('/', $substr)[1];
-            // $filename    = substr(md5(time()), 0, 10) . "." . $file_ext;
-
-
             $data = $request->except(['file']);
-
             $expense = Expense::create($data);
-
             if ($request->hasFile('file')) {
                 $avatar = $request->file('file');
                 $filename = substr(md5(time()), 0 , 10) .'.' . $avatar->getClientOriginalExtension();
                 $avatarPath = $avatar->storeAs('expenses', $filename, 'public');
-                $expense->update(['file' => $avatarPath]);
+                $expense->update(['file' => 'storage/'. $avatarPath]);
             }
 
-            return $this->jsonResponse(false, 'Expense created successfully', $expense, [], JsonResponse::HTTP_CREATED);
+            return redirect('/expenses')->withSuccess('Expenses create successfuly!');
 
         }catch (\Exception $e) {
 
-            return $this->jsonResponse(true, 'Failed to create expense', $request->all(), [$e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return back()->withErrors('Failed to cread exense!!');
         }
     }
 

@@ -13,18 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->id('payment_id')->autoIncrement();
-            $table->foreignId('customer_id')->constrained('payments', 'customer_id')->cascadeOnDelete();
+        Schema::create('earnings', function (Blueprint $table) {
+            $table->id('earning_id')->autoIncrement();
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 8, 2);
             $table->decimal('tax', 8, 2);
             $table->string('pay_status');
-            $table->string('payment_service');
+            $table->string('pay_services');
             $table->string('pay_date');
             $table->string('pay_type');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('earnings');
     }
 };

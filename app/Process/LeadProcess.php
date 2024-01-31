@@ -15,21 +15,27 @@ class LeadProcess {
     public static function create(LeadStoreRequest $request)
     {
         $lead = new Lead();
-        $lead->avatar = $request->avatar;
         $lead->name = $request->name;
-        $lead->lead_type_id = $request->lead_type_id;
         $lead->phone = $request->phone;
         $lead->email = $request->email;
         $lead->linkedin = $request->linkedin;
         $lead->instagram = $request->instagram;
-        $lead->socials = $request->socials;
         $lead->company = $request->company;
         $lead->website = $request->website;
         $lead->kvk = $request->kvk;
+        $lead->lead_type_id = $request->lead_type_id; 
         $lead->note = $request->note;
-
-
+        $lead->lead_order = '';
+        $lead->state = 'new';
+        $lead->status = 'active';
         $lead->save();
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = substr(md5(time()), 0, 10) . '.' . $avatar->getClientOriginalExtension();
+            $avatarPath = $avatar->storeAs('leads', $filename, 'public');
+            $lead->update(['avatar' => 'storage/' . $avatarPath]);
+        }
 
         return $lead;
     }

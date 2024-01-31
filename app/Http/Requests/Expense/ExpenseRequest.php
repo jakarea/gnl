@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\Expense;
 
-use App\Http\Requests\BaseFormRequest;
-
-class ExpenseRequest extends BaseFormRequest
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
+class ExpenseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,10 +30,10 @@ class ExpenseRequest extends BaseFormRequest
         return [
             'title' => 'required|string',
             'pay_date' => 'required',
-            'service_type' => 'required',
+            'lead_type_id' => ['required', Rule::exists('lead_types', 'lead_type_id')],
             'amount' => 'required|numeric',
             'tax' => 'required|numeric',
-            // 'type' => 'in:Fixed,Variable'
+            'type' => 'in:fixed,variable'
         ];
     }
 }

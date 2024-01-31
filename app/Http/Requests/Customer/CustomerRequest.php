@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
 
 class CustomerRequest extends FormRequest
 {
@@ -30,19 +31,18 @@ class CustomerRequest extends FormRequest
         $rules = [
             'email' => 'required|unique:customers,email,' . $this->route('id') . ',customer_id',
             'avatar' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
+            'lead_type_id' => ['required', Rule::exists('lead_types', 'lead_type_id')],
+            'service_type_id' => ['required', Rule::exists('service_types', 'service_type_id')],
         ];
 
         $fieldRules = [
             'name'        => ['required', 'string'],
             'designation' => ['required'],
-            'service_type_id'=>['required','int','exists:service_types,service_type_id'],
         ];
 
 
         // $customMessages = [
         //     'service_type_id.required' => 'Please select a service type.',
-        //     'service_type_id.int' => 'Service type must be an integer.',
-        //     'service_type_id.exists' => 'The selected service type does not exist.',
         // ];
 
 

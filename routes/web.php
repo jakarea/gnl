@@ -3,23 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\EarningController;
-use App\Http\Controllers\PackageController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ProjectsController;
-use App\Http\Controllers\AnalyticsController;
-use App\Http\Controllers\CustomerControlller;
-use App\Http\Controllers\LeadControlller;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\MarketPlaceController;
-
-use App\Http\Controllers\AdvertisementController;
-use App\Http\Controllers\API\ForgotPasswordController;
 use App\Http\Controllers\LeadController;
-use App\Models\Lead;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\EarningController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\CustomerControlller;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,11 +30,6 @@ Route::group(['middleware' => ['guest']], function () {
     // Login
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-
-    // forgot password handle routes for mobile app user
-    Route::get('api/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::get('api/reset-update', [ForgotPasswordController::class, 'showStatusPage'])->name('password.status');
-    Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
 // initial redirection route
@@ -55,9 +41,15 @@ Route::group(['middleware' => ['auth']], function () {
         return redirect('/dashboard');
     });
     Route::get('/dashboard',  [DashboardController::class, 'index']);
+    Route::get('/analytics',  [DashboardController::class, 'analytics']);
 });
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('search-customers', [ProjectsController::class, 'search'])->name('search.customers');
+    Route::get('project/search', [TaskController::class, 'projectSearch'])->name('projectsearch');
+    Route::get('get/project', [TaskController::class, 'getProjectById'])->name('getProjectById');
+
 
     Route::prefix('customers')->name('customers.')->group(function () {
         Route::get('/', [CustomerControlller::class, 'index'])->name('index');
@@ -70,7 +62,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('projects')->name('projects.')->group(function () {
-        Route::get('/search-customers', [ProjectsController::class, 'search'])->name('search.customers');
+
+        // Route::get('/search-customers', [ProjectsController::class, 'search'])->name('search.customers');
 
         Route::get('/', [ProjectsController::class, 'index'])->name('index');
         Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
@@ -79,26 +72,63 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('{id}/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
     });
 
-
     Route::prefix('to-do-list')->name('task.')->group(function () {
+        Route::post('/edit', [TaskController::class, 'edit']);
         Route::get('/', [TaskController::class, 'index']);
         Route::post('/store', [TaskController::class, 'store']);
         Route::get('/{id}', [TaskController::class, 'show']);
         Route::put('/{id}/update', [TaskController::class, 'update']);
         Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
-        Route::get('/project/search', [TaskController::class, 'projectSearch'])->name('projectsearch');
     });
 
+    Route::prefix('expenses')->name('expense.')->group(function () {
+        Route::get('/', [ExpenseController::class, 'index'])->name('expense.index');
+        Route::post('/store', [ExpenseController::class, 'store'])->name('expense.store');
+        Route::get('/{id}', [ExpenseController::class, 'show'])->name('expense.show');
+        Route::put('/{id}', [ExpenseController::class, 'update'])->name('expense.update');
+        Route::delete('/{id}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
+    });
+
+    // all lead actions route
+    Route::get('/all-leads', [LeadController::class, 'allLeads'])->name('lead.all-leads');
+    Route::post('/leads-store', [LeadController::class, 'store'])->name('lead.store');
+    Route::get('/lead-details/{id}', [LeadController::class, 'details'])->name('lead.details');
+    Route::post('/leads-update', [LeadController::class, 'update'])->name('lead.update');
+    Route::post('{id}/destroy', [LeadController::class, 'destroy'])->name('lead.destroy');
+
+    // category leads route
     Route::get('/hosting-leads', [LeadController::class, 'hosting'])->name('lead.hosting-leads');
-    Route::get('/hosting-leads/all', [LeadController::class, 'hostingAll'])->name('lead.hosting-leads-all');
     Route::get('/marketing-leads', [LeadController::class, 'marketing'])->name('lead.marketing-leads');
     Route::get('/project-leads', [LeadController::class, 'project'])->name('lead.project-leads');
     Route::get('/website-leads', [LeadController::class, 'website'])->name('lead.website-leads');
     Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lead.lost-leads');
+
+    // common earning route
+    Route::get('earning/details/{id?}', [EarningController::class, 'showEarningWithModal'])->name('earning.details');
+    Route::get('/total-earnings', [EarningController::class, 'index'])->name('earning.total-earnings');
+    Route::post('/add-earnings', [EarningController::class, 'store'])->name('earning.add-earnings');
+    Route::post('{id}/destroy-earnings', [EarningController::class, 'destroy'])->name('earning.destroy-earnings');
+
+    // hosting earning
+    Route::get('/hosting-earnings', [EarningController::class, 'hostingEarning'])->name('earning.hosting-earnings');
+
+    // expense route
+    // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expense.total-expense');
+
+    // admin profile
+    Route::prefix('account')->name('account.')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'index'])->name('index');
+        Route::get('/settings', [ProfileController::class, 'settings'])->name('settings');
+        Route::put('/settings/update', [ProfileController::class, 'settingsUpdate'])->name('settings.update');
+        Route::get('/settings/address', [ProfileController::class, 'address'])->name('address');
+        Route::put('/address/update', [ProfileController::class, 'addressUpdate'])->name('address.update');
+    });
+
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
 
 // all cache clear route
 Route::get('/clear-cache', function () {

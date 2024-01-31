@@ -47,7 +47,7 @@
                     <div class="adress-info-text">
                         <p>Phone</p>
                         <a href="tel:{{ $customer->phone }}">
-                            <img src="/assets/images/icons/call.svg" alt="" />{{ $customer->phone }}
+                            <img src="{{ asset('assets/images/icons/call.svg') }}" alt="" />{{ $customer->phone }}
                         </a>
                     </div>
                 @endif
@@ -56,7 +56,7 @@
                     <div class="adress-info-text">
                         <p>Email</p>
                         <a href="mailto:{{ $customer->email }}">
-                            <img src="/assets/images/icons/envelope.svg" alt="" />{{ $customer->email }}
+                            <img src="{{ asset('assets/images/icons/envelope.svg') }}" alt="" />{{ $customer->email }}
                         </a>
                     </div>
                 @endif
@@ -65,7 +65,7 @@
                     <div class="address-info-text">
                         <p>Website</p>
                         <a target="_blank" href="{{ $customer->website }}">
-                            <img src="/assets/images/icons/location.svg" alt="" />{!! $customer->website !!}
+                            <img src="{{ asset('assets/images/icons/location.svg') }}" alt="" />{!! $customer->website !!}
                         </a>
                     </div>
                 @endif
@@ -119,164 +119,12 @@
                 <h3>Customer History</h3>
                 <span class="paid">Total Paid= $1,956</span>
             </div>
-            <div class="user-payment-table">
-                <table>
-                    <tr>
-                        <th width="3%">No</th>
-                        <th class="d-flex justify-content-between">
-                            <span>Service</span>
-                            <div class="filter-sort-box">
-                                <div class="dropdown">
-                                    <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                        id="dropdownBttn"></button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item filterItem" href="#" data-value="asc">In order
-                                                A-Z</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item filterItem" href="#" data-value="desc">In order
-                                                Z-A</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </th>
-                        <th>Payment Date</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                    </tr>
-                    <!-- payment single item start -->
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div class="media">
-                                <div class="media-body">
-                                    <h5>Dashboard Design</h5>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>09 Oct, 2023</p>
-                        </td>
-                        <td>
-                            <p>$1,290</p>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <span class="btn-pending">Pending</span>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <!-- payment single item end -->
-                    <!-- payment single item start -->
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <div class="media">
-                                <div class="media-body">
-                                    <h5>App Design</h5>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>09 Oct, 2023</p>
-                        </td>
-                        <td>
-                            <p>$2,640</p>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <span class="btn-view btn-export">Paid</span>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <!-- payment single item end -->
-                    <!-- payment single item start -->
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <div class="media">
-                                <div class="media-body">
-                                    <h5>Landing Page Design</h5>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>09 Oct, 2023</p>
-                        </td>
-                        <td>
-                            <p>$1,290</p>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <span class="btn-view btn-export">Paid</span>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <!-- payment single item end -->
-                    <!-- payment single item start -->
-                    <tr>
-                        <td>4</td>
-                        <td>
-                            <div class="media">
-                                <div class="media-body">
-                                    <h5>Logo Design</h5>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>09 Oct, 2023</p>
-                        </td>
-                        <td>
-                            <p>$2,609</p>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <span class="btn-view btn-export">Paid</span>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <!-- payment single item end -->
-                    <!-- payment single item start -->
-                    <tr>
-                        <td>5</td>
-                        <td>
-                            <div class="media">
-                                <div class="media-body">
-                                    <h5>Dashboard Design</h5>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p>09 Oct, 2023</p>
-                        </td>
-                        <td>
-                            <p>$2,608</p>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <span class="btn-view btn-export">Paid</span>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <!-- payment single item end -->
-                </table>
-            </div>
+
+            @include('components.customer-history', ['customer' => $customer])
         </div>
         <!-- payment from company user end -->
         <!-- add comapny modal form start -->
-        <div class="add-company-modal-from">
+        {{-- <div class="add-company-modal-from">
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-body">
                     <!-- payment from company user start -->
@@ -361,165 +209,12 @@
                             <h3>Customer History</h3>
 
                         </div>
-                        <div class="user-payment-table">
-                            <table>
-                                <tr>
-                                    <th width="3%">No</th>
-                                    <th class="d-flex justify-content-between">
-                                        <span>Service</span>
-                                        <div class="filter-sort-box">
-                                            <div class="dropdown">
-                                                <button class="btn p-0" type="button" data-bs-toggle="dropdown"
-                                                    aria-expanded="false" id="dropdownBttn"></button>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a class="dropdown-item filterItem" href="#"
-                                                            data-value="asc">In order A-Z</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item filterItem" href="#"
-                                                            data-value="desc">In order Z-A</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>Payment Date</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                </tr>
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>Dashboard Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$1,290</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-pending">Pending</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>App Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$2,640</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-view btn-export">Paid</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>3</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>Landing Page Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$1,290</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-view btn-export">Paid</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>4</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>Logo Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$2,609</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-view btn-export">Paid</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                                <!-- payment single item start -->
-                                <tr>
-                                    <td>5</td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <h5>Dashboard Design</h5>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>09 Oct, 2023</p>
-                                    </td>
-                                    <td>
-                                        <p>$2,608</p>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="btn-view btn-export">Paid</a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <!-- payment single item end -->
-                            </table>
-                        </div>
+                        @include('components.customer-history', ['customer' => $customer])
                     </div>
                     <!-- payment from company user end -->
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- add comapny modal form end -->
     </section>
     <div class="showEditCustomerModal"></div>

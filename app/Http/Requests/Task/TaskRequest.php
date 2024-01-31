@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\Task;
 
-use App\Http\Requests\BaseFormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
-class TaskRequest extends BaseFormRequest
+class TaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,12 +33,12 @@ class TaskRequest extends BaseFormRequest
             'manualyCustomer' => 'boolean',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            // 'project_id' => ['required', Rule::exists('projects', 'id')],
+            'project_id' => ['required', Rule::exists('projects', 'project_id')],
+            'priority' => ['required', 'in:basic,important,priority'],
         ];
 
         $fieldRules = [
             'title' => ['required'],
-            'priority' => ['in:Basic,Important,Priority'],
             'date' => ['required'],
             'schedule' => ['required'],
         ];

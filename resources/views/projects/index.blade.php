@@ -6,6 +6,7 @@
 @endsection
 @section('content')
 <section class="main-page-wrapper">
+
     <!-- page title -->
     <div class="page-title mb-4">
         <h1>Projects</h1>
@@ -18,15 +19,7 @@
         <!-- bttn -->
     </div>
 
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+
     <div class="project-root-wrap">
         <div class="row align-items-center mb-4">
             <div class="col-lg-6">
@@ -107,7 +100,7 @@
                                     <form action="{{ url('projects/'.$project->project_id.'/destroy') }}" class="d-inline" method="POST">
                                         @csrf
                                         <button type="submit" class="btn dropdown-item">Delete Project</button>
-                                      </form> 
+                                      </form>
                                 </li>
                             </ul>
                         </div>
@@ -164,7 +157,7 @@
             </div>
             <!--project single box end-->
             @endforeach
- 
+
         </div>
     </div>
 </section>
@@ -176,7 +169,7 @@
 {{-- add custmer form end --}}
 
 @section('script')
-<script> 
+<script>
     document.addEventListener("DOMContentLoaded", function() {
 
         let inputField = document.getElementById("inputField");
@@ -187,7 +180,7 @@
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 inputField.value = this.getAttribute("data-value");
-               
+
                 form.submit();
             });
         });

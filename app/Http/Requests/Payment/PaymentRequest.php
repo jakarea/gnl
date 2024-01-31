@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Payment;
 
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\BaseFormRequest;
 
-class PaymentRequest extends BaseFormRequest
+class PaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +29,11 @@ class PaymentRequest extends BaseFormRequest
         $rules = [
             'amount' => 'required|numeric',
             'tax' => 'required|numeric|lt:amount',
-            'pay_status'=>'required',
+            'pay_status'=>'required|in:paid,unpaid',
             'pay_date'=>'required',
-            'payment_service'=>'required',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            // 'project_id' => ['required', Rule::exists('projects', 'id')],
+            'pay_services'=>'required',
+            'pay_date'=>'required',
+            'pay_type'=>'required|in:one_time,repeated',
         ];
 
         $fieldRules = [];

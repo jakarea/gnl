@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Project;
 
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 use App\Http\Requests\BaseFormRequest;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class ProjectRequest extends FormRequest
 {
@@ -29,6 +30,7 @@ class ProjectRequest extends FormRequest
         $rules = [
             'manualyCustomer' => 'boolean',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'customer_id' => ['required', Rule::exists('customers', 'customer_id')],
         ];
 
         $fieldRules = [

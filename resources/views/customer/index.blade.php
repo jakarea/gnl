@@ -10,12 +10,6 @@
 <section class="main-page-wrapper customer-page-wrapper">
     <!-- page title -->
 
-    @if ($errors->any())
-    @foreach ($errors->all() as $error)
-    <div>{{ $error }}</div>
-    @endforeach
-    @endif
-
     <div class="page-title">
         <h1 class="pb-0">Customer</h1>
 
@@ -179,9 +173,9 @@
                 <div class="customer-person-box-wrap">
                     <div class="avatar">
                         @if ($customer->avatar)
-                        <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid" />
+                        <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid avatar" />
                         @else
-                        <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar" class="img-fluid" />
+                        <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar" class="img-fluid avatar" />
                         @endif
                     </div>
 
@@ -494,7 +488,6 @@
     </div>
 
 
-
     <!-- customer add modal end -->
     <!-- add comapny modal form start -->
 
@@ -520,7 +513,7 @@
             e.preventDefault();
             const customerId = $(this).data('customer-id');
             $.ajax({
-                url: '{{ route('customers.details.modal') }}',
+                url: "{{ route('customers.details.modal') }}",
                 type: 'post',
                 data: {
                     customerId: customerId
@@ -541,7 +534,7 @@
 
         const editCustomerModal = (customerId) => {
             $.ajax({
-                url: '{{ route('customers.edit') }}',
+                url: "{{ route('customers.edit') }}",
                 type: 'post',
                 data: {
                     customerId: customerId
@@ -642,15 +635,15 @@
 {{-- select services type js --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let serviceTypeId = document.getElementById("service_type_id"); 
-        let setType = document.getElementById("setType"); 
-        let serviceTypes = document.querySelectorAll(".service-type"); 
+        let serviceTypeId = document.getElementById("service_type_id");
+        let setType = document.getElementById("setType");
+        let serviceTypes = document.querySelectorAll(".service-type");
 
         serviceTypes.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setType.innerHTML = this.innerHTML;
-                serviceTypeId.value = this.getAttribute("data-id"); 
+                serviceTypeId.value = this.getAttribute("data-id");
             });
         });
     });
@@ -659,15 +652,15 @@
 {{-- select leads type js --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let leadTypeId = document.getElementById("lead_type_id"); 
-        let setLeadType = document.getElementById("setLeadType"); 
-        let leadTypes = document.querySelectorAll(".lead-type"); 
+        let leadTypeId = document.getElementById("lead_type_id");
+        let setLeadType = document.getElementById("setLeadType");
+        let leadTypes = document.querySelectorAll(".lead-type");
 
         leadTypes.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setLeadType.innerHTML = this.innerHTML;
-                leadTypeId.value = this.getAttribute("data-id"); 
+                leadTypeId.value = this.getAttribute("data-id");
             });
         });
     });

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class Project extends Model
 {
     use HasFactory;
@@ -18,5 +18,18 @@ class Project extends Model
     public function customers()
     {
         return $this->belongsToMany(Customer::class, 'customer_projects', 'project_id', 'customer_id');
+    }
+
+
+    public function getRemainingDaysAttribute()
+    {
+        $now = Carbon::now();
+
+        $startDate = Carbon::parse($this->start_date);
+        if ($startDate->isPast()) {
+            return $now->diffInDays($this->end_date);
+        } else {
+            return $now->diffInDays($startDate);
+        }
     }
 }

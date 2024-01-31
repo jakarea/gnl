@@ -21,11 +21,13 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email');
             $table->string('linkedin')->nullable();
-            $table->string('instagram')->nullable();
-            $table->string('socials')->nullable();
+            $table->string('instagram')->nullable(); 
             $table->string('company')->nullable();
             $table->string('website')->nullable();
             $table->string('kvk')->nullable();
+            $table->string('state')->nullable()->default('new');
+            $table->string('lead_order')->nullable();
+            $table->string('status')->nullable()->default('active');
             $table->text('note')->nullable();
             $table->timestamps();
 
