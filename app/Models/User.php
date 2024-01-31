@@ -27,6 +27,7 @@ class User extends Authenticatable {
         'nationality',
         'marital_status',
         'address',
+        'website',
         'email_verified_at',
         'password',
         'country',

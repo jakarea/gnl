@@ -10,6 +10,14 @@
 
 @section('content')
     <section class="main-page-wrapper">
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        @endif
+
+
         <!-- page title -->
         <div class="page-title">
             <h1 class="pb-0">To Do List</h1>
@@ -31,15 +39,16 @@
                         <!-- task item start -->
                         @if (count($tasks) > 0)
                             @foreach ($tasks as $task)
-                            <div data-delete-url="{{ url("/to-do-list/" .$task->task_id. "/delete") }}" data-task-id="{{ $task->task_id }}"></div>
+                                <div data-delete-url="{{ url('/to-do-list/' . $task->task_id . '/delete') }}"
+                                    data-task-id="{{ $task->task_id }}"></div>
                                 <div class="task-item">
                                     <div class="top">
                                         <span><i class="fas fa-circle"></i> {{ ucfirst($task->priority) }}</span>
                                         {{-- <a href="#"><i class="fas fa-ellipsis-vertical"></i></a> --}}
 
                                         <div class="btn-group dropstart">
-                                            <a href="#" type="button" class="ellipse dropdown-toggle" data-bs-toggle="dropdown"
-                                                aria-expanded="false" aria-expanded="false"><i
+                                            <a href="#" type="button" class="ellipse dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false" aria-expanded="false"><i
                                                     class="fa-solid fa-ellipsis-vertical"></i></a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li>
@@ -48,7 +57,8 @@
                                                         Task</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="javascript:;" onclick="deleteTask()">Delete
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        onclick="deleteTask()">Delete
                                                         Task</a>
                                                 </li>
                                             </ul>
@@ -89,7 +99,8 @@
                                             <div class="media-body">
                                                 <h5>{{ $task->project->title }}</h5>
                                                 <span><img src="/assets/images/icons/close-3.svg" alt="a"
-                                                        class="img-fluid "> {{ $task->project->remaining_days }} Days Remaining</span>
+                                                        class="img-fluid "> {{ $task->project->remaining_days }} Days
+                                                    Remaining</span>
                                             </div>
                                         </div>
                                         <hr />
@@ -99,7 +110,8 @@
                                     <div class="ftr">
                                         <p><img src="assets/images/icons/calendar.svg" alt="a" class="img-fluid">
                                             {{ $task->created_at->diffForHumans() }}</p>
-                                        <p><img src="assets/images/icons/clock.svg" alt="a" class="img-fluid"> {{ $task->created_at->format('g:i A') }}
+                                        <p><img src="assets/images/icons/clock.svg" alt="a" class="img-fluid">
+                                            {{ $task->created_at->format('g:i A') }}
 
                                         </p>
                                     </div>
@@ -548,7 +560,8 @@
                                                                                                     type="button"
                                                                                                     data-bs-toggle="dropdown"
                                                                                                     aria-expanded="false">
-                                                                                                    <div class="setLeadLabel">
+                                                                                                    <div
+                                                                                                        class="setLeadLabel">
                                                                                                         Select Below</div><i
                                                                                                         class="fas fa-angle-down"></i>
                                                                                                 </button>
@@ -748,8 +761,6 @@
                 }
             });
         }
-
-
     </script>
 
     {{-- customer get by search ajax req --}}

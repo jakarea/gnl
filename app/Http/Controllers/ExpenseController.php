@@ -43,7 +43,7 @@ class ExpenseController extends ApiController
                 $avatar = $request->file('file');
                 $filename = substr(md5(time()), 0 , 10) .'.' . $avatar->getClientOriginalExtension();
                 $avatarPath = $avatar->storeAs('expenses', $filename, 'public');
-                $expense->update(['file' => $avatarPath]);
+                $expense->update(['file' => 'storage/'. $avatarPath]);
             }
 
             return redirect('/expenses')->withSuccess('Expenses create successfuly!');

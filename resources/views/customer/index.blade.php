@@ -10,12 +10,6 @@
 <section class="main-page-wrapper customer-page-wrapper">
     <!-- page title -->
 
-    @if ($errors->any())
-    @foreach ($errors->all() as $error)
-    <div>{{ $error }}</div>
-    @endforeach
-    @endif
-
     <div class="page-title">
         <h1 class="pb-0">Customer</h1>
 

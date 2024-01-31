@@ -34,11 +34,11 @@ class TaskRequest extends FormRequest
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'project_id' => ['required', Rule::exists('projects', 'project_id')],
+            'priority' => ['required', 'in:basic,important,priority'],
         ];
 
         $fieldRules = [
             'title' => ['required'],
-            // 'priority' => ['required', 'in:basic,important,priority'],
             'date' => ['required'],
             'schedule' => ['required'],
         ];
