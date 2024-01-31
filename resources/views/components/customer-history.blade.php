@@ -33,7 +33,7 @@
                     <td>
                         <div class="media">
                             <div class="media-body">
-                                <h5>{{ optional($payment->customer->projects->first())->name }}</h5>
+                                <h5>{{ $customer->serviceTypes->name }}</h5>
                             </div>
                         </div>
                     </td>
@@ -47,9 +47,9 @@
                         <ul>
                             <li>
                                 @if ($payment->pay_status == 'pending')
-                                    <a href="javascript:;" class="status unpaid">{{ ucfirst($payment->pay_status) }}</a>
-                                @elseif ($payment->pay_status == 'processing')
                                     <a href="javascript:;" class="btn-pending">{{ ucfirst($payment->pay_status) }}</a>
+                                @elseif ($payment->pay_status == 'unpaid')
+                                    <a href="javascript:;" class="status unpaid">{{ ucfirst($payment->pay_status) }}</a>
                                 @else
                                     <a href="javascript:;" class="btn-view btn-export">{{ ucfirst($payment->pay_status) }}</a>
                                 @endif
