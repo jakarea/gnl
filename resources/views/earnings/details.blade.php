@@ -1,6 +1,6 @@
 <div class="custom-modal client-details-modal">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade earning-details-modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header modal-header-two">
@@ -15,72 +15,102 @@
                         <!--customer profile header start-->
                         <div class="profile-header">
                             <div class="profile-box">
-                                <img src="uploads/users/avatar-9.png" alt="" />
+                                <img src="uploads/users/avatar-9.png" alt="avatar" class="img-fluid" />
                                 <div class="profile-text">
-                                    <h3>Melinda Keebler</h3>
-                                    <p>Facilitator</p>
+                                    <h3>{{ $earning->customer->name }}</h3>
+                                    <p>{{ $earning->customer->designation }}</p>
                                 </div>
-                                <a href="#" class="active">Active</a>
+                                @if ($earning->customer->status == 'active')
+                                <a href="javascript:;" class="active">Active</a>
+                                @else
+                                <a href="javascript:;" class="inactive">Inactive</a>
+                                @endif
+
                             </div>
 
                         </div>
                         <!--customer profile header end-->
                         <!--address info start-->
                         <div class="address-info">
-                            <div class="adress-info-text">
-                                <p>Phone</p>
-                                <a href="#"><img src="./assets/images/icons/call.svg" alt="" />817-291-2029</a>
-                            </div>
-                            <div class="adress-info-text">
-                                <p>Email</p>
-                                <a href="#"><img src="./assets/images/icons/envelope.svg" alt="" />Dolly30@yahoo.com</a>
-                            </div>
-                            <div class="adress-info-text">
-                                <p>Website</p>
-                                <a href="#"><img src="./assets/images/icons/call.svg" alt="" />www.thestarplace.net</a>
-                            </div>
-                            <div class="adress-info-text">
-                                <p>Location</p>
-                                <a href="#"><img src="./assets/images/icons/location.svg" alt="" />47946
-                                    Mitchel Circles</a>
-                            </div>
+                            @if ($earning->customer)
+                                @if ($earning->customer->phone)
+                                <div class="adress-info-text">
+                                    <p>Phone</p>
+                                    <a href="tel:{{ $earning->customer->phone }}">
+                                        <img src="{{ asset('assets/images/icons/call.svg') }}" alt="" />{{ $earning->customer->phone }}
+                                    </a>
+                                </div>
+                                @endif
+
+                                @if ($earning->customer->email)
+                                <div class="adress-info-text">
+                                    <p>Email</p>
+                                    <a href="mailto:{{ $earning->customer->email }}">
+                                        <img src="{{ asset('assets/images/icons/envelope.svg') }}" alt="" />{{ $earning->customer->email
+                                        }}
+                                    </a>
+                                </div>
+                                @endif
+
+                                @if ($earning->customer->website)
+                                <div class="address-info-text">
+                                    <p>Website</p>
+                                    <a target="_blank" href="{{ $earning->customer->website }}">
+                                        <img src="{{ asset('assets/images/icons/location.svg') }}" alt="" />{!!
+                                        $earning->customer->website !!}
+                                    </a>
+                                </div>
+                                @endif
+
+                                @if ($earning->customer->location)
+                                <div class="address-info-text">
+                                    <p>Location</p>
+                                    <a target="_blank" href="{{ $earning->customer->location }}">
+                                        <img src="{{ asset('assets/images/icons/location.svg') }}"
+                                            alt="location icon" />{!! $earning->customer->location !!}
+                                    </a>
+                                </div>
+                                @endif
+                            @endif
                         </div>
                         <!--address info end-->
                         <!--service part start-->
                         <div class="service-profile">
                             <div class="service-text">
-                                <p class="ps-0">Service:</p>
-                                <a href="#">Dashboard Design</a>
-                                <a href="#">Hosting</a>
-                                <a href="#">Marketing</a>
+                                <p>Service:</p>
+                                @if ($earning->pay_services)
+                                    <a href="#"> {{ $earning->pay_services }}</a>
+                                @endif
                             </div>
-                            <div class="service-text border-line">
-                                <p>Company:</p>
-                                <a href="#">The Star Place</a>
-                            </div>
-                            <div class="service-text border-line">
-                                <p>KVK:</p>
-                                <a href="">Z005484</a>
-                            </div>
+            
+                            @if ($earning->customer->company)
+                                <div class="service-text border-line">
+                                    <p class="mb-0">Company:</p>
+                                    <a href="#">{{ $earning->customer->company }}</a>
+                                </div>
+                            @endif
+            
+                            @if ($earning->customer->kvk)
+                                <div class="service-text border-line">
+                                    <p class="mb-0">KVK:</p>
+                                    <a href="#"> {{ $earning->customer->kvk }} </a>
+                                </div>
+                            @endif
                         </div>
                         <!--service part end-->
                         <!--details page start-->
-                        <div class="details">
-                            <h3>Details</h3>
-                            <p>
-                                Ut qui vel libero labore quidem aut veniam. Distinctio et
-                                doloremque velit iusto amet aut. Qui praesentium consequatur sint
-                                atque. Aut iure aut possimus libero nisi molestias in et
-                                consequatur. Cumque soluta beatae dolor enim nostrum est. Rem
-                                minus dicta et quia. Ut delectus minima commodi. Neque veritatis
-                                sunt quaerat quasi quo maiores impedit. Dolor sequi fuga rerum
-                                delectus in necessitatibus non quam. Doloribus molestiae qui esse.
-                            </p>
-                        </div>
+                        @isset($earning->customer->details)
+                            <div class="details">
+                                <h3>Details</h3>
+                                <p>
+                                    {{ $earning->customer->details }}
+                                </p>
+                            </div>
+                        @endisset
                         <!--details page end-->
                         <div class="header">
                             <h3>Customer History</h3>
-                            <span class="paid">Total Paid= $1,956</span>
+                            <span class="paid">Total Paid = {{ $earning->amount }}</span>
                         </div>
                         <div class="user-payment-table">
                             <table>

@@ -208,7 +208,7 @@
 
     function fetchLeadDetails(leadId) {
 
-        let currentURL = window.location.href;
+            let currentURL = window.location.href;
             const baseUrl = currentURL.split('/').slice(0, 3).join('/'); 
 
             fetch(`${baseUrl}/lead-details/${leadId}`, {
