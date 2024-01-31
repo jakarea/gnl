@@ -22,184 +22,192 @@ class EarningController extends Controller
 
     public function __construct()
     {
+
         $this->today = Carbon::today();
         $this->thisMonth = Carbon::now()->startOfMonth();
         $this->lastMonth = Carbon::now()->subMonth()->startOfMonth();
-        $this->lastAgoMonth = Carbon::now()->subMonths(1)->startOfMonth();
+        $this->lastAgoMonth = Carbon::now()->subMonths(2)->startOfMonth();
         $this->thisYear = Carbon::now()->year;
         $this->lastYear = Carbon::now()->subYear()->startOfYear();
         $this->lastAgoYear = Carbon::now()->subYears(2)->startOfYear();
     }
 
     public function index()
-    { 
-
-        // return $this->lastAgoMonth->year;
+    {
 
         $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
 
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $earnings = Earning::with('customer')->paginate(12);
 
-        return $totalEarning = $this->getTotalEarning($queryStatus);
+        return $data = [
+            'totalEarningToday'     => $this->getTodayEarning($queryStatus),
+            'totalEarning'          => $this->getTotalEarning($queryStatus),
+            'totalTax'              => $this->getTotalTax($queryStatus),
+            'totalProfit'           => $this->getTotalProfit($queryStatus),
+            'totalEarningHosting'   => $this->getHoistingEarning($queryStatus),
+            'totalEarningMarketing' => $this->getMarketingEarning($queryStatus),
+            'totalEarningProject'   => $this->getProjectEarning($queryStatus),
+            'totalEarningWebsite'   => $this->getWebsiteEarning($queryStatus),
+        ];
 
-        // total tax
-        $taxAmount = Earning::pluck('tax')->toArray();
-        $totalTax = array_sum($taxAmount);
-
-        // total profit
-        $totalProfit = 1234;
-
-        // earning amount today
-        $earningAmountToday = Earning::whereDate('created_at', $this->today)->pluck('amount')->toArray();
-        $totalEarningToday = array_sum($earningAmountToday);
-
-        // total hosting earning
-        $earningAmountHosting = Earning::where('pay_services', 'hoisting')->pluck('amount')->toArray();
-        $totalEarningHosting = array_sum($earningAmountHosting);
-
-        // total marketing earning
-        $earningAmountMarketing = Earning::where('pay_services', 'marketing')->pluck('amount')->toArray();
-        $totalEarningMarketing = array_sum($earningAmountMarketing);
-
-        // total project earning
-        $earningAmountProject = Earning::where('pay_services', 'project')->pluck('amount')->toArray();
-        $totalEarningProject = array_sum($earningAmountProject);
-
-        // total website earning
-        $earningAmountWebsite = Earning::where('pay_services', 'website')->pluck('amount')->toArray();
-        $totalEarningWebsite = array_sum($earningAmountWebsite);
-
-        $status = [
-            'totalEarning'          => $totalEarning,
-            'totalTax'              => $totalTax,
-            'totalProfit'           => $totalProfit,
-            'totalEarningToday'     => $totalEarningToday, 
-            'totalEarningHosting'   => $totalEarningHosting,
-            'totalEarningMarketing' => $totalEarningMarketing,
-            'totalEarningProject'   => $totalEarningProject,
-            'totalEarningWebsite'   => $totalEarningWebsite,
-        ]; 
- 
-
-        return view('earnings/index',compact('lead_types','earnings','status'));
+        return view('earnings/index', compact('lead_types', 'earnings', 'data'));
     }
 
+    // query map for sort 
+    private function getQueryMap()
+    {
+        $queryMap = [
+            'last_month' => [
+                'earning' => ['year' => $this->lastMonth->year, 'month' => $this->lastMonth->month],
+                'compare' => ['year' => $this->lastAgoMonth->year, 'month' => $this->lastAgoMonth->month]
+            ],
+            'this_year' => [
+                'earning' => ['year' => $this->thisYear],
+                'compare' => ['year' => $this->lastYear->year]
+            ],
+            'last_year' => [
+                'earning' => ['year' => $this->lastYear->year],
+                'compare' => ['year' => $this->lastAgoYear->year]
+            ],
+            'this_month' => [
+                'earning' => ['year' => $this->thisMonth->year, 'month' => $this->thisMonth->month],
+                'compare' => ['year' => $this->lastAgoMonth->year, 'month' => $this->lastAgoMonth->month]
+            ],
+            '' => [
+                'earning' => ['year' => null, 'month' => null],
+                'compare' => ['year' => null, 'month' => null]
+            ]
+        ];
+
+        return $queryMap;
+    }
+
+    // all query to get amount and compare
+    private function getAmounts($queryStatus, $field, $type)
+    {
+        $queryMap = $this->getQueryMap();
+
+        // Fetch amounts and comparison amounts
+        $amount = array_sum(
+            Earning::whereYear('created_at', $queryMap[$queryStatus]['earning']['year'])
+                ->when(isset($queryMap[$queryStatus]['earning']['month']), function ($query) use ($queryMap, $queryStatus) {
+                    $query->whereMonth('created_at', $queryMap[$queryStatus]['earning']['month']);
+                })
+                ->whereIn('pay_services', $type)
+                ->pluck($field)
+                ->toArray()
+        );
+
+        $compareAmount = array_sum(
+            Earning::whereYear('created_at', $queryMap[$queryStatus]['compare']['year'])
+                ->when(isset($queryMap[$queryStatus]['compare']['month']), function ($query) use ($queryMap, $queryStatus) {
+                    $query->whereMonth('created_at', $queryMap[$queryStatus]['compare']['month']);
+                })
+                ->whereIn('pay_services', $type)
+                ->pluck($field)
+                ->toArray()
+        );
+
+        $compare = ($compareAmount != 0) ? (($amount - $compareAmount) / $compareAmount) * 100 : 0;
+
+        return [$field . 'Compare' => $compare, $field . 'Earning' => $amount];
+    }
+
+    // Get total earning
+    private function getTotalEarning($queryStatus)
+    {
+        $type = ['hoisting', 'marketing', 'website', 'project'];
+        return $this->getAmounts($queryStatus, 'amount', $type);
+    }
+
+    // Get total tax
+    private function getTotalTax($queryStatus)
+    {
+        $type = ['hoisting', 'marketing', 'website', 'project'];
+        return $this->getAmounts($queryStatus, 'tax', $type);
+    }
+
+    // Get total profit
+    private function getTotalProfit($queryStatus)
+    {
+        $earning = $this->getTotalEarning($queryStatus);
+        $tax = $this->getTotalTax($queryStatus);
+
+        $amountEarning = $earning['amountEarning'];
+        $taxEarning = $tax['taxEarning'];
+
+        $totalProfit = $amountEarning - $taxEarning;
+
+        // $profitCompare = ($earning['amountCompare'] != 0) ? (($totalProfit - $earning['amountCompare']) / $earning['amountCompare']) * 100 : 0;
+
+        return ['totalProfit' => $totalProfit];
+    }
+
+    // earning amount today
+    private function getTodayEarning()
+    {
+        $earningAmountToday = Earning::whereDate('created_at', $this->today)->pluck('amount')->toArray();
+        $totalEarningToday = array_sum($earningAmountToday);
+    }
+
+    // Get hoisting earning
+    private function getHoistingEarning($queryStatus)
+    {
+        $type = ['hoisting'];
+        return $this->getAmounts($queryStatus, 'amount', $type);
+    }
+
+    // Get hoisting earning
+    private function getMarketingEarning($queryStatus)
+    {
+        $type = ['marketing'];
+        return $this->getAmounts($queryStatus, 'amount', $type);
+    }
+
+    // Get hoisting earning
+    private function getWebsiteEarning($queryStatus)
+    {
+        $type = ['website'];
+        return $this->getAmounts($queryStatus, 'amount', $type);
+    }
+
+    // Get hoisting earning
+    private function getProjectEarning($queryStatus)
+    {
+        $type = ['project'];
+        return $this->getAmounts($queryStatus, 'amount', $type);
+    }
+
+    // earning store method
     public function store(CustomerService $addCustomer, PaymentRequest $request)
     {
-       $data = $request->all();
-        if($request->manualyCustomer == 1 || $request->manualyCustomer == "1"){
+        $data = $request->all();
+        if ($request->manualyCustomer == 1 || $request->manualyCustomer == "1") {
             $customer =  $addCustomer->addCustomer($request);
             $customerId = $customer->customer_id;
-        }elseif($request->customer_id){
+        } elseif ($request->customer_id) {
             $customerId = $request->customer_id;
-        }else{
-            return redirect()->back()->with('error','You have to select a customer');
+        } else {
+            return redirect()->back()->with('error', 'You have to select a customer');
         }
 
         $data['customer_id'] = $customerId;
 
         $service = Earning::create($data);
 
-        return redirect()->back()->with('success','Payment added successfuly!');
+        return redirect()->back()->with('success', 'Payment added successfuly!');
     }
 
     public function destroy($earning_id)
     {
         if (!$earning_id) {
-            return redirect()->back()->with('error','No payment found!');
+            return redirect()->back()->with('error', 'No payment found!');
         }
 
         $earning = Earning::findOrFail($earning_id);
-        if($earning->delete() ){
-            return redirect()->back()->with('success','Payment deleted successfuly!');
+        if ($earning->delete()) {
+            return redirect()->back()->with('success', 'Payment deleted successfuly!');
         }
-    }
-
-    private function getTotalEarning($queryStatus)
-    { 
-         // this month
-         $thisMonthEarning = Earning::whereYear('created_at', $this->thisMonth->year)
-                            ->whereMonth('created_at', $this->thisMonth->month)
-                            ->pluck('amount')
-                            ->toArray();
-
-        //  last month
-        $lastMonthEarning = Earning::whereYear('created_at', $this->lastMonth->year)
-                            ->whereMonth('created_at', $this->lastMonth->month)
-                            ->pluck('amount')
-                            ->toArray();
-
-        //  last ago 2 month
-        $lastAgoMonthEarning = Earning::whereYear('created_at', $this->lastAgoMonth->year)
-                            ->whereMonth('created_at', $this->lastAgoMonth->month)
-                            ->pluck('amount')
-                            ->toArray();
-
-        // this year
-        $thisYearEarning = Earning::whereYear('created_at', $this->thisYear)
-                            ->pluck('amount')
-                            ->toArray();
-
-        // last year
-        $lastYearEarning = Earning::whereYear('created_at', $this->lastYear->year)
-                            ->pluck('amount')
-                            ->toArray();
-
-        // last ago 2year
-        $lastAgoYearEarning = Earning::whereYear('created_at', $this->lastAgoYear->year)
-                            ->pluck('amount')
-                            ->toArray();
-
-         if ($queryStatus === 'last_month') {
-
-           $earningAmount = array_sum($lastMonthEarning);
-           $lastAgoMonthEarnings = array_sum($lastAgoMonthEarning);
-
-           if ($lastAgoMonthEarnings != 0) {
-            $earningCompare = (($earningAmount - $lastAgoMonthEarnings) / $lastAgoMonthEarnings) * 100;
-            } else { 
-                $earningCompare = 0;
-            }
-
-        }
-        elseif ($queryStatus === 'this_year') {
-            
-            $earningAmount = array_sum($thisYearEarning);
-            $lastYearEarnings = array_sum($lastYearEarning);
-
-            if ($lastYearEarnings != 0) {
-                $earningCompare = (($earningAmount - $lastYearEarnings) / $lastYearEarnings) * 100;
-            } else { 
-                $earningCompare = 0;
-            }
-
-        }
-        elseif ($queryStatus === 'last_year') {
-
-            $earningAmount = array_sum($lastYearEarning);
-            $lastAgoYearEarnings = array_sum($lastAgoYearEarning);
-
-            if ($lastAgoYearEarnings != 0) {
-                $earningCompare = (($earningAmount - $lastAgoYearEarnings) / $lastAgoYearEarnings) * 100;
-            } else { 
-                $earningCompare = 0;
-            }
-            
-        }else{
-            
-            $earningAmount = array_sum($thisMonthEarning);
-            $lastAgoMonthEarnings = array_sum($lastAgoMonthEarning);
-
-           if ($lastAgoMonthEarnings != 0) {
-            $earningCompare = (($earningAmount - $lastAgoMonthEarnings) / $lastAgoMonthEarnings) * 100;
-            } else { 
-                $earningCompare = 0;
-            }
-
-        }
-
-        // total earning
-       return ['earningCompare' => $earningCompare,'earningAmount' => $earningAmount];
     }
 }
