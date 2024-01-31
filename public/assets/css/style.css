@@ -1305,6 +1305,7 @@ body {
 
 .pagination-section .d-flex.justify-items-center.justify-content-between{
   width: 100%!important;
+  flex-direction: row-reverse!important;
 }
 
 .table-dropdown .dot-bttn {
@@ -1319,4 +1320,14 @@ body {
 
 .page-bttn .bttn.show i {
   transform: rotate(180deg)!important;
+}
+
+.pagination-section .active>.page-link, .page-link.active {
+  background-color: #F8F8F8!important;
+  color: #000!important;
+  border-radius: 10px!Important;
+}
+
+.all-customer-box .pagination-section .pagination .page-item.active{
+  background-color: transparent!important;
 }

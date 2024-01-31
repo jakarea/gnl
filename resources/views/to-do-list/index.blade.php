@@ -9,15 +9,7 @@
 @endsection
 
 @section('content')
-    <section class="main-page-wrapper">
-
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <div>{{ $error }}</div>
-            @endforeach
-        @endif
-
-
+    <section class="main-page-wrapper"> 
         <!-- page title -->
         <div class="page-title">
             <h1 class="pb-0">To Do List</h1>
@@ -183,7 +175,7 @@
                                                             <label for="title">Task Title</label>
                                                             <input type="text" placeholder="Enter title"
                                                                 id="title" name="title" class="form-control"
-                                                                value="{{ old('title') }}">
+                                                                value="{{ old('title') }}" required>
                                                             @error('title')
                                                                 <div class="text-danger">{{ $message }}</div>
                                                             @enderror
@@ -226,7 +218,7 @@
                                                             <label for="date">Date</label>
                                                             <input type="date" placeholder="dd-mm-yyyy" id="date"
                                                                 name="date" class="form-control"
-                                                                value="{{ old('date') }}">
+                                                                value="{{ old('date') }}" required>
                                                             @error('date')
                                                                 <div class="text-danger">{{ $message }}</div>
                                                             @enderror
@@ -237,7 +229,7 @@
                                                             <label for="schedule">Schedule</label>
                                                             <input type="time" placeholder="dd-mm-yyyy" id="schedule"
                                                                 name="schedule" class="form-control"
-                                                                value="{{ old('schedule') }}">
+                                                                value="{{ old('schedule') }}" required>
                                                             @error('schedule')
                                                                 <div class="text-danger">{{ $message }}</div>
                                                             @enderror
@@ -294,7 +286,7 @@
                                                             <h3>Select Customer</h3>
                                                         </div>
                                                         <!-- customer search form start -->
-                                                        <div class="form-group search-by-name mt-2">
+                                                        <div class="form-group search-by-name mt-2" style="grid-template-columns: 65% 35%!important">
                                                             <div class="search-item">
                                                                 <img src="assets/images/icons/search-ic.svg"
                                                                     alt="a" class="img-fluid search">
