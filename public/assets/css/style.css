@@ -1316,3 +1316,7 @@ body {
   border: 1px solid var(--Neutral-200, #F1F2F4);
   display: flex;
 }
+
+.page-bttn .bttn.show i {
+  transform: rotate(180deg)!important;
+}
