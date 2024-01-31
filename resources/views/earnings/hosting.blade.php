@@ -87,7 +87,7 @@
     <div class="col-12 col-sm-6 col-md-4 col-xl-4 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          @if ($data['totalEarning']['amountCompare'] >= 0)
+          @if ($data['totalEarningHosting']['amountCompare'] >= 0)
           <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
           @else
           <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
@@ -95,14 +95,14 @@
 
           <p>Total Hosting Income</p>
         </div>
-        <h4>€{{ $data['totalEarning']['amountEarning'] }}</h4>
+        <h4>€{{ $data['totalEarningHosting']['amountEarning'] }}</h4>
         <div class="bottom-text">
-          <h5 class="{{ $data['totalEarning']['amountCompare'] < 0 ? 'red' : ''}} ">{{
-            $data['totalEarning']['amountCompare'] }}%</h5>
+          <h5 class="{{ $data['totalEarningHosting']['amountCompare'] < 0 ? 'red' : ''}} ">{{
+            $data['totalEarningHosting']['amountCompare'] }}%</h5>
 
           @php
           $highLess = 'Higher';
-          if ($data['totalEarning']['amountCompare'] < 0) {
+          if ($data['totalEarningHosting']['amountCompare'] < 0) {
             $highLess='Less';
           }
           @endphp 
@@ -125,13 +125,13 @@
           <img src="{{ asset('assets/images/icons/user-add.svg') }}" alt="I" class="img-fluid money-recive">
           <p>Total Customer</p>
         </div>
-        <h4>{{ $data['totalTax']['taxEarning'] }}</h4>
+        <h4>{{ $data['totalHostingCustomer']['hostingcustomers'] }}</h4>
         <div class="bottom-text">
-          <h5 class="{{ $data['totalTax']['taxCompare'] < 0 ? 'red' : ''}} ">{{ $data['totalTax']['taxCompare'] }}%</h5>
+          <h5 class="{{ $data['totalHostingCustomer']['hostingcustomersCompare'] < 0 ? 'red' : ''}} ">{{ $data['totalHostingCustomer']['hostingcustomersCompare'] }}%</h5>
 
           @php
           $highLess2 = 'Higher';
-          if ($data['totalTax']['taxCompare'] < 0) 
+          if ($data['totalHostingCustomer']['hostingcustomersCompare'] < 0) 
           { $highLess2='Less' ; } 
           @endphp 
 
@@ -153,25 +153,11 @@
           <img src="{{ asset('assets/images/icons/user-add.svg') }}" alt="I" class="img-fluid money-recive">
           <p>New Customer</p>
         </div>
-        <h4>{{ $data['totalProfit']['totalProfit'] }}</h4>
+        <h4>{{ $data['totalHostingNewCustomer'] }}</h4>
         <div class="bottom-text">
-          <h5 class="{{ $data['totalProfit']['profitCompare'] < 0 ? 'red' : ''}} ">{{
-            $data['totalProfit']['profitCompare'] }}%</h5>
+          <h5 class="{{ $data['totalHostingNewCustomer'] < 0 ? 'red' : ''}} ">100%</h5>
 
-          @php
-          $highLess3 = 'Higher';
-          if ($data['totalProfit']['profitCompare'] < 0) { 
-            $highLess3='Less' ; 
-            } 
-          @endphp 
-          @if ($selectedQuery==='this_month' || $selectedQuery==='last_month' ) <p>{{ $highLess3 }} than last month</p>
-            @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-            <p>{{ $highLess3 }} than last year</p>
-            @elseif ($selectedQuery === 'all_time')
-            <p>All time record</p>
-            @else
-            <p>{{ $highLess3 }} than last month</p>
-            @endif
+          <p>All time record</p>
         </div>
       </div>
     </div>  
@@ -193,7 +179,7 @@
           </div>
           <div class="earning">
             <a href="#"><i class="fas fa-circle"></i> Earning</a>
-            <h5>€{{ $data['totalEarning']['amountEarning'] }}</h5>
+            <h5>€{{ $data['totalEarningHosting']['amountEarning'] }}</h5>
           </div>
         </div>
         <div id="totalEarning"></div>
@@ -353,12 +339,8 @@
             }
             return response.text();
         })
-        .then(function (data) {
-          console.log(data);
-            document.querySelector(".showEarningDetails").innerHTML = data;
-            
-            // $(".earning-details-modal").modal('show');
-
+        .then(function (data) { 
+            document.querySelector(".showEarningDetails").innerHTML = data; 
             const modal = new bootstrap.Modal(document.querySelector('.earning-details-modal'));
             modal.show(); 
 
@@ -373,12 +355,13 @@
 
 <!-- total hoisting  js start -->
 <script>
-  const earningsPerMonth = @json($earningsPerMonth);
+
+const totalTypeEarningPerMonth = @json($totalTypeEarningPerMonth);
 
   var options = {
       series: [{
         name: 'Total earning',
-        data: earningsPerMonth
+        data: totalTypeEarningPerMonth
       }],
       chart: {
         type: 'bar',

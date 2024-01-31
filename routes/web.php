@@ -111,6 +111,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     // hosting earning
     Route::get('/hosting-earnings', [EarningController::class, 'hostingEarning'])->name('earning.hosting-earnings');
+    Route::get('/marketing-earnings', [EarningController::class, 'marketingEarning'])->name('earning.marketing-earnings');
+    Route::get('/project-earnings', [EarningController::class, 'projectEarning'])->name('earning.project-earnings');
+    Route::get('/website-earnings', [EarningController::class, 'websiteEarning'])->name('earning.website-earnings');
 
     // expense route
     // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expense.total-expense');
