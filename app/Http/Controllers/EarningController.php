@@ -22,7 +22,6 @@ class EarningController extends Controller
 
     public function __construct()
     {
-
         $this->today = Carbon::today();
         $this->thisMonth = Carbon::now()->startOfMonth();
         $this->lastMonth = Carbon::now()->subMonth()->startOfMonth();
@@ -64,7 +63,7 @@ class EarningController extends Controller
         return view('earnings/index', compact('lead_types', 'earnings', 'data', 'selectedQuery', 'earningsPerMonth'));
     }
 
-    // query map for sort 
+    // query map for sort
     private function getQueryMap()
     {
         $queryMap = [
@@ -248,8 +247,8 @@ class EarningController extends Controller
     {
 
         if ($earningId) {
-            $earning = Earning::findOrFail($earningId); 
- 
+            $earning = Earning::findOrFail($earningId);
+
             return view('earnings.details',compact('earning'));
 
         } else{
