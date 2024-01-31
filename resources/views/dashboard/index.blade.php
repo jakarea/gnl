@@ -63,7 +63,7 @@
                         <img src="./assets/images/icons/money-recive.svg" alt="icon" class="img-fluid" />
                         Total Income
                     </h5>
-                    <h3>${{ $totalIncome }}</h3>
+                    <h3>$00.00</h3>
                     <div class="d-flex">
                         <span>+4.3%</span>
                         <p>Higher than last month</p>
@@ -76,7 +76,7 @@
                         <img src="./assets/images/icons/money-recive.svg" alt="icon" class="img-fluid" />
                         Total Expenses
                     </h5>
-                    <h3>${{ $totalExpense }}</h3>
+                    <h3>$00.00</h3>
                     <div class="d-flex">
                         <span class="lower">-0.12%</span>
                         <p>Less than last month</p>
@@ -89,7 +89,7 @@
                         <img src="./assets/images/icons/money-recive.svg" alt="icon" class="img-fluid" />
                         Total Profit
                     </h5>
-                    <h3>${{ $totalProfit }}</h3>
+                    <h3>$00.00</h3>
                     <div class="d-flex">
                         <span>+4.3%</span>
                         <p>Higher than last month</p>
@@ -102,9 +102,9 @@
                         <img src="./assets/images/icons/user-add.svg" alt="icon" class="img-fluid" />
                         Total Customer
                     </h5>
-                    <h3>{{ $totalCustomer }}</h3>
+                    <h3>$00.00</h3>
                     <div class="d-flex">
-                        <span>+{{ $totalCustomerInc }}%</span>
+                        <span>+4.3%</span>
                         <p>Higher than last month</p>
                     </div>
                 </div>
@@ -115,9 +115,9 @@
                         <img src="./assets/images/icons/user-add.svg" alt="icon" class="img-fluid" />
                         New Customer
                     </h5>
-                    <h3>{{ $newCustomer }}</h3>
+                    <h3>0.00</h3>
                     <div class="d-flex">
-                        <span>+{{ $newCustomerInc }}%</span>
+                        <span>+4.3%</span>
                         <p>Higher than last month</p>
                     </div>
                 </div>
@@ -128,9 +128,9 @@
                         <img src="./assets/images/icons/user-add.svg" alt="icon" class="img-fluid" />
                         Repeat Customer
                     </h5>
-                    <h3>{{ $repeatedCustomer }}</h3>
+                    <h3>00.00</h3>
                     <div class="d-flex">
-                        <span>+{{ $repeatCustomerInc }}%</span>
+                        <span>+4.3%</span>
                         <p>Higher than last month</p>
                     </div>
                 </div>
