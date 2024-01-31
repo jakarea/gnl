@@ -42,6 +42,8 @@ class TaskController extends ApiController
 
         try {
 
+
+
             $data = $request->except(['file_upload', 'schedule']);
 
             if($request->manualyCustomer == true || $request->manualyCustomer == "true"){
@@ -62,6 +64,8 @@ class TaskController extends ApiController
 
             $data['created_by'] = auth()->user()->full_name;
             $data['customer_id'] = $customerId;
+
+            // dd( $data);
 
             $taks = Task::create($data);
 

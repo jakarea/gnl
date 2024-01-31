@@ -14,12 +14,14 @@ return new class extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id')->autoIncrement();
             $table->string('full_name');
+            $table->string('gender')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('designation')->nullable();
             $table->string('birth')->nullable();
             $table->string('phone')->nullable();
+            $table->string('website')->nullable();
             $table->string('nationality')->nullable();
             $table->string('marital_status')->nullable();
             $table->longText('address')->nullable();

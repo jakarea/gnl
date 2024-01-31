@@ -113,9 +113,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     // admin profile
     Route::prefix('account')->name('account.')->group(function () {
-        Route::get('/profile', [ProfileController::class, 'index']);
-        Route::get('/settings', [ProfileController::class, 'settings']);
-        Route::get('/settings/address', [ProfileController::class, 'address']);
+        Route::get('/profile', [ProfileController::class, 'index'])->name('index');
+        Route::get('/settings', [ProfileController::class, 'settings'])->name('settings');
+        Route::put('/settings/update', [ProfileController::class, 'settingsUpdate'])->name('settings.update');
+        Route::get('/settings/address', [ProfileController::class, 'address'])->name('address');
+        Route::put('/address/update', [ProfileController::class, 'addressUpdate'])->name('address.update');
     });
 
     // logout route
