@@ -44,8 +44,7 @@ class EarningController extends Controller
         if (!empty($queryStatus)) {
             $selectedQuery = $queryStatus;
         }
-
-        // $earningsPerMonth = [];
+ 
         $earningsPerMonth =  $this->getEarningPerMonth();
 
         $data = [
@@ -254,14 +253,16 @@ class EarningController extends Controller
         }
     }
 
+    // hoisting earning dashboard
     public function hostingEarning()
     {
         $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
+        $leadType = 'hosting';
 
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $earnings = Earning::with('customer')
-        ->where('pay_services')
-        ->paginate(12);
+            ->where('pay_services', $leadType)
+            ->paginate(12);
 
         // seledted sort query
         $selectedQuery = '';
@@ -269,20 +270,165 @@ class EarningController extends Controller
             $selectedQuery = $queryStatus;
         }
 
-        // $earningsPerMonth = [];
-        $earningsPerMonth =  $this->getEarningPerMonth();
+        $totalTypeEarningPerMonth  = $this->getTypeEarningPerMonth($leadType);
 
         $data = [
-            'totalEarningToday'     => $this->getTodayEarning($queryStatus),
-            'totalEarning'          => $this->getTotalEarning($queryStatus),
-            'totalTax'              => $this->getTotalTax($queryStatus),
-            'totalProfit'           => $this->getTotalProfit($queryStatus),
-            'totalEarningHosting'   => $this->getHostingEarning($queryStatus),
-            'totalEarningMarketing' => $this->getMarketingEarning($queryStatus),
-            'totalEarningProject'   => $this->getProjectEarning($queryStatus),
-            'totalEarningWebsite'   => $this->getWebsiteEarning($queryStatus),
+            'totalEarningHosting'       => $this->getHostingEarning($queryStatus),
+            'totalHostingCustomer'      => $this->getTotalCustomer($leadType, $queryStatus),
+            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType), 
         ];
 
-        return view('earnings/hosting', compact('lead_types', 'earnings', 'data', 'selectedQuery', 'earningsPerMonth'));
+        return view('earnings/hosting', compact('lead_types', 'earnings', 'data', 'selectedQuery','totalTypeEarningPerMonth'));
+    }
+
+    // marketing earning dashboard
+    public function marketingEarning()
+    {
+        $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
+        $leadType = 'marketing';
+
+        $lead_types = LeadType::orderByDesc('lead_type_id')->get();
+        $earnings = Earning::with('customer')
+            ->where('pay_services', $leadType)
+            ->paginate(12);
+
+        // seledted sort query
+        $selectedQuery = '';
+        if (!empty($queryStatus)) {
+            $selectedQuery = $queryStatus;
+        }
+
+        $totalTypeEarningPerMonth  = $this->getTypeEarningPerMonth($leadType);
+
+        $data = [
+            'totalEarningHosting'       => $this->getHostingEarning($queryStatus),
+            'totalHostingCustomer'      => $this->getTotalCustomer($leadType, $queryStatus),
+            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType), 
+        ];
+
+        return view('earnings/marketing', compact('lead_types', 'earnings', 'data', 'selectedQuery','totalTypeEarningPerMonth'));
+    }
+
+    // project earning dashboard
+    public function projectEarning()
+    {
+        $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
+        $leadType = 'project';
+
+        $lead_types = LeadType::orderByDesc('lead_type_id')->get();
+        $earnings = Earning::with('customer')
+            ->where('pay_services', $leadType)
+            ->paginate(12);
+
+        // seledted sort query
+        $selectedQuery = '';
+        if (!empty($queryStatus)) {
+            $selectedQuery = $queryStatus;
+        }
+
+        $totalTypeEarningPerMonth  = $this->getTypeEarningPerMonth($leadType);
+
+        $data = [
+            'totalEarningHosting'       => $this->getHostingEarning($queryStatus),
+            'totalHostingCustomer'      => $this->getTotalCustomer($leadType, $queryStatus),
+            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType), 
+        ];
+
+        return view('earnings/project', compact('lead_types', 'earnings', 'data', 'selectedQuery','totalTypeEarningPerMonth'));
+    }
+
+    // website earning dashboard
+    public function websiteEarning()
+    {
+        $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
+        $leadType = 'website';
+
+        $lead_types = LeadType::orderByDesc('lead_type_id')->get();
+        $earnings = Earning::with('customer')
+            ->where('pay_services', $leadType)
+            ->paginate(12);
+
+        // seledted sort query
+        $selectedQuery = '';
+        if (!empty($queryStatus)) {
+            $selectedQuery = $queryStatus;
+        }
+
+        $totalTypeEarningPerMonth  = $this->getTypeEarningPerMonth($leadType);
+
+        $data = [
+            'totalEarningHosting'       => $this->getHostingEarning($queryStatus),
+            'totalHostingCustomer'      => $this->getTotalCustomer($leadType, $queryStatus),
+            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType), 
+        ];
+
+        return view('earnings/website', compact('lead_types', 'earnings', 'data', 'selectedQuery','totalTypeEarningPerMonth'));
+    }
+
+    // get total unique customer from earning table
+    private function getTotalCustomer($type, $queryStatus)
+    {
+
+        $queryMap = $this->getQueryMap();
+
+        // Count unique customers for the current period
+        $hostingCustomersCount = Earning::select('customer_id')
+            ->whereYear('created_at', $queryMap[$queryStatus]['earning']['year'])
+            ->when(isset($queryMap[$queryStatus]['earning']['month']), function ($query) use ($queryMap, $queryStatus) {
+                $query->whereMonth('created_at', $queryMap[$queryStatus]['earning']['month']);
+            })
+            ->where('pay_services', $type)
+            ->distinct()
+            ->count('customer_id');
+
+        // Comparison logic
+        $compareEarningYear = $queryMap[$queryStatus]['compare']['year'];
+        $compareEarningMonth = $queryMap[$queryStatus]['compare']['month'] ?? null;
+
+        // Count unique customers for the comparison period
+        $compareCustomersCount = Earning::select('customer_id')
+            ->whereYear('created_at', $compareEarningYear)
+            ->when($compareEarningMonth, function ($query) use ($compareEarningMonth) {
+                $query->whereMonth('created_at', $compareEarningMonth);
+            })
+            ->where('pay_services', $type)
+            ->distinct()
+            ->count('customer_id');
+
+        // Return the counts
+        return [
+            'hostingcustomers' => $hostingCustomersCount,
+            'hostingcustomersCompare' => $compareCustomersCount
+        ];
+    }
+
+    private function getNewCustomer($type)
+    {
+        $sevenDaysAgo = Carbon::now()->subDays(7);
+
+        $newCustomers = Earning::select('customer_id')
+            ->where('pay_services', $type)
+            ->whereBetween('created_at', [$sevenDaysAgo, Carbon::now()])
+            ->distinct()
+            ->count('customer_id');
+
+        return $newCustomers;
+    }
+
+    private function getTypeEarningPerMonth($type)
+    {
+        $earningCounts = [];
+        $currentYear = $this->thisYear;
+
+        for ($month = 1; $month <= 12; $month++) {
+            $earningCount = Earning::whereMonth('created_at', $month)
+                ->whereYear('created_at', $currentYear)
+                ->where('pay_services', $type)
+                ->sum('amount');
+
+            $earningCounts[] = $earningCount;
+        }
+
+        return $earningCounts;
     }
 }

@@ -52,13 +52,13 @@
             </div>
         </li>
         <li class="side-item side-subitem">
-            <a class="side-link" data-bs-toggle="collapse" href="#collapseExample2" role="button"
+            <a class="side-link {{ Request::is('total-earnings') || Request::is('hosting-earnings') || Request::is('marketing-earnings') || Request::is('website-earnings') || Request::is('project-earnings')? 'active' : '' }}" data-bs-toggle="collapse" href="#collapseExample2" role="button"
                 aria-expanded="false" aria-controls="collapseExample2">
                 <img src="{{ url('assets/images/icons/sidebar/earnings.svg') }}" alt="I" class="img-fluid" />
                 Earning
                 <i class="fas fa-angle-down"></i>
             </a>
-            <div class="collapse {{ Request::is('total-earnings') || Request::is('hosting-earnings') ? 'show' : '' }}" id="collapseExample2">
+            <div class="collapse {{ Request::is('total-earnings') || Request::is('hosting-earnings') || Request::is('marketing-earnings') || Request::is('website-earnings') || Request::is('project-earnings')? 'show' : '' }}" id="collapseExample2">
                 <ul class="sub-nav">
                     <li><a href="{{ url("total-earnings") }}" class="sub-link {{ Request::is('total-earnings') ? 'active' : '' }}">Total</a></li>
                     <li><a href="{{ url("hosting-earnings") }}" class="sub-link {{ Request::is('hosting-earnings') ? 'active' : '' }}">Hosting</a></li>
