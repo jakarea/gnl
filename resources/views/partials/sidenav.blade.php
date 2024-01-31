@@ -58,13 +58,13 @@
                 Earning
                 <i class="fas fa-angle-down"></i>
             </a>
-            <div class="collapse {{ Request::is('total-earnings') ? 'show' : '' }}" id="collapseExample2">
+            <div class="collapse {{ Request::is('total-earnings') || Request::is('hosting-earnings') ? 'show' : '' }}" id="collapseExample2">
                 <ul class="sub-nav">
                     <li><a href="{{ url("total-earnings") }}" class="sub-link {{ Request::is('total-earnings') ? 'active' : '' }}">Total</a></li>
-                    <li><a href="#" class="sub-link">Hosting</a></li>
-                    <li><a href="#" class="sub-link">Marketing</a></li>
-                    <li><a href="#" class="sub-link">Website</a></li>
-                    <li><a href="#" class="sub-link">Project</a></li>
+                    <li><a href="{{ url("hosting-earnings") }}" class="sub-link {{ Request::is('hosting-earnings') ? 'active' : '' }}">Hosting</a></li>
+                    <li><a href="{{ url("marketing-earnings") }}" class="sub-link {{ Request::is('marketing-earnings') ? 'active' : '' }}">Marketing</a></li>
+                    <li><a href="{{ url("website-earnings") }}" class="sub-link {{ Request::is('website-earnings') ? 'active' : '' }}">Website</a></li>
+                    <li><a href="{{ url("project-earnings") }}" class="sub-link {{ Request::is('project-earnings') ? 'active' : '' }}">Project</a></li>
                 </ul>
             </div>
         </li>

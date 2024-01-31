@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Total Earning')
+@section('title', 'Hosting Earning')
 
 @section('style')
 <link rel="stylesheet" href="{{ url('assets/css/earning.css') }}" />
@@ -84,7 +84,7 @@
   <!-- earning card start -->
   <div class="row mt-3">
     <!-- card item start -->
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
+    <div class="col-12 col-sm-6 col-md-4 col-xl-4 mb-4">
       <div class="analytics-card-box">
         <div class="top">
           @if ($data['totalEarning']['amountCompare'] >= 0)
@@ -93,7 +93,7 @@
           <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
           @endif
 
-          <p>Total Earning</p>
+          <p>Total Hosting Income</p>
         </div>
         <h4>€{{ $data['totalEarning']['amountEarning'] }}</h4>
         <div class="bottom-text">
@@ -119,17 +119,13 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
+    <div class="col-12 col-sm-6 col-md-4 col-xl-4 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          @if ($data['totalTax']['taxCompare'] >= 0)
-          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
-          @else
-          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
-          @endif
-          <p>Total VAT</p>
+          <img src="{{ asset('assets/images/icons/user-add.svg') }}" alt="I" class="img-fluid money-recive">
+          <p>Total Customer</p>
         </div>
-        <h4>€{{ $data['totalTax']['taxEarning'] }}</h4>
+        <h4>{{ $data['totalTax']['taxEarning'] }}</h4>
         <div class="bottom-text">
           <h5 class="{{ $data['totalTax']['taxCompare'] < 0 ? 'red' : ''}} ">{{ $data['totalTax']['taxCompare'] }}%</h5>
 
@@ -151,17 +147,13 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
+    <div class="col-12 col-sm-6 col-md-4 col-xl-4 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          @if ($data['totalProfit']['profitCompare'] >= 0)
-          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
-          @else
-          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
-          @endif
-          <p>Total Profit</p>
+          <img src="{{ asset('assets/images/icons/user-add.svg') }}" alt="I" class="img-fluid money-recive">
+          <p>New Customer</p>
         </div>
-        <h4>€{{ $data['totalProfit']['totalProfit'] }}</h4>
+        <h4>{{ $data['totalProfit']['totalProfit'] }}</h4>
         <div class="bottom-text">
           <h5 class="{{ $data['totalProfit']['profitCompare'] < 0 ? 'red' : ''}} ">{{
             $data['totalProfit']['profitCompare'] }}%</h5>
@@ -182,144 +174,7 @@
             @endif
         </div>
       </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
-      <div class="analytics-card-box">
-        <div class="top">
-          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
-
-          <p>Earning Today</p>
-        </div>
-        <h4>€{{ $data['totalEarningToday'] }}</h4>
-        <div class="bottom-text">
-          <h5>+100%</h5>
-          <p>All time record</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
-      <div class="analytics-card-box">
-        <div class="top">
-          @if ($data['totalEarningHosting']['amountCompare'] >= 0)
-          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
-          @else
-          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
-          @endif
-          <p>Hosting Earning</p>
-        </div>
-        <h4>€{{ $data['totalEarningHosting']['amountEarning'] }}</h4>
-        <div class="bottom-text">
-          <h5 class="{{ $data['totalEarningHosting']['amountCompare'] < 0 ? 'red' : ''}} ">{{
-            $data['totalEarningHosting']['amountCompare'] }}%</h5>
-
-          @php
-          $highLess4 = 'Higher';
-          if ($data['totalEarningHosting']['amountCompare'] < 0) { $highLess4='Less' ; } @endphp 
-          @if ($selectedQuery==='this_month' || $selectedQuery==='last_month' ) <p>{{ $highLess4 }} than last month</p>
-            @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-            <p>{{ $highLess4 }} than last year</p>
-            @elseif ($selectedQuery === 'all_time')
-            <p>All time record</p>
-            @else
-            <p>{{ $highLess4 }} than last month</p>
-            @endif
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
-      <div class="analytics-card-box">
-        <div class="top">
-          @if ($data['totalEarningMarketing']['amountCompare'] >= 0)
-          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
-          @else
-          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
-          @endif
-          <p>Marketing Earning</p>
-        </div>
-        <h4>€{{ $data['totalEarningMarketing']['amountEarning'] }}</h4>
-        <div class="bottom-text">
-          <h5 class="{{ $data['totalEarningMarketing']['amountCompare'] < 0 ? 'red' : ''}} ">{{
-            $data['totalEarningMarketing']['amountCompare'] }}%</h5>
-
-          @php
-          $highLess5 = 'Higher';
-          if ($data['totalEarningMarketing']['amountCompare'] < 0) { $highLess5='Less' ; } @endphp
-
-            @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-            <p>{{ $highLess5 }} than last month</p>
-            @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-            <p>{{ $highLess5 }} than last year</p>
-            @elseif ($selectedQuery === 'all_time')
-            <p>All time record</p>
-            @else
-            <p>{{ $highLess5 }} than last month</p>
-            @endif
-
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
-      <div class="analytics-card-box">
-        <div class="top">
-          @if ($data['totalEarningProject']['amountCompare'] >= 0)
-          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
-          @else
-          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
-          @endif
-          <p>Project Earning</p>
-        </div>
-        <h4>€{{ $data['totalEarningProject']['amountEarning'] }}</h4>
-        <div class="bottom-text">
-          <h5 class="{{ $data['totalEarningProject']['amountCompare'] < 0 ? 'red' : ''}} ">{{
-            $data['totalEarningProject']['amountCompare'] }}%</h5>
-
-          @php
-          $highLess6 = 'Higher';
-          if ($data['totalEarningProject']['amountCompare'] < 0) { $highLess6='Less' ; } @endphp
-
-          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-          <p>{{ $highLess6 }} than last month</p>
-          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-          <p>{{ $highLess6 }} than last year</p>
-          @elseif ($selectedQuery === 'all_time')
-          <p>All time record</p>
-          @else
-          <p>{{ $highLess6 }} than last month</p>
-          @endif
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
-      <div class="analytics-card-box">
-        <div class="top">
-          @if ($data['totalEarningWebsite']['amountCompare'] >= 0)
-          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
-          @else
-          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
-          @endif
-          <p>Website Earning</p>
-        </div>
-        <h4>€{{ $data['totalEarningWebsite']['amountEarning'] }}</h4>
-        <div class="bottom-text">
-          <h5 class="{{ $data['totalEarningWebsite']['amountCompare'] < 0 ? 'red' : ''}} ">{{
-            $data['totalEarningWebsite']['amountCompare'] }}%</h5>
-
-          @php
-          $highLess7 = 'Higher';
-          if ($data['totalEarningWebsite']['amountCompare'] < 0) { $highLess7='Less' ; } @endphp
-
-          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-          <p>{{ $highLess7 }} than last month</p>
-          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-          <p>{{ $highLess7 }} than last year</p>
-          @elseif ($selectedQuery === 'all_time')
-          <p>All time record</p>
-          @else
-          <p>{{ $highLess7 }} than last month</p>
-          @endif
-        </div>
-      </div>
-    </div>
+    </div>  
     <!-- card item end -->
   </div>
   <!-- earning card end -->
@@ -330,7 +185,7 @@
       <div class="chart-box-wrap">
         <div class="graph-head mb-15">
           <div class="total-earning">
-            <h5>Total Earning</h5>
+            <h5>Hosting Earning</h5>
             <div class="bottom-text">
               <h5>+100%</h5>
               <p>All time record</p>
@@ -349,7 +204,7 @@
 
   <!--cient leads start-->
   <div class="page-title page-title-two pb-0">
-    <h1>Clients</h1>
+    <h1>Hosting Clients</h1>
     <!-- filter -->
     <div class="page-filter d-flex">
       <div class="dropdown">
@@ -472,8 +327,7 @@
 
 @endsection
 
-@section('script')
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script> --}}
+@section('script') 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 {{-- earning details js --}}
@@ -517,7 +371,7 @@
 
 </script>
 
-<!-- total user graph js start -->
+<!-- total hoisting  js start -->
 <script>
   const earningsPerMonth = @json($earningsPerMonth);
 
@@ -576,7 +430,7 @@
     var chart = new ApexCharts(document.querySelector("#totalEarning"), options);
     chart.render();
 </script>
-<!-- total user graph js end -->
+<!-- total hoisting graph js end -->
 
 {{-- sort top card query js --}}
 <script>
