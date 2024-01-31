@@ -16,43 +16,62 @@
     <!-- bttn -->
     <div class="page-bttn">
       <form action="" method="GET" id="myForm">
-      <div class="dropdown">
-        <a class="bttn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="./assets/images/icons/calendar-2.svg" alt="icon" class="img-fluid">
-          <span id="currentQuery">This Month</span>
-          <i class="fas fa-angle-down"></i>
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <a class="dropdown-item filter-item" href="#" data-value="this_month">
-              This Month 
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item filter-item" href="#" data-value="last_month">
-              Last Month 
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item filter-item" href="#" data-value="this_year">
+        <div class="dropdown">
+          <a class="bttn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="./assets/images/icons/calendar-2.svg" alt="icon" class="img-fluid">
+            <span id="currentQuery">
+              @if ($selectedQuery === 'this_month')
+              This Month
+              @elseif ($selectedQuery === 'last_month')
+              Last Month
+              @elseif ($selectedQuery === 'this_year')
               This Year
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item filter-item" href="#" data-value="last_year">
+              @elseif ($selectedQuery === 'last_year')
               Last Year
-            </a>
-          </li>
-        </ul>
-      </div>
-      <input type="hidden" name="query" id="filterQuery">
+              @elseif ($selectedQuery === 'all_time')
+              All Time
+              @else
+              This Month
+              @endif
+            </span>
+            <i class="fas fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item filter-item" href="#" data-value="all_time">
+                All Time
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item filter-item" href="#" data-value="this_month">
+                This Month
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item filter-item" href="#" data-value="last_month">
+                Last Month
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item filter-item" href="#" data-value="this_year">
+                This Year
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item filter-item" href="#" data-value="last_year">
+                Last Year
+              </a>
+            </li>
+          </ul>
+        </div>
+        <input type="hidden" name="query" id="filterQuery">
       </form>
     </div>
     <!-- bttn -->
   </div>
   <!--page title end-->
 
-  @if ($errors->any())
+  {{-- @if ($errors->any())
   <div class="alert alert-danger">
     <ul>
       @foreach ($errors->all() as $error)
@@ -60,7 +79,7 @@
       @endforeach
     </ul>
   </div>
-  @endif
+  @endif --}}
 
   <!-- earning card start -->
   <div class="row mt-3">
@@ -68,104 +87,198 @@
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+          @if ($data['totalEarning']['amountCompare'] >= 0)
+          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
+          @else
+          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
+          @endif
+
           <p>Total Earning</p>
         </div>
-        <h4>€{{ $status['totalEarning'] }}</h4>
+        <h4>€{{ $data['totalEarning']['amountEarning'] }}</h4>
         <div class="bottom-text">
-          <h5>+1.48%</h5>
+          <h5 class="{{ $data['totalEarning']['amountCompare'] < 0 ? 'red' : ''}} ">{{
+            $data['totalEarning']['amountCompare'] }}%</h5>
+
+          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
           <p>Higher than last month</p>
+          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+          <p>Higher than last year</p>
+          @elseif ($selectedQuery === 'all_time')
+          <p>All time record</p>
+          @else
+          <p>Higher than last month</p>
+          @endif
+
         </div>
       </div>
-    </div> 
+    </div>
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+          @if ($data['totalTax']['taxCompare'] >= 0)
+          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
+          @else
+          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
+          @endif
           <p>Total VAT</p>
         </div>
-        <h4>€{{ $status['totalTax'] }}</h4>
+        <h4>€{{ $data['totalTax']['taxEarning'] }}</h4>
         <div class="bottom-text">
-          <h5>+1.48%</h5>
+          <h5 class="{{ $data['totalTax']['taxCompare'] < 0 ? 'red' : ''}} ">{{ $data['totalTax']['taxCompare'] }}%</h5>
+          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
           <p>Higher than last month</p>
+          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+          <p>Higher than last year</p>
+          @elseif ($selectedQuery === 'all_time')
+          <p>All time record</p>
+          @else
+          <p>Higher than last month</p>
+          @endif
         </div>
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+          @if ($data['totalProfit']['profitCompare'] >= 0)
+          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
+          @else
+          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
+          @endif
           <p>Total Profit</p>
         </div>
-        <h4>€{{ $status['totalProfit'] }}</h4>
+        <h4>€{{ $data['totalProfit']['totalProfit'] }}</h4>
         <div class="bottom-text">
-          <h5>+1.48%</h5>
+          <h5 class="{{ $data['totalProfit']['profitCompare'] < 0 ? 'red' : ''}} ">{{
+            $data['totalProfit']['profitCompare'] }}%</h5>
+          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
           <p>Higher than last month</p>
+          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+          <p>Higher than last year</p>
+          @elseif ($selectedQuery === 'all_time')
+          <p>All time record</p>
+          @else
+          <p>Higher than last month</p>
+          @endif
         </div>
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
+
           <p>Earning Today</p>
         </div>
-        <h4>€{{ $status['totalEarningToday'] }}</h4>
+        <h4>€{{ $data['totalEarningToday'] }}</h4>
         <div class="bottom-text">
-          <h5>+1.48%</h5>
-          <p>Higher than last month</p>
+          <h5>+100%</h5>
+          <p>All time record</p>
         </div>
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          <img src="./assets/images/icons/money-recive-down.svg" alt="I" class="img-fluid money-recive">
+          @if ($data['totalEarningHosting']['amountCompare'] >= 0)
+          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
+          @else
+          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
+          @endif
           <p>Hoisting Earning</p>
         </div>
-        <h4>€{{ $status['totalEarningHosting'] }}</h4>
+        <h4>€{{ $data['totalEarningHosting']['amountEarning'] }}</h4>
         <div class="bottom-text">
-          <h5 class="red">-0.12%</h5>
-          <p>Less than last month</p>
+          <h5 class="{{ $data['totalEarningHosting']['amountCompare'] < 0 ? 'red' : ''}} ">{{
+            $data['totalEarningHosting']['amountCompare'] }}%</h5>
+          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+          <p>Higher than last month</p>
+          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+          <p>Higher than last year</p>
+          @elseif ($selectedQuery === 'all_time')
+          <p>All time record</p>
+          @else
+          <p>Higher than last month</p>
+          @endif
         </div>
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+          @if ($data['totalEarningMarketing']['amountCompare'] >= 0)
+          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
+          @else
+          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
+          @endif
           <p>Marketing Earning</p>
         </div>
-        <h4>€{{ $status['totalEarningMarketing'] }}</h4>
+        <h4>€{{ $data['totalEarningMarketing']['amountEarning'] }}</h4>
         <div class="bottom-text">
-          <h5>+1.48%</h5>
+          <h5 class="{{ $data['totalEarningMarketing']['amountCompare'] < 0 ? 'red' : ''}} ">{{
+            $data['totalEarningMarketing']['amountCompare'] }}%</h5>
+          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
           <p>Higher than last month</p>
+          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+          <p>Higher than last year</p>
+          @elseif ($selectedQuery === 'all_time')
+          <p>All time record</p>
+          @else
+          <p>Higher than last month</p>
+          @endif
         </div>
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+          @if ($data['totalEarningProject']['amountCompare'] >= 0)
+          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
+          @else
+          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
+          @endif
           <p>Project Earning</p>
         </div>
-        <h4>€{{ $status['totalEarningProject'] }}</h4>
+        <h4>€{{ $data['totalEarningProject']['amountEarning'] }}</h4>
         <div class="bottom-text">
-          <h5>+1.48%</h5>
+          <h5 class="{{ $data['totalEarningProject']['amountCompare'] < 0 ? 'red' : ''}} ">{{
+            $data['totalEarningProject']['amountCompare'] }}%</h5>
+          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
           <p>Higher than last month</p>
+          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+          <p>Higher than last year</p>
+          @elseif ($selectedQuery === 'all_time')
+          <p>All time record</p>
+          @else
+          <p>Higher than last month</p>
+          @endif
         </div>
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-4">
       <div class="analytics-card-box">
         <div class="top">
-          <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+          @if ($data['totalEarningWebsite']['amountCompare'] >= 0)
+          <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I" class="img-fluid money-recive">
+          @else
+          <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I" class="img-fluid money-recive">
+          @endif
           <p>Website Earning</p>
         </div>
-        <h4>€{{ $status['totalEarningWebsite'] }}</h4>
+        <h4>€{{ $data['totalEarningWebsite']['amountEarning'] }}</h4>
         <div class="bottom-text">
-          <h5>+1.48%</h5>
+          <h5 class="{{ $data['totalEarningWebsite']['amountCompare'] < 0 ? 'red' : ''}} ">{{
+            $data['totalEarningWebsite']['amountCompare'] }}%</h5>
+          @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
           <p>Higher than last month</p>
+          @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+          <p>Higher than last year</p>
+          @elseif ($selectedQuery === 'all_time')
+          <p>All time record</p>
+          @else
+          <p>Higher than last month</p>
+          @endif
         </div>
       </div>
     </div>
@@ -181,13 +294,13 @@
           <div class="total-earning">
             <h5>Total Earning</h5>
             <div class="bottom-text">
-              <h5>+6.10%</h5>
-              <p>Higher than last month</p>
+              <h5>+100%</h5>
+              <p>All time record</p>
             </div>
           </div>
           <div class="earning">
             <a href="#"><i class="fas fa-circle"></i> Earning</a>
-            <h5>€{{ $status['totalEarning'] }}</h5>
+            <h5>€{{ $data['totalEarning']['amountEarning'] }}</h5>
           </div>
         </div>
         <div id="totalEarning"></div>
@@ -209,7 +322,7 @@
       </div>
     </div>
   </div>
-  <div class="payment-from-copany-user">
+  <div class="payment-from-copany-user" style="border-radius: 0 0 16px 16px">
     <div class="user-payment-table">
       <table>
         <tr>
@@ -235,15 +348,14 @@
               @if ($earning->customer->avatar)
               <img src="{{ asset($earning->customer->avatar) }}" alt="avatar" class="img-fluid avatar" />
               @else
-              <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar"
-                  class="img-fluid avatar" />
+              <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar" class="img-fluid avatar" />
               @endif
 
               <div class="media-body">
-                  <h5>{{ $earning->customer->name }}</h5>
-                  <span>{{ $earning->customer->email }}</span>
+                <h5>{{ $earning->customer->name }}</h5>
+                <span>{{ $earning->customer->email }}</span>
               </div>
-          </div>
+            </div>
           </td>
           <td>
             @if ($earning->customer->status == 'active')
@@ -251,7 +363,7 @@
             @else
             <p class="active-status text-danger">Inactive</p>
             @endif
-            
+
           </td>
           <td>
             <p>{{ $earning->pay_date}}</p>
@@ -269,7 +381,7 @@
                 @if ($earning->pay_status == 'unpaid')
                 <a href="#" class="btn-view no-ans-btn">Unpaid</a>
                 @elseif($earning->pay_status == 'paid')
-                <a href="#" class="btn-view btn-completed">Paid</a>  
+                <a href="#" class="btn-view btn-completed">Paid</a>
                 @endif
 
               </li>
@@ -283,10 +395,11 @@
                 <img src="{{ url('/assets/images/icons/dots-horizontal.svg')}}" class="img-fluid" alt="">
               </a>
               <div class="dropdown-menu">
-                {{-- <a class="dropdown-item lead-edit" href="#" data-bs-toggle="modal" data-id="{{ $earning->earning_id }}"
-                  data-bs-target="#staticBackdropFive">Edit Payment</a> --}}
+                <a class="dropdown-item earning-details-item" href="#" data-bs-toggle="modal"
+                  data-id="{{ $earning->earning_id }}" data-bs-target="#staticBackdrop">View Details</a>
 
-                <form action="{{ route('earning.destroy-earnings',$earning->earning_id) }}" class="d-inline" method="POST">
+                <form action="{{ route('earning.destroy-earnings',$earning->earning_id) }}" class="d-inline"
+                  method="POST">
                   @csrf
                   <button type="submit" class="btn dropdown-item">Delete Payment</button>
                 </form>
@@ -326,10 +439,12 @@
 
 <!-- total user graph js start -->
 <script>
+  const earningsPerMonth = @json($earningsPerMonth);
+
   var options = {
       series: [{
-        name: 'Net Profit',
-        data: [44, 55, 23, 56, 61, 28, 63, 35, 66, 30, 45, 33]
+        name: 'Total earning',
+        data: earningsPerMonth
       }],
       chart: {
         type: 'bar',
@@ -372,7 +487,7 @@
       tooltip: {
         y: {
           formatter: function(val) {
-            return "$ " + val + " thousands"
+            return "€ " + val + " euros"
           }
         }
       }
@@ -383,8 +498,8 @@
 </script>
 <!-- total user graph js end -->
 
-{{-- sort top card query js --}} 
-<script> 
+{{-- sort top card query js --}}
+<script>
   document.addEventListener("DOMContentLoaded", function() {
 
       document.querySelectorAll(".filter-item").forEach(item => {

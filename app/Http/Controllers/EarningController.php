@@ -35,12 +35,22 @@ class EarningController extends Controller
     public function index()
     {
 
+
         $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
 
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $earnings = Earning::with('customer')->paginate(12);
 
-        return $data = [
+        // seledted sort query
+        $selectedQuery = '';
+        if (!empty($queryStatus)) {
+            $selectedQuery = $queryStatus;
+        }
+
+        // $earningsPerMonth = [];
+        $earningsPerMonth =  $this->getEarningPerMonth();
+
+        $data = [
             'totalEarningToday'     => $this->getTodayEarning($queryStatus),
             'totalEarning'          => $this->getTotalEarning($queryStatus),
             'totalTax'              => $this->getTotalTax($queryStatus),
@@ -51,7 +61,7 @@ class EarningController extends Controller
             'totalEarningWebsite'   => $this->getWebsiteEarning($queryStatus),
         ];
 
-        return view('earnings/index', compact('lead_types', 'earnings', 'data'));
+        return view('earnings/index', compact('lead_types', 'earnings', 'data','selectedQuery','earningsPerMonth'));
     }
 
     // query map for sort 
@@ -74,9 +84,13 @@ class EarningController extends Controller
                 'earning' => ['year' => $this->thisMonth->year, 'month' => $this->thisMonth->month],
                 'compare' => ['year' => $this->lastAgoMonth->year, 'month' => $this->lastAgoMonth->month]
             ],
+            'all_time' => [
+                'earning' => ['year' => 2024, 'month' => 1],
+                'compare' => ['year' => 2024, 'month' => 1]
+            ],
             '' => [
-                'earning' => ['year' => null, 'month' => null],
-                'compare' => ['year' => null, 'month' => null]
+                'earning' => ['year' => $this->thisMonth->year, 'month' => $this->thisMonth->month],
+                'compare' => ['year' => $this->lastAgoMonth->year, 'month' => $this->lastAgoMonth->month]
             ]
         ];
 
@@ -109,7 +123,7 @@ class EarningController extends Controller
                 ->toArray()
         );
 
-        $compare = ($compareAmount != 0) ? (($amount - $compareAmount) / $compareAmount) * 100 : 0;
+        $compare = ($compareAmount != 0) ? round((($amount - $compareAmount) / $compareAmount) * 100, 2) : 0;
 
         return [$field . 'Compare' => $compare, $field . 'Earning' => $amount];
     }
@@ -136,19 +150,22 @@ class EarningController extends Controller
 
         $amountEarning = $earning['amountEarning'];
         $taxEarning = $tax['taxEarning'];
+        
+        $amountCompare = $earning['amountCompare'];
+        $taxCompare = $tax['taxCompare'];
 
         $totalProfit = $amountEarning - $taxEarning;
 
-        // $profitCompare = ($earning['amountCompare'] != 0) ? (($totalProfit - $earning['amountCompare']) / $earning['amountCompare']) * 100 : 0;
+        $profitCompare = $taxCompare - $amountCompare;
 
-        return ['totalProfit' => $totalProfit];
+        return ['profitCompare' => $profitCompare, 'totalProfit' => $totalProfit];
     }
 
     // earning amount today
     private function getTodayEarning()
     {
         $earningAmountToday = Earning::whereDate('created_at', $this->today)->pluck('amount')->toArray();
-        $totalEarningToday = array_sum($earningAmountToday);
+        return array_sum($earningAmountToday);
     }
 
     // Get hoisting earning
@@ -158,25 +175,41 @@ class EarningController extends Controller
         return $this->getAmounts($queryStatus, 'amount', $type);
     }
 
-    // Get hoisting earning
+    // Get marketing earning
     private function getMarketingEarning($queryStatus)
     {
         $type = ['marketing'];
         return $this->getAmounts($queryStatus, 'amount', $type);
     }
 
-    // Get hoisting earning
+    // Get website earning
     private function getWebsiteEarning($queryStatus)
     {
         $type = ['website'];
         return $this->getAmounts($queryStatus, 'amount', $type);
     }
 
-    // Get hoisting earning
+    // Get project earning
     private function getProjectEarning($queryStatus)
     {
         $type = ['project'];
         return $this->getAmounts($queryStatus, 'amount', $type);
+    }
+
+    private function getEarningPerMonth()
+    {
+        $earningCounts = [];
+        $currentYear = $this->thisYear;
+
+        for ($month = 1; $month <= 12; $month++) {
+            $earningCount = Earning::whereMonth('created_at', $month)
+                ->whereYear('created_at', $currentYear)
+                ->sum('amount');
+
+            $earningCounts[] = $earningCount;
+        }
+
+        return $earningCounts;
     }
 
     // earning store method
