@@ -180,6 +180,7 @@ body {
   left: 0;
   top: 0;
   z-index: 999;
+  overflow-y: scroll;
 }
 
 .root-main-wrapper .sidebar-wrap .logo-box {
@@ -1304,4 +1305,14 @@ body {
 
 .pagination-section .d-flex.justify-items-center.justify-content-between{
   width: 100%!important;
+}
+
+.table-dropdown .dot-bttn {
+  background-color: #fff;
+  border-radius: 16px;
+  width: 34px;
+  height: 34px;
+  padding: 5px;
+  border: 1px solid var(--Neutral-200, #F1F2F4);
+  display: flex;
 }

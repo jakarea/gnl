@@ -23,6 +23,11 @@ class Customer extends Model
     {
         return $this->belongsTo(ServiceType::class, 'service_type_id','customer_id');
     }
+
+    public function earning()
+    {
+        return $this->hasOne(Earning::class, 'customer_id');
+    }
 }
 
 

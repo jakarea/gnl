@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('projects')->name('projects.')->group(function () {
 
-        Route::get('/search-customers', [ProjectsController::class, 'search'])->name('search.customers');
+        // Route::get('/search-customers', [ProjectsController::class, 'search'])->name('search.customers');
 
         Route::get('/', [ProjectsController::class, 'index'])->name('index');
         Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
@@ -105,7 +105,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     // earning route
     Route::get('/total-earnings', [EarningController::class, 'index'])->name('earning.total-earnings');
-
+    Route::post('/add-earnings', [EarningController::class, 'store'])->name('earning.add-earnings');
+    Route::post('{id}/destroy-earnings', [EarningController::class, 'destroy'])->name('earning.destroy-earnings');
 
     // expense route
     // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expense.total-expense');
