@@ -61,7 +61,7 @@ class EarningController extends Controller
             'totalEarningWebsite'   => $this->getWebsiteEarning($queryStatus),
         ];
 
-        return view('earnings/index', compact('lead_types', 'earnings', 'data','selectedQuery','earningsPerMonth'));
+        return view('earnings/index', compact('lead_types', 'earnings', 'data', 'selectedQuery', 'earningsPerMonth'));
     }
 
     // query map for sort 
@@ -150,7 +150,7 @@ class EarningController extends Controller
 
         $amountEarning = $earning['amountEarning'];
         $taxEarning = $tax['taxEarning'];
-        
+
         $amountCompare = $earning['amountCompare'];
         $taxCompare = $tax['taxCompare'];
 
@@ -241,6 +241,19 @@ class EarningController extends Controller
         $earning = Earning::findOrFail($earning_id);
         if ($earning->delete()) {
             return redirect()->back()->with('success', 'Payment deleted successfuly!');
+        }
+    }
+
+    public function showEarningWithModal($earningId)
+    {
+
+        if ($earningId) {
+            $earning = Earning::findOrFail($earningId); 
+ 
+            return view('earnings.details',compact('earning'));
+
+        } else{
+            return response()->json(['error' => 'No Earning found!'], 404);
         }
     }
 }

@@ -47,7 +47,7 @@
                     <div class="adress-info-text">
                         <p>Phone</p>
                         <a href="tel:{{ $customer->phone }}">
-                            <img src="/assets/images/icons/call.svg" alt="" />{{ $customer->phone }}
+                            <img src="{{ asset('assets/images/icons/call.svg') }}" alt="" />{{ $customer->phone }}
                         </a>
                     </div>
                 @endif
@@ -56,7 +56,7 @@
                     <div class="adress-info-text">
                         <p>Email</p>
                         <a href="mailto:{{ $customer->email }}">
-                            <img src="/assets/images/icons/envelope.svg" alt="" />{{ $customer->email }}
+                            <img src="{{ asset('assets/images/icons/envelope.svg') }}" alt="" />{{ $customer->email }}
                         </a>
                     </div>
                 @endif
@@ -65,7 +65,7 @@
                     <div class="address-info-text">
                         <p>Website</p>
                         <a target="_blank" href="{{ $customer->website }}">
-                            <img src="/assets/images/icons/location.svg" alt="" />{!! $customer->website !!}
+                            <img src="{{ asset('assets/images/icons/location.svg') }}" alt="" />{!! $customer->website !!}
                         </a>
                     </div>
                 @endif

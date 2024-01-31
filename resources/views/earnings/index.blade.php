@@ -395,8 +395,8 @@
                 <img src="{{ url('/assets/images/icons/dots-horizontal.svg')}}" class="img-fluid" alt="">
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item earning-details-item" href="#" data-bs-toggle="modal"
-                  data-id="{{ $earning->earning_id }}" data-bs-target="#staticBackdrop">View Details</a>
+                <a class="dropdown-item earningModalDetails" href="javascript:;"
+                data-earning-id="{{ $earning->earning_id }}">View Details</a>
 
                 <form action="{{ route('earning.destroy-earnings',$earning->earning_id) }}" class="d-inline"
                   method="POST">
@@ -424,7 +424,8 @@
 </section>
 
 {{-- client details modal start --}}
-@include('earnings.details')
+{{-- @include('earnings.details') --}}
+<div class="showEarningDetails"></div>
 {{-- client details modal end --}}
 
 {{-- add client modal start --}}
@@ -434,8 +435,49 @@
 @endsection
 
 @section('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+{{-- earning details js --}}
+<script>
+ document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('earningModalDetails')) {
+        e.preventDefault();
+        const earningId = e.target.dataset.earningId;
+
+        let currentURL3 = window.location.href;
+        const baseUrl3 = currentURL3.split('/').slice(0, 3).join('/'); 
+
+        fetch(`${baseUrl3}/earning/details/${earningId}`, {
+            method: 'GET',
+            headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                }, 
+        })
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(function (data) {
+          console.log(data);
+            document.querySelector(".showEarningDetails").innerHTML = data;
+            
+            // $(".earning-details-modal").modal('show');
+
+            const modal = new bootstrap.Modal(document.querySelector('.earning-details-modal'));
+            modal.show(); 
+
+        })
+        .catch(function (error) {
+            console.error('There was a problem with your fetch operation:', error);
+        });
+    }
+});
+
+</script>
 
 <!-- total user graph js start -->
 <script>
