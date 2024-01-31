@@ -285,7 +285,7 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="all-customer-box active-client-table payment-from-copany-user">
-                    <h4 class="common-subtitle mb-15">Active Clients</h4>
+                    <h4 class="common-subtitle mb-15">Earning Clients</h4>
                     <div class="user-payment-table">
                         <table>
                             <tr>
@@ -309,16 +309,17 @@
                                         </td>
                                         <td>
                                             <div class="media">
-                                                @if ($customer->avatar)
-                                                    <img src="{{ asset($customer->avatar) }}" alt="avatar"
+
+                                                @if ($activeClient->avatar)
+                                                    <img src="{{ asset($activeClient->avatar) }}" alt="avatar"
                                                         class="img-fluid" />
                                                 @else
                                                     <img src="{{ asset('uploads/users/avatar-1.png') }}"
                                                         alt="default avatar" class="img-fluid" />
                                                 @endif
                                                 <div class="media-body">
-                                                    <h5>{{ $activeClient->name }}</h5>
-                                                    <span>{{ $activeClient->designation }} </span>
+                                                    <h5>{{ $activeClient->customer->name }}</h5>
+                                                    <span>{{ $activeClient->customer->designation }}</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -340,28 +341,25 @@
                                             <p>{{ $formattedDate }}</p>
                                         </td>
                                         <td>
-                                            <p>{{ $activeClient->serviceTypes->name }}</p>
+                                            <p>{{ $activeClient->customer->serviceTypes->name }}</p>
                                         </td>
                                         <td>
-                                            <p>${{ $activeClient->earning->amount ?? '0.00' }}</p>
+                                            <p>${{ $activeClient->amount ?? '0.00' }}</p>
                                         </td>
                                         <td>
-                                            @php
-                                                $payStatus = optional($activeClient->earning)->pay_status;
-                                            @endphp
-
-                                            @if ($payStatus == 'pending')
-                                                <span class="btn-pending">{{ ucfirst($payStatus) }}</span>
-                                            @elseif ($payStatus == 'unpaid')
-                                                <span class="status unpaid">{{ ucfirst($payStatus) }}</span>
+                                            @if ($activeClient->pay_status == 'pending')
+                                                <span class="btn-pending">{{ ucfirst($activeClient->pay_status) }}</span>
+                                            @elseif ($activeClient->pay_status == 'unpaid')
+                                                <span
+                                                    class="status unpaid">{{ ucfirst($activeClient->pay_status) }}</span>
                                             @else
-                                                <span class="btn-view btn-export">{{ ucfirst($payStatus) }}</span>
+                                                <span
+                                                    class="btn-view btn-export">{{ ucfirst($activeClient->pay_status) }}</span>
                                             @endif
-
                                         </td>
                                         <td>
                                             <a href="#">
-                                                <img src="./assets/images/icons/dots-horizontal.svg" class="img-fluid"
+                                                <img src="/assets/images/icons/dots-horizontal.svg" class="img-fluid"
                                                     alt="">
                                             </a>
                                         </td>

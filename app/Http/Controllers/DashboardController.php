@@ -18,7 +18,7 @@ class DashboardController extends Controller
         ->whereDate('date', '<=', now()->addDays(2)->toDateString())
         ->get();
 
-        $data['activeClients'] = Customer::with('earning')->paginate(12);
+        $data['activeClients'] = Earning::with('customer')->get();
         return view('dashboard/index', $data);
     }
 
