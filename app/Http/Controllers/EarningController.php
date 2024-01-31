@@ -34,7 +34,6 @@ class EarningController extends Controller
     public function index()
     {
 
-
         $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
 
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
@@ -54,7 +53,7 @@ class EarningController extends Controller
             'totalEarning'          => $this->getTotalEarning($queryStatus),
             'totalTax'              => $this->getTotalTax($queryStatus),
             'totalProfit'           => $this->getTotalProfit($queryStatus),
-            'totalEarningHosting'   => $this->getHoistingEarning($queryStatus),
+            'totalEarningHosting'   => $this->getHostingEarning($queryStatus),
             'totalEarningMarketing' => $this->getMarketingEarning($queryStatus),
             'totalEarningProject'   => $this->getProjectEarning($queryStatus),
             'totalEarningWebsite'   => $this->getWebsiteEarning($queryStatus),
@@ -101,7 +100,6 @@ class EarningController extends Controller
     {
         $queryMap = $this->getQueryMap();
 
-        // Fetch amounts and comparison amounts
         $amount = array_sum(
             Earning::whereYear('created_at', $queryMap[$queryStatus]['earning']['year'])
                 ->when(isset($queryMap[$queryStatus]['earning']['month']), function ($query) use ($queryMap, $queryStatus) {
@@ -130,14 +128,14 @@ class EarningController extends Controller
     // Get total earning
     private function getTotalEarning($queryStatus)
     {
-        $type = ['hoisting', 'marketing', 'website', 'project'];
+        $type = ['hosting', 'marketing', 'website', 'project'];
         return $this->getAmounts($queryStatus, 'amount', $type);
     }
 
     // Get total tax
     private function getTotalTax($queryStatus)
     {
-        $type = ['hoisting', 'marketing', 'website', 'project'];
+        $type = ['hosting', 'marketing', 'website', 'project'];
         return $this->getAmounts($queryStatus, 'tax', $type);
     }
 
@@ -167,10 +165,10 @@ class EarningController extends Controller
         return array_sum($earningAmountToday);
     }
 
-    // Get hoisting earning
-    private function getHoistingEarning($queryStatus)
+    // Get hosting earning
+    private function getHostingEarning($queryStatus)
     {
-        $type = ['hoisting'];
+        $type = ['hosting'];
         return $this->getAmounts($queryStatus, 'amount', $type);
     }
 
@@ -254,5 +252,37 @@ class EarningController extends Controller
         } else{
             return response()->json(['error' => 'No Earning found!'], 404);
         }
+    }
+
+    public function hostingEarning()
+    {
+        $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
+
+        $lead_types = LeadType::orderByDesc('lead_type_id')->get();
+        $earnings = Earning::with('customer')
+        ->where('pay_services')
+        ->paginate(12);
+
+        // seledted sort query
+        $selectedQuery = '';
+        if (!empty($queryStatus)) {
+            $selectedQuery = $queryStatus;
+        }
+
+        // $earningsPerMonth = [];
+        $earningsPerMonth =  $this->getEarningPerMonth();
+
+        $data = [
+            'totalEarningToday'     => $this->getTodayEarning($queryStatus),
+            'totalEarning'          => $this->getTotalEarning($queryStatus),
+            'totalTax'              => $this->getTotalTax($queryStatus),
+            'totalProfit'           => $this->getTotalProfit($queryStatus),
+            'totalEarningHosting'   => $this->getHostingEarning($queryStatus),
+            'totalEarningMarketing' => $this->getMarketingEarning($queryStatus),
+            'totalEarningProject'   => $this->getProjectEarning($queryStatus),
+            'totalEarningWebsite'   => $this->getWebsiteEarning($queryStatus),
+        ];
+
+        return view('earnings/hosting', compact('lead_types', 'earnings', 'data', 'selectedQuery', 'earningsPerMonth'));
     }
 }

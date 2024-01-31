@@ -45,14 +45,12 @@ class DashboardController extends Controller
 
         $earning = new Earning();
 
-        $data['totalIncome'] = $this->totalIncome($earning);
+        $data['totalIncome'] = 0;
 
-        $data['totalExpense'] = $earning->sum('tax');
-        $data['totalProfit'] = $this->totalExpense($earning);
-
+        $data['totalExpense'] = 0;
+        $data['totalProfit'] = 0;
 
         $data['earnings'] = Earning::with('customer')->paginate(12);
-
 
         return view('dashboard/index', $data);
     }
@@ -73,11 +71,5 @@ class DashboardController extends Controller
         ->get();
     }
 
-    protected function totalIncome($earning){
-        return ($earning->sum('amount') + $earning->sum('tax'));
-    }
 
-    protected function totalExpense($earning){
-        return ($earning->sum('amount') - $earning->sum('tax'));
-    }
 }

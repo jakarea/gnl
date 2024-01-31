@@ -102,14 +102,21 @@
                         <h5 class="{{ $data['totalEarning']['amountCompare'] < 0 ? 'red' : '' }} ">
                             {{ $data['totalEarning']['amountCompare'] }}%</h5>
 
+                        @php
+                            $highLess = 'Higher';
+                            if ($data['totalEarning']['amountCompare'] < 0) {
+                                $highLess = 'Less';
+                            }
+                        @endphp
+
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-                            <p>Higher than last year</p>
+                            <p>{{ $highLess }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
                             <p>All time record</p>
                         @else
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess }} than last month</p>
                         @endif
 
                     </div>
@@ -131,14 +138,22 @@
                     <div class="bottom-text">
                         <h5 class="{{ $data['totalTax']['taxCompare'] < 0 ? 'red' : '' }} ">
                             {{ $data['totalTax']['taxCompare'] }}%</h5>
+
+                        @php
+                            $highLess2 = 'Higher';
+                            if ($data['totalTax']['taxCompare'] < 0) {
+                                $highLess2 = 'Less';
+                            }
+                        @endphp
+
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess2 }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-                            <p>Higher than last year</p>
+                            <p>{{ $highLess2 }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
                             <p>All time record</p>
                         @else
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess2 }} than last month</p>
                         @endif
                     </div>
                 </div>
@@ -159,14 +174,21 @@
                     <div class="bottom-text">
                         <h5 class="{{ $data['totalProfit']['profitCompare'] < 0 ? 'red' : '' }} ">
                             {{ $data['totalProfit']['profitCompare'] }}%</h5>
+
+                        @php
+                            $highLess3 = 'Higher';
+                            if ($data['totalProfit']['profitCompare'] < 0) {
+                                $highLess3 = 'Less';
+                            }
+                        @endphp
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess3 }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-                            <p>Higher than last year</p>
+                            <p>{{ $highLess3 }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
                             <p>All time record</p>
                         @else
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess3 }} than last month</p>
                         @endif
                     </div>
                 </div>
@@ -196,20 +218,26 @@
                             <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
                                 class="img-fluid money-recive">
                         @endif
-                        <p>Hoisting Earning</p>
+                        <p>Hosting Earning</p>
                     </div>
                     <h4>€{{ $data['totalEarningHosting']['amountEarning'] }}</h4>
                     <div class="bottom-text">
                         <h5 class="{{ $data['totalEarningHosting']['amountCompare'] < 0 ? 'red' : '' }} ">
                             {{ $data['totalEarningHosting']['amountCompare'] }}%</h5>
+
+                        @php
+                            $highLess4 = 'Higher';
+                            if ($data['totalEarningHosting']['amountCompare'] < 0) {
+                                $highLess4 = 'Less';
+                        } @endphp
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess4 }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-                            <p>Higher than last year</p>
+                            <p>{{ $highLess4 }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
                             <p>All time record</p>
                         @else
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess4 }} than last month</p>
                         @endif
                     </div>
                 </div>
@@ -230,15 +258,23 @@
                     <div class="bottom-text">
                         <h5 class="{{ $data['totalEarningMarketing']['amountCompare'] < 0 ? 'red' : '' }} ">
                             {{ $data['totalEarningMarketing']['amountCompare'] }}%</h5>
+
+                        @php
+                            $highLess5 = 'Higher';
+                            if ($data['totalEarningMarketing']['amountCompare'] < 0) {
+                                $highLess5 = 'Less';
+                        } @endphp
+
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess5 }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-                            <p>Higher than last year</p>
+                            <p>{{ $highLess5 }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
                             <p>All time record</p>
                         @else
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess5 }} than last month</p>
                         @endif
+
                     </div>
                 </div>
             </div>
@@ -258,14 +294,21 @@
                     <div class="bottom-text">
                         <h5 class="{{ $data['totalEarningProject']['amountCompare'] < 0 ? 'red' : '' }} ">
                             {{ $data['totalEarningProject']['amountCompare'] }}%</h5>
+
+                        @php
+                            $highLess6 = 'Higher';
+                            if ($data['totalEarningProject']['amountCompare'] < 0) {
+                                $highLess6 = 'Less';
+                        } @endphp
+
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess6 }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-                            <p>Higher than last year</p>
+                            <p>{{ $highLess6 }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
                             <p>All time record</p>
                         @else
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess6 }} than last month</p>
                         @endif
                     </div>
                 </div>
@@ -286,14 +329,21 @@
                     <div class="bottom-text">
                         <h5 class="{{ $data['totalEarningWebsite']['amountCompare'] < 0 ? 'red' : '' }} ">
                             {{ $data['totalEarningWebsite']['amountCompare'] }}%</h5>
+
+                        @php
+                            $highLess7 = 'Higher';
+                            if ($data['totalEarningWebsite']['amountCompare'] < 0) {
+                                $highLess7 = 'Less';
+                        } @endphp
+
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess7 }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
-                            <p>Higher than last year</p>
+                            <p>{{ $highLess7 }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
                             <p>All time record</p>
                         @else
-                            <p>Higher than last month</p>
+                            <p>{{ $highLess7 }} than last month</p>
                         @endif
                     </div>
                 </div>
@@ -338,7 +388,6 @@
                 </div>
             </div>
         </div>
-
         <div class="payment-from-copany-user" style="border-radius: 0 0 16px 16px">
             @include('earnings.earning-clients')
             {{-- paggination wrap --}}

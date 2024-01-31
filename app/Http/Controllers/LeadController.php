@@ -95,7 +95,7 @@ class LeadController extends Controller
         // all leads
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
 
-        // as hoisting lead is = 1
+        // as hosting lead is = 1
         $leadType = 1;
 
         $leads = [
@@ -106,7 +106,7 @@ class LeadController extends Controller
             'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->get(),
         ];
 
-        return view('lead/hoisting',compact('lead_types','leads'));
+        return view('lead/hosting',compact('lead_types','leads'));
     }
 
     public function marketing()

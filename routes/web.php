@@ -103,13 +103,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/website-leads', [LeadController::class, 'website'])->name('lead.website-leads');
     Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lead.lost-leads');
 
-    // earning route
+    // common earning route
     Route::get('earning/details/{id?}', [EarningController::class, 'showEarningWithModal'])->name('earning.details');
-
     Route::get('/total-earnings', [EarningController::class, 'index'])->name('earning.total-earnings');
     Route::post('/add-earnings', [EarningController::class, 'store'])->name('earning.add-earnings');
-    
     Route::post('{id}/destroy-earnings', [EarningController::class, 'destroy'])->name('earning.destroy-earnings');
+
+    // hosting earning
+    Route::get('/hosting-earnings', [EarningController::class, 'hostingEarning'])->name('earning.hosting-earnings');
 
     // expense route
     // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expense.total-expense');
