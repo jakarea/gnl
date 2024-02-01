@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
 class ProfileController extends Controller
 {
     //
@@ -34,8 +34,24 @@ class ProfileController extends Controller
             'marital_status'=>'required',
         ]);
 
+
         $user = auth()->user();
-        $user->update($request->all());
+
+        $data = $request->except(['avatar']);
+
+        $user->update($data);
+
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar) {
+                Storage::disk('public')->delete("users/{$user->avatar}");
+            }
+            $avatar = $request->file('avatar');
+            $filename = substr(md5(time()), 0, 10) . '.' . $avatar->getClientOriginalExtension();
+            $avatarPath = $avatar->storeAs('users', $filename, 'public');
+            $user->update(['avatar' => 'storage/'. $avatarPath]);
+        }
+
+
         return redirect(route('account.index'))->withSuccess('User info updated!!');
     }
 
