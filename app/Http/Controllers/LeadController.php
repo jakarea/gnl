@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class LeadController extends Controller
 {
-    
+
     public function allLeads()
     {
 
@@ -20,13 +20,13 @@ class LeadController extends Controller
 
         $allLeads = Lead::orderByDesc('lead_id');
 
-        $selectedLead = ''; 
+        $selectedLead = '';
         if (!empty($status)) {
             $selectedLead = $status;
-         
+
             if (in_array($status, ['in_progress', 'completed', 'new', 'no_ans', 'lost'])) {
                 $allLeads->where('state', $status);
-            } else { 
+            } else {
                 $allLeads->whereIn('state', ['in_progress', 'completed', 'new', 'no_ans', 'lost']);
             }
         }
@@ -45,7 +45,7 @@ class LeadController extends Controller
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             return response()->json(['error' => 'No Lead found!'], 404);
         }
-        
+
     }
 
     public function store(LeadStoreRequest $request)
@@ -69,7 +69,7 @@ class LeadController extends Controller
         }else{
             return redirect()->back()->with('error','No Leads found!');
         }
-       
+
         if ($request->has('lead_type_id') && !LeadType::where('lead_type_id', $request->input('lead_type_id'))->exists()) {
             return redirect()->back()->with('error','No Leads type found!');
         }
@@ -145,7 +145,7 @@ class LeadController extends Controller
         ];
 
         return view('lead/project',compact('lead_types','leads'));
-    } 
+    }
 
     public function website()
     {
@@ -164,24 +164,24 @@ class LeadController extends Controller
         ];
 
         return view('lead/website',compact('lead_types','leads'));
-    } 
+    }
 
     public function lost(){
-         
+
          $lostLeads = Lead::orderByDesc('lead_id')->where('state','lost')->paginate(16);
          $lead_types = LeadType::orderByDesc('lead_type_id')->get();
- 
+
          return view('lead/lost',compact('lostLeads','lead_types'));
     }
 
     public function destroy($lead_id)
     {
         $lead = Lead::findOrFail($lead_id);
- 
+
         if ($lead->avatar) {
             Storage::disk('public')->delete($lead->avatar);
         }
- 
+
         $lead->delete();
 
         return redirect()->back()->with('success','Leads deleted successfuly!');
