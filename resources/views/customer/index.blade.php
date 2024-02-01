@@ -32,7 +32,7 @@
                 </h5>
                 <h3>{{ $totalCustomer }}</h3>
                 <div class="d-flex">
-                    <span>+{{ $totalCustomerInc }}%</span>
+                    <span>{{ $totalCustomerInc }}%</span>
                     <p>Higher than last month</p>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 </h5>
                 <h3>{{ $newCustomer }}</h3>
                 <div class="d-flex">
-                    <span>+{{ $newCustomerInc }}%</span>
+                    <span>{{ $newCustomerInc }}%</span>
                     <p>Higher than last month</p>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 </h5>
                 <h3> {{ $repeatedCustomer }} </h3>
                 <div class="d-flex">
-                    <span>+{{ $repeatCustomerInc }}%</span>
+                    <span>{{ $repeatCustomerInc }}%</span>
                     <p>Higher than last month</p>
                 </div>
             </div>
@@ -226,7 +226,7 @@
         <!-- Your content goes here -->
 
         <!-- Pagination Section -->
-        {!! $customers->links('pagination::gnl-pagination') !!} 
+        {!! $customers->links('pagination::gnl-pagination') !!}
 
         <!--pagination end-->
     </div>

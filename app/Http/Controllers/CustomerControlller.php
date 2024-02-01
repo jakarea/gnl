@@ -39,18 +39,37 @@ class CustomerControlller extends ApiController
         $data['customers'] = $customers;
 
         // Get count current month
-        $data['totalCustomer'] = $query->count();
-        $data['newCustomer'] = $query->where('created_at', '>=', now()->subDays(7))->count();
-        $data['repeatedCustomer'] = $query->whereColumn('updated_at', '>', 'created_at')->count();
+        // $data['totalCustomer'] = $query->count();
+        // $data['newCustomer'] = $query->where('created_at', '>=', now()->subDays(7))->count();
+        // $data['repeatedCustomer'] = $query->whereColumn('updated_at', '>', 'created_at')->count();
+
+        // // Get counts for the previous month
+        // $previousMonthTotalCustomers = $query->whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+        // $previousMonthNewCustomers = $query->whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+        // $previousMonthRepeatedCustomers = $query->whereBetween('updated_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+
+        // $data['totalCustomerInc'] = round($this->calculatePercentageIncrease($data['totalCustomer'], $previousMonthTotalCustomers), 2);
+        // $data['newCustomerInc'] = round($this->calculatePercentageIncrease($data['newCustomer'], $previousMonthNewCustomers), 2);
+        // $data['repeatCustomerInc'] = round($this->calculatePercentageIncrease($data['repeatedCustomer'], $previousMonthRepeatedCustomers), 2);
+
+
+        $currentMonthTotalCustomers = $query->count();
+        $currentMonthNewCustomers = $query->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->count();
+        $currentMonthRepeatedCustomers = $query->whereBetween('updated_at', [now()->startOfMonth(), now()->endOfMonth()])->count();
 
         // Get counts for the previous month
-        $previousMonthTotalCustomers = $query->whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
-        $previousMonthNewCustomers = $query->whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
-        $previousMonthRepeatedCustomers = $query->whereBetween('updated_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
 
-        $data['totalCustomerInc'] = round($this->calculatePercentageIncrease($data['totalCustomer'], $previousMonthTotalCustomers), 2);
-        $data['newCustomerInc'] = round($this->calculatePercentageIncrease($data['newCustomer'], $previousMonthNewCustomers), 2);
-        $data['repeatCustomerInc'] = round($this->calculatePercentageIncrease($data['repeatedCustomer'], $previousMonthRepeatedCustomers), 2);
+        $previousMonthTotalCustomers = Customer::whereBetween('created_at', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+        $previousMonthNewCustomers = Customer::whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+        $previousMonthRepeatedCustomers = Customer::whereBetween('updated_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+
+        $data['totalCustomer'] = $currentMonthTotalCustomers;
+        $data['newCustomer'] = $currentMonthNewCustomers;
+        $data['repeatedCustomer'] = $currentMonthRepeatedCustomers;
+
+        $data['totalCustomerInc'] = round($this->calculatePercentageIncrease($currentMonthTotalCustomers, $previousMonthTotalCustomers), 2);
+        $data['newCustomerInc'] = round($this->calculatePercentageIncrease($currentMonthNewCustomers, $previousMonthNewCustomers), 2);
+        $data['repeatCustomerInc'] = round($this->calculatePercentageIncrease($currentMonthRepeatedCustomers, $previousMonthRepeatedCustomers), 2);
 
         $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
         $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
@@ -147,7 +166,9 @@ class CustomerControlller extends ApiController
 
     function calculatePercentageIncrease($currentCount, $previousCount): float
     {
-        return $previousCount !== 0 ? (($currentCount - $previousCount) / $previousCount) * 100 : 0;
+        // return $previousCount !== 0 ? (($currentCount - $previousCount) / $previousCount) * 100 : 0;
+        return $previousCount !== 0 ? (($currentCount - $previousCount) / abs($previousCount)) * 100 : 0;
+
     }
 
     function showCustomerWithModal(Request $request)
