@@ -1,5 +1,5 @@
-<div class="custom-modal custom-modal-leads">
-    <div class="modal fade" id="staticBackdropFive" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="custom-modal custom-modal-leads ">
+    <div class="modal fade lead-details-modal" id="staticBackdropFive" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropFiveLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-leads">
@@ -14,7 +14,7 @@
                         enctype="multipart/form-data">
 
                         @csrf
-                        <input type="hidden" name="lead_id" id="leadId" value="">
+                        <input type="hidden" name="lead_id" id="leadId" value="{{ $lead->lead_id }}">
                         <div class="add-customer-form">
                             <div class="row">
                                 <div class="col-12">
@@ -24,7 +24,7 @@
                                         <!-- upload avatar -->
                                         <div class="d-flex">
                                             <label for="avatar2" class="avatar" id="avatarLabel2">
-                                                <img src="{{ asset('/uploads/users/avatar-9.png') }}" alt="avatar"
+                                                <img src="{{ $lead->avatar ? asset($lead->avatar) : asset('/uploads/users/avatar-9.png') }}" alt="avatar"
                                                     class="img-fluid" id="avatarPreview2">
                                                 <span class="avatar-ol">
                                                     <img src="{{ asset('/assets/images/icons/camera.svg') }}" alt="camera"
@@ -44,7 +44,7 @@
                                     <div class="form-group form-error">
                                         <label for="name">Name</label>
                                         <input type="text" placeholder="Enter Name" id="name2" name="name"
-                                            class="form-control" value="{{ old('name') }}" />
+                                            class="form-control" value="{{ $lead->name }}" />
                                         @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -54,7 +54,7 @@
                                     <div class="form-group form-error">
                                         <label for="phone">Phone</label>
                                         <input type="number" placeholder="Enter phone number" id="phone2" name="phone"
-                                            class="form-control" value="{{ old('phone') }}" />
+                                            class="form-control" value="{{ $lead->phone }}" />
 
                                         @error('phone')
                                         <div class="text-danger">{{ $message }}</div>
@@ -66,7 +66,7 @@
                                     <div class="form-group form-error">
                                         <label for="email">E-mail</label>
                                         <input type="email" placeholder="Enter email address" id="email2" name="email"
-                                            class="form-control" value="{{ old('email') }}" />
+                                            class="form-control" value="{{ $lead->email }}" />
                                         @error('email')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -77,7 +77,7 @@
                                     <div class="form-group form-error">
                                         <label for="instagram">Instagram</label>
                                         <input type="text" placeholder="Enter Instagram" id="instagram2" name="instagram"
-                                            class="form-control" value="{{ old('instagram') }}" />
+                                            class="form-control" value="{{ $lead->instagram }}" />
                                         @error('instagram')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -85,9 +85,9 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
-                                        <label for="linkedin">LinkedIn</label>
+                                        <label for="linkedin2">LinkedIn</label>
                                         <input type="text" placeholder="Enter Linkedin" id="linkedin2" name="linkedin"
-                                            class="form-control" value="{{ old('linkedin') }}" />
+                                            class="form-control" value="{{ $lead->linkedin }}" />
                                         @error('linkedin')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -97,7 +97,7 @@
                                     <div class="form-group form-error">
                                         <label for="company">Company</label>
                                         <input type="text" placeholder="Enter company name" id="company2" name="company"
-                                            class="form-control" value="{{ old('company') }}" />
+                                            class="form-control" value="{{ $lead->company }}" />
                                         @error('company')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -107,7 +107,7 @@
                                     <div class="form-group form-error">
                                         <label for="website">Website</label>
                                         <input type="text" placeholder="Enter website" id="website2" name="website"
-                                            class="form-control" value="{{ old('website') }}" />
+                                            class="form-control" value="{{ $lead->website }}" />
                                         @error('website')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -115,9 +115,9 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
-                                        <label for="company">KVK</label>
+                                        <label for="kvk">KVK</label>
                                         <input type="text" placeholder="Enter kvk number" id="kvk2" name="kvk"
-                                            class="form-control" value="{{ old('kvk') }}" />
+                                            class="form-control" value="{{ $lead->kvk }}" />
                                         @error('kvk')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -126,13 +126,24 @@
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="lead_type_id2">Type of Lead</label>
-                                        <input type="hidden" name="lead_type_id" id="lead_type_id2" value="">
+                                        <input type="hidden" name="lead_type_id" id="lead_type_id2" value="{{ $lead->lead_type_id }}">
                                         <div class="common-dropdown common-dropdown-two common-dropdown-three">
                                             <div class="dropdown dropdown-two dropdown-three">
                                                 <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                    <div id="setLeadType2">Select Below</div><i
-                                                        class="fas fa-angle-down"></i>
+                                                    <div id="setLeadType2">
+                                                        @if ($lead->lead_type_id == 1)
+                                                            Hosting Lead 
+                                                        @elseif ($lead->lead_type_id == 2)
+                                                            Marketing Lead 
+                                                        @elseif ($lead->lead_type_id == 3)
+                                                            Project Lead 
+                                                        @elseif ($lead->lead_type_id == 4)
+                                                            Website Lead 
+                                                        @else 
+                                                        Select Below
+                                                        @endif
+                                                        </div><i class="fas fa-angle-down"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three w-100">
                                                     @foreach ($lead_types as $leadType)
@@ -140,7 +151,7 @@
                                                         <a class="dropdown-item dropdown-item-two lead-type-2"
                                                             href="javascript:;"
                                                             data-id="{{ $leadType->lead_type_id }}">{{
-                                                            $leadType->name }}</a>
+                                                            $leadType->name }} Lead</a>
                                                     </li>
                                                     @endforeach
                                                 </ul>
@@ -157,7 +168,7 @@
                                     <div class="form-group form-error">
                                         <label for="note">Notes</label>
                                         <textarea name="note" id="note2" rows="7" class="form-control"
-                                            placeholder="Enter details">{{ old('note') }}</textarea>
+                                            placeholder="Enter details">{{ $lead->note }}</textarea>
                                         @error('note')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -186,45 +197,9 @@
     </div>
 </div>
 
-
-{{-- get data --}}
-<script> 
-
-    function populateFormFields(data){
-
-        let editingLead = JSON.parse(data); 
-        console.log(editingLead.avatar)
- 
-        document.getElementById('leadId').value = editingLead.lead_id;
-        document.getElementById('avatarPreview2').src = editingLead.avatar ? editingLead.avatar : 'uploads/users/avatar-9.png';
-        document.getElementById('name2').value = editingLead.name;
-        document.getElementById('phone2').value = editingLead.phone;
-        document.getElementById('email2').value = editingLead.email;
-        document.getElementById('instagram2').value = editingLead.instagram;
-        document.getElementById('linkedin2').value = editingLead.linkedin;
-        document.getElementById('company2').value = editingLead.company;
-        document.getElementById('website2').value = editingLead.website;
-        document.getElementById('kvk2').value = editingLead.kvk;
-        document.getElementById('lead_type_id2').value = editingLead.lead_type_id;
-        document.getElementById('note2').value = editingLead.note;
-
-        if (editingLead.lead_type_id == 1) {
-            document.getElementById('setLeadType2').innerHTML = 'Hosting Lead';
-        }else if (editingLead.lead_type_id == 2) {
-            document.getElementById('setLeadType2').innerHTML = 'Marketing Lead';
-        }else if (editingLead.lead_type_id == 3) {
-            document.getElementById('setLeadType2').innerHTML = 'Project Lead';
-        }else if (editingLead.lead_type_id == 4) {
-            document.getElementById('setLeadType2').innerHTML = 'Website Lead';
-        }else{
-            document.getElementById('setLeadType2').innerHTML = 'Select Below';
-        }
-
-    }
-</script>
-
 {{-- lead avatar js --}}
 <script>
+    // console.log('upload');
     // Get references to elements
     const avatarInput2 = document.getElementById('avatar2');
     const avatarPreview2 = document.getElementById('avatarPreview2');
@@ -233,6 +208,7 @@
     // Add event listener to file input
     avatarInput2.addEventListener('change', function(event) {
     const file2 = event.target.files[0]; // Get the first file selected by the user
+    
 
     // Check if a file is selected
     if (file2) {

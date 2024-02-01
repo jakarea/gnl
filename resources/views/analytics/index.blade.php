@@ -167,7 +167,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="chart-box-wrap">
+            <div class="chart-box-wrap status-graph-box">
                 <div class="graph-head">
                     <h5>Customer Active Status</h5>
                 </div>
@@ -212,7 +212,7 @@
             <div class="top-active-company-user">
                 <h4 class="mb-15">Top Active Customer</h4>
                 <div class="user-list">
-                  @foreach ($topActiveCustomers as $index => $topCustomer)
+                  @foreach ($topActiveCustomers->slice(0,7) as $index => $topCustomer)
                     <!-- user one start -->
                     <div class="media">
                       @if ($topCustomer->customer->avatar)

@@ -40,13 +40,21 @@
   margin-right: 0.5rem;
 }
 
-.project-single-box .project-status span i.danger {
-  color: #ED5763;
-}
 
 .project-single-box .project-status .in_progress {
   background: rgba(248, 119, 46, 0.1);
   color: var(--Warning-Dark, #F89B2E);
+}
+.project-single-box .project-status .cancel {
+  background: rgba(237, 87, 99, 0.1);
+  color: var(--Warning-Dark, #ED5763);
+}
+
+.project-single-box .project-status span.in_progress i.danger {
+  color: #F89B2E;
+}
+.project-single-box .project-status span.cancel i.danger {
+  color: #ED5763;
 }
 
 .project-single-box .project-status button,
@@ -838,6 +846,7 @@
   position: relative;
 }
 
+.projectSearch,
 .search-suggestions-box {
   border-radius: var(--8, 0.5rem);
   border: 1px solid var(--Neutral-200, #F1F2F4);
@@ -852,10 +861,12 @@
   display: block;
 }
 
+.projectSearch .select-customer .media ,
 .search-suggestions-box .select-customer .media {
   padding: 10px 1rem !important;
 }
 
+.projectSearch .select-customer .media:hover ,
 .search-suggestions-box .select-customer .media:hover {
   background-color: #F9F9FC !important;
   border-radius: 10px;

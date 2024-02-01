@@ -39,10 +39,22 @@ class LeadController extends Controller
 
     public function details($lead_id)
     {
-        try {
+        // try {
+        //     $lead = Lead::findOrFail($lead_id);
+        //     return response()->json($lead);
+        // } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
+        //     return response()->json(['error' => 'No Lead found!'], 404);
+        // }
+
+        if ($lead_id) {
             $lead = Lead::findOrFail($lead_id);
-            return response()->json($lead);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
+
+            // return $lead;
+            $lead_types = LeadType::orderByDesc('lead_type_id')->get();
+            
+            return view('lead/common/edit',compact('lead','lead_types'));
+
+        } else{
             return response()->json(['error' => 'No Lead found!'], 404);
         }
 

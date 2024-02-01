@@ -30,8 +30,10 @@ class ProjectsController extends Controller
                 $projects->where('status', 'in_progress');
             } elseif ($status == 'completed') {
                 $projects->where('status', 'completed');
+            }  elseif ($status == 'cancel') {
+                $projects->where('status', 'cancel');
             } else {
-                $projects->whereIn('status', ['in_progress', 'completed']);
+                $projects->whereIn('status', ['in_progress', 'completed','cancel']);
             }
         }
 

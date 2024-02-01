@@ -175,7 +175,7 @@
                         @if ($customer->avatar)
                         <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid avatar" />
                         @else
-                        <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar" class="img-fluid avatar" />
+                        <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar" class="img-fluid avatar" />
                         @endif
                     </div>
 
@@ -434,7 +434,7 @@
                                                             <a class="dropdown-item dropdown-item-two lead-type"
                                                                 href="javascript:;"
                                                                 data-id="{{ $leadType->lead_type_id }}">{{
-                                                                $leadType->name }}</a>
+                                                                $leadType->name }} Lead</a>
                                                         </li>
                                                         @endforeach
                                                     </ul>

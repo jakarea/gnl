@@ -29,11 +29,11 @@
 
                 @if ($paginator->hasMorePages())
                 <li class="page-item">
-                    <a href="{{ $paginator->nextPageUrl() }}" class="page-link page-link-right" href="#"><i class="fa-solid fa-angle-right"></i></a>
+                    <a href="{{ $paginator->nextPageUrl() }}" class="page-link page-link-right ms-0" href="#"><i class="fa-solid fa-angle-right"></i></a>
                 </li>
                 @else
                 <li class="page-item">
-                    <a class="page-link page-link-right"><i class="fa-solid fa-angle-right"></i></a>
+                    <a class="page-link page-link-right ms-0"><i class="fa-solid fa-angle-right"></i></a>
                 </li>
                 @endif
             </ul>

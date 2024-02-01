@@ -188,9 +188,13 @@
                                                                 </button>
                                                                 <ul class="dropdown-menu dropdown-menu-two">
                                                                     <li>
+                                                                        <a class="text-danger dropdown-item dropdown-item-two filterProjectStatus"
+                                                                            href="#" data-value="cancel">Cancelled</a>
+                                                                    </li>
+                                                                    <li>
                                                                         <a class="text-warning dropdown-item dropdown-item-two filterProjectStatus"
                                                                             href="#" data-value="in_progress">In
-                                                                            Progress<i class="fas fa-check"></i></a>
+                                                                            Progress</a>
                                                                     </li>
                                                                     <li><a class="text-primary dropdown-item dropdown-item-two filterProjectStatus"
                                                                             href="#"
@@ -633,7 +637,7 @@
         filterProjectStatus.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
-                project_statusss.innerHTML = this.getAttribute("data-value");
+                project_statusss.innerHTML = this.innerHTML;
                 project_statuss.value = this.getAttribute("data-value");
             });
         });

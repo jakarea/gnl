@@ -23,18 +23,24 @@
         <li class="head-item">
           <div class="dropdown p-0 header-dropdown">
             <a class="p-0 user head-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="{{ asset('uploads/users/avatar-2.png') }}" alt="A" class="img-fluid">
+              <img src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('uploads/users/avatar-2.png') }}" alt="A" class="img-fluid">
             </a>
 
             <ul class="dropdown-menu">
               <li>
                 <a class="dropdown-item" href="{{ url('account/profile') }}">
                   Profile
+                  @if (Request::is('account/profile'))
+                      <i class="fas fa-check"></i>
+                  @endif
                 </a>
               </li>
               <li>
                 <a class="dropdown-item" href="{{ url('account/settings') }}">
                   Profile Setting
+                  @if (Request::is('account/settings'))
+                      <i class="fas fa-check"></i>
+                  @endif
                 </a>
               </li>
               <li>
