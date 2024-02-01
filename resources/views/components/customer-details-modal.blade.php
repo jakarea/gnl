@@ -10,7 +10,7 @@
     </div>
     <div class="profile-header profile-header-address">
         @if ($customer->avatar)
-            <img src="{{ asset('storage/' . $customer->avatar) }}" alt="avatar" class="img-fluid" />
+            <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid" />
         @else
             <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar" class="img-fluid" />
         @endif

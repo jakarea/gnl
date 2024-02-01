@@ -235,7 +235,7 @@
                                                     <h3>Select Customer</h3>
                                                 </div>
                                                 <!-- customer search form start -->
-                                                <div class="form-group search-by-name">
+                                                <div class="form-group search-by-name" style="grid-template-columns: 65% 35%!important">
                                                     <div class="search-item">
                                                         <img src="{{ url('assets/images/icons/search-ic.svg') }}"
                                                             alt="a" class="img-fluid search">
