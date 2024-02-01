@@ -9,13 +9,15 @@
 
 @section('content')
 
-<section class="main-page-wrapper leads-page-wrapper">
-    <!-- page title -->
-    <div class="page-title leads-page-title">
-        <h1>Hosting Leads</h1>
-        <!-- bttn -->
-        <div class="common-bttn">
-            <a href="{{ url('leads/all') }}" class="add">View All</a>
+    <section class="main-page-wrapper leads-page-wrapper">
+        <!-- page title -->
+        <div class="page-title leads-page-title">
+            <h1>Hosting Leads</h1>
+            <!-- bttn -->
+            <div class="common-bttn">
+                <a href="{{ url('leads/all') }}" class="add">View All</a>
+            </div>
+            <!-- bttn -->
         </div>
         <div class="leads-main-wrapper">
             <div class="leads-vertical-scroller custom-scroll-bar" id="stateChangeDraggable">
@@ -295,6 +297,7 @@
                 <!-- Lost Leads End-->
             </div>
         </div>
+
     </section>
 
     {{-- create leads modal start --}}
