@@ -30,6 +30,8 @@
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+
+                        <input type="file" name="avatar" id="avatar" class="d-none">
                         <div class="title">
                             <h3>Personal Info</h3>
                             <a href="{{ route('account.index') }}">
@@ -68,7 +70,7 @@
                                     <label for="text">Gender <span>*</span></label>
                                     <select name="gender" id="" class="form-control" required>
                                         <option @selected($user->gender == 'male') value="male">Male</option>
-                                        <option @selected($user->gender == 'female') value="felmale">Female</option>
+                                        <option @selected($user->gender == 'female') value="female">Female</option>
                                     </select>
                                     <div class="fields-icons">
                                         <i class="fas fa-angle-down"></i>

@@ -38,5 +38,3 @@
     </section>
 @endsection
 
-@section('script')
-@endsection

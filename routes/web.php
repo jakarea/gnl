@@ -100,6 +100,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lost-leads');
     });
 
+
+    // all lead sortable
+    Route::post('/new-leads/sortable', [LeadController::class, 'newLeadsSortable'])->name('lead.sortable');
+    Route::post('/inprogress-leads/sortable', [LeadController::class, 'inprogressLeadsSortable'])->name('state.lead.sortable');
+
+
+
+
+
     // common earning route
     Route::name('earning.')->group(function () {
         Route::get('earning/details/{id?}', [EarningController::class, 'showEarningWithModal'])->name('details');
