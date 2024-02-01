@@ -211,7 +211,7 @@
             let currentURL = window.location.href;
             const baseUrl = currentURL.split('/').slice(0, 3).join('/'); 
 
-            fetch(`${baseUrl}/lead-details/${leadId}`, {
+            fetch(`${baseUrl}/leads/${leadId}/details`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -225,6 +225,7 @@
                 return response.text();
             })
             .then(function (data) {
+                // console.log(data);
                 populateFormFields(data); 
             })
             .catch(function (error) {

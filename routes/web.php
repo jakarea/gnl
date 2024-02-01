@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
@@ -23,34 +24,35 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
+// initial redirection route
+Route::group(['middleware' => ['auth']], function () {
+    Route::redirect('/', '/dashboard');
+    Route::redirect('/home', '/dashboard');
+});
+
+// custom auth routes
 Route::group(['middleware' => ['guest']], function () {
-    // Registration
     Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
-    // Login
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
 });
 
-// initial redirection route
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', function () {
-        return redirect('/dashboard');
-    });
-    Route::get('/home', function () {
-        return redirect('/dashboard');
-    });
-    Route::get('/dashboard',  [DashboardController::class, 'index']);
-    Route::get('/analytics',  [DashboardController::class, 'analytics']);
-});
-
+// all routes start
 Route::group(['middleware' => ['auth']], function () {
 
+    // common search api route 
     Route::get('search-customers', [ProjectsController::class, 'search'])->name('search.customers');
     Route::get('project/search', [TaskController::class, 'projectSearch'])->name('projectsearch');
     Route::get('get/project', [TaskController::class, 'getProjectById'])->name('getProjectById');
 
+    // dashboard route
+    Route::get('/dashboard',  [DashboardController::class, 'index']);
 
+    // analytics route
+    Route::get('/analytics',  [AnalyticsController::class, 'index']);
+
+    // customer route
     Route::prefix('customers')->name('customers.')->group(function () {
         Route::get('/', [CustomerControlller::class, 'index'])->name('index');
         Route::post('/store', [CustomerControlller::class, 'store'])->name('store');
@@ -61,17 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/details/modal', [CustomerControlller::class, 'showCustomerWithModal'])->name('details.modal');
     });
 
-    Route::prefix('projects')->name('projects.')->group(function () {
-
-        // Route::get('/search-customers', [ProjectsController::class, 'search'])->name('search.customers');
-
-        Route::get('/', [ProjectsController::class, 'index'])->name('index');
-        Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
-        Route::post('/store', [ProjectsController::class, 'store'])->name('store');
-        Route::post('{id}/update', [ProjectsController::class, 'update'])->name('update');
-        Route::post('{id}/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
-    });
-
+    // todo list route
     Route::prefix('to-do-list')->name('task.')->group(function () {
         Route::post('/edit', [TaskController::class, 'edit']);
         Route::get('/', [TaskController::class, 'index']);
@@ -81,6 +73,50 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
     });
 
+    // project route
+    Route::prefix('projects')->name('projects.')->group(function () {
+        Route::get('/', [ProjectsController::class, 'index'])->name('index');
+        Route::get('/{id}', [ProjectsController::class, 'show'])->name('single');
+        Route::post('/store', [ProjectsController::class, 'store'])->name('store');
+        Route::post('{id}/update', [ProjectsController::class, 'update'])->name('update');
+        Route::post('{id}/destroy', [ProjectsController::class, 'destroy'])->name('destroy');
+    });
+
+    // total lead route
+    Route::prefix('leads')->name('lead.')->group(function () {
+        Route::get('/all', [LeadController::class, 'allLeads'])->name('all-leads');
+        Route::post('/store', [LeadController::class, 'store'])->name('store');
+        Route::get('{id}/details', [LeadController::class, 'details'])->name('details');
+        Route::post('/update', [LeadController::class, 'update'])->name('update');
+        Route::post('{id}/destroy', [LeadController::class, 'destroy'])->name('destroy');
+    });
+
+    // leads different types route
+    Route::name('lead.')->group(function () {
+        Route::get('/hosting-leads', [LeadController::class, 'hosting'])->name('hosting-leads');
+        Route::get('/marketing-leads', [LeadController::class, 'marketing'])->name('marketing-leads');
+        Route::get('/project-leads', [LeadController::class, 'project'])->name('project-leads');
+        Route::get('/website-leads', [LeadController::class, 'website'])->name('website-leads');
+        Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lost-leads');
+    });
+
+    // common earning route
+    Route::name('earning.')->group(function () {
+        Route::get('earning/details/{id?}', [EarningController::class, 'showEarningWithModal'])->name('details');
+        Route::get('/total-earnings', [EarningController::class, 'index'])->name('total-earnings');
+        Route::post('/add-earnings', [EarningController::class, 'store'])->name('add-earnings');
+        Route::post('{id}/destroy-earnings', [EarningController::class, 'destroy'])->name('destroy-earnings');
+    });
+
+    // earning with different lead type
+    Route::name('earning.')->group(function () {
+        Route::get('/hosting-earnings', [EarningController::class, 'hostingEarning'])->name('hosting-earnings');
+        Route::get('/marketing-earnings', [EarningController::class, 'marketingEarning'])->name('marketing-earnings');
+        Route::get('/project-earnings', [EarningController::class, 'projectEarning'])->name('project-earnings');
+        Route::get('/website-earnings', [EarningController::class, 'websiteEarning'])->name('website-earnings');
+    });
+
+    // expense route
     Route::prefix('expenses')->name('expense.')->group(function () {
         Route::get('/', [ExpenseController::class, 'index'])->name('expense.index');
         Route::post('/store', [ExpenseController::class, 'store'])->name('expense.store');
@@ -88,35 +124,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}', [ExpenseController::class, 'update'])->name('expense.update');
         Route::delete('/{id}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
     });
-
-    // all lead actions route
-    Route::get('/all-leads', [LeadController::class, 'allLeads'])->name('lead.all-leads');
-    Route::post('/leads-store', [LeadController::class, 'store'])->name('lead.store');
-    Route::get('/lead-details/{id}', [LeadController::class, 'details'])->name('lead.details');
-    Route::post('/leads-update', [LeadController::class, 'update'])->name('lead.update');
-    Route::post('{id}/destroy', [LeadController::class, 'destroy'])->name('lead.destroy');
-
-    // category leads route
-    Route::get('/hosting-leads', [LeadController::class, 'hosting'])->name('lead.hosting-leads');
-    Route::get('/marketing-leads', [LeadController::class, 'marketing'])->name('lead.marketing-leads');
-    Route::get('/project-leads', [LeadController::class, 'project'])->name('lead.project-leads');
-    Route::get('/website-leads', [LeadController::class, 'website'])->name('lead.website-leads');
-    Route::get('/lost-leads', [LeadController::class, 'lost'])->name('lead.lost-leads');
-
-    // common earning route
-    Route::get('earning/details/{id?}', [EarningController::class, 'showEarningWithModal'])->name('earning.details');
-    Route::get('/total-earnings', [EarningController::class, 'index'])->name('earning.total-earnings');
-    Route::post('/add-earnings', [EarningController::class, 'store'])->name('earning.add-earnings');
-    Route::post('{id}/destroy-earnings', [EarningController::class, 'destroy'])->name('earning.destroy-earnings');
-
-    // hosting earning
-    Route::get('/hosting-earnings', [EarningController::class, 'hostingEarning'])->name('earning.hosting-earnings');
-    Route::get('/marketing-earnings', [EarningController::class, 'marketingEarning'])->name('earning.marketing-earnings');
-    Route::get('/project-earnings', [EarningController::class, 'projectEarning'])->name('earning.project-earnings');
-    Route::get('/website-earnings', [EarningController::class, 'websiteEarning'])->name('earning.website-earnings');
-
-    // expense route
-    // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expense.total-expense');
 
     // admin profile
     Route::prefix('account')->name('account.')->group(function () {

@@ -193,6 +193,7 @@
     function populateFormFields(data){
 
         let editingLead = JSON.parse(data); 
+        console.log(editingLead.avatar)
  
         document.getElementById('leadId').value = editingLead.lead_id;
         document.getElementById('avatarPreview2').src = editingLead.avatar ? editingLead.avatar : 'uploads/users/avatar-9.png';

@@ -13,7 +13,7 @@
         <h1>Website Leads</h1>
         <!-- bttn -->
         <div class="common-bttn">
-            <a href={{ url('all-leads') }} class="add">View All</a>
+            <a href="{{ url('leads/all') }}" class="add">View All</a>
         </div>
         <!-- bttn -->
     </div>
