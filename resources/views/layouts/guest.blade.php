@@ -31,7 +31,7 @@
         @yield('style')
         <!-- custom CSS end -->
 
-        <title>DnD || Authintication @yield('title')</title>
+        <title>GNL || Authintication @yield('title')</title>
 
     </head>
 

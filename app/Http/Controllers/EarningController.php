@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class EarningController extends Controller
 {
-    //
+    // 
     protected $today;
     protected $thisMonth;
     protected $lastMonth;

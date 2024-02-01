@@ -5,7 +5,7 @@
                 class="{{ Request::is('dashboard') ? 'active' : '' }} side-link">
                 <img src="{{ url('assets/images/icons/sidebar/dashboard.svg') }}" alt="I"
                     class="img-fluid">
-                dashboard
+                Dashboard
             </a>
         </li>
 

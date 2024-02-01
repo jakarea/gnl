@@ -36,17 +36,18 @@
                 </td>
                 <td>
                     @if ($earning->customer->status == 'active')
-                        <p class="active-status">Active</p>
+                        <p class="active-status" style="color: #08B86E;">Active</p>
                     @else
                         <p class="active-status text-danger">Inactive</p>
                     @endif
 
                 </td>
                 <td>
-                    <p>{{ $earning->pay_date }}</p>
+                    <p>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $earning->pay_date)->format('d M, Y') }}
+                    </p>
                 </td>
                 <td>
-                    <p class="text-capitalize">{{ $earning->pay_services }}</p>
+                    <p class="text-capitalize">{{ $earning->pay_services }} Services</p>
                 </td>
                 <td>
                     <p>€{{ $earning->amount }}</p>
@@ -72,10 +73,10 @@
                             <img src="{{ url('/assets/images/icons/dots-horizontal.svg') }}"
                                 class="img-fluid" alt="">
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item earningModalDetails" href="javascript:;"
+                        <div class="dropdown-menu"> 
+                                <a class="dropdown-item earningModalDetails w-100 border-0 py-4" href="javascript:;"
                                 data-earning-id="{{ $earning->earning_id }}">View Details</a>
-
+                            
                             <form action="{{ route('earning.destroy-earnings', $earning->earning_id) }}"
                                 class="d-inline" method="POST">
                                 @csrf

@@ -71,16 +71,6 @@
   </div>
   <!--page title end-->
 
-  {{-- @if ($errors->any())
-  <div class="alert alert-danger">
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-  @endif --}}
-
   <!-- earning card start -->
   <div class="row mt-3">
     <!-- card item start -->
