@@ -156,8 +156,7 @@
                                     alt="">
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item lead-edit" href="#" data-bs-toggle="modal" data-id="{{ $lead->lead_id }}"
-                                    data-bs-target="#staticBackdropFive">Edit Lead</a> 
+                                    <a class="dropdown-item lead-edit" href="#" data-id="{{ $lead->lead_id }}">Edit Lead</a> 
 
                                     <form action="{{ route('lead.destroy',$lead->lead_id) }}" class="d-inline" method="POST">
                                         @csrf
@@ -188,7 +187,8 @@
 {{-- create leads modal end --}}
 
 {{-- create leads modal start --}}
-@include('lead.common.edit')
+{{-- @include('lead.common.edit') --}}
+<div class="showLeadDetails"></div>
 {{-- create leads modal end --}}
 @endsection
 
@@ -225,8 +225,9 @@
                 return response.text();
             })
             .then(function (data) {
-                // console.log(data);
-                populateFormFields(data); 
+                document.querySelector(".showLeadDetails").innerHTML = data;
+                $(".lead-details-modal").modal('show');
+
             })
             .catch(function (error) {
                 console.error('There was a problem with your fetch operation:', error);
@@ -253,4 +254,7 @@
         });
     });
 </script>
+
+
+
 @endsection

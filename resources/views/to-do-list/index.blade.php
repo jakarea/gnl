@@ -259,20 +259,20 @@
                                                             <h3>Select Project</h3>
                                                         </div>
                                                         <!-- customer search form start -->
-                                                        <div class="form-group search-by-name mt-2 grid-100">
-                                                            <div class="search-item">
-                                                                <img src="./assets/images/icons/search-ic.svg"
-                                                                    alt="a" class="img-fluid search">
-                                                                <input oninput="searchProject(event)" type="text"
-                                                                    placeholder="Search Project" name="search"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div class="projectSearch"></div>
-                                                            @error('project_id')
-                                                                <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
+                                                         
 
+                                                        <div class="form-group search-by-name grid-100">
+                                                            <div class="search-item">
+                                                                <img src="{{ url('assets/images/icons/search-ic.svg') }}"
+                                                                    alt="a" class="img-fluid search">
+        
+                                                                <input type="text" placeholder="Search by name" oninput="searchProject(event)"
+                                                                    class="form-control" autocomplete="off">
+        
+                                                                <div class="projectSearch"></div>
+        
+                                                            </div> 
+                                                        </div>
 
                                                         <div class="row loadProjectById"></div>
 
@@ -833,7 +833,7 @@
 
                             let customerHTML = `
                             <div class="col-lg-6 prfile-box">
-                                <div class="selected-profile-box">
+                                <div class="selected-profile-box mt-0 bg-white border-0 p-0">
                                     <div class="media">
                                         <img src="${avatar}" class="img-fluid avatar" alt="avatar">
                                         <div class="media-body">

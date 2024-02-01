@@ -51,6 +51,15 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item project-dropdown-item filterItems" href="#"
+                                        data-value="cancel">
+                                        Cancelled
+                                        @if ($selectedStatus && $selectedStatus == 'cancel')
+                                        <i class="fas fa-check"></i>
+                                        @endif
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item project-dropdown-item filterItems" href="#"
                                         data-value="in_progress">
                                         In Progress
                                         @if ($selectedStatus && $selectedStatus == 'in_progress')
@@ -82,6 +91,8 @@
                     <div class="project-status">
                         @if ($project->status == 'in_progress')
                         <span class="in_progress"><i class="fas fa-circle danger"></i> In Progress</span>
+                        @elseif ($project->status == 'cancel')
+                        <span class="cancel"><i class="fas fa-circle danger"></i> Cancelled</span>
                         @else
                         <span><i class="fas fa-circle"></i> Completed</span>
                         @endif

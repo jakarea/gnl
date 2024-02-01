@@ -193,10 +193,21 @@
                                                             <div class="dropdown dropdown-two">
                                                                 <button class="btn" type="button"
                                                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <span class="project_statuss text-capitalize">{{ $project->status }}</span>
+                                                                    <span class="project_statuss text-capitalize">
+                                                                        {{ $project->status == 'in_progress' ? 'In Progress' : $project->status }}
+                                                                    </span>
                                                                     <i class="fas fa-angle-down"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu dropdown-menu-two">
+                                                                    <li>
+                                                                        <a class="text-danger dropdown-item dropdown-item-two filterProjectStatus"
+                                                                            href="#" data-value="cancel">Cancelled
+
+                                                                            @if ($project->status == 'cancel')
+                                                                            <i class="fas fa-check"></i>
+                                                                            @endif
+                                                                        </a>
+                                                                    </li>
                                                                     <li>
                                                                         <a class="text-warning dropdown-item dropdown-item-two filterProjectStatus"
                                                                             href="#" data-value="in_progress">In Progress
@@ -594,8 +605,9 @@
                                                                                             <li>
                                                                                                 <a class="dropdown-item dropdown-item-two lead-type"
                                                                                                     href="javascript:;"
-                                                                                                    data-id="{{ $leadType->lead_type_id }}">{{
-                                                                                                    $leadType->name }}</a>
+                                                                                                    data-id="{{ $leadType->lead_type_id }}">
+
+                                                                                                    {{ $leadType->name }} Lead</a>
                                                                                             </li>
                                                                                             @endforeach
                                                                                         </ul>

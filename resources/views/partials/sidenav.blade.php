@@ -18,7 +18,7 @@
         </li>
         <li class="side-item">
             <a href="{{ url('customers') }}"
-                class="{{ Request::is('customers') ? 'active' : '' }} side-link"><img
+                class="{{ Request::is('customers*') ? 'active' : '' }} side-link"><img
                     src="{{ url('assets/images/icons/sidebar/customer.svg') }}" alt="I" class="img-fluid" />
                 Customers</a>
         </li>
@@ -30,18 +30,18 @@
             </a>
         </li>
         <li class="side-item">
-            <a href="{{ url('projects') }}" class="{{ Request::is('projects') ? 'active' : '' }} side-link"><img
+            <a href="{{ url('projects') }}" class="{{ Request::is('projects*') ? 'active' : '' }} side-link"><img
                     src="{{ url('assets/images/icons/sidebar/project.svg') }}" alt="I" class="img-fluid" />
                 Projects</a>
         </li>
         <li class="side-item side-subitem">
-            <a class="side-link {{ Request::is('hosting-leads') || Request::is('marketing-leads') || Request::is('project-leads') || Request::is('website-leads') || Request::is('lost-leads') ? 'active' : '' }}" data-bs-toggle="collapse" href="#collapseExample" role="button"
+            <a class="side-link {{ Request::is('hosting-leads') || Request::is('marketing-leads') || Request::is('project-leads') || Request::is('website-leads') || Request::is('lost-leads') || Request::is('leads/all') ? 'active' : '' }}" data-bs-toggle="collapse" href="#collapseExample" role="button"
                 aria-expanded="false" aria-controls="collapseExample">
                 <img src="{{ url('assets/images/icons/sidebar/leads.svg') }}" alt="I" class="img-fluid" />
                 Leads
                 <i class="fas fa-angle-down"></i>
             </a>
-            <div class="collapse {{ Request::is('hosting-leads') || Request::is('marketing-leads') || Request::is('project-leads') || Request::is('website-leads') || Request::is('lost-leads') ? 'show' : '' }}" id="collapseExample">
+            <div class="collapse {{ Request::is('hosting-leads') || Request::is('marketing-leads') || Request::is('project-leads') || Request::is('website-leads') || Request::is('lost-leads') || Request::is('leads/all') ? 'show' : '' }}" id="collapseExample">
                 <ul class="sub-nav">
                     <li><a href="{{ url("hosting-leads") }}" class="sub-link {{ Request::is('hosting-leads') ? 'active' : '' }}">Hosting Leads</a></li>
                     <li><a href="{{ url("marketing-leads") }}" class="sub-link {{ Request::is('marketing-leads') ? 'active' : '' }}">Marketing Leads</a></li>

@@ -347,12 +347,12 @@
                                                         <div class="setLeadType">Select Below</div><i
                                                             class="fas fa-angle-down"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                    <ul class="dropdown-menu w-100 dropdown-menu-two dropdown-menu-three">
                                                         @foreach ($lead_types as $leadType)
                                                         <li>
                                                             <a onclick="setLeadType('{{ $leadType->lead_type_id }}', '{{ $leadType->name }}')" class="dropdown-item dropdown-item-two lead-type"
                                                                 href="javascript:;">{{
-                                                                $leadType->name }}</a>
+                                                                $leadType->name }} Lead</a>
                                                         </li>
                                                         @endforeach
                                                     </ul>

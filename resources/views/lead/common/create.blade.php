@@ -139,7 +139,7 @@
                                                         <a class="dropdown-item dropdown-item-two lead-type"
                                                             href="javascript:;"
                                                             data-id="{{ $leadType->lead_type_id }}">{{
-                                                            $leadType->name }}</a>
+                                                            $leadType->name }} Lead</a>
                                                     </li>
                                                     @endforeach
                                                 </ul>

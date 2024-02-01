@@ -367,7 +367,7 @@
                         <div class="txt">
                             <h5>{{ array_sum($projectStatusGraph) }}</h5>
                             <p><img src="{{ asset('assets/images/icons/arrow-up-gren.svg') }}" alt="a" class="img-fluid"> 
-                                {{ array_sum($projectStatusGraph) > 0 ? '+' . array_sum($projectStatusGraph) : '-' }}%
+                               <span id="completedPercentage"></span> %
                             </p>
                           </div>
                         <canvas id="projectStatus"></canvas>
@@ -501,6 +501,10 @@ const earnExpenGraph = @json($earnExpenGraph);
 {{-- project graph --}}
 <script>
     const projectStatusGraph = @json($projectStatusGraph); 
+
+    let completedPercentage = (projectStatusGraph.completedProject / projectStatusGraph.inProgressProject) * 100;
+
+    document.querySelector('#completedPercentage').innerHTML = completedPercentage.toFixed(2);
 
     var datas = [projectStatusGraph.completedProject, projectStatusGraph.inProgressProject];
 
