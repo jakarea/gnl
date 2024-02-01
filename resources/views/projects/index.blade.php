@@ -94,7 +94,7 @@
                             <ul class="dropdown-menu dropdown-menu-start">
                                 <li>
                                     <a class="dropdown-item"
-                                        href="{{ url('projects/'.$project->project_id.'/edit') }}">Edit Project</a>
+                                        href="{{ url('projects/'.$project->project_id) }}">View Project</a>
                                 </li>
                                 <li>
                                     <form action="{{ url('projects/'.$project->project_id.'/destroy') }}" class="d-inline" method="POST">

@@ -329,7 +329,15 @@ body {
 }
 
 .custom-scroll-bar::-webkit-scrollbar {
-  width: 0.375rem;
+  width: 0.375rem;  
+}
+
+.leads-vertical-scroller.custom-scroll-bar{
+  padding-bottom: 1.5rem;
+  min-height: 75vh;
+}
+.leads-vertical-scroller.custom-scroll-bar::-webkit-scrollbar{
+  height: 0.575rem; 
 }
 
 .custom-scroll-bar::-webkit-scrollbar-track {

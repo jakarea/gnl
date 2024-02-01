@@ -59,10 +59,10 @@ class DashboardController extends Controller
         $projectStatusGraph = $this->getProjectStatus(); 
  
         $data = [
-            'totalEarning'          => $this->getTotalEarning($queryStatus),
-            'totalTax'              => $this->getTotalTax($queryStatus),
-            'totalProfit'           => $this->getTotalProfit($queryStatus),
-            'totalCustomer'         => $this->getTotalCustomer($queryStatus),
+            'totalEarning'          => $this->getTotalEarning($selectedQuery),
+            'totalTax'              => $this->getTotalTax($selectedQuery),
+            'totalProfit'           => $this->getTotalProfit($selectedQuery),
+            'totalCustomer'         => $this->getTotalCustomer($selectedQuery),
             'totalNewCustomer'      => $this->getNewCustomer(),
             'totalRepeatCustomer'      => $this->getRepeatCustomer(),
         ];
@@ -278,12 +278,6 @@ class DashboardController extends Controller
         $completed = Project::where('status','completed')->count();
 
         return ['inProgressProject' => $in_progress, 'completedProject' => $completed];
-    }
-
-
-    public function analytics()
-    {
-        return view('dashboard/analytics');
     }
 
     function calculatePercentageIncrease($currentCount, $previousCount): float

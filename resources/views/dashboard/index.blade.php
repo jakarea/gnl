@@ -19,7 +19,7 @@
             <form action="" method="GET" id="myForm">
                 <div class="dropdown">
                     <a class="bttn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="./assets/images/icons/calendar-2.svg" alt="icon" class="img-fluid">
+                        <img src="{{ asset('assets/images/icons/calendar-2.svg') }}" alt="icon" class="img-fluid">
                         <span id="currentQuery">
                             @if ($selectedQuery === 'this_month')
                             This Month
