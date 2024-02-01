@@ -408,7 +408,8 @@
 .payment-from-copany-user .profile-header .profile-box img {
   width: 80px;
   height: 80px;
-  border-radius: 80px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .payment-from-copany-user .profile-header .profile-box .profile-text {
   align-items: center;
@@ -443,6 +444,10 @@
   line-height: 30px;
   border-radius: 52px;
   background: var(--Success-Base, #36B37E);
+}
+
+.payment-from-copany-user .profile-header .profile-box .inactive {
+  background-color: #ED5763;
 }
 .payment-from-copany-user .profile-header .profile-edit-box {
   display: inline-flex;

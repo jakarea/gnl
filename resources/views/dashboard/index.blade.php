@@ -562,5 +562,5 @@ const earnExpenGraph = @json($earnExpenGraph);
             });
         });
     });
-</>
+</script>
 @endsection

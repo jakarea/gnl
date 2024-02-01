@@ -26,7 +26,7 @@
                                         <!-- upload avatar -->
                                         <div class="d-flex">
                                             <label for="avatar" class="avatar" id="avatarLabel2">
-                                                <img src="{{ $customer->avatar ? asset($customer->avatar) : 'uploads/users/avatar-9.png' }}"
+                                                <img src="{{ $customer->avatar ? asset($customer->avatar) : asset('uploads/users/avatar-9.png') }}"
                                                     alt="avatar" class="img-fluid" id="avatarPreview2">
                                                 <span class="avatar-ol">
                                                     <img src="{{ url('/assets/images/icons/camera.svg') }}" alt="camera"
@@ -113,7 +113,7 @@
                                                     <i class="fas fa-angle-down"></i>
                                                 </button>
 
-                                                <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                <ul class="dropdown-menu w-100 dropdown-menu-two dropdown-menu-three">
                                                     <li>
                                                         <a class="dropdown-item dropdown-item-two status-update"
                                                             data-status="active" href="#">Active
@@ -167,7 +167,7 @@
                                                         class="fas fa-angle-down"></i>
 
                                                 </button>
-                                                <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                <ul class="dropdown-menu w-100 dropdown-menu-two dropdown-menu-three">
                                                     @foreach ($services_types as $serviceType)
                                                     <li>
                                                         <a class="dropdown-item dropdown-item-two select-serv"
@@ -220,12 +220,25 @@
                                         <input type="hidden" name="lead_type_id" id="lead_type_id2" value="{{ $customer->lead_type_id }}">
                                         <div class="common-dropdown common-dropdown-two common-dropdown-three">
                                             <div class="dropdown dropdown-two dropdown-three">
-                                                <button class="btn" type="button" data-bs-toggle="dropdown"
+                                                <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                    <div id="setLeadType2">Select Below</div><i
+                                                    <div id="setLeadType2">
+                                                        @if ($customer->lead_type_id == 1)
+                                                            Hosting Lead
+                                                        @if ($customer->lead_type_id == 2)
+                                                            Marketing Lead
+                                                        @if ($customer->lead_type_id == 3)
+                                                            Project Lead
+                                                        @if ($customer->lead_type_id == 4)
+                                                            Website Lead
+                                                        @else 
+                                                            Select Below
+                                                        @endif
+                                                        
+                                                    </div><i
                                                         class="fas fa-angle-down"></i>
                                                 </button>
-                                                <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                <ul class="dropdown-menu w-100 dropdown-menu-two dropdown-menu-three">
                                                     @foreach ($lead_types as $leadType)
                                                     <li>
                                                         <a class="dropdown-item dropdown-item-two lead-type2"
@@ -293,7 +306,7 @@
         $("#setEditStatus").html(capitalizeStatus);
     });
 
-  {{-- customer avatar js --}}
+//   {{-- customer avatar js --}}
     // Get references to elements
     const avatarInput2 = document.getElementById('avatar');
     const avatarPreview2 = document.getElementById('avatarPreview2');
@@ -323,7 +336,7 @@
 
 
 
-{{-- select services type js --}}
+// {{-- select services type js --}}
 
 
        
@@ -340,7 +353,7 @@
         }); 
 
 
-{{-- select leads type js --}}
+// {{-- select leads type js --}}
 
 
         let leadTypeId2 = document.getElementById("lead_type_id2"); 
