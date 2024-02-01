@@ -310,150 +310,164 @@
     <script>
         $(function() {
             // ------ Lead reorder ----- //
-            $("#newLeadDraggable").sortable({
-                connectWith: ".droptrue",
-                update: function(event, ui) {
-                    var leadOrder = $(this).sortable("toArray", {
-                        attribute: "data-new-lead-id"
-                    });
-
-                    leadOrder = leadOrder.filter(function(item) {
-                        return item !== '';
-                    });
-                    updateLeadOrder(leadOrder);
-                }
-            });
-
-            $("#inprogressLeadDraggable").sortable({
-                connectWith: ".droptrue",
-                update: function(event, ui) {
-                    var leadOrder = $(this).sortable("toArray", {
-                        attribute: "data-inprogress-lead-id"
-                    });
-
-                    leadOrder = leadOrder.filter(function(item) {
-                        return item !== '';
-                    });
-                    updateLeadOrder(leadOrder);
-                }
-            });
-
-            $("#noAnswarLeadDraggable").sortable({
-                connectWith: ".droptrue",
-                update: function(event, ui) {
-                    var leadOrder = $(this).sortable("toArray", {
-                        attribute: "data-noanswar-lead-id"
-                    });
-
-                    leadOrder = leadOrder.filter(function(item) {
-                        return item !== '';
-                    });
-                    updateLeadOrder(leadOrder);
-                }
-            });
-
-            $("#completedLeadDraggable").sortable({
-                connectWith: ".droptrue",
-                update: function(event, ui) {
-                    var leadOrder = $(this).sortable("toArray", {
-                        attribute: "data-completed-lead-id"
-                    });
-
-                    leadOrder = leadOrder.filter(function(item) {
-                        return item !== '';
-                    });
-                    updateLeadOrder(leadOrder);
-                }
-            });
-
-            $("#lostLeadDraggable").sortable({
-                connectWith: ".droptrue",
-                update: function(event, ui) {
-                    var leadOrder = $(this).sortable("toArray", {
-                        attribute: "data-lost-lead-id"
-                    });
-
-                    leadOrder = leadOrder.filter(function(item) {
-                        return item !== '';
-                    });
-                    updateLeadOrder(leadOrder);
-                }
-            });
-
-            function updateLeadOrder(leadOrder) {
-                $.ajax({
-                    url: "{{ route('lead.sortable') }}",
-                    type: "POST",
-                    data: {
-                        leadOrder: leadOrder,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        console.log("lead reorder updated successfully");
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error updating module order:", error);
-                    }
-                });
-            }
-
-            // ---- lead reorder closed ---- //
-
-
-            // ------ Lead state change --- //
-
-            // $("#newLeadDraggable, #inprogressLeadDraggable, #noAnswarLeadDraggable, #completedLeadDraggable, #lostLeadDraggable")
-            //     .disableSelection();
-
-
-            // $("#newLeadDraggable, #inprogressLeadDraggable, #completeLeadDraggable").sortable({
+            // $("#newLeadDraggable").sortable({
             //     connectWith: ".droptrue",
             //     update: function(event, ui) {
             //         var leadOrder = $(this).sortable("toArray", {
-            //             attribute: $(this).data('lead-id-attribute')
+            //             attribute: "data-new-lead-id"
             //         });
 
             //         leadOrder = leadOrder.filter(function(item) {
             //             return item !== '';
             //         });
-
-            //         var targetList = $(this).attr('id');
-            //         updateStateLeadOrder(leadOrder, targetList);
+            //         updateLeadOrder(leadOrder);
             //     }
             // });
 
-            // function updateStateLeadOrder(leadOrder, targetList) {
-            //     var route;
-            //     switch (targetList) {
-            //         case 'newLeadDraggable':
-            //             route = "{{ route('state.lead.sortable', ['state' => 'new']) }}";
-            //             break;
-            //         case 'inprogressLeadDraggable':
-            //             route = "{{ route('state.lead.sortable', ['state' => 'in_progress']) }}";
-            //             break;
-            //         case 'completeLeadDraggable':
-            //             route = "{{ route('state.lead.sortable', ['state' => 'completed']) }}";
-            //             break;
-            //         default:
-            //             console.error('Invalid target list:', targetList);
-            //             return;
-            //     }
+            // $("#inprogressLeadDraggable").sortable({
+            //     connectWith: ".droptrue",
+            //     update: function(event, ui) {
+            //         var leadOrder = $(this).sortable("toArray", {
+            //             attribute: "data-inprogress-lead-id"
+            //         });
 
+            //         leadOrder = leadOrder.filter(function(item) {
+            //             return item !== '';
+            //         });
+            //         updateLeadOrder(leadOrder);
+            //     }
+            // });
+
+            // $("#noAnswarLeadDraggable").sortable({
+            //     connectWith: ".droptrue",
+            //     update: function(event, ui) {
+            //         var leadOrder = $(this).sortable("toArray", {
+            //             attribute: "data-noanswar-lead-id"
+            //         });
+
+            //         leadOrder = leadOrder.filter(function(item) {
+            //             return item !== '';
+            //         });
+            //         updateLeadOrder(leadOrder);
+            //     }
+            // });
+
+            // $("#completedLeadDraggable").sortable({
+            //     connectWith: ".droptrue",
+            //     update: function(event, ui) {
+            //         var leadOrder = $(this).sortable("toArray", {
+            //             attribute: "data-completed-lead-id"
+            //         });
+
+            //         leadOrder = leadOrder.filter(function(item) {
+            //             return item !== '';
+            //         });
+            //         updateLeadOrder(leadOrder);
+            //     }
+            // });
+
+            // $("#lostLeadDraggable").sortable({
+            //     connectWith: ".droptrue",
+            //     update: function(event, ui) {
+            //         var leadOrder = $(this).sortable("toArray", {
+            //             attribute: "data-lost-lead-id"
+            //         });
+
+            //         leadOrder = leadOrder.filter(function(item) {
+            //             return item !== '';
+            //         });
+            //         updateLeadOrder(leadOrder);
+            //     }
+            // });
+
+            // function updateLeadOrder(leadOrder) {
             //     $.ajax({
-            //         url: route,
+            //         url: "{{ route('lead.sortable') }}",
             //         type: "POST",
             //         data: {
             //             leadOrder: leadOrder,
             //             _token: "{{ csrf_token() }}"
             //         },
             //         success: function(response) {
-            //             console.log("state updated successfully");
+            //             console.log("lead reorder updated successfully");
             //         },
             //         error: function(xhr, status, error) {
-            //             console.error("Error updating lead order and state:", error);
+            //             console.error("Error updating module order:", error);
             //         }
             //     });
             // }
+
+            // ---- lead reorder closed ---- //
+
+
+            // ------ Lead state change --- //
+
+            $("#newLeadDraggable, #inprogressLeadDraggable, #noAnswarLeadDraggable, #completedLeadDraggable, #lostLeadDraggable")
+                .disableSelection();
+
+
+            function initSortable(listId, dataAttribute) {
+                $("#" + listId).sortable({
+                    connectWith: ".droptrue",
+                    update: function(event, ui) {
+                        var leadOrder = $(this).sortable("toArray", {
+                            attribute: dataAttribute
+                        });
+
+                        leadOrder = leadOrder.filter(function(item) {
+                            return item !== '';
+                        });
+
+                        console.log(leadOrder)
+
+                        var newState = determineNewState(listId);
+                        updateLeadOrder(leadOrder, newState);
+                    }
+                });
+            }
+
+            function determineNewState(listId) {
+                switch (listId) {
+                    case 'newLeadDraggable':
+                        return 'new';
+                    case 'inprogressLeadDraggable':
+                        return 'in_progress';
+                    case 'noAnswarLeadDraggable':
+                        return 'no_ans';
+                    case 'completedLeadDraggable':
+                        return 'completed';
+                    case 'lostLeadDraggable':
+                        return 'lost';
+
+                    default:
+                        return 'new';
+                }
+            }
+
+            function updateLeadOrder(leadOrder, newState) {
+                $.ajax({
+                    url: "{{ route('lead.sortable') }}",
+                    type: "POST",
+                    data: {
+                        leadOrder: leadOrder,
+                        newState: newState,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        console.log("Lead reorder and state update successfully");
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error updating lead order and state:", error);
+                    }
+                });
+            }
+
+            // Initialize sortable for different lists with different data attributes
+            initSortable('newLeadDraggable', 'data-new-lead-id');
+            initSortable('inprogressLeadDraggable', 'data-inprogress-lead-id');
+            initSortable('noAnswarLeadDraggable', 'data-noanswar-lead-id');
+            initSortable('completedLeadDraggable', 'data-completed-lead-id');
+            initSortable('lostLeadDraggable', 'data-lost-lead-id');
 
 
 
