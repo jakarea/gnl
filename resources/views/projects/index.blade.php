@@ -154,7 +154,7 @@
                             @if ($customer->avatar)
                             <img src="{{ asset($customer->avatar) }}" alt="a" class="img-fluid avatar">
                             @else
-                            <img src="{{ asset('uploads/users/avatar-18.png') }}" alt="a" class="img-fluid avatar">
+                            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="a" class="img-fluid avatar">
                             @endif
                             <div class="media-body">
                                 <h5>{{ $customer->name }}</h5>

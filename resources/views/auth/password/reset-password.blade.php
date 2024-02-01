@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{{ url('assets/css/responsive.css') }}">
     <!-- custom CSS end -->
 
-    <title>DnD || Authintication </title>
+    <title>GNL || Authintication </title>
 </head>
 
 <body>

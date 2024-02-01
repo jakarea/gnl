@@ -211,7 +211,7 @@
                                                                                 alt="avatar"
                                                                                 class="img-fluid avatar" />
                                                                         @else
-                                                                            <img src="{{ asset('uploads/users/avatar-1.png') }}"
+                                                                            <img src="{{ asset('uploads/users/avatar-9.png') }}"
                                                                                 alt="default avatar"
                                                                                 class="img-fluid avatar" />
                                                                         @endif
@@ -250,17 +250,17 @@
                                                                                     <div class="d-flex">
                                                                                         <label for="avatar"
                                                                                             class="avatar">
-                                                                                            <img src="./uploads/users/avatar-9.png"
+                                                                                            <img src="{{ asset('uploads/users/avatar-9.png') }}"
                                                                                                 alt="avatar"
                                                                                                 class="img-fluid">
                                                                                             <span class="avatar-ol">
-                                                                                                <img src="./assets/images/icons/camera.svg"
+                                                                                                <img src="{{ asset('assets/images/icons/camera.svg') }}"
                                                                                                     alt="camera"
                                                                                                     class="img-fluid">
                                                                                             </span>
                                                                                         </label>
                                                                                         <label for="avatar">
-                                                                                            <p><img src="./assets/images/icons/anchor.svg"
+                                                                                            <p><img src="{{ asset('assets/images/icons/anchor.svg') }}"
                                                                                                     alt="anchor"
                                                                                                     class="img-fluid">
                                                                                                 Upload</p>
@@ -579,7 +579,7 @@
                 <a href="#" class="select-customer" data-customer-id="${customer.customer_id}">
                     <div class="selected-profile-box mt-0 bg-white border-0 p-0">
                     <div class="media">
-                        <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-19.png') }}'}" class="img-fluid avatar" alt="avatar">
+                        <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-9.png') }}'}" class="img-fluid avatar" alt="avatar">
                         <div class="media-body">
                             <h3>${customer.name}</h3>
                             <p>${customer.designation}</p>

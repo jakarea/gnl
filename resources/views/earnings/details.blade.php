@@ -19,7 +19,7 @@
                                     <img src="{{ asset($earning->customer->avatar) }}" alt="avatar"
                                         class="img-fluid" />
                                 @else
-                                    <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar"
+                                    <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar"
                                         class="img-fluid" />
                                 @endif
                                 <div class="profile-text">
