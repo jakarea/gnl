@@ -20,10 +20,45 @@ class ExpenseController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
+    protected $filterLabels = [
+        'today' => 'Today',
+        'yesterday' => 'Yesterday',
+        'last7days' => 'Last 7 days',
+        'thisMonth' => 'This Month',
+        'thisYear' => 'This Year',
+    ];
+
     public function index()
     {
+
         $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
-        $data['expenses'] = Expense::orderByDesc('expense_id')->get();
+
+        $filter = request()->query('filter', 'all');
+
+        $query = Expense::orderByDesc('expense_id');
+
+        switch ($filter) {
+            case 'today':
+                $query->whereDate('created_at', today());
+                break;
+            case 'yesterday':
+                $query->whereDate('created_at', today()->subDay());
+                break;
+            case 'last7days':
+                $query->whereBetween('created_at', [today()->subDays(7), today()]);
+                break;
+            case 'thisMonth':
+                $query->whereMonth('created_at', today()->month);
+                break;
+            case 'thisYear':
+                $query->whereYear('created_at', today()->year);
+                break;
+        }
+
+        $data['expenses'] = $query->paginate(12)->appends(['filter' => $filter]);
+
+        $data['filterLabels'] = $this->filterLabels;
+
         return view('expenses.index', $data);
     }
 
