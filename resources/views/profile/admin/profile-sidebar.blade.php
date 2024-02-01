@@ -6,10 +6,13 @@
             <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar" class="img-fluid avatar" />
         @endif
 
-        <label class="update-photo" for="avatar">
-            <img src="/assets/images/icons/photos.svg" alt="photo" class="img-fluid">
-            <p>Update Photo</p>
-        </label>
+        @if (!request()->is('account/profile'))
+            <label class="update-photo" for="avatar">
+                <img src="/assets/images/icons/photos.svg" alt="photo" class="img-fluid">
+                <p>Update Photo</p>
+            </label>
+        @endif
+
     </div>
 
     <div class="txt">
