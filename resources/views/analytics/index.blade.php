@@ -376,7 +376,6 @@
 
   <!-- company user graph js start -->
   <script>
- 
 
     var options = {
       series:  [{
