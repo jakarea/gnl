@@ -201,38 +201,38 @@
                         <h4 class="common-subtitle">Expenses History</h4>
                         <div class="actions">
                             <div class="dropdown">
-                                <a class="bttn" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    All History <i class="fas fa-angle-down ms-2"></i>
+                                <a class="bttn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ request()->filter ? $filterLabels[request()->filter] : "All History" }} <i class="fas fa-angle-down ms-2"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="profile">
+                                    <li class="{{ request()->is('expenses/today') ? 'active' : '' }}">
+                                        <a class="dropdown-item" href="{{ route('expense.index', ['filter' => 'today']) }}">
                                             Today
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="profile">
+                                    <li class="{{ request()->is('expenses/yesterday') ? 'active' : '' }}">
+                                        <a class="dropdown-item" href="{{ route('expense.index', ['filter' => 'yesterday']) }}">
                                             Yesterday
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="profile">
+                                    <li class="{{ request()->is('expenses/last7days') ? 'active' : '' }}">
+                                        <a class="dropdown-item" href="{{ route('expense.index', ['filter' => 'last7days']) }}">
                                             Last 7 days
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item " href="profile-edit">
+                                    <li class="{{ request()->is('expenses/thisMonth') ? 'active' : '' }}">
+                                        <a class="dropdown-item" href="{{ route('expense.index', ['filter' => 'thisMonth']) }}">
                                             This Month
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item " href="#">
+                                    <li class="{{ request()->is('expenses/thisYear') ? 'active' : '' }}">
+                                        <a class="dropdown-item" href="{{ route('expense.index', ['filter' => 'thisYear']) }}">
                                             This Year
                                         </a>
                                     </li>
                                 </ul>
                             </div>
+
 
                             <a href="#" class="bttn" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdropAdd"><i class="fas fa-plus me-2"></i> Add Expenses</a>
@@ -250,193 +250,43 @@
                                 <th>Action</th>
                             </tr>
                             <!-- expense single item start -->
-                            <tr>
-                                <td>
-                                    <p>Lela Mraz</p>
-                                </td>
-                                <td>
-                                    <p>Payment for our Marketing purpose</p>
-                                </td>
-                                <td>
-                                    <p>09 Oct, 2023</p>
-                                </td>
-                                <td>
-                                    <p>Marketing</p>
-                                </td>
-                                <td>
-                                    <p class="fixed">Fixed</p>
-                                </td>
-                                <td>
-                                    <p>$1,290</p>
-                                </td>
-                                <td>
-                                    <a class="invoice" href="#">
-                                        Invoice
-                                    </a>
-                                </td>
-                            </tr>
+                            @if ( count($expenses) > 0 )
+                                @foreach ($expenses as $expense)
+
+                                    <tr>
+                                        <td>
+                                            <p>{{ $expense->title }}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ Str::substr($expense->description, 0, 48) }}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $expense->pay_date)->format('d M, Y') }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p>{{ $expense->service_type }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="fixed">{{ $expense->type }}</p>
+                                        </td>
+                                        <td>
+                                            <p>${{ $expense->amount }}</p>
+                                        </td>
+                                        <td>
+                                            <a class="invoice" href="#">
+                                                Invoice
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             <!-- expense single item end -->
-                            <!-- expense single item start -->
-                            <tr>
-                                <td>
-                                    <p>Lela Mraz</p>
-                                </td>
-                                <td>
-                                    <p>Payment for our Marketing purpose</p>
-                                </td>
-                                <td>
-                                    <p>09 Oct, 2023</p>
-                                </td>
-                                <td>
-                                    <p>Marketing</p>
-                                </td>
-                                <td>
-                                    <p class="variable">Variable</p>
-                                </td>
-                                <td>
-                                    <p>$1,290</p>
-                                </td>
-                                <td>
-                                    <a class="invoice" href="#">
-                                        Invoice
-                                    </a>
-                                </td>
-                            </tr>
-                            <!-- expense single item end -->
-                            <!-- expense single item start -->
-                            <tr>
-                                <td>
-                                    <p>Lela Mraz</p>
-                                </td>
-                                <td>
-                                    <p>Payment for our Marketing purpose</p>
-                                </td>
-                                <td>
-                                    <p>09 Oct, 2023</p>
-                                </td>
-                                <td>
-                                    <p>Marketing</p>
-                                </td>
-                                <td>
-                                    <p class="fixed">Fixed</p>
-                                </td>
-                                <td>
-                                    <p>$1,290</p>
-                                </td>
-                                <td>
-                                    <a class="invoice" href="#">
-                                        Invoice
-                                    </a>
-                                </td>
-                            </tr>
-                            <!-- expense single item end -->
-                            <!-- expense single item start -->
-                            <tr>
-                                <td>
-                                    <p>Lela Mraz</p>
-                                </td>
-                                <td>
-                                    <p>Payment for our Marketing purpose</p>
-                                </td>
-                                <td>
-                                    <p>09 Oct, 2023</p>
-                                </td>
-                                <td>
-                                    <p>Marketing</p>
-                                </td>
-                                <td>
-                                    <p class="variable">Variable</p>
-                                </td>
-                                <td>
-                                    <p>$1,290</p>
-                                </td>
-                                <td>
-                                    <a class="invoice" href="#">
-                                        Invoice
-                                    </a>
-                                </td>
-                            </tr>
-                            <!-- expense single item end -->
-                            <!-- expense single item start -->
-                            <tr>
-                                <td>
-                                    <p>Lela Mraz</p>
-                                </td>
-                                <td>
-                                    <p>Payment for our Marketing purpose</p>
-                                </td>
-                                <td>
-                                    <p>09 Oct, 2023</p>
-                                </td>
-                                <td>
-                                    <p>Marketing</p>
-                                </td>
-                                <td>
-                                    <p class="fixed">Fixed</p>
-                                </td>
-                                <td>
-                                    <p>$1,290</p>
-                                </td>
-                                <td>
-                                    <a class="invoice" href="#">
-                                        Invoice
-                                    </a>
-                                </td>
-                            </tr>
-                            <!-- expense single item end -->
-                            <!-- expense single item start -->
-                            <tr>
-                                <td>
-                                    <p>Lela Mraz</p>
-                                </td>
-                                <td>
-                                    <p>Payment for our Marketing purpose</p>
-                                </td>
-                                <td>
-                                    <p>09 Oct, 2023</p>
-                                </td>
-                                <td>
-                                    <p>Marketing</p>
-                                </td>
-                                <td>
-                                    <p class="variable">Variable</p>
-                                </td>
-                                <td>
-                                    <p>$1,290</p>
-                                </td>
-                                <td>
-                                    <a class="invoice" href="#">
-                                        Invoice
-                                    </a>
-                                </td>
-                            </tr>
-                            <!-- expense single item end -->
+
                         </table>
                     </div>
                     <!--pagination started-->
-                    <div class="pagination-section">
-                        <nav class="mt-4" aria-label="...">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link page-link-left"><i class="fa-solid fa-angle-left"></i></a>
-                                </li>
-                                <li class="page-item" aria-current="page"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">...</a></li>
-                                <li class="page-item"><a class="page-link" href="#">10</a></li>
-                                <li class="page-item">
-                                    <a class="page-link page-link-right ms-0" href="#"><i
-                                            class="fa-solid fa-angle-right"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <div class="pagination-text">
-                            <p>Showing 1 to 8 of 80 entries</p>
-                        </div>
-                    </div>
+                    {!! $expenses->links('pagination::gnl-pagination') !!}
                     <!--pagination end-->
                 </div>
             </div>

@@ -41,7 +41,7 @@ Route::group(['middleware' => ['guest']], function () {
 // all routes start
 Route::group(['middleware' => ['auth']], function () {
 
-    // common search api route 
+    // common search api route
     Route::get('search-customers', [ProjectsController::class, 'search'])->name('search.customers');
     Route::get('project/search', [TaskController::class, 'projectSearch'])->name('projectsearch');
     Route::get('get/project', [TaskController::class, 'getProjectById'])->name('getProjectById');
@@ -127,7 +127,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // expense route
     Route::prefix('expenses')->name('expense.')->group(function () {
-        Route::get('/', [ExpenseController::class, 'index'])->name('expense.index');
+        Route::get('/', [ExpenseController::class, 'index'])->name('index');
         Route::post('/store', [ExpenseController::class, 'store'])->name('expense.store');
         Route::get('/{id}', [ExpenseController::class, 'show'])->name('expense.show');
         Route::put('/{id}', [ExpenseController::class, 'update'])->name('expense.update');
