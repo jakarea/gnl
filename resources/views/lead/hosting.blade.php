@@ -8,15 +8,14 @@
 @endsection
 
 @section('content')
-    <section class="main-page-wrapper leads-page-wrapper">
-        <!-- page title -->
-        <div class="page-title leads-page-title">
-            <h1>Hosting Leads</h1>
-            <!-- bttn -->
-            <div class="common-bttn">
-                <a href={{ url('all-leads') }} class="add">View All</a>
-            </div>
-            <!-- bttn -->
+
+<section class="main-page-wrapper leads-page-wrapper">
+    <!-- page title -->
+    <div class="page-title leads-page-title">
+        <h1>Hosting Leads</h1>
+        <!-- bttn -->
+        <div class="common-bttn">
+            <a href="{{ url('leads/all') }}" class="add">View All</a>
         </div>
         <div class="leads-main-wrapper">
             <div class="leads-vertical-scroller custom-scroll-bar" id="stateChangeDraggable">

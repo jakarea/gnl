@@ -33,7 +33,6 @@
                                 @endif
 
                             </div>
-
                         </div>
                         <!--customer profile header end-->
                         <!--address info start-->
