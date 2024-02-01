@@ -354,7 +354,7 @@
                     </ul>
                 </div>
                  {{-- earning expenses graph --}}
-                 {{-- <div id="earningExpenseGraph"></div> --}}
+                 <div id="earningExpenseGraph"></div>
 
             </div>
         </div>
@@ -442,38 +442,61 @@
 </script>
 
 <script>
+
+const earnExpenGraph = @json($earnExpenGraph);
+
     var options = {
-          series: [{
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-        }],
-          chart: {
-          height: 350,
-          type: 'line',
-          zoom: {
-            enabled: false
+      series:  [{
+        name: 'earning',
+        data: earnExpenGraph.earningPerMonth
+      }, {
+        name: 'expense',
+        data: earnExpenGraph.expensePerMonth
+      }],
+      chart: {
+        height: 300,
+        type: 'area',
+        toolbar: {
+          show: false
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      grid: {
+        show: true,
+        borderColor: '#C2C6CE',
+        borderDashArray: 4,
+        strokeDashArray: 4,
+        xaxis: {
+          lines: {
+            show: false
           }
         },
-        dataLabels: {
-          enabled: false
+      },
+      colors: ['#194BFB', '#FE8111'],
+      stroke: {
+        curve: 'smooth'
+      },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      },
+      tooltip: {
+        x: {
+          format: 'dd/MM/yy HH:mm'
         },
-        stroke: {
-          curve: 'straight'
-        }, 
-        grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },
-        },
-        xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-        }
-        };
+      },
+      legend: {
+        show: false
+      },
+      toolbar: {
+        show: false
+      }
+    };
 
-        var chart = new ApexCharts(document.querySelector("#earningExpenseGraph"), options);
-        chart.render();
-</script>
+    var chart = new ApexCharts(document.querySelector("#earningExpenseGraph"), options);
+    chart.render();
+  </script>
 
 {{-- project graph --}}
 <script>
@@ -535,5 +558,5 @@
             });
         });
     });
-</script>
+</>
 @endsection
