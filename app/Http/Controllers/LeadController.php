@@ -99,11 +99,11 @@ class LeadController extends Controller
         $leadType = 1;
 
         $leads = [
-            'new_leads'         => Lead::where('state', 'new')->where('lead_type_id', $leadType)->get(),
-            'in_progress_leads' => Lead::where('state', 'in_progress')->where('lead_type_id', $leadType)->get(),
-            'no_ans_leads'      => Lead::where('state', 'no_ans')->where('lead_type_id', $leadType)->get(),
-            'completed_leads'   => Lead::where('state', 'completed')->where('lead_type_id', $leadType)->get(),
-            'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->get(),
+            'new_leads'         => Lead::where('state', 'new')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'in_progress_leads' => Lead::where('state', 'in_progress')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'no_ans_leads'      => Lead::where('state', 'no_ans')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'completed_leads'   => Lead::where('state', 'completed')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
         ];
 
         return view('lead/hosting',compact('lead_types','leads'));
@@ -186,4 +186,43 @@ class LeadController extends Controller
 
         return redirect()->back()->with('success','Leads deleted successfuly!');
     }
+
+
+    // New lead sortable
+
+    public function newLeadsSortable( Request $request ){
+
+        $leads = $request->input('leadOrder');
+        foreach ($leads as $index => $leadId) {
+            $lead = Lead::find($leadId);
+
+            if ($lead) {
+                $lead->lead_order = $index + 1;
+                $lead->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+
+    }
+    // New lead sortable
+
+    public function stateLeadsSortable( Request $request ){
+
+        $stateLeads = $request->input('stateOrder');
+        foreach ($stateLeads as $index => $leadId) {
+            $lead = Lead::find($leadId);
+
+            if ($lead) {
+                $lead->lead_order = $index + 1;
+                $lead->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+
+    }
+
+
+
 }
