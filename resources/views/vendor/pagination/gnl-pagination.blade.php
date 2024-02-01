@@ -24,10 +24,7 @@
                                 <li class="page-item"><a class="page-link"  href="{{ $url }}">{{ $page }}</a></li>
                             @endif
                         @endforeach
-                    @endif
-                    <li class="page-item" aria-current="page">
-                        <a class="page-link" href="#">1</a>
-                    </li>
+                    @endif 
                 @endforeach
 
                 @if ($paginator->hasMorePages())

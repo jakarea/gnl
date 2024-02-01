@@ -38,7 +38,7 @@
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ url('/logout') }}">
                   Logout
                 </a>
               </li>

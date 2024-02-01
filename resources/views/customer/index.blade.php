@@ -226,15 +226,7 @@
         <!-- Your content goes here -->
 
         <!-- Pagination Section -->
-        <div class="pagination-section">
-            <nav class="mt-4" aria-label="...">
-                {!! $customers->links('pagination::gnl-pagination') !!}
-            </nav>
-            {{-- <div class="pagination-text">
-                <p>Showing {{ $customers->firstItem() }} to {{ $customers->lastItem() }} of {{ $customers->total() }}
-                    entries</p>
-            </div> --}}
-        </div>
+        {!! $customers->links('pagination::gnl-pagination') !!} 
 
         <!--pagination end-->
     </div>
