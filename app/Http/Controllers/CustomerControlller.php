@@ -131,7 +131,7 @@ class CustomerControlller extends ApiController
 
     public function update(CustomerRequest $request, $customer_id)
     {
-        dd($request->all());
+        // dd($request->all());
         $customer = Customer::findOrFail($customer_id);
         $data = $request->except(['avatar']);
 
@@ -141,12 +141,13 @@ class CustomerControlller extends ApiController
 
         if ($request->hasFile('avatar')) {
             if ($customer->avatar) {
-                Storage::disk('public')->delete("customers/{$customer->avatar}");
+                $avatarPath = str_replace('storage/', '', $customer->avatar);
+                Storage::disk('public')->delete($avatarPath);
             }
             $avatar = $request->file('avatar');
             $filename = substr(md5(time()), 0, 10) . '.' . $avatar->getClientOriginalExtension();
             $avatarPath = $avatar->storeAs('customers', $filename, 'public');
-            $customer->update(['avatar' => $avatarPath]);
+            $customer->update(['avatar' => 'storage/'.$avatarPath]);
         }
 
         return redirect()->route('customers.index')->withSuccess('Customers update successfuly!');
