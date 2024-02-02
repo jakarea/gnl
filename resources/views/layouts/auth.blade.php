@@ -29,7 +29,7 @@
     <!-- custom CSS end -->
     @yield("style")
 
-    <title>@yield("title")</title>
+    <title>GNL || @yield("title")</title>
 </head>
 
 <body>

@@ -88,7 +88,7 @@
                                         alt="A" class="img-fluid"> Apple</a>
                             </div>
                             <div class="already-have">
-                                <p>You're new in here? <a href="{{ url('register')}}">Create Account</a></p>
+                                {{-- <p>You're new in here? <a href="{{ url('register')}}">Create Account</a></p> --}}
                             </div>
                         </form>
                     </div>

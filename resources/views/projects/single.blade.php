@@ -76,7 +76,7 @@
               @if ($customer->avatar)
               <img src="{{ asset($customer->avatar) }}" alt="a" class="img-fluid avatar">
               @else
-              <img src="{{ asset('uploads/users/avatar-18.png') }}" alt="a" class="img-fluid avatar">
+              <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="a" class="img-fluid avatar">
               @endif
               <div class="media-body">
                 <h5>{{ $customer->name }}</h5>
@@ -97,7 +97,7 @@
           <!-- comment item start -->
           <div class="project-single-comment mb-4">
             <div class="media">
-              <img src="{{ url('uploads/users/avatar-18.png')}}" alt="a" class="img-fluid avatar" />
+              <img src="{{ url('uploads/users/avatar-9.png')}}" alt="a" class="img-fluid avatar" />
               <div class="media-body">
                 <h5>Louise Schuppe</h5>
                 <p>1 days ago</p>
@@ -162,7 +162,7 @@
             <!-- comment reply start -->
             <div class="comment-reply-box">
               <div class="media">
-                <img src="{{ url('/uploads/users/avatar-12.png')}}" alt="a" class="img-fluid avatar" />
+                <img src="{{ url('/uploads/users/avatar-9.png')}}" alt="a" class="img-fluid avatar" />
                 <div class="media-body">
                   <h5>Louise Schuppe</h5>
                   <p>04:30 PM</p>
@@ -188,7 +188,7 @@
           <!-- comment item start -->
           <div class="project-single-comment mb-4">
             <div class="media">
-              <img src="{{ url('/uploads/users/avatar-4.png')}}" alt="a" class="img-fluid avatar" />
+              <img src="{{ url('/uploads/users/avatar-9.png')}}" alt="a" class="img-fluid avatar" />
               <div class="media-body">
                 <h5>Maggie Grady</h5>
                 <p>1 days ago</p>
@@ -220,7 +220,7 @@
             <!-- comment reply start -->
             <div class="comment-reply-box">
               <div class="media">
-                <img src="{{ url('/uploads/users/avatar-12.png')}}" alt="a" class="img-fluid avatar" />
+                <img src="{{ url('/uploads/users/avatar-9.png')}}" alt="a" class="img-fluid avatar" />
                 <div class="media-body">
                   <h5>Bryan Schroeder</h5>
                   <p>04:30 PM</p>

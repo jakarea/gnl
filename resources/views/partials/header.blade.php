@@ -23,7 +23,7 @@
         <li class="head-item">
           <div class="dropdown p-0 header-dropdown">
             <a class="p-0 user head-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('uploads/users/avatar-2.png') }}" alt="A" class="img-fluid">
+              <img src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('uploads/users/avatar-9.png') }}" alt="A" class="img-fluid">
             </a>
 
             <ul class="dropdown-menu">

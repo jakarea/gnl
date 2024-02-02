@@ -308,7 +308,7 @@
                                                                 @if ($assignedCustomer->avatar)
                                                                 <img src="{{ asset($assignedCustomer->avatar) }}" class="img-fluid avatar" alt="avatar">
                                                                 @else
-                                                                <img src="{{ asset('uploads/users/avatar-18.png') }}" alt="a" class="img-fluid avatar">
+                                                                <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="a" class="img-fluid avatar">
                                                                 @endif
 
                                                                 <div class="media-body">
@@ -795,7 +795,7 @@
                     <a href="#" class="select-customer" data-id="${customer.customer_id}">
                         <div class="selected-profile-box mt-0 bg-white border-0 p-0">
                         <div class="media">
-                            <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-19.png')}}'}" class="img-fluid avatar" alt="avatar">
+                            <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-9.png')}}'}" class="img-fluid avatar" alt="avatar">
                             <div class="media-body">
                                 <h3>${customer.name}</h3>
                                 <p>${customer.designation}</p>

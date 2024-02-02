@@ -20,16 +20,22 @@
             <div class="profile-header">
                 <div class="profile-box">
                     @if ($customer->avatar)
-                        <img src="{{ asset('storage/' . $customer->avatar) }}" alt="avatar" class="img-fluid" />
+                        <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid" />
                     @else
-                        <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar" class="img-fluid" />
+                        <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar" class="img-fluid" />
                     @endif
                     <div class="profile-text">
                         <h3>{{ $customer->name }}</h3>
                         <p>{{ $customer->designation }}</p>
                     </div>
 
-                    <a href="#" class="active">{{ $customer->status ? 'Active' : "Inactive" }}</a>
+                    @if ($customer->status == 'active') 
+                        <a href="javascript:;" class="active">Active</a>
+                    @else   
+                        <a href="javascript:;" class="active inactive">Inactive</a>
+                    @endif
+
+                    
 
                 </div>
                 <div class="profile-edit-box">

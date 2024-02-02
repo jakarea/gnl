@@ -3,7 +3,7 @@
         @if ($user->avatar)
             <img src="{{ asset($user->avatar) }}" alt="avatar" class="img-fluid main-avatar" id="avatar-preview" />
         @else
-            <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar" class="img-fluid avatar" />
+            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar" class="img-fluid avatar" />
         @endif
 
         @if (!request()->is('account/profile', 'settings/address'))

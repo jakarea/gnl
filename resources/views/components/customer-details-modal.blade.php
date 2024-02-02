@@ -12,7 +12,7 @@
         @if ($customer->avatar)
             <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid" />
         @else
-            <img src="{{ asset('uploads/users/avatar-1.png') }}" alt="default avatar" class="img-fluid" />
+            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar" class="img-fluid" />
         @endif
         <div class="profile-box profile-box-address">
             <div class="profile-text profile-text-address">
