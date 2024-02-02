@@ -2,7 +2,9 @@
     <!-- search box start -->
     <div class="header-search-box">
       <img src="{{ asset('assets/images/icons/search.svg') }}" alt="S" class="img-fluid search">
-      <input type="text" class="form-control" placeholder="Search">
+      <form action="">
+        <input type="text" name="q" class="form-control" placeholder="Search">
+      </form>
     </div>
     <!-- search box end -->
 

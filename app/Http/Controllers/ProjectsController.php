@@ -23,6 +23,15 @@ class ProjectsController extends Controller
 
         $projects = Project::orderByDesc('project_id');
 
+        $q = request()->input('q','');
+        if ($q) {
+            $projects->where(function ($query) use ($q) {
+                $query->where('title', 'LIKE', "%$q%")
+                    ->orWhere('start_date', 'LIKE', "%$q%");
+            });
+        }
+
+
         $selectedStatus = '';
         if (!empty($status)) {
             $selectedStatus = $status;

@@ -16,41 +16,41 @@ class CustomerControlller extends ApiController
 
     public function index()
     {
-        $status = request()->input('status', 'all');
-        $serviceTypeId = request()->input('searchTypeId');
-        $leadTypeId = request()->input('leadTypeId');
+
         $query = Customer::query();
+
+
+
+        $status = request()->input('status', 'all');
+        $serviceTypeId = request()->input('searchTypeId','all');
+        $leadTypeId = request()->input('leadTypeId','all');
+
+        $q = request()->input('q','');
+        if ($q) {
+            $query->where(function ($query) use ($q) {
+                $query->where('name', 'LIKE', "%$q%")
+                    ->orWhere('designation', 'LIKE', "%$q%")
+                    ->orWhere('email', 'LIKE', "%$q%")
+                    ->orWhere('phone', 'LIKE', "%$q%");
+            });
+        }
 
         if ($status !== 'all') {
             $query->where('status', $status);
         }
 
-        if ($leadTypeId) {
+        if ($leadTypeId !='all') {
             $query->where('lead_type_id', $leadTypeId);
         }
 
-        if ($serviceTypeId) {
+        if ($serviceTypeId !='all') {
             $query->where('service_type_id', $serviceTypeId);
         }
 
-        $customers = $query->orderByDesc('customer_id')->paginate(12);
-        $customers->appends(['leadTypeId' => $leadTypeId, 'searchTypeId' => $serviceTypeId, 'status' => $status]);
+        $customers = $query->orderByDesc('customer_id')->paginate(3);
+        $customers->appends(request()->query());
 
         $data['customers'] = $customers;
-
-        // Get count current month
-        // $data['totalCustomer'] = $query->count();
-        // $data['newCustomer'] = $query->where('created_at', '>=', now()->subDays(7))->count();
-        // $data['repeatedCustomer'] = $query->whereColumn('updated_at', '>', 'created_at')->count();
-
-        // // Get counts for the previous month
-        // $previousMonthTotalCustomers = $query->whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
-        // $previousMonthNewCustomers = $query->whereBetween('created_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
-        // $previousMonthRepeatedCustomers = $query->whereBetween('updated_at', [now()->subMonths(2)->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
-
-        // $data['totalCustomerInc'] = round($this->calculatePercentageIncrease($data['totalCustomer'], $previousMonthTotalCustomers), 2);
-        // $data['newCustomerInc'] = round($this->calculatePercentageIncrease($data['newCustomer'], $previousMonthNewCustomers), 2);
-        // $data['repeatCustomerInc'] = round($this->calculatePercentageIncrease($data['repeatedCustomer'], $previousMonthRepeatedCustomers), 2);
 
 
         $currentMonthTotalCustomers = $query->count();

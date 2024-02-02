@@ -84,6 +84,9 @@
 
         </div>
         <div class="row">
+            @if ( count($projects) )
+
+
             @foreach ($projects as $project)
             <!--project single box start-->
             <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-15">
@@ -168,6 +171,9 @@
             </div>
             <!--project single box end-->
             @endforeach
+            @else
+            <div>Not found any projects</div>
+            @endif
 
         </div>
     </div>
