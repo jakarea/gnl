@@ -51,7 +51,7 @@ class LeadController extends Controller
 
             // return $lead;
             $lead_types = LeadType::orderByDesc('lead_type_id')->get();
-            
+
             return view('lead/common/edit',compact('lead','lead_types'));
 
         } else{
@@ -74,8 +74,6 @@ class LeadController extends Controller
 
     public function update(LeadStoreRequest $request)
     {
-        // return $request->all();
-
         if ($request->lead_id) {
             $lead = Lead::findOrFail($request->lead_id);
         }else{

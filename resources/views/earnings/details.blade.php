@@ -37,46 +37,38 @@
                         <!--customer profile header end-->
                         <!--address info start-->
                         <div class="address-info">
-                            @if ($earning->customer)
-                                @if ($earning->customer->phone)
-                                    <div class="adress-info-text">
-                                        <p>Phone</p>
-                                        <a href="tel:{{ $earning->customer->phone }}">
-                                            <img src="{{ asset('assets/images/icons/call.svg') }}"
-                                                alt="" />{{ $earning->customer->phone }}
-                                        </a>
-                                    </div>
-                                @endif
+                            @if ($earning->customer->phone)
+                                <div class="adress-info-text">
+                                    <p>Phone</p>
+                                    <a href="tel:{{ $earning->customer->phone }}"><img src="/assets/images/icons/call.svg"
+                                            alt="" />{{ $earning->customer->phone }}</a>
+                                </div>
+                            @endif
 
-                                @if ($earning->customer->email)
-                                    <div class="adress-info-text">
-                                        <p>Email</p>
-                                        <a href="mailto:{{ $earning->customer->email }}">
-                                            <img src="{{ asset('assets/images/icons/envelope.svg') }}"
-                                                alt="" />{{ $earning->customer->email }}
-                                        </a>
-                                    </div>
-                                @endif
+                            @if ($earning->customer->email)
+                                <div class="adress-info-text">
+                                    <p>Email</p>
+                                    <a href="mailto:{{ $earning->customer->email }}"><img
+                                            src="/assets/images/icons/envelope.svg"
+                                            alt="" />{{ $earning->customer->email }}</a>
+                                </div>
+                            @endif
 
-                                @if ($earning->customer->website)
-                                    <div class="address-info-text">
-                                        <p>Website</p>
-                                        <a target="_blank" href="{{ $earning->customer->website }}">
-                                            <img src="{{ asset('assets/images/icons/location.svg') }}"
-                                                alt="" />{!! $earning->customer->website !!}
-                                        </a>
-                                    </div>
-                                @endif
+                            @if ($earning->customer->website)
+                                <div class="adress-info-text">
+                                    <p>Website</p>
+                                    <a target="_blank" href="{{ $earning->customer->website }}"><img
+                                            src="/assets/images/icons/call.svg"
+                                            alt="" />{{ $earning->customer->website }}</a>
+                                </div>
+                            @endif
 
-                                @if ($earning->customer->location)
-                                    <div class="address-info-text">
-                                        <p>Location</p>
-                                        <a target="_blank" href="{{ $earning->customer->location }}">
-                                            <img src="{{ asset('assets/images/icons/location.svg') }}"
-                                                alt="location icon" />{!! $earning->customer->location !!}
-                                        </a>
-                                    </div>
-                                @endif
+                            @if ($earning->customer->location)
+                                <div class="adress-info-text">
+                                    <p>Location</p>
+                                    <a href="javascript:;"><img src="/assets/images/icons/location.svg"
+                                            alt="" />{{ $earning->customer->location }}</a>
+                                </div>
                             @endif
                         </div>
                         <!--address info end-->
@@ -116,7 +108,7 @@
                         <!--details page end-->
                         <div class="header">
                             <h3>Customer History</h3>
-                            <span class="paid">Total Paid = {{ $earning->amount }}</span>
+                            <span class="paid">Total Paid = ${{ $earning->where('pay_status', 'paid')->sum('amount') }}</span>
                         </div>
                         @include('components.customer-history', ['customer' => $earning->customer])
                     </div>

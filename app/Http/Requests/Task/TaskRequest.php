@@ -41,6 +41,8 @@ class TaskRequest extends FormRequest
             'title' => ['required'],
             'date' => ['required'],
             'schedule' => ['required'],
+            'service_type_id' => ['required', Rule::exists('service_types', 'service_type_id')],
+            'lead_type_id' => ['required', Rule::exists('lead_types', 'lead_type_id')],
         ];
 
 
@@ -54,6 +56,8 @@ class TaskRequest extends FormRequest
             unset($fieldRules['name']);
             unset($fieldRules['email']);
             unset($fieldRules['designation']);
+            unset($fieldRules['service_type_id']);
+            unset($fieldRules['lead_type_id']);
         }
 
 

@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [TaskController::class, 'index']);
         Route::post('/store', [TaskController::class, 'store']);
         Route::get('/{id}', [TaskController::class, 'show']);
-        Route::put('/{id}/update', [TaskController::class, 'update']);
+        Route::put('/{id}/update', [TaskController::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
     });
 

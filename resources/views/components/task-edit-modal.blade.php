@@ -9,10 +9,12 @@
                         <i class="fas fa-close"></i>
                     </button>
                 </div>
+
+
                 <div class="modal-body">
-                    <form method="post" action="{{ url('/to-do-list/' . $task->task_id . '/update') }}"
+                    <form method="post" action="{{ route('task.update', $task->task_id) }}"
                         class="common-form another-form" enctype="multipart/form-data">
-                        <input class="setCustomerId" type="hidden" name="project_id" value="{{ $task->project_id }}">
+                        <input class="setProjectId" type="hidden" name="project_id" value="{{ $task->project_id }}">
                         <input type="hidden" name="priority" class="priority" value="{{ $task->priority }}">
                         <input type="hidden" name="manualyCustomer" id="manualyCustomer" value="false">
                         <input type="hidden" name="status" id="status" value="active">

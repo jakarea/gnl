@@ -11,7 +11,9 @@ class CustomerService
     public function addCustomer($request)
     {
 
+
         $data     = $request->except(['avatar']);
+
         $customer = Customer::create($data);
 
         if ($request->hasFile('avatar')) {
@@ -20,7 +22,6 @@ class CustomerService
             $avatarPath = $avatar->storeAs('customers', $filename, 'public');
             $customer->update(['avatar' => 'storage/' . $avatarPath]);
         }
-
         return $customer;
     }
 }

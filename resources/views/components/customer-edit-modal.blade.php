@@ -12,8 +12,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{ route('customers.update', $customer->customer_id) }}"
-                        class="common-form" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('customers.update', $customer->customer_id) }}" class="common-form" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <input type="hidden" name="status" id="statusEdit" value="active">
@@ -22,7 +21,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="avatar">Profile Image</label>
-                                        <input type="file" name="avatar" id="avatar" class="d-none">
+                                        <input type="file" name="avatar" id="avatar3" class="d-none">
                                         <!-- upload avatar -->
                                         <div class="d-flex">
                                             <label for="avatar" class="avatar" id="avatarLabel2">
@@ -33,7 +32,7 @@
                                                         alt="camera" class="img-fluid">
                                                 </span>
                                             </label>
-                                            <label for="avatar">
+                                            <label for="avatar3">
                                                 <p><img src="{{ url('/assets/images/icons/anchor.svg') }}"
                                                         alt="anchor" class="img-fluid">
                                                     Upload</p>
@@ -299,7 +298,7 @@
 
     //   {{-- customer avatar js --}}
     // Get references to elements
-    const avatarInput2 = document.getElementById('avatar');
+    const avatarInput2 = document.getElementById('avatar3');
     const avatarPreview2 = document.getElementById('avatarPreview2');
     const avatarLabel2 = document.getElementById('avatarLabel2');
 

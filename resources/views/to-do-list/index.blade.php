@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <section class="main-page-wrapper"> 
+    <section class="main-page-wrapper">
         <!-- page title -->
         <div class="page-title">
             <h1 class="pb-0">To Do List</h1>
@@ -146,7 +146,7 @@
                     <div class="modal-body">
                         <form method="post" action="{{ url('/to-do-list/store') }}" class="common-form another-form"
                             enctype="multipart/form-data">
-                            <input class="setCustomerId" type="hidden" name="project_id">
+                            <input type="hidden" name="project_id" class="setProjectId">
                             <input type="hidden" name="priority" class="priority">
                             <input type="hidden" name="manualyCustomer" id="manualyCustomer" value="false">
                             <input type="hidden" name="status" id="status" value="active">
@@ -259,19 +259,25 @@
                                                             <h3>Select Project</h3>
                                                         </div>
                                                         <!-- customer search form start -->
-                                                         
+
 
                                                         <div class="form-group search-by-name grid-100">
                                                             <div class="search-item">
                                                                 <img src="{{ url('assets/images/icons/search-ic.svg') }}"
                                                                     alt="a" class="img-fluid search">
-        
-                                                                <input type="text" placeholder="Search by name" oninput="searchProject(event)"
-                                                                    class="form-control" autocomplete="off">
-        
+
+                                                                <input type="text" placeholder="Search by name"
+                                                                    oninput="searchProject(event)" class="form-control"
+                                                                    autocomplete="off">
+
                                                                 <div class="projectSearch"></div>
-        
-                                                            </div> 
+
+                                                            </div>
+                                                            @error('project_id')
+                                                                <div class="text-danger">
+                                                                    {{ $message }}</div>
+                                                            @enderror
+
                                                         </div>
 
                                                         <div class="row loadProjectById"></div>
@@ -286,7 +292,8 @@
                                                             <h3>Select Customer</h3>
                                                         </div>
                                                         <!-- customer search form start -->
-                                                        <div class="form-group search-by-name mt-2" style="grid-template-columns: 65% 35%!important">
+                                                        <div class="form-group search-by-name mt-2"
+                                                            style="grid-template-columns: 65% 35%!important">
                                                             <div class="search-item">
                                                                 <img src="assets/images/icons/search-ic.svg"
                                                                     alt="a" class="img-fluid search">
@@ -641,6 +648,7 @@
                     console.error('Ajax request failed: ', error);
                 }
             });
+
         }
 
         const getProjectId = (projectId) => {
@@ -651,7 +659,7 @@
                     projectId: projectId
                 },
                 success: function(data) {
-                    $(".setCustomerId").val(projectId);
+                    $(".setProjectId").val(projectId);
                     $(".projectSearch").empty();
                     $(".loadProjectById").html(data);
                 },

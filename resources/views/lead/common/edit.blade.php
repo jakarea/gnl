@@ -10,8 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body" id="leadDetails">
-                    <form method="post" action="{{ route('lead.update') }}" class="common-form"
-                        enctype="multipart/form-data">
+                    <form method="post" action="{{ route('lead.update') }}" class="common-form" enctype="multipart/form-data">
 
                         @csrf
                         <input type="hidden" name="lead_id" id="leadId" value="{{ $lead->lead_id }}">
@@ -31,12 +30,14 @@
                                                         class="img-fluid">
                                                 </span>
                                             </label>
-                                            <label for="avatar">
+                                            <label for="avatar2">
                                                 <p><img src="{{ asset('/assets/images/icons/anchor.svg') }}" alt="anchor"
                                                         class="img-fluid">
                                                     Upload</p>
                                             </label>
                                         </div>
+
+
                                         <!-- upload avatar -->
                                     </div>
                                 </div>
@@ -133,14 +134,14 @@
                                                     aria-expanded="false">
                                                     <div id="setLeadType2">
                                                         @if ($lead->lead_type_id == 1)
-                                                            Hosting Lead 
+                                                            Hosting Lead
                                                         @elseif ($lead->lead_type_id == 2)
-                                                            Marketing Lead 
+                                                            Marketing Lead
                                                         @elseif ($lead->lead_type_id == 3)
-                                                            Project Lead 
+                                                            Project Lead
                                                         @elseif ($lead->lead_type_id == 4)
-                                                            Website Lead 
-                                                        @else 
+                                                            Website Lead
+                                                        @else
                                                         Select Below
                                                         @endif
                                                         </div><i class="fas fa-angle-down"></i>
@@ -208,7 +209,7 @@
     // Add event listener to file input
     avatarInput2.addEventListener('change', function(event) {
     const file2 = event.target.files[0]; // Get the first file selected by the user
-    
+
 
     // Check if a file is selected
     if (file2) {
@@ -232,15 +233,15 @@
 
 {{-- select leads type js --}}
 <script>
-    let leadTypeId2 = document.getElementById("lead_type_id2"); 
-    let setLeadType2 = document.getElementById("setLeadType2"); 
-    let leadTypes2 = document.querySelectorAll(".lead-type-2"); 
+    let leadTypeId2 = document.getElementById("lead_type_id2");
+    let setLeadType2 = document.getElementById("setLeadType2");
+    let leadTypes2 = document.querySelectorAll(".lead-type-2");
 
     leadTypes2.forEach(item => {
         item.addEventListener("click", function(e) {
             e.preventDefault();
             setLeadType2.innerHTML = this.innerHTML;
-            leadTypeId2.value = this.getAttribute("data-id"); 
+            leadTypeId2.value = this.getAttribute("data-id");
         });
-    }); 
+    });
 </script>
