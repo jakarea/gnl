@@ -26,7 +26,7 @@
             <th>Status</th>
         </tr>
         <!-- payment single item start -->
-        @if ($customer->earnings)
+        @if (count( $customer->earnings ) > 0)
             @foreach ($customer->earnings as $payment)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
@@ -51,13 +51,18 @@
                                 @elseif ($payment->pay_status == 'unpaid')
                                     <a href="javascript:;" class="status unpaid">{{ ucfirst($payment->pay_status) }}</a>
                                 @else
-                                    <a href="javascript:;" class="btn-view btn-export">{{ ucfirst($payment->pay_status) }}</a>
+                                    <a href="javascript:;"
+                                        class="btn-view btn-export">{{ ucfirst($payment->pay_status) }}</a>
                                 @endif
                             </li>
                         </ul>
                     </td>
                 </tr>
             @endforeach
+        @else
+            <tr>
+                <td class="text-center" colspan="5">No found customer history</td>
+            </tr>
         @endif
     </table>
 </div>
