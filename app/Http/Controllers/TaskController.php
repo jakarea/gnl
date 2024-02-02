@@ -42,7 +42,7 @@ class TaskController extends ApiController
 
         try {
 
-
+            // dd( $request->all() );
 
             $data = $request->except(['file_upload', 'schedule']);
 
@@ -64,8 +64,6 @@ class TaskController extends ApiController
 
             $data['created_by'] = auth()->user()->full_name;
             $data['customer_id'] = $customerId;
-
-            // dd( $data);
 
             $taks = Task::create($data);
 
@@ -182,11 +180,10 @@ class TaskController extends ApiController
     public function projectSearch(Request $request){
         if( $request->ajax() ){
             $query = $request->input('query');
-            if ($query === null || $query === '') {
-                $data['projects'] = Project::all();
+            if ($query !== null && $query !== '') {
+                $data['projects'] = Project::where('title', 'like', "%$query%")->get();
+                return view('components.load-project', $data);
             }
-            $data['projects'] = Project::where('title', 'like', "%$query%")->get();
-            return view('components.load-project', $data);
         }
     }
 

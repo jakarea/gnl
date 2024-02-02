@@ -131,9 +131,11 @@ class CustomerControlller extends ApiController
 
     public function update(CustomerRequest $request, $customer_id)
     {
-
+        dd($request->all());
         $customer = Customer::findOrFail($customer_id);
         $data = $request->except(['avatar']);
+
+
 
         $customer->update($data);
 

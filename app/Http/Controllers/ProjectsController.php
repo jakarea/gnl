@@ -114,7 +114,7 @@ class ProjectsController extends Controller
         }
 
         $project->customers()->sync($customerIds);
- 
+
         return redirect()->back()->with('success', 'Project updated successfully');
     }
 
@@ -135,12 +135,12 @@ class ProjectsController extends Controller
         $project = Project::findOrFail($project_id);
 
        $filename = basename($project->thumbnail);
- 
+
 
         if (Storage::exists('public/projects/' . $filename)) {
             Storage::delete('public/projects/' . $filename);
         }
- 
+
         $project->customers()->detach();
 
         // Delete the project record

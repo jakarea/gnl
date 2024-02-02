@@ -26,7 +26,7 @@
             <th>Status</th>
         </tr>
         <!-- payment single item start -->
-        @if (count( $customer->earnings ) > 0)
+        @if (count($customer->earnings) > 0)
             @foreach ($customer->earnings as $payment)
                 <tr>
                     <td>{{ $loop->iteration }}</td>

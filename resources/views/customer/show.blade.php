@@ -115,7 +115,7 @@
             <!--details page end-->
             <div class="header">
                 <h3>Customer History</h3>
-                <span class="paid">Total Paid= $1,956</span>
+                <span class="paid">Total Paid= ${{ $customer->earning->where('pay_status', 'paid')->sum('amount') }}</span>
             </div>
 
             @include('components.customer-history', ['customer' => $customer])

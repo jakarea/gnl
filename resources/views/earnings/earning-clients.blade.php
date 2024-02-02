@@ -73,10 +73,10 @@
                             <img src="{{ url('/assets/images/icons/dots-horizontal.svg') }}"
                                 class="img-fluid" alt="">
                         </a>
-                        <div class="dropdown-menu"> 
+                        <div class="dropdown-menu">
                                 <a class="dropdown-item earningModalDetails w-100 border-0 py-4" href="javascript:;"
                                 data-earning-id="{{ $earning->earning_id }}">View Details</a>
-                            
+
                             <form action="{{ route('earning.destroy-earnings', $earning->earning_id) }}"
                                 class="d-inline" method="POST">
                                 @csrf
@@ -93,7 +93,5 @@
 </div>
 {{-- paggination wrap --}}
 <div class="row mt-5">
-    <div class="col-12 pagination-section">
-        {{ $earnings->links('pagination::bootstrap-5') }}
-    </div>
+    {!! $earnings->links('pagination::gnl-pagination') !!}
 </div>

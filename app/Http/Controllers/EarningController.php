@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class EarningController extends Controller
 {
-    // 
+    //
     protected $today;
     protected $thisMonth;
     protected $lastMonth;
@@ -44,7 +44,7 @@ class EarningController extends Controller
         if (!empty($queryStatus)) {
             $selectedQuery = $queryStatus;
         }
- 
+
         $earningsPerMonth =  $this->getEarningPerMonth();
 
         $data = [
@@ -275,7 +275,7 @@ class EarningController extends Controller
         $data = [
             'totalEarningHosting'       => $this->getHostingEarning($queryStatus),
             'totalHostingCustomer'      => $this->getTotalCustomer($leadType, $queryStatus),
-            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType), 
+            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType),
         ];
 
         return view('earnings/hosting', compact('lead_types', 'earnings', 'data', 'selectedQuery','totalTypeEarningPerMonth'));
@@ -303,7 +303,7 @@ class EarningController extends Controller
         $data = [
             'totalEarningHosting'       => $this->getHostingEarning($queryStatus),
             'totalHostingCustomer'      => $this->getTotalCustomer($leadType, $queryStatus),
-            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType), 
+            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType),
         ];
 
         return view('earnings/marketing', compact('lead_types', 'earnings', 'data', 'selectedQuery','totalTypeEarningPerMonth'));
@@ -331,7 +331,7 @@ class EarningController extends Controller
         $data = [
             'totalEarningHosting'       => $this->getHostingEarning($queryStatus),
             'totalHostingCustomer'      => $this->getTotalCustomer($leadType, $queryStatus),
-            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType), 
+            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType),
         ];
 
         return view('earnings/project', compact('lead_types', 'earnings', 'data', 'selectedQuery','totalTypeEarningPerMonth'));
@@ -359,7 +359,7 @@ class EarningController extends Controller
         $data = [
             'totalEarningHosting'       => $this->getHostingEarning($queryStatus),
             'totalHostingCustomer'      => $this->getTotalCustomer($leadType, $queryStatus),
-            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType), 
+            'totalHostingNewCustomer'   => $this->getNewCustomer($leadType),
         ];
 
         return view('earnings/website', compact('lead_types', 'earnings', 'data', 'selectedQuery','totalTypeEarningPerMonth'));

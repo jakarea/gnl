@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    // 
+    //
     protected $today;
     protected $thisMonth;
     protected $lastMonth;
@@ -50,14 +50,14 @@ class DashboardController extends Controller
         $earnings = Earning::with('customer')->paginate(12);
 
         // earning expenses per month graph
-        $earnExpenGraph = []; 
+        $earnExpenGraph = [];
         $earnExpenGraph['earningPerMonth'] = $this->getEarningPerMonth();
         $earnExpenGraph['expensePerMonth'] = $this->getExpensePerMonth();
 
         // project status graph
-        $projectStatusGraph = []; 
-        $projectStatusGraph = $this->getProjectStatus(); 
- 
+        $projectStatusGraph = [];
+        $projectStatusGraph = $this->getProjectStatus();
+
         $data = [
             'totalEarning'          => $this->getTotalEarning($selectedQuery),
             'totalTax'              => $this->getTotalTax($selectedQuery),
@@ -177,7 +177,7 @@ class DashboardController extends Controller
             ->whereYear('created_at', $queryMap[$queryStatus]['earning']['year'])
             ->when(isset($queryMap[$queryStatus]['earning']['month']), function ($query) use ($queryMap, $queryStatus) {
                 $query->whereMonth('created_at', $queryMap[$queryStatus]['earning']['month']);
-            }) 
+            })
             ->distinct()
             ->count('customer_id');
 
@@ -190,7 +190,7 @@ class DashboardController extends Controller
             ->whereYear('created_at', $compareEarningYear)
             ->when($compareEarningMonth, function ($query) use ($compareEarningMonth) {
                 $query->whereMonth('created_at', $compareEarningMonth);
-            }) 
+            })
             ->distinct()
             ->count('customer_id');
 

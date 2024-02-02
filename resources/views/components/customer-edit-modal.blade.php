@@ -22,7 +22,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="avatar">Profile Image</label>
-                                        <input type="file" name="avatar" id="avatar" class="d-none">
+                                        <input type="file" name="avatar" id="avatar" class="">
                                         <!-- upload avatar -->
                                         <div class="d-flex">
                                             <label for="avatar" class="avatar" id="avatarLabel2">
