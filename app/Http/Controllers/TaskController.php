@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Customer;
 use App\Models\LeadType;
 use App\Models\ServiceType;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Services\CustomerService;
 use Illuminate\Http\JsonResponse;
@@ -74,6 +75,16 @@ class TaskController extends ApiController
                 $taks->update(['file' => 'storage/' . $avatarPath]);
             }
 
+            Notification::create([
+                'creator_id' => auth()->user()->user_id,
+                'action_id' => $taks->task_id,
+                'type' => 'create',
+                'action_link' => "task.show",
+                'title' => "Task Added",
+                'message' => "Task added successfully",
+                'status' => true,
+            ]);
+
             return redirect('/to-do-list')->withSuccess('Task Created Successfuly!');
 
         }catch (\Exception $e) {
@@ -98,7 +109,7 @@ class TaskController extends ApiController
     public function show($task_id)
     {
        $task = Task::findOrFail( $task_id);
-        return $this->jsonResponse(false, $this->success, $task, $this->emptyArray, JsonResponse::HTTP_OK);
+        return $task;
     }
 
 
@@ -150,13 +161,24 @@ class TaskController extends ApiController
 
         if ($request->hasFile('file_upload')) {
             if ($task->file) {
-                Storage::disk('public')->delete("tasks/{$task->file}");
+                $filePath = str_replace('storage/', '', $task->file);
+                Storage::disk('public')->delete($filePath);
             }
             $file = $request->file('file_upload');
             $filename = substr(md5(time()), 0 , 10) .'.' . $file->getClientOriginalExtension();
             $avatarPath = $file->storeAs('tasks', $filename, 'public');
             $task->update(['file' => $avatarPath]);
         }
+
+        Notification::create([
+            'creator_id' => auth()->user()->user_id,
+            'action_id' => $task->task_id,
+            'type' => 'updated',
+            'action_link' => "task.show",
+            'title' => "Task Updated",
+            'message' => "Task updatted successfully",
+            'status' => true,
+        ]);
 
         return redirect('/to-do-list')->withSuccess('Task Update Successfuly!');
     }

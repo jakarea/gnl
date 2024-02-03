@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\LeadType;
+use App\Models\ServiceType;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Customer\CustomerRequest;
-use App\Models\LeadType;
-use App\Models\ServiceType;
 
 class CustomerControlller extends ApiController
 {
@@ -18,8 +19,6 @@ class CustomerControlller extends ApiController
     {
 
         $query = Customer::query();
-
-
 
         $status = request()->input('status', 'all');
         $serviceTypeId = request()->input('searchTypeId','all');
@@ -88,6 +87,16 @@ class CustomerControlller extends ApiController
     {
 
         $customer = $addCustomer->addCustomer($request);
+        Notification::create([
+            'creator_id' => auth()->user()->user_id,
+            'action_id' => $customer->customer_id,
+            'type' => 'create',
+            'action_link' => "customers.show",
+            'title' => "Customer added",
+            'message' => "Customer added successfully",
+            'status' => true,
+        ]);
+
         return redirect()->route('customers.index')->withSuccess('Customers Created Successfuly!');
     }
 
@@ -135,8 +144,6 @@ class CustomerControlller extends ApiController
         $customer = Customer::findOrFail($customer_id);
         $data = $request->except(['avatar']);
 
-
-
         $customer->update($data);
 
         if ($request->hasFile('avatar')) {
@@ -149,6 +156,16 @@ class CustomerControlller extends ApiController
             $avatarPath = $avatar->storeAs('customers', $filename, 'public');
             $customer->update(['avatar' => 'storage/'.$avatarPath]);
         }
+
+        Notification::create([
+            'creator_id' => auth()->user()->user_id,
+            'action_id' => $customer->customer_id,
+            'type' => 'update',
+            'action_link' => "customers.show",
+            'title' => "Customer updated",
+            'message' => "Customr updated successfully",
+            'status' => true,
+        ]);
 
         return redirect()->route('customers.index')->withSuccess('Customers update successfuly!');
     }

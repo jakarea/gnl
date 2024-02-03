@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AnalyticsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
@@ -10,8 +9,10 @@ use App\Http\Controllers\EarningController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CustomerControlller;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/edit', [TaskController::class, 'edit']);
         Route::get('/', [TaskController::class, 'index']);
         Route::post('/store', [TaskController::class, 'store']);
-        Route::get('/{id}', [TaskController::class, 'show']);
+        Route::get('/{id}', [TaskController::class, 'show'])->name('show');
         Route::put('/{id}/update', [TaskController::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
     });
@@ -141,6 +142,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/settings/update', [ProfileController::class, 'settingsUpdate'])->name('settings.update');
         Route::get('/settings/address', [ProfileController::class, 'address'])->name('address');
         Route::put('/address/update', [ProfileController::class, 'addressUpdate'])->name('address.update');
+    });
+
+    // Notification
+
+    Route::prefix('notifications')->name('notification.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::put('/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('markAsRead');
+        Route::put('/mark-as-unread/{id}', [NotificationController::class, 'markAsUnRead'])->name('markAsUnread');
     });
 
     // logout route
