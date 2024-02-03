@@ -141,9 +141,22 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" id="reply"> Reply </a>
+                                            <a href="javascript:;" onclick="toggleReplyForm('{{ $comment->comment_id }}')">
+                                                Reply </a>
                                         </li>
+
                                     </ul>
+                                    <form style="display: none" id="reply-form-{{ $comment->comment_id }}" action="{{ route('comments.reply', ['comment' => $comment->comment_id]) }}" method="POST">
+                                        @csrf
+                                        <div class="commment-reply-box">
+                                            <textarea name="reply_text" class="form-control" placeholder="Reply"></textarea>
+                                            <button class="btn btn-submit" type="submit">
+                                                <img src="{{ url('assets/images/icons/reply-icon.svg') }}" alt="a"
+                                                    class="img-fluid">
+                                            </button>
+                                        </div>
+
+                                    </form>
                                     <!-- comment action end -->
 
                                     <!-- comment reply start -->
@@ -165,20 +178,19 @@
                                                     </div>
                                                 </div>
                                                 <!-- reply box start -->
-                                                <form
-                                                    action="{{ route('comments.reply', ['comment' => $comment->comment_id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <div class="commment-reply-box">
-                                                        <p class="mb-2">{{ $reply->comment }}</p>
+
+                                                <div class="commment-reply-box">
+                                                    <p class="mb-2">{{ $reply->comment }}</p>
+                                                    {{-- <div class="commment-reply-box">
                                                         <textarea name="reply_text" class="form-control" placeholder="Reply"></textarea>
                                                         <button class="btn btn-submit" type="submit"><img
-                                                                src="{{ url('assets/images/icons/reply-icon.svg') }}"
-                                                                alt="a" class="img-fluid"></button>
+                                                                src="{{ url('assets/images/icons/reply-icon.svg') }}" alt="a"
+                                                                class="img-fluid"></button>
 
-                                                    </div>
-                                                </form>
-                                                    <!-- reply box end -->
+                                                    </div> --}}
+                                                </div>
+
+                                                <!-- reply box end -->
                                             </div>
                                             <!-- comment reply end -->
                                             <hr />
@@ -187,8 +199,11 @@
 
                                 </div>
                                 <!-- comment item end -->
+
                             @endforeach
                         @endif
+
+
 
                         <!-- comment write box start -->
                         <form action="{{ route('comments.store') }}" method="POST" enctype="multipart/form-data">
@@ -254,5 +269,11 @@
                 }
             });
         }
+
+        const toggleReplyForm = (commentId) => {
+            var replyForm = document.getElementById('reply-form-' + commentId);
+            replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+        }
+
     </script>
 @endsection
