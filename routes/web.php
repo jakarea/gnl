@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
@@ -145,11 +146,20 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // Notification
-
     Route::prefix('notifications')->name('notification.')->group(function () {
         Route::get('/', [NotificationController::class, 'index'])->name('index');
         Route::put('/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('markAsRead');
         Route::put('/mark-as-unread/{id}', [NotificationController::class, 'markAsUnRead'])->name('markAsUnread');
+    });
+
+    // Notification
+    Route::prefix('comments')->name('comments.')->group(function () {
+        Route::get('/', [CommentController::class, 'index'])->name('index');
+        Route::post('/store', [CommentController::class, 'store'])->name('store');
+        Route::post('/like', [CommentController::class, 'like'])->name('like');
+        Route::post('/dislike', [CommentController::class, 'dislike'])->name('dislike');
+        Route::post('/reply/{comment}', [CommentController::class, 'reply'])->name('reply');
+
     });
 
     // logout route
