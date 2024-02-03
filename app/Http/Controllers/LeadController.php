@@ -202,12 +202,12 @@ class LeadController extends Controller
 
     public function newLeadsSortable( Request $request ){
 
-        // dd( $request->all() );
 
         $leads = $request->input('leadOrder');
         $newState = $request->input('newState');
 
         foreach ($leads as $index => $leadId) {
+
             $lead = Lead::find($leadId);
 
             if ($lead) {

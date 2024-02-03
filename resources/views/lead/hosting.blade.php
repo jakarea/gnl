@@ -5,6 +5,17 @@
 @section('style')
     <link rel="stylesheet" href="{{ url('assets/css/leads.css') }}" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <style>
+        .ui-sortable-placeholder {
+            border: 2px dashed #ccc;
+            background-color: #f7f7f7;
+            height: 50px;
+        }
+
+        .leads-collection {
+            min-height: 50px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -20,7 +31,7 @@
             <!-- bttn -->
         </div>
         <div class="leads-main-wrapper">
-            <div class="leads-vertical-scroller custom-scroll-bar" id="stateChangeDraggable">
+            <div class="leads-vertical-scroller custom-scroll-bar">
 
                 <!--New Leads Start-->
                 <div class="leads-section">
@@ -409,8 +420,10 @@
 
 
             function initSortable(listId, dataAttribute) {
+
                 $("#" + listId).sortable({
                     connectWith: ".droptrue",
+                    dropOnEmpty: true,
                     update: function(event, ui) {
                         var leadOrder = $(this).sortable("toArray", {
                             attribute: dataAttribute
@@ -420,9 +433,9 @@
                             return item !== '';
                         });
 
-                        console.log(leadOrder)
 
                         var newState = determineNewState(listId);
+
                         updateLeadOrder(leadOrder, newState);
                     }
                 });
@@ -470,10 +483,6 @@
             initSortable('noAnswarLeadDraggable', 'data-noanswar-lead-id');
             initSortable('completedLeadDraggable', 'data-completed-lead-id');
             initSortable('lostLeadDraggable', 'data-lost-lead-id');
-
-
-
-
         });
     </script>
 @endsection
