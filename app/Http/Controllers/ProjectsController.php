@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Arr;
+use App\Models\Comment;
 use App\Models\Project;
 use App\Models\Customer;
 use App\Models\LeadType;
@@ -67,7 +68,13 @@ class ProjectsController extends Controller
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $service_types = ServiceType::orderByDesc('service_type_id')->get();
 
-        return view("projects/single", compact("project",'lead_types', 'service_types'));
+        $comments = Comment::where('is_reply', false)
+            ->orderBy('created_at', 'desc')
+            ->with('replies')
+            ->get();
+
+
+        return view("projects/single", compact("project",'lead_types', 'service_types','comments'));
     }
 
     public function store(CustomerService $addCustomer, ProjectRequest $request)
