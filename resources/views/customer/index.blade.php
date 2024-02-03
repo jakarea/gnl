@@ -113,6 +113,7 @@
                             <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ Str::ucfirst(request()->searchTypeId && request()->searchTypeId !== 'all'? optional(App\Models\ServiceType::find(request()->searchTypeId))->name : 'All Service') }}
+
                                     <i class="fas fa-angle-down"></i>
                                 </button>
 
@@ -145,17 +146,17 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item {{ request()->input('status') === 'all' ? 'active' : '' }}"
-                                            href="{{ route('customers.index', ['status' => 'all', 'searchTypeId' => $serviceType, 'leadTypeId' => request()->input('leadTypeId')]) }}">All
+                                            href="{{ route('customers.index', ['status' => 'all', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId]) }}">All
                                             Customer {!! request()->status == 'all' ? '<i class="fas fa-check"></i>' : '' !!}</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item {{ request()->input('status') === 'active' ? 'active' : '' }}"
-                                            href="{{ route('customers.index', ['status' => 'active', 'searchTypeId' => $serviceType, 'leadTypeId' => request()->input('leadTypeId')]) }}">Active
+                                            href="{{ route('customers.index', ['status' => 'active', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId]) }}">Active
                                             Customer {!! request()->status == 'active' ? '<i class="fas fa-check"></i>' : '' !!}</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item {{ request()->input('status') === 'inactive' ? 'active' : '' }}"
-                                            href="{{ route('customers.index', ['status' => 'inactive', 'searchTypeId' => $serviceType, 'leadTypeId' => request()->input('leadTypeId')]) }}">Inactive
+                                            href="{{ route('customers.index', ['status' => 'inactive', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId]) }}">Inactive
                                             Customer {!! request()->status == 'inactive' ? '<i class="fas fa-check"></i>' : '' !!}</a>
                                     </li>
                                 </ul>

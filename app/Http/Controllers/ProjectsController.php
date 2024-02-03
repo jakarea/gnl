@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Arr;
 use App\Models\Project;
+use App\Models\Customer;
+use App\Models\LeadType;
+use App\Models\ServiceType;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\CustomerProject;
 use App\Services\CustomerService;
@@ -11,9 +15,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Project\ProjectRequest;
-use App\Models\Customer;
-use App\Models\LeadType;
-use App\Models\ServiceType;
 
 class ProjectsController extends Controller
 {
@@ -94,6 +95,16 @@ class ProjectsController extends Controller
 
         $project->customers()->sync($customerIds);
 
+        Notification::create([
+            'creator_id' => auth()->user()->user_id,
+            'action_id' => $project->project_id,
+            'type' => 'create',
+            'action_link' => "projects.single",
+            'title' => "Project Added",
+            'message' => "Project added successfully",
+            'status' => true,
+        ]);
+
         return redirect()->back()->with('success', 'Project created successfully');
     }
 
@@ -114,7 +125,8 @@ class ProjectsController extends Controller
 
         if ($request->hasFile('thumbnail')) {
             if ($project->thumbnail) {
-                Storage::disk('public')->delete($project->thumbnail);
+                $filePath = str_replace('storage/', '', $project->thumbnail);
+                Storage::disk('public')->delete($filePath);
             }
             $file = $request->file('thumbnail');
             $filename = substr(md5(time()), 0 , 10) .'.' . $file->getClientOriginalExtension();
@@ -123,6 +135,17 @@ class ProjectsController extends Controller
         }
 
         $project->customers()->sync($customerIds);
+
+        Notification::create([
+            'creator_id' => auth()->user()->user_id,
+            'action_id' => $project->project_id,
+            'type' => 'update',
+            'action_link' => "projects.single",
+            'title' => "Project Updated",
+            'message' => "Project updated successfully",
+            'status' => true,
+        ]);
+
 
         return redirect()->back()->with('success', 'Project updated successfully');
     }
