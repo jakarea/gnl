@@ -45,7 +45,7 @@
                     <div class="leads-collection droptrue" id="newLeadDraggable">
                         @foreach ($leads['new_leads'] as $new_lead)
                             <!--leads item start-->
-                            <div class="lead-item-area" data-new-lead-id="{{ $new_lead->lead_id }}"
+                            <div class="lead-item-area" data-lead-id="{{ $new_lead->lead_id }}"
                                 data-state="{{ $new_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
@@ -100,7 +100,7 @@
                     <div class="leads-collection droptrue" id="inprogressLeadDraggable">
                         @foreach ($leads['in_progress_leads'] as $in_progress_lead)
                             <!--leads item start-->
-                            <div class="lead-item-area" data-inprogress-lead-id="{{ $in_progress_lead->lead_id }}"
+                            <div class="lead-item-area" data-lead-id="{{ $in_progress_lead->lead_id }}"
                                 data-state="{{ $in_progress_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
@@ -155,7 +155,7 @@
                     <div class="leads-collection droptrue" id="noAnswarLeadDraggable">
                         @foreach ($leads['no_ans_leads'] as $no_ans_lead)
                             <!--leads item start-->
-                            <div class="lead-item-area" data-noanswar-lead-id="{{ $no_ans_lead->lead_id }}"
+                            <div class="lead-item-area" data-lead-id="{{ $no_ans_lead->lead_id }}"
                                 data-state="{{ $no_ans_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
@@ -210,7 +210,7 @@
                     <div class="leads-collection droptrue" id="completedLeadDraggable">
                         @foreach ($leads['completed_leads'] as $completed_lead)
                             <!--leads item start-->
-                            <div class="lead-item-area" data-completed-lead-id="{{ $completed_lead->lead_id }}"
+                            <div class="lead-item-area" data-lead-id="{{ $completed_lead->lead_id }}"
                                 data-state="{{ $completed_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
@@ -265,7 +265,7 @@
                     <div class="leads-collection droptrue" id="lostLeadDraggable">
                         @foreach ($leads['lost_leads'] as $lost_lead)
                             <!--leads item start-->
-                            <div class="lead-item-area" data-lost-lead-id="{{ $lost_lead->lead_id }}"
+                            <div class="lead-item-area" data-lead-id="{{ $lost_lead->lead_id }}"
                                 data-state="{{ $lost_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
@@ -321,125 +321,33 @@
 @section('script')
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
-        $(function() {
-            // ------ Lead reorder ----- //
-            // $("#newLeadDraggable").sortable({
-            //     connectWith: ".droptrue",
-            //     update: function(event, ui) {
-            //         var leadOrder = $(this).sortable("toArray", {
-            //             attribute: "data-new-lead-id"
-            //         });
-
-            //         leadOrder = leadOrder.filter(function(item) {
-            //             return item !== '';
-            //         });
-            //         updateLeadOrder(leadOrder);
-            //     }
-            // });
-
-            // $("#inprogressLeadDraggable").sortable({
-            //     connectWith: ".droptrue",
-            //     update: function(event, ui) {
-            //         var leadOrder = $(this).sortable("toArray", {
-            //             attribute: "data-inprogress-lead-id"
-            //         });
-
-            //         leadOrder = leadOrder.filter(function(item) {
-            //             return item !== '';
-            //         });
-            //         updateLeadOrder(leadOrder);
-            //     }
-            // });
-
-            // $("#noAnswarLeadDraggable").sortable({
-            //     connectWith: ".droptrue",
-            //     update: function(event, ui) {
-            //         var leadOrder = $(this).sortable("toArray", {
-            //             attribute: "data-noanswar-lead-id"
-            //         });
-
-            //         leadOrder = leadOrder.filter(function(item) {
-            //             return item !== '';
-            //         });
-            //         updateLeadOrder(leadOrder);
-            //     }
-            // });
-
-            // $("#completedLeadDraggable").sortable({
-            //     connectWith: ".droptrue",
-            //     update: function(event, ui) {
-            //         var leadOrder = $(this).sortable("toArray", {
-            //             attribute: "data-completed-lead-id"
-            //         });
-
-            //         leadOrder = leadOrder.filter(function(item) {
-            //             return item !== '';
-            //         });
-            //         updateLeadOrder(leadOrder);
-            //     }
-            // });
-
-            // $("#lostLeadDraggable").sortable({
-            //     connectWith: ".droptrue",
-            //     update: function(event, ui) {
-            //         var leadOrder = $(this).sortable("toArray", {
-            //             attribute: "data-lost-lead-id"
-            //         });
-
-            //         leadOrder = leadOrder.filter(function(item) {
-            //             return item !== '';
-            //         });
-            //         updateLeadOrder(leadOrder);
-            //     }
-            // });
-
-            // function updateLeadOrder(leadOrder) {
-            //     $.ajax({
-            //         url: "{{ route('lead.sortable') }}",
-            //         type: "POST",
-            //         data: {
-            //             leadOrder: leadOrder,
-            //             _token: "{{ csrf_token() }}"
-            //         },
-            //         success: function(response) {
-            //             console.log("lead reorder updated successfully");
-            //         },
-            //         error: function(xhr, status, error) {
-            //             console.error("Error updating module order:", error);
-            //         }
-            //     });
-            // }
-
-            // ---- lead reorder closed ---- //
+        $("#newLeadDraggable, #inprogressLeadDraggable, #noAnswarLeadDraggable, #completedLeadDraggable, #lostLeadDraggable")
+            .disableSelection();
 
 
-            // ------ Lead state change --- //
+        $(document).ready(function() {
 
-            $("#newLeadDraggable, #inprogressLeadDraggable, #noAnswarLeadDraggable, #completedLeadDraggable, #lostLeadDraggable")
-                .disableSelection();
+            $(".leads-collection").sortable({
+                connectWith: ".droptrue",
+                update: function(event, ui) {
+                    var leadOrder = $(this).sortable("toArray", {
+                        attribute: "data-lead-id"
+                    });
 
-
-            function initSortable(listId, dataAttribute) {
-
-                $("#" + listId).sortable({
-                    connectWith: ".droptrue",
-                    dropOnEmpty: true,
-                    update: function(event, ui) {
-                        var leadOrder = $(this).sortable("toArray", {
-                            attribute: dataAttribute
-                        });
-
-                        leadOrder = leadOrder.filter(function(item) {
-                            return item !== '';
-                        });
+                    leadOrder = leadOrder.filter(function(item) {
+                        return item !== '';
+                    });
+                    console.log(leadOrder);
 
 
-                        var newState = determineNewState(listId);
+                    var listId = $(this).attr("id");
 
-                        updateLeadOrder(leadOrder, newState);
-                    }
-                });
-            }
+
+                    var newState = determineNewState(listId);
+                    console.log(newState);
+                    updateLeadOrder(leadOrder, newState);
+                }
+            });
 
             function determineNewState(listId) {
                 switch (listId) {
@@ -453,7 +361,6 @@
                         return 'completed';
                     case 'lostLeadDraggable':
                         return 'lost';
-
                     default:
                         return 'new';
                 }
@@ -461,7 +368,7 @@
 
             function updateLeadOrder(leadOrder, newState) {
                 $.ajax({
-                    url: "{{ route('lead.sortable') }}",
+                    url: "{{ route('lead.sortable') }}", // Adjust the route accordingly
                     type: "POST",
                     data: {
                         leadOrder: leadOrder,
@@ -476,13 +383,8 @@
                     }
                 });
             }
-
-            // Initialize sortable for different lists with different data attributes
-            initSortable('newLeadDraggable', 'data-new-lead-id');
-            initSortable('inprogressLeadDraggable', 'data-inprogress-lead-id');
-            initSortable('noAnswarLeadDraggable', 'data-noanswar-lead-id');
-            initSortable('completedLeadDraggable', 'data-completed-lead-id');
-            initSortable('lostLeadDraggable', 'data-lost-lead-id');
         });
+    </script>
+
     </script>
 @endsection
