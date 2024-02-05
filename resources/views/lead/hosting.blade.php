@@ -337,14 +337,8 @@
                     leadOrder = leadOrder.filter(function(item) {
                         return item !== '';
                     });
-                    console.log(leadOrder);
-
-
                     var listId = $(this).attr("id");
-
-
                     var newState = determineNewState(listId);
-                    console.log(newState);
                     updateLeadOrder(leadOrder, newState);
                 }
             });
