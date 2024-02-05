@@ -324,7 +324,6 @@
         $("#newLeadDraggable, #inprogressLeadDraggable, #noAnswarLeadDraggable, #completedLeadDraggable, #lostLeadDraggable")
             .disableSelection();
 
-
         $(document).ready(function() {
 
             $(".leads-collection").sortable({
