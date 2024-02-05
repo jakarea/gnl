@@ -280,6 +280,11 @@
                                         </td>
                                     </tr>
                                 @endforeach
+
+                            @else
+                                <tr>
+                                    <td class="text-center" colspan="7">@component( 'components.empty-data-component' , ['dynamicData' => 'No found customer history'])@endcomponent</td>
+                                </tr>
                             @endif
                             <!-- expense single item end -->
 
