@@ -14,9 +14,11 @@ class CommentController extends Controller
     public function store( Request $request ) {
         $data = $request->validate([
             'comment' => 'required|string',
+            'project_id' => 'required',
         ]);
         Comment::create([
             'user_id' => auth()->user()->user_id,
+            'project_id' => $data['project_id'],
             'comment' => $data['comment'],
         ]);
         return back()->withSuccess('Comment has been published!');
@@ -40,9 +42,11 @@ class CommentController extends Controller
     {
         $data = $request->validate([
             'reply_text' => 'required|string',
+            'project_id' => 'required',
         ]);
 
         $reply = new Comment([
+            'project_id' => $data['project_id'],
             'user_id' => auth()->user()->user_id,
             'comment' => $data['reply_text'],
             'is_reply' => 1,

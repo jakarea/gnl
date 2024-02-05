@@ -32,4 +32,9 @@ class Project extends Model
             return $now->diffInDays($startDate);
         }
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'project_id');
+    }
 }

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id('comment_id')->autoIncrement();
+            $table->foreignId('project_id')->nullable()->constrained('projects', 'project_id')->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users', 'user_id')->cascadeOnDelete();
             $table->bigInteger('like')->unsigned()->default(0);
             $table->bigInteger('dislike')->unsigned()->default(0);
