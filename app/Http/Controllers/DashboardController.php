@@ -47,7 +47,7 @@ class DashboardController extends Controller
         })->get();
 
         $tasks = $this->getTaskUpComming();
-        $earnings = Earning::with('customer')->paginate(12);
+        $earnings = Earning::with('customer')->paginate(20);
 
         // earning expenses per month graph
         $earnExpenGraph = [];

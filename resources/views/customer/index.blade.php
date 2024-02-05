@@ -33,7 +33,7 @@
                     <h3>{{ $totalCustomer }}</h3>
                     <div class="d-flex">
                         <span>{{ $totalCustomerInc }}%</span>
-                        <p>Higher than last month</p>
+                        <p>{{ $totalCustomerInc > 0 ? "Higher" : "Less" }} than last month</p>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <h3>{{ $newCustomer }}</h3>
                     <div class="d-flex">
                         <span>{{ $newCustomerInc }}%</span>
-                        <p>Higher than last month</p>
+                        <p>{{ $newCustomerInc > 0 ? "Higher" : "Less" }} than last month</p>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     <h3> {{ $repeatedCustomer }} </h3>
                     <div class="d-flex">
                         <span>{{ $repeatCustomerInc }}%</span>
-                        <p>Higher than last month</p>
+                        <p>{{ $repeatCustomerInc > 0 ? "Higher" : "Less" }} than last month</p>
                     </div>
                 </div>
             </div>

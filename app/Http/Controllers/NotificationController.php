@@ -40,7 +40,7 @@ class NotificationController extends Controller
                 break;
         }
 
-        $data['notifications'] = $query->paginate(12)->appends(['filter' => $filter]);
+        $data['notifications'] = $query->paginate(20)->appends(['filter' => $filter]);
         $data['filterLabels'] = $this->filterLabels;
         return view('notifications.index', $data);
     }
