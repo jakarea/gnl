@@ -84,7 +84,7 @@
 
         </div>
         <div class="row">
-            @if ( count($projects) )
+            @if ( count($projects) > 0 )
 
 
             @foreach ($projects as $project)
@@ -172,7 +172,7 @@
             <!--project single box end-->
             @endforeach
             @else
-            <div>Not found any projects</div>
+            @component( 'components.empty-data-component' , ['dynamicData' => 'No found customer history'])@endcomponent
             @endif
 
         </div>
