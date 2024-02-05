@@ -99,9 +99,9 @@
                         </div>
                         <hr />
 
-                        @if (count($comments) > 0)
-                            @foreach ($comments as $comment)
-                                <!-- comment item start -->
+
+                        @if (count($project->comments) > 0)
+                            @foreach ($project->comments as $comment)
                                 <div class="project-single-comment mb-4">
                                     <div class="media">
 
@@ -120,7 +120,7 @@
                                     <p class="comment-text">
                                         {{ $comment->comment }}
                                     </p>
-                                    <!-- comment action start -->
+
                                     <ul>
                                         <li>
                                             <a href="javascript:;" class="active"
@@ -147,6 +147,7 @@
 
                                     </ul>
                                     <form style="display: none" id="reply-form-{{ $comment->comment_id }}" action="{{ route('comments.reply', ['comment' => $comment->comment_id]) }}" method="POST">
+                                        <input type="hidden" name="project_id" value="{{ $project->project_id }}">
                                         @csrf
                                         <div class="commment-reply-box">
                                             <textarea name="reply_text" class="form-control" placeholder="Reply"></textarea>
@@ -157,9 +158,7 @@
                                         </div>
 
                                     </form>
-                                    <!-- comment action end -->
 
-                                    <!-- comment reply start -->
                                     @if (count($comment->replies) > 0)
                                         @foreach ($comment->replies as $reply)
                                             <div class="comment-reply-box">
@@ -177,29 +176,18 @@
                                                         <p>{{ $reply->created_at->format('h:i A') }}</p>
                                                     </div>
                                                 </div>
-                                                <!-- reply box start -->
 
                                                 <div class="commment-reply-box">
                                                     <p class="mb-2">{{ $reply->comment }}</p>
-                                                    {{-- <div class="commment-reply-box">
-                                                        <textarea name="reply_text" class="form-control" placeholder="Reply"></textarea>
-                                                        <button class="btn btn-submit" type="submit"><img
-                                                                src="{{ url('assets/images/icons/reply-icon.svg') }}" alt="a"
-                                                                class="img-fluid"></button>
-
-                                                    </div> --}}
                                                 </div>
 
-                                                <!-- reply box end -->
                                             </div>
-                                            <!-- comment reply end -->
+
                                             <hr />
                                         @endforeach
                                     @endif
 
                                 </div>
-                                <!-- comment item end -->
-
                             @endforeach
                         @endif
 
@@ -207,6 +195,7 @@
 
                         <!-- comment write box start -->
                         <form action="{{ route('comments.store') }}" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="project_id" value="{{ $project->project_id }}">
                             @csrf
                             <div class="main-comment-input-box">
                                 <input name="comment" type="text" placeholder="Enter comment.."

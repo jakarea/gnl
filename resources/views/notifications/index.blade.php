@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="notification-box-wrapper">
-                        @if (count($notifications) > 0)
+                        @if (count($notifications) > 200)
                             @foreach ($notifications as $notification)
                                 @if ($notification->action_link == 'customers.show')
                                     <a href="{{ route('customers.show', $notification->action_id) }}">{{ $notification->message }}</a>
@@ -73,11 +73,8 @@
                                 @endif
                             @endforeach
                         @else
-                            <div class="text-center d-flex justify-content-center align-items-center flex-column"
-                                style="min-height: 50vh;">
-                                <i class="fa-solid fa-circle-exclamation" style="font-size: 2rem; color:#E03137;"></i>
-                                <h6 style="font-size: 1rem; font-weight: 700;" class="mt-3">No Notification Found!</h6>
-                            </div>
+
+                            @component( 'components.empty-data-component' , ['dynamicData' => 'No Notification Found!'])@endcomponent
                         @endif
 
                     </div>

@@ -64,17 +64,14 @@ class ProjectsController extends Controller
      */
     public function show($project_id)
     {
-        $project = Project::findOrFail($project_id);
+        $project = Project::with(['comments' => function ($query) {
+            $query->where('is_reply', false)->with('replies');
+        }])->findOrFail($project_id);
+
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $service_types = ServiceType::orderByDesc('service_type_id')->get();
 
-        $comments = Comment::where('is_reply', false)
-            ->orderBy('created_at', 'desc')
-            ->with('replies')
-            ->get();
-
-
-        return view("projects/single", compact("project",'lead_types', 'service_types','comments'));
+        return view("projects/single", compact("project",'lead_types', 'service_types'));
     }
 
     public function store(CustomerService $addCustomer, ProjectRequest $request)
