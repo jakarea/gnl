@@ -77,7 +77,7 @@
                             <div class="form-submit">
                                 <button class="btn btn-submit" type="submit">Login</button>
                             </div>
-                            <div class="options">
+                            {{-- <div class="options">
                                 <hr>
                                 <p>Or login with</p>
                             </div>
@@ -88,8 +88,8 @@
                                         alt="A" class="img-fluid"> Apple</a>
                             </div>
                             <div class="already-have">
-                                {{-- <p>You're new in here? <a href="{{ url('register')}}">Create Account</a></p> --}}
-                            </div>
+                                <p>You're new in here? <a href="{{ url('register')}}">Create Account</a></p>
+                            </div> --}}
                         </form>
                     </div>
                     <!-- auth login form end -->

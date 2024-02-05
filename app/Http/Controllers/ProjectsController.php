@@ -48,7 +48,7 @@ class ProjectsController extends Controller
             }
         }
 
-        $projects = $projects->paginate(16);
+        $projects = $projects->paginate(20);
 
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $service_types = ServiceType::orderByDesc('service_type_id')->get();

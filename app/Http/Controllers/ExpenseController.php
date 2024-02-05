@@ -55,7 +55,7 @@ class ExpenseController extends ApiController
                 break;
         }
 
-        $data['expenses'] = $query->paginate(12)->appends(['filter' => $filter]);
+        $data['expenses'] = $query->paginate(20)->appends(['filter' => $filter]);
 
         $data['filterLabels'] = $this->filterLabels;
 

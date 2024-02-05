@@ -37,7 +37,7 @@ class EarningController extends Controller
         $queryStatus = isset($_GET['query']) ? $_GET['query'] : '';
 
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
-        $earnings = Earning::with('customer')->paginate(12);
+        $earnings = Earning::with('customer')->paginate(20);
 
         // seledted sort query
         $selectedQuery = '';
@@ -262,7 +262,7 @@ class EarningController extends Controller
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $earnings = Earning::with('customer')
             ->where('pay_services', $leadType)
-            ->paginate(12);
+            ->paginate(20);
 
         // seledted sort query
         $selectedQuery = '';
@@ -290,7 +290,7 @@ class EarningController extends Controller
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $earnings = Earning::with('customer')
             ->where('pay_services', $leadType)
-            ->paginate(12);
+            ->paginate(20);
 
         // seledted sort query
         $selectedQuery = '';
@@ -318,7 +318,7 @@ class EarningController extends Controller
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $earnings = Earning::with('customer')
             ->where('pay_services', $leadType)
-            ->paginate(12);
+            ->paginate(20);
 
         // seledted sort query
         $selectedQuery = '';
@@ -346,7 +346,7 @@ class EarningController extends Controller
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $earnings = Earning::with('customer')
             ->where('pay_services', $leadType)
-            ->paginate(12);
+            ->paginate(20);
 
         // seledted sort query
         $selectedQuery = '';

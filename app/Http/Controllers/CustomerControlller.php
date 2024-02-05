@@ -46,7 +46,7 @@ class CustomerControlller extends ApiController
             $query->where('service_type_id', $serviceTypeId);
         }
 
-        $customers = $query->orderByDesc('customer_id')->paginate(3);
+        $customers = $query->orderByDesc('customer_id')->paginate(20);
         $customers->appends(request()->query());
 
         $data['customers'] = $customers;

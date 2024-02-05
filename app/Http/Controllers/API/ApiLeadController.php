@@ -22,7 +22,7 @@ class ApiLeadController extends ApiController
     public function index()
     {
         try {
-            $leads = Lead::with("LeadType")->orderByDesc('lead_id')->paginate(12);
+            $leads = Lead::with("LeadType")->orderByDesc('lead_id')->paginate(20);
 
             return $this->jsonResponse(false, $this->success, $leads, $this->emptyArray, JsonResponse::HTTP_OK);
         } catch (\Exception $e) {

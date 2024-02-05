@@ -31,7 +31,7 @@ class LeadController extends Controller
             }
         }
 
-        $allLeads = $allLeads->paginate(16);
+        $allLeads = $allLeads->paginate(20);
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
 
         return view('lead/common/all',compact('allLeads','lead_types','selectedLead'));
@@ -178,7 +178,7 @@ class LeadController extends Controller
 
     public function lost(){
 
-         $lostLeads = Lead::orderByDesc('lead_id')->where('state','lost')->paginate(16);
+         $lostLeads = Lead::orderByDesc('lead_id')->where('state','lost')->paginate(20);
          $lead_types = LeadType::orderByDesc('lead_type_id')->get();
 
          return view('lead/lost',compact('lostLeads','lead_types'));
