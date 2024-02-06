@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Task;
 use App\Models\Project;
 use App\Models\Customer;
@@ -29,6 +30,10 @@ class TaskController extends ApiController
         $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
         $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
         $data['tasks'] = Task::with('customer')->orderByDesc('task_id')->get();
+
+        $data['tomorrowTasks'] = Task::whereDate('date', now()->addDay(1))->get();
+        $data['nextDayOfTomorrowTasks'] = Task::whereDate('date', now()->addDay(2))->get();
+        $data['afterNextDayOfTomorrowTasks'] = Task::whereDate('date', now()->addDay(3))->get();
 
         return view('to-do-list.index', $data);
     }
@@ -214,6 +219,12 @@ class TaskController extends ApiController
             $data['project'] = Project::findOrFail( $request->projectId);
             return view( 'components.load-project-by-id' , $data);
         }
+    }
+
+
+    public function showTaskByDate( Request $request ){
+        $data['dateWiseTasks'] = Task::where('date', $request->date)->get();
+        return view('components.show-task-by-date', $data);
     }
 
 }

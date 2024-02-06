@@ -5,7 +5,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/css/project.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/todo.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('assets/calender/calendar.css') }}" />
 @endsection
 
 @section('content')
@@ -124,7 +124,63 @@
                         <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
                     </div>
 
-                    <h4>Schedule Comming soon.....</h4>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div id="navigation">
+                                <div id="currentMonthYear"></div>
+                                <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+
+                                <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <table id="calendar"></table>
+
+                            <div class="metting-notice-day">
+                                @if (count($tomorrowTasks) > 0)
+                                    <div class="notice-item">
+                                        <h4>TOMORROW {{ now()->addDay(1)->format('j/m/Y') }}</h4>
+                                        @foreach ($tomorrowTasks as $task)
+                                            <div>
+                                                <p class="m-0">{{ $task->start_time }} -
+                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                                <p class="m-0">{{ $task->description }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                @if (count($nextDayOfTomorrowTasks) > 0)
+                                    <div class="notice-item">
+                                        <h4>{{ strtoupper(now()->addDay(2)->format('l j/m/Y')) }}</h4>
+                                        @foreach ($nextDayOfTomorrowTasks as $task)
+                                            <div>
+                                                <p class="m-0">{{ $task->start_time }} -
+                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                                <p class="m-0">{{ $task->description }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                @if (count($afterNextDayOfTomorrowTasks) > 0)
+                                    <div class="notice-item">
+                                        <h4>{{ strtoupper(now()->addDay(3)->format('l j/m/Y')) }}</h4>
+                                        @foreach ($afterNextDayOfTomorrowTasks as $task)
+                                            <div>
+                                                <p class="m-0">{{ $task->start_time }} -
+                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                                <p class="m-0">{{ $task->description }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 text-left">
+                            {{-- Show task by date --}}
+                            <div class="showTaskByDate"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -631,6 +687,8 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('assets/calender/calendar.js') }}"></script>
+
     <script>
         const searchProject = (e) => {
             const searchTerm = e.target.value;
@@ -761,6 +819,8 @@
                 }
             });
         }
+
+        // get schedule data by click
     </script>
 
     {{-- customer get by search ajax req --}}
