@@ -95,7 +95,7 @@
           if ($data['totalEarningHosting']['amountCompare'] < 0) {
             $highLess='Less';
           }
-          @endphp 
+          @endphp
 
           @if ($selectedQuery==='this_month' || $selectedQuery==='last_month' ) <p>{{ $highLess }} than last month</p>
             @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
@@ -121,11 +121,11 @@
 
           @php
           $highLess2 = 'Higher';
-          if ($data['totalHostingCustomer']['hostingcustomersCompare'] < 0) 
-          { $highLess2='Less' ; } 
-          @endphp 
+          if ($data['totalHostingCustomer']['hostingcustomersCompare'] < 0)
+          { $highLess2='Less' ; }
+          @endphp
 
-          @if ($selectedQuery==='this_month' || $selectedQuery==='last_month' ) 
+          @if ($selectedQuery==='this_month' || $selectedQuery==='last_month' )
           <p>{{ $highLess2 }} than last month</p>
             @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
             <p>{{ $highLess2 }} than last year</p>
@@ -150,7 +150,7 @@
           <p>All time record</p>
         </div>
       </div>
-    </div>  
+    </div>
     <!-- card item end -->
   </div>
   <!-- earning card end -->
@@ -221,7 +221,7 @@
               @endif
 
               <div class="media-body">
-                <h5>{{ $earning->customer->name }}</h5>
+                <h5><a href="{{ route('customers.show', $earning->customer->customer_id) }}">{{ $earning->customer->name }}</a></h5>
                 <span>{{ $earning->customer->email }}</span>
               </div>
             </div>
@@ -303,7 +303,7 @@
 
 @endsection
 
-@section('script') 
+@section('script')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 {{-- earning details js --}}
@@ -314,14 +314,14 @@
         const earningId = e.target.dataset.earningId;
 
         let currentURL3 = window.location.href;
-        const baseUrl3 = currentURL3.split('/').slice(0, 3).join('/'); 
+        const baseUrl3 = currentURL3.split('/').slice(0, 3).join('/');
 
         fetch(`${baseUrl3}/earning/details/${earningId}`, {
             method: 'GET',
             headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}', 
-                }, 
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
         })
         .then(function (response) {
             if (!response.ok) {
@@ -329,10 +329,10 @@
             }
             return response.text();
         })
-        .then(function (data) { 
-            document.querySelector(".showEarningDetails").innerHTML = data; 
+        .then(function (data) {
+            document.querySelector(".showEarningDetails").innerHTML = data;
             const modal = new bootstrap.Modal(document.querySelector('.earning-details-modal'));
-            modal.show(); 
+            modal.show();
 
         })
         .catch(function (error) {

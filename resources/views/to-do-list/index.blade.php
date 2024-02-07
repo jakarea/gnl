@@ -72,7 +72,7 @@
                                                     class="img-fluid avatar" />
                                             @endif
                                             <div class="media-body">
-                                                <h5>{{ $task->customer->name }}</h5>
+                                                <h5><a href="{{ route('customers.show', $task->customer->customer_id) }}">{{ $task->customer->name }}</a></h5>
                                                 <span>{{ $task->customer->designation }}</span>
                                             </div>
                                         </div>
@@ -90,7 +90,7 @@
                                             @endif
 
                                             <div class="media-body">
-                                                <h5>{{ $task->project->title }}</h5>
+                                                <h5><a href="{{ url('projects/'.$task->project->project_id) }}">{{ $task->project->title }}</a></h5>
                                                 <span><img src="/assets/images/icons/close-3.svg" alt="a"
                                                         class="img-fluid "> {{ $task->project->remaining_days }} Days
                                                     Remaining</span>

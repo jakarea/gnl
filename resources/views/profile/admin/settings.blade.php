@@ -34,9 +34,11 @@
                         <input type="file" name="avatar" id="avatar" class="d-none">
                         <div class="title">
                             <h3>Personal Info</h3>
-                            <a href="{{ route('account.index') }}">
-                                <img src="/assets/images/icons/pen.svg" alt="I" class="img-fluid">
-                            </a>
+                            @if (!request()->is('account/settings'))
+                                <a href="{{ route('account.index') }}">
+                                    <img src="/assets/images/icons/pen.svg" alt="I" class="img-fluid">
+                                </a>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="name">Full Name <span>*</span></label>
@@ -130,9 +132,11 @@
                     <div class="form-box mt-4">
                         <div class="title">
                             <h3>Address</h3>
-                            <a href="{{ route('account.address') }}">
-                                <img src="/assets/images/icons/pen.svg" alt="I" class="img-fluid">
-                            </a>
+
+                                <a href="{{ route('account.address') }}">
+                                    <img src="/assets/images/icons/pen.svg" alt="I" class="img-fluid">
+                                </a>
+
                         </div>
                         <!-- table start -->
                         <div class="personal-info-table-wrap">

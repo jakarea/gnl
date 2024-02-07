@@ -1,10 +1,12 @@
 <div class="form-box">
-    <div class="title">
-        <h3>Personal Info</h3>
-        <a href="{{ route('account.settings') }}">
-            <img src="/assets/images/icons/pen.svg" alt="I" class="img-fluid">
-        </a>
-    </div>
+
+        <div class="title">
+            <h3>Personal Info</h3>
+            <a href="{{ route('account.settings') }}">
+                <img src="/assets/images/icons/pen.svg" alt="I" class="img-fluid">
+            </a>
+        </div>
+
 
     <!-- table start -->
     <div class="personal-info-table-wrap">
