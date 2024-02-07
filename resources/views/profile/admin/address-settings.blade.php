@@ -34,9 +34,11 @@
                             @method('put')
                             <div class="title">
                                 <h3>Address</h3>
-                                <a href="{{ route('account.index') }}">
-                                    <img src="/assets/images/icons/pen.svg" alt="I" class="img-fluid">
-                                </a>
+                                @if (!request()->is('account/settings/address'))
+                                    <a href="{{ route('account.index') }}">
+                                        <img src="/assets/images/icons/pen.svg" alt="I" class="img-fluid">
+                                    </a>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label for="name">Primary Address <span>*</span></label>
