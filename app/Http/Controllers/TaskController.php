@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Task;
 use App\Models\Project;
 use App\Models\Customer;
@@ -30,6 +31,10 @@ class TaskController extends ApiController
         $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
         $data['tasks'] = Task::with('customer')->orderByDesc('task_id')->get();
 
+        $data['tomorrowTasks'] = Task::whereDate('date', now()->addDay(1))->get();
+        $data['nextDayOfTomorrowTasks'] = Task::whereDate('date', now()->addDay(2))->get();
+        $data['afterNextDayOfTomorrowTasks'] = Task::whereDate('date', now()->addDay(3))->get();
+
         return view('to-do-list.index', $data);
     }
 
@@ -54,14 +59,9 @@ class TaskController extends ApiController
                 $customerId = $request->customer_id;
             }
 
-            // $times = explode('-', $request->schedule);
-            // $data['start_time'] = trim($times[0]);
-            // $data['end_time'] = trim($times[1]);
-
-            $data['start_time'] = $request->schedule;
-            $data['end_time'] = '18:50';
-
-
+            $times = explode('-', $request->schedule);
+            $data['start_time'] = trim($times[0]);
+            $data['end_time'] = trim($times[1]);
 
             $data['created_by'] = auth()->user()->full_name;
             $data['customer_id'] = $customerId;
@@ -214,6 +214,12 @@ class TaskController extends ApiController
             $data['project'] = Project::findOrFail( $request->projectId);
             return view( 'components.load-project-by-id' , $data);
         }
+    }
+
+
+    public function showTaskByDate( Request $request ){
+        $data['dateWiseTasks'] = Task::where('date', $request->date)->get();
+        return view('components.show-task-by-date', $data);
     }
 
 }

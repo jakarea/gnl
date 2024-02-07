@@ -10,6 +10,7 @@ use App\Http\Controllers\EarningController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CustomerControlller;
 use App\Http\Controllers\DashboardController;
@@ -73,7 +74,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}', [TaskController::class, 'show'])->name('show');
         Route::put('/{id}/update', [TaskController::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [TaskController::class, 'destroy']);
+
+        Route::post('/taskbydate', [TaskController::class, 'showTaskByDate'])->name('showtaskdate');
     });
+
+
+
 
     // project route
     Route::prefix('projects')->name('projects.')->group(function () {
@@ -161,6 +167,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/reply/{comment}', [CommentController::class, 'reply'])->name('reply');
 
     });
+
+
+
 
     // logout route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

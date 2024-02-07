@@ -5,7 +5,8 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/css/project.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/todo.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('assets/css/time-range.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/calender/calendar.css') }}" />
 @endsection
 
 @section('content')
@@ -124,7 +125,63 @@
                         <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
                     </div>
 
-                    <h4>Schedule Comming soon.....</h4>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div id="navigation">
+                                <div id="currentMonthYear"></div>
+                                <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+
+                                <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <table id="calendar"></table>
+
+                            <div class="metting-notice-day">
+                                @if (count($tomorrowTasks) > 0)
+                                    <div class="notice-item">
+                                        <h4>TOMORROW {{ now()->addDay(1)->format('j/m/Y') }}</h4>
+                                        @foreach ($tomorrowTasks as $task)
+                                            <div>
+                                                <p class="m-0">{{ $task->start_time }} -
+                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                                <p class="m-0">{{ $task->description }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                @if (count($nextDayOfTomorrowTasks) > 0)
+                                    <div class="notice-item">
+                                        <h4>{{ strtoupper(now()->addDay(2)->format('l j/m/Y')) }}</h4>
+                                        @foreach ($nextDayOfTomorrowTasks as $task)
+                                            <div>
+                                                <p class="m-0">{{ $task->start_time }} -
+                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                                <p class="m-0">{{ $task->description }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                @if (count($afterNextDayOfTomorrowTasks) > 0)
+                                    <div class="notice-item">
+                                        <h4>{{ strtoupper(now()->addDay(3)->format('l j/m/Y')) }}</h4>
+                                        @foreach ($afterNextDayOfTomorrowTasks as $task)
+                                            <div>
+                                                <p class="m-0">{{ $task->start_time }} -
+                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                                <p class="m-0">{{ $task->description }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 text-left">
+                            {{-- Show task by date --}}
+                            <div class="showTaskByDate"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -225,7 +282,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-12">
-                                                        <div class="form-group form-error">
+
+                                                        {{-- <div class="form-group form-error">
                                                             <label for="schedule">Schedule</label>
                                                             <input type="time" placeholder="dd-mm-yyyy" id="schedule"
                                                                 name="schedule" class="form-control"
@@ -233,7 +291,21 @@
                                                             @error('schedule')
                                                                 <div class="text-danger">{{ $message }}</div>
                                                             @enderror
+                                                        </div> --}}
+
+                                                        <div class="form-group form-error">
+                                                            <label for="schedule">Schedule</label>
+                                                            <div id="datetimepickerDate" class="input-group timerange">
+                                                                <input class="form-control" type="text" name="schedule" placeholder="--:- -">
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa-regular fa-clock"></i>
+                                                                </span>
+                                                            </div>
+                                                            @error('schedule')
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
                                                         </div>
+
                                                     </div>
 
                                                     <div class="col-12">
@@ -311,7 +383,8 @@
                                                                     role="button" aria-expanded="false"
                                                                     aria-controls="collapseTwo" type="button">
                                                                     <img src="./assets/images/icons/user-add-two.svg"
-                                                                        alt="a" class="img-fluid">Add Manually</a>
+                                                                        alt="a" class="img-fluid">Add
+                                                                    Manually</a>
                                                             </div>
                                                         </div>
                                                         <div class="row" id="selectedCustomerUi"></div>
@@ -495,7 +568,8 @@
                                                                                                     aria-expanded="false">
                                                                                                     <div
                                                                                                         class="setServiceLabel">
-                                                                                                        Select Below</div><i
+                                                                                                        Select Below
+                                                                                                    </div><i
                                                                                                         class="fas fa-angle-down"></i>
                                                                                                 </button>
                                                                                                 <ul
@@ -561,7 +635,8 @@
                                                                                                     aria-expanded="false">
                                                                                                     <div
                                                                                                         class="setLeadLabel">
-                                                                                                        Select Below</div><i
+                                                                                                        Select Below
+                                                                                                    </div><i
                                                                                                         class="fas fa-angle-down"></i>
                                                                                                 </button>
                                                                                                 <ul
@@ -631,6 +706,9 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('assets/js/time-range.js') }}"></script>
+    <script src="{{ asset('assets/calender/calendar.js') }}"></script>
+
     <script>
         const searchProject = (e) => {
             const searchTerm = e.target.value;
@@ -761,6 +839,8 @@
                 }
             });
         }
+
+        // get schedule data by click
     </script>
 
     {{-- customer get by search ajax req --}}
