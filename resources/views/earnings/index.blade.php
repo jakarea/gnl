@@ -380,7 +380,7 @@
               @endif
 
               <div class="media-body">
-                <h5>{{ $earning->customer->name }}</h5>
+                <h5><a href="{{ route('customers.show', $earning->customer->customer_id) }}">{{ $earning->customer->name }}</a></h5>
                 <span>{{ $earning->customer->email }}</span>
               </div>
             </div>
