@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use Carbon\Carbon;
 use App\Models\Earning;
 use App\Models\Project;
-use Carbon\Carbon;
+use App\Models\Customer;
+use App\Models\LeadType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -49,10 +50,13 @@ class AnalyticsController extends Controller
         $projectStatus = [];
         $projectStatus = $this->getProjectStatus($selectedQuery);
 
+
+        $leadTypes = LeadType::all();
+        $getClientByPermonth = $this->generateSeriesData($leadTypes);
+
         $topActiveCustomers = [];
         $topActiveCustomers = $this->getTopActiveCustomer();
-
-        return view('analytics/index',compact('projectStatus','selectedQuery','customerStatusInfos','totalCustomerPerMonth','topActiveCustomers'));
+        return view('analytics/index',compact('projectStatus','selectedQuery','customerStatusInfos','totalCustomerPerMonth','topActiveCustomers','getClientByPermonth'));
     }
 
     // query map for sort
@@ -93,9 +97,9 @@ class AnalyticsController extends Controller
     {
         // Get the query map
         $queryMap = $this->getQueryMap();
- 
+
         $filterData = isset($queryMap[$queryStatus]) ? $queryMap[$queryStatus] : $queryMap[''];
- 
+
         $year = $filterData['total']['year'];
         $month = isset($filterData['total']['month']) ? $filterData['total']['month'] : null;
 
@@ -145,7 +149,7 @@ class AnalyticsController extends Controller
     // get total unique customer from earning table
     private function getTotalCustomer()
     {
- 
+
         $activeCustomers = Customer::where('status','active')->count();
         $inActiveCustomers = Customer::where('status','inactive')->count();
         $totalCustomers = $activeCustomers + $inActiveCustomers;
@@ -182,11 +186,43 @@ class AnalyticsController extends Controller
         ->select('earnings.customer_id', DB::raw('COUNT(*) as count'))
         ->join('customers', 'earnings.customer_id', '=', 'customers.customer_id')
         ->where('customers.status', 'active')
-        ->groupBy('earnings.customer_id') 
+        ->groupBy('earnings.customer_id')
         ->orderByDesc('count')
         ->get();
 
         return $topActiveCustomers;
     }
-    
+
+
+    // Generated client data
+    private function generateSeriesData($leadTypes)
+    {
+        $series = [];
+
+        foreach ($leadTypes as $leadType) {
+            $customerCounts = $this->getCustomerCountsByMonth($leadType);
+
+            $series[] = [
+                'name' => $leadType->name,
+                'data' => $customerCounts,
+            ];
+        }
+
+        return $series;
+    }
+
+
+    private function getCustomerCountsByMonth($leadType)
+    {
+        $customerCounts = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $count = $leadType->customers()
+                ->whereMonth('created_at', $month)
+                ->count();
+            $customerCounts[] = $count;
+        }
+
+        return $customerCounts;
+    }
 }

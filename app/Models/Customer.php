@@ -34,6 +34,11 @@ class Customer extends Model
         return $this->hasMany(Earning::class, 'customer_id');
     }
 
+    public function leadType()
+    {
+        return $this->belongsTo(LeadType::class, 'lead_type_id');
+    }
+
 }
 
 
