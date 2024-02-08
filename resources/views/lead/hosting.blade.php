@@ -336,6 +336,8 @@
                     leadOrder = leadOrder.filter(function(item) {
                         return item !== '';
                     });
+
+                    console.log(leadOrder)
                     var listId = $(this).attr("id");
                     var newState = determineNewState(listId);
                     updateLeadOrder(leadOrder, newState);
@@ -361,7 +363,7 @@
 
             function updateLeadOrder(leadOrder, newState) {
                 $.ajax({
-                    url: "{{ route('lead.sortable') }}", // Adjust the route accordingly
+                    url: "{{ route('lead.sortable') }}",
                     type: "POST",
                     data: {
                         leadOrder: leadOrder,
