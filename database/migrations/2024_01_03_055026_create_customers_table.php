@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('service')->nullable();
             $table->string('company')->nullable();
             $table->string('website')->nullable();
+            $table->tinyInteger('lead')->default(0)->comment('Lead active or inactive');
             $table->longText('details')->nullable();
             $table->timestamps();
         });
