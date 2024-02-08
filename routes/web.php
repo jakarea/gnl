@@ -110,7 +110,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     // all lead sortable
-    Route::post('/new-leads/sortable', [LeadController::class, 'newLeadsSortable'])->name('lead.sortable');
+
+    Route::post('/leads/state/update', [LeadController::class, 'leadStateUpdate'])->name('lead.state.update');
+
+    Route::post('/leads/sortable', [LeadController::class, 'leadSortable'])->name('lead.sortable');
     Route::post('/lead/reactive', [LeadController::class, 'leadReactive'])->name('lead.reactive');
     Route::post('/inprogress-leads/sortable', [LeadController::class, 'inprogressLeadsSortable'])->name('state.lead.sortable');
 

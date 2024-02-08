@@ -322,6 +322,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
         $(document).ready(function() {
+
             $('.leads-collection').sortable({
                 connectWith: '.leads-collection',
                 update: function(event, ui) {
@@ -330,69 +331,86 @@
                     var listId = $(this).attr("id");
                     var newState = determineNewState(listId);
 
+                    console.log(leadId)
+
                     updateLeadOrder(leadId, newState);
 
                 }
             }).disableSelection();
-        });
 
-        // Determine the new state based on the list ID
-        const determineNewState = (listId) => {
-            switch (listId) {
-                case 'newLeadDraggable':
-                    return 'new';
-                case 'inprogressLeadDraggable':
-                    return 'in_progress';
-                case 'noAnswarLeadDraggable':
-                    return 'no_ans';
-                case 'completedLeadDraggable':
-                    return 'completed';
-                case 'lostLeadDraggable':
-                    return 'lost';
-                default:
-                    return 'new';
-            }
-        }
 
-        // Update lead order and state on drop
-        const updateLeadOrder = (leadId, newState) => {
-            $.ajax({
-                url: "{{ route('lead.sortable') }}",
-                type: "POST",
-                data: {
-                    leadId: leadId,
-                    newState: newState,
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function(res) {
-                    console.log(res)
-                    console.log("Lead reorder and state update successfully");
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error updating lead order and state:", error);
+            // Determine the new state based on the list ID
+            const determineNewState = (listId) => {
+                switch (listId) {
+                    case 'newLeadDraggable':
+                        return 'new';
+                    case 'inprogressLeadDraggable':
+                        return 'in_progress';
+                    case 'noAnswarLeadDraggable':
+                        return 'no_ans';
+                    case 'completedLeadDraggable':
+                        return 'completed';
+                    case 'lostLeadDraggable':
+                        return 'lost';
+                    default:
+                        return 'new';
                 }
-            });
-        }
+            }
 
+            // Update lead order and state on drop
+            const updateLeadOrder = (leadId, newState) => {
+                $.ajax({
+                    url: "{{ route('lead.state.update') }}",
+                    type: "POST",
+                    data: {
+                        leadId: leadId,
+                        newState: newState,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(res) {
+                        console.log(res)
+                        console.log("Lead state update successfully");
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error updating lead order and state:", error);
+                    }
+                });
+            }
 
-        // Add a new function to set a flag in the Lead table
-        // const leadReactive = (leadId) => {
-        //     $.ajax({
-        //         url: "{{ route('lead.reactive') }}", // Adjust the route as needed
-        //         type: "POST",
-        //         data: {
-        //             leadId: leadId,
-        //             _token: "{{ csrf_token() }}"
-        //         },
-        //         success: function(response) {
-        //             console.log("Flag set in Lead table successfully");
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.error("Error setting flag in Lead table:", error);
-        //         }
-        //     });
-        // }
+        });
     </script>
 
+    <script>
+        // $(document).ready(function() {
+        //     $(".leads-collection").sortable({
+        //         update: function(event, ui) {
+        //             var leadOrder = $(this).sortable("toArray", {
+        //                 attribute: "data-lead-id"
+        //             });
 
+        //             leadOrder = leadOrder.filter(function(item) {
+        //                 return item !== '';
+        //             });
+
+        //             console.log(leadOrder)
+
+        //             $.ajax({
+        //                 url: "{{ route('lead.sortable') }}",
+        //                 type: "POST",
+        //                 data: {
+        //                     leadOrder: leadOrder,
+        //                     _token: "{{ csrf_token() }}"
+        //                 },
+        //                 success: function(response) {
+        //                     console.log("Lead reorder successfully");
+        //                 },
+        //                 error: function(xhr, status, error) {
+        //                     console.error("Error updating lead order and state:", error);
+        //                 }
+        //             });
+
+        //         }
+        //     });
+        });
+    </script>
 @endsection

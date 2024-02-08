@@ -203,7 +203,7 @@ class LeadController extends Controller
 
 
 
-    public function newLeadsSortable( Request $request ){
+    public function leadStateUpdate( Request $request ){
 
         // dd( $request->all() );
         $lead = Lead::find($request->leadId);
@@ -252,26 +252,17 @@ class LeadController extends Controller
     }
 
 
-    protected function reorderLeads($leadOrder, $leadState)
-    {
-        // $leads = Lead::where('state', $leadState)
-        // ->orderBy('lead_order')
-        // ->get();
+    public function leadSortable( Request $request ){
+        $leads = $request->input('leadOrder');
+        foreach ($leads as $index => $leadId) {
+            $lead = Lead::find($leadId);
 
-        // foreach ($leads as $index => $lead) {
-        //     $lead->lead_order = $index + 1;
-        //     $lead->save();
-        // }
-
-        // $leads = Lead::where('state', $leadState)
-        //     ->orderBy('lead_order')
-        //     ->get();
-
-
-        // dd($leads->toArray());
-
-
-
+            if ($lead) {
+                $lead->lead_order = $index + 1;
+                $lead->save();
+            }
+        }
+        return response()->json(['success' => true]);
     }
 
 
