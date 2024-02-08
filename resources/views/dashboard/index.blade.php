@@ -291,6 +291,10 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="4">@component( 'components.empty-data-component' , ['dynamicData' => 'No project found ending as soon'])@endcomponent</td>
+                                    </tr>
                                 @endif
                                 <!-- project single item end -->
 
@@ -345,6 +349,10 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="4">@component( 'components.empty-data-component' , ['dynamicData' => 'Upcoming not found'])@endcomponent</td>
+                                </tr>
                                 @endif
                                 <!-- task single item end -->
 

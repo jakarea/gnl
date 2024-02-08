@@ -13,7 +13,7 @@
         }
 
         .leads-collection {
-            min-height: 50px;
+            min-height: 100%;
         }
     </style>
 @endsection
@@ -46,7 +46,7 @@
                         @foreach ($leads['new_leads'] as $new_lead)
                             <!--leads item start-->
                             <div class="lead-item-area" data-lead-id="{{ $new_lead->lead_id }}"
-                                data-state="{{ $new_lead->state }}">
+                                data-lead-state="{{ $new_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
                                         @if ($new_lead->avatar)
@@ -101,7 +101,7 @@
                         @foreach ($leads['in_progress_leads'] as $in_progress_lead)
                             <!--leads item start-->
                             <div class="lead-item-area" data-lead-id="{{ $in_progress_lead->lead_id }}"
-                                data-state="{{ $in_progress_lead->state }}">
+                                data-lead-state="{{ $in_progress_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
                                         @if ($in_progress_lead->avatar)
@@ -156,7 +156,7 @@
                         @foreach ($leads['no_ans_leads'] as $no_ans_lead)
                             <!--leads item start-->
                             <div class="lead-item-area" data-lead-id="{{ $no_ans_lead->lead_id }}"
-                                data-state="{{ $no_ans_lead->state }}">
+                                data-lead-state="{{ $no_ans_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
                                         @if ($no_ans_lead->avatar)
@@ -211,7 +211,7 @@
                         @foreach ($leads['completed_leads'] as $completed_lead)
                             <!--leads item start-->
                             <div class="lead-item-area" data-lead-id="{{ $completed_lead->lead_id }}"
-                                data-state="{{ $completed_lead->state }}">
+                                data-lead-state="{{ $completed_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
                                         @if ($completed_lead->avatar)
@@ -266,7 +266,7 @@
                         @foreach ($leads['lost_leads'] as $lost_lead)
                             <!--leads item start-->
                             <div class="lead-item-area" data-lead-id="{{ $lost_lead->lead_id }}"
-                                data-state="{{ $lost_lead->state }}">
+                                data-lead-state="{{ $lost_lead->state }}">
                                 <div class="leads-items">
                                     <div class="media">
                                         @if ($lost_lead->avatar)
@@ -321,28 +321,26 @@
 @section('script')
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
-        $("#newLeadDraggable, #inprogressLeadDraggable, #noAnswarLeadDraggable, #completedLeadDraggable, #lostLeadDraggable")
-            .disableSelection();
-
         $(document).ready(function() {
 
-            $(".leads-collection").sortable({
-                connectWith: ".droptrue",
+            $('.leads-collection').sortable({
+                connectWith: '.leads-collection',
                 update: function(event, ui) {
-                    var leadOrder = $(this).sortable("toArray", {
-                        attribute: "data-lead-id"
-                    });
+                    var leadId = ui.item.data('lead-id');
 
-                    leadOrder = leadOrder.filter(function(item) {
-                        return item !== '';
-                    });
                     var listId = $(this).attr("id");
                     var newState = determineNewState(listId);
-                    updateLeadOrder(leadOrder, newState);
-                }
-            });
 
-            function determineNewState(listId) {
+                    console.log(leadId)
+
+                    updateLeadOrder(leadId, newState);
+
+                }
+            }).disableSelection();
+
+
+            // Determine the new state based on the list ID
+            const determineNewState = (listId) => {
                 switch (listId) {
                     case 'newLeadDraggable':
                         return 'new';
@@ -359,25 +357,60 @@
                 }
             }
 
-            function updateLeadOrder(leadOrder, newState) {
+            // Update lead order and state on drop
+            const updateLeadOrder = (leadId, newState) => {
                 $.ajax({
-                    url: "{{ route('lead.sortable') }}", // Adjust the route accordingly
+                    url: "{{ route('lead.state.update') }}",
                     type: "POST",
                     data: {
-                        leadOrder: leadOrder,
+                        leadId: leadId,
                         newState: newState,
                         _token: "{{ csrf_token() }}"
                     },
-                    success: function(response) {
-                        console.log("Lead reorder and state update successfully");
+                    success: function(res) {
+                        console.log(res)
+                        console.log("Lead state update successfully");
                     },
                     error: function(xhr, status, error) {
                         console.error("Error updating lead order and state:", error);
                     }
                 });
             }
+
         });
     </script>
 
+    <script>
+        // $(document).ready(function() {
+        //     $(".leads-collection").sortable({
+        //         update: function(event, ui) {
+        //             var leadOrder = $(this).sortable("toArray", {
+        //                 attribute: "data-lead-id"
+        //             });
+
+        //             leadOrder = leadOrder.filter(function(item) {
+        //                 return item !== '';
+        //             });
+
+        //             console.log(leadOrder)
+
+        //             $.ajax({
+        //                 url: "{{ route('lead.sortable') }}",
+        //                 type: "POST",
+        //                 data: {
+        //                     leadOrder: leadOrder,
+        //                     _token: "{{ csrf_token() }}"
+        //                 },
+        //                 success: function(response) {
+        //                     console.log("Lead reorder successfully");
+        //                 },
+        //                 error: function(xhr, status, error) {
+        //                     console.error("Error updating lead order and state:", error);
+        //                 }
+        //             });
+
+        //         }
+        //     });
+        });
     </script>
 @endsection

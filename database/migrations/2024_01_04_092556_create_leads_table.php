@@ -28,9 +28,9 @@ return new class extends Migration
             $table->string('state')->nullable()->default('new');
             $table->string('lead_order')->default(false);
             $table->string('status')->nullable()->default('active');
+            $table->tinyInteger('completed')->default(0)->comment('Lead completed or not');
             $table->text('note')->nullable();
             $table->timestamps();
-
             $table->foreign('lead_type_id')->references('lead_type_id')->on('lead_types')->onDelete('cascade'); // Cascade deletion of associated leads
 
 

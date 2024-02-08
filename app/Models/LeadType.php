@@ -14,4 +14,10 @@ class LeadType extends Model
     protected $primaryKey = 'lead_type_id';
     protected $fillable = ['name', 'slug'];
     protected $dates = ['deleted_at'];
+
+
+    public function customers()
+    {
+        return $this->hasMany(Customer::class, 'lead_type_id');
+    }
 }

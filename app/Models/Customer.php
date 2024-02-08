@@ -12,7 +12,7 @@ class Customer extends Model
     protected $primaryKey = 'customer_id';
 
     protected $fillable = ['lead_type_id','service_type_id',
-        'name','avatar','designation','email','phone','location','status','kvk','company','website','details'
+        'name','avatar','designation','email','phone','location','status','kvk','company','website','lead','details'
     ];
 
     public function projects(){
@@ -32,6 +32,11 @@ class Customer extends Model
     public function earnings()
     {
         return $this->hasMany(Earning::class, 'customer_id');
+    }
+
+    public function leadType()
+    {
+        return $this->belongsTo(LeadType::class, 'lead_type_id');
     }
 
 }

@@ -14,39 +14,60 @@
             <h1>Expenses</h1>
             <!-- bttn -->
             <div class="page-bttn d-flex">
-                <div class="dropdown">
-                    <a class="bttn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="./assets/images/icons/calendar-2.svg" alt="">This Month<i
-                            class="fas fa-angle-down"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="profile">
-                                Today
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="profile">
-                                Yesterday
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="profile">
-                                Last 7 days
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item " href="profile-edit">
-                                This Month
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item " href="#">
-                                This Year
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <form action="" method="GET" id="myForm">
+
+                    <div class="dropdown">
+                        <a class="bttn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="./assets/images/icons/calendar-2.svg" alt="">
+
+                            <span id="currentQuery">
+                                @if ($selectedQuery === 'this_month')
+                                    This Month
+                                @elseif ($selectedQuery === 'last_month')
+                                    Last Month
+                                @elseif ($selectedQuery === 'this_year')
+                                    This Year
+                                @elseif ($selectedQuery === 'last_year')
+                                    Last Year
+                                @elseif ($selectedQuery === 'all_time')
+                                    All Time
+                                @else
+                                    This Month
+                                @endif
+                            </span>
+
+                            <i class="fas fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item filter-item" href="#" data-value="all_time">
+                                    All Time
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item filter-item" href="#" data-value="this_month">
+                                    This Month
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item filter-item" href="#" data-value="last_month">
+                                    Last Month
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item filter-item" href="#" data-value="this_year">
+                                    This Year
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item filter-item" href="#" data-value="last_year">
+                                    Last Year
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input type="hidden" name="query" id="filterQuery">
+                </form>
 
                 <div class="common-bttn ms-3">
                     {{-- <a href="#" type="button" class="add" data-bs-toggle="modal"
@@ -66,39 +87,99 @@
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
                 <div class="analytics-card-box">
                     <div class="top">
-                        <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+                        @if ($fixedExpense['amountCompare'] >= 0)
+                            <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @else
+                            <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @endif
                         <p>Fixed Expenses</p>
                     </div>
-                    <h4>$30,000</h4>
+                    <h4>${{ $fixedExpense['amountExpenses'] }}</h4>
                     <div class="bottom-text">
-                        <h5>+1.48%</h5>
-                        <p>Higher than last month</p>
+                        <h5 class="{{ $fixedExpense['amountCompare'] < 0 ? 'red' : '' }}">+{{ $fixedExpense['amountCompare'] }}%</h5>
+                        @php
+                            $highLess = 'Higher';
+                            if ($fixedExpense['amountCompare'] < 0) {
+                                $highLess = 'Less';
+                        } @endphp
+                        @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+                            <p>{{ $highLess }} than last
+                                month</p>
+                        @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+                            <p>{{ $highLess }} than last year</p>
+                        @elseif ($selectedQuery === 'all_time')
+                            <p>All time record</p>
+                        @else
+                            <p>{{ $highLess }} than last month</p>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
                 <div class="analytics-card-box">
                     <div class="top">
-                        <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+                        @if ($variableExpense['amountCompare'] >= 0)
+                            <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @else
+                            <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @endif
                         <p>Variable Expenses</p>
                     </div>
-                    <h4>$10,000</h4>
+                    <h4>${{ $variableExpense['amountExpenses'] }}</h4>
                     <div class="bottom-text">
-                        <h5 class="red">+0.12%</h5>
-                        <p>Higher than last month</p>
+                        <h5 class="{{ $variableExpense['amountCompare'] < 0 ? 'red' : '' }}">+{{ $variableExpense['amountCompare'] }}%</h5>
+                        @php
+                            $highLess = 'Higher';
+                            if ($variableExpense['amountCompare'] < 0) {
+                                $highLess = 'Less';
+                        } @endphp
+                        @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+                            <p>{{ $highLess }} than last
+                                month</p>
+                        @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+                            <p>{{ $highLess }} than last year</p>
+                        @elseif ($selectedQuery === 'all_time')
+                            <p>All time record</p>
+                        @else
+                            <p>{{ $highLess }} than last month</p>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
                 <div class="analytics-card-box">
                     <div class="top">
-                        <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+                        @if ($totalExpense['amountCompare'] >= 0)
+                            <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @else
+                            <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @endif
                         <p>Total Expenses</p>
                     </div>
-                    <h4>$5000</h4>
+                    <h4>${{ $totalExpense['amountExpenses'] }}</h4>
                     <div class="bottom-text">
-                        <h5>+1.48%</h5>
-                        <p>Higher than last month</p>
+                        <h5 class="{{ $totalExpense['amountCompare'] < 0 ? 'red' : '' }}">+{{ $totalExpense['amountCompare'] }}%</h5>
+                        @php
+                            $highLess = 'Higher';
+                            if ($totalExpense['amountCompare'] < 0) {
+                                $highLess = 'Less';
+                        } @endphp
+                        @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+                            <p>{{ $highLess }} than last
+                                month</p>
+                        @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+                            <p>{{ $highLess }} than last year</p>
+                        @elseif ($selectedQuery === 'all_time')
+                            <p>All time record</p>
+                        @else
+                            <p>{{ $highLess }} than last month</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -108,7 +189,7 @@
                         <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
                         <p>Marketing Tax</p>
                     </div>
-                    <h4>$15,000</h4>
+                    <h4>${{ $totalTax['taxExpenses'] }}</h4>
                     <div class="bottom-text">
                         <h5>+1.48%</h5>
                         <p>Higher than last month</p>
@@ -131,13 +212,33 @@
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
                 <div class="analytics-card-box">
                     <div class="top">
-                        <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
+                        @if ($totalTax['taxCompare'] >= 0)
+                            <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @else
+                            <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @endif
                         <p>Total Tax</p>
                     </div>
-                    <h4>$6,000</h4>
+                    <h4>${{ $totalTax['taxExpenses'] }}</h4>
                     <div class="bottom-text">
-                        <h5 class="red">-0.12%</h5>
-                        <p>Higher than last month</p>
+                        <h5 class="{{ $totalTax['taxCompare'] < 0 ? 'red' : '' }}">+{{ $totalTax['taxCompare'] }}%</h5>
+                        @php
+                            $highLess = 'Higher';
+                            if ($totalTax['taxCompare'] < 0) {
+                                $highLess = 'Less';
+                        } @endphp
+                        @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+                            <p>{{ $highLess }} than last
+                                month</p>
+                        @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+                            <p>{{ $highLess }} than last year</p>
+                        @elseif ($selectedQuery === 'all_time')
+                            <p>All time record</p>
+                        @else
+                            <p>{{ $highLess }} than last month</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -164,7 +265,7 @@
                     </div>
                     <div class="product-progress-box">
                         <div class="txt">
-                            <h5>12,375</h5>
+                            <h5 id="totalExpense"></h5>
                             <p>Total Expenses</p>
                         </div>
                         <canvas id="productStatus"></canvas>
@@ -187,7 +288,7 @@
                         </ul>
                     </div>
                     <!-- graph placeholde -->
-                    <img src="./uploads/graph/grap-03.png" alt="a" class="img-fluid d-block w-100">
+                    <img src="/uploads/graph/grap-03.png" alt="a" class="img-fluid d-block w-100">
                 </div>
             </div>
         </div>
@@ -465,7 +566,13 @@
 
     <!-- product status graph js start -->
     <script>
-        var datas = [70, 30];
+
+
+        const getExpenseAnalyticsGraph = @json($getExpenseAnalyticsGraph);
+
+        document.querySelector('#totalExpense').innerHTML = getExpenseAnalyticsGraph.totalExpense;
+
+        var datas = [getExpenseAnalyticsGraph.fixed, getExpenseAnalyticsGraph.variable];
 
         var backgroundColor = ['#194BFB', '#ED5763'];
         var ctx = document.getElementById('productStatus').getContext('2d');
@@ -525,10 +632,12 @@
 
     <!-- total user graph js start -->
     <script>
+
+        const getExpensePerMonths = @json($getExpensePerMonths);
         var options = {
             series: [{
                 name: 'Net Profit',
-                data: [44, 55, 23, 56, 61, 28, 63, 35, 66, 30, 45, 33]
+                data: getExpensePerMonths
             }],
             chart: {
                 type: 'bar',
@@ -584,4 +693,17 @@
         chart.render();
     </script>
     <!-- total user graph js end -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            document.querySelectorAll(".filter-item").forEach(item => {
+                item.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    document.getElementById("filterQuery").value = this.getAttribute("data-value");
+                    document.getElementById("myForm").submit();
+                });
+            });
+        });
+    </script>
 @endsection
