@@ -186,26 +186,66 @@
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
                 <div class="analytics-card-box">
                     <div class="top">
-                        <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
-                        <p>Marketing Tax</p>
+                        @if ($fixedTax['taxCompare'] >= 0)
+                            <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @else
+                            <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @endif
+                        <p>Fixed Tax</p>
                     </div>
-                    <h4>${{ $totalTax['taxExpenses'] }}</h4>
+                    <h4>${{ $fixedTax['taxExpenses'] }}</h4>
                     <div class="bottom-text">
-                        <h5>+1.48%</h5>
-                        <p>Higher than last month</p>
+                        <h5 class="{{ $fixedTax['taxCompare'] < 0 ? 'red' : '' }}">+{{ $fixedTax['taxCompare'] }}%</h5>
+                        @php
+                            $highLess = 'Higher';
+                            if ($fixedTax['taxCompare'] < 0) {
+                                $highLess = 'Less';
+                        } @endphp
+                        @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+                            <p>{{ $highLess }} than last
+                                month</p>
+                        @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+                            <p>{{ $highLess }} than last year</p>
+                        @elseif ($selectedQuery === 'all_time')
+                            <p>All time record</p>
+                        @else
+                            <p>{{ $highLess }} than last month</p>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
                 <div class="analytics-card-box">
                     <div class="top">
-                        <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
-                        <p>Project Tax</p>
+                        @if ($variableTax['taxCompare'] >= 0)
+                            <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @else
+                            <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @endif
+                        <p>Variable Tax</p>
                     </div>
-                    <h4>$12,000</h4>
+                    <h4>${{ $variableTax['taxExpenses'] }}</h4>
                     <div class="bottom-text">
-                        <h5>+1.48%</h5>
-                        <p>Higher than last month</p>
+                        <h5 class="{{ $variableTax['taxCompare'] < 0 ? 'red' : '' }}">+{{ $variableTax['taxCompare'] }}%</h5>
+                        @php
+                            $highLess = 'Higher';
+                            if ($variableTax['taxCompare'] < 0) {
+                                $highLess = 'Less';
+                        } @endphp
+                        @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+                            <p>{{ $highLess }} than last
+                                month</p>
+                        @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+                            <p>{{ $highLess }} than last year</p>
+                        @elseif ($selectedQuery === 'all_time')
+                            <p>All time record</p>
+                        @else
+                            <p>{{ $highLess }} than last month</p>
+                        @endif
                     </div>
                 </div>
             </div>

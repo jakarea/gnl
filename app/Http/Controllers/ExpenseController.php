@@ -69,6 +69,8 @@ class ExpenseController extends ApiController
         $data['fixedExpense'] = $this->getExpenses($queryStatus, 'amount',['fixed']);
         $data['variableExpense'] = $this->getExpenses($queryStatus, 'amount',['variable']);
         $data['totalExpense'] = $this->getExpenses($queryStatus, 'amount',['fixed','variable']);
+        $data['fixedTax'] = $this->getExpenses($queryStatus, 'tax',['fixed']);
+        $data['variableTax'] = $this->getExpenses($queryStatus, 'tax',['variable']);
         $data['totalTax'] = $this->getExpenses($queryStatus, 'tax',['fixed','variable']);
 
 
