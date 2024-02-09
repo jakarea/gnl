@@ -73,6 +73,10 @@ class ExpenseController extends ApiController
         $data['variableTax'] = $this->getExpenses($queryStatus, 'tax',['variable']);
         $data['totalTax'] = $this->getExpenses($queryStatus, 'tax',['fixed','variable']);
 
+        $data['currentTaxPerYear'] = $this->currentYearTax();
+        $data['previousTaxPerYear'] = $this->previousYearTax();
+
+        // return $data;
 
         // return $data;
 
@@ -236,6 +240,7 @@ class ExpenseController extends ApiController
     // all query to get amount and compare
     private function getExpenses($queryStatus, $field, $type)
     {
+        // dd( $field);
         $queryMap = $this->getQueryMap();
 
         $expenses = array_sum(
@@ -263,6 +268,15 @@ class ExpenseController extends ApiController
         return [$field . 'Compare' => $compare, $field . 'Expenses' => $expenses];
     }
 
+
+    private function currentYearTax(){
+        return Expense::whereYear('created_at', $this->thisYear)->sum('tax');
+
+    }
+
+    private function previousYearTax(){
+        return Expense::whereYear('created_at', $this->lastYear)->sum('tax');
+    }
 
 }
 
