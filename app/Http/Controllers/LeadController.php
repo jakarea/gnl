@@ -206,9 +206,6 @@ class LeadController extends Controller
     public function leadStateUpdate( Request $request ){
 
         // dd( $request->all() );
-
-
-
         if( $request->leadId ){
             $lead = Lead::find($request->leadId);
             $oldState = $lead->state;
@@ -251,19 +248,18 @@ class LeadController extends Controller
                 $lead->completed = 1;
                 $lead->save();
             }
+        }
 
-            if( $request->input('leadOrder') ){
-                $leads = $request->input('leadOrder');
-                foreach ($leads as $index => $leadId) {
-                    $lead = Lead::find($leadId);
+        if( $request->input('leadOrder') ){
+            $leads = $request->input('leadOrder');
+            foreach ($leads as $index => $leadId) {
+                $lead = Lead::find($leadId);
 
-                    if ($lead) {
-                        $lead->lead_order = $index + 1;
-                        $lead->save();
-                    }
+                if ($lead) {
+                    $lead->lead_order = $index + 1;
+                    $lead->save();
                 }
             }
-
         }
 
     }
