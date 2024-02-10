@@ -121,12 +121,11 @@
             <div class="col-lg-9">
                 <!-- schedule part here -->
                 <div class="schedule-part-box">
-                    <div class="header">
-                        <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
-                    </div>
-
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
+                            <div class="header mb-4">
+                                <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
+                            </div>
                             <div id="navigation">
                                 <div id="currentMonthYear"></div>
                                 <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
@@ -177,9 +176,146 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 text-left">
+                        <div class="col-sm-7 text-left">
                             {{-- Show task by date --}}
-                            <div class="showTaskByDate"></div>
+                            <div class="showTaskByDate">
+                                <div class="task-list-box">
+                                    <div class="task-list-box-inner">
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">8:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">8:00 am - 9:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">9:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">9:00 am - 10:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">10:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">10:00 am - 11:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">11:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">11:00 am - 12:00 pm</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">12:00 PM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">12:00 pm - 1:00 pm</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">1:00 PM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">1:00 pm - 11:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">10:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">10:00 am - 11:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">10:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">10:00 am - 11:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">10:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">10:00 am - 11:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">10:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">10:00 am - 11:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="single-task-box">
+                                            <div class="time-box">
+                                                <span class="time">10:00 AM</span>
+                                            </div>
+                                            <div class="task-info-box">
+                                                <div class="task-info">
+                                                    <h4>Cloud Project Meeting</h4>
+                                                    <div class="timespan">10:00 am - 11:00 am</div>
+                                                </div>
+                                                <div class="box-divider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
