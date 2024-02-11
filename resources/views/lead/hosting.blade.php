@@ -59,7 +59,7 @@
                                         <div class="media-body">
                                             <h5>{{ $new_lead->name }}</h5>
                                             <ul>
-                                                <li><a href="{{ $new_lead->phone }}"><img
+                                                <li><a href="tel:{{ $new_lead->phone }}"><img
                                                             src="{{ asset('assets/images/icons/calling-one.svg') }}"
                                                             alt="a" class="img-fluid"></a></li>
                                                 <li><a href="mailto:{{ $new_lead->email }}"><img
@@ -114,7 +114,7 @@
                                         <div class="media-body">
                                             <h5>{{ $in_progress_lead->name }}</h5>
                                             <ul>
-                                                <li><a href="{{ $in_progress_lead->phone }}"><img
+                                                <li><a href="tel:{{ $in_progress_lead->phone }}"><img
                                                             src="{{ asset('assets/images/icons/calling-one.svg') }}"
                                                             alt="a" class="img-fluid"></a></li>
                                                 <li><a href="mailto:{{ $in_progress_lead->email }}"><img
@@ -169,7 +169,7 @@
                                         <div class="media-body">
                                             <h5>{{ $no_ans_lead->name }}</h5>
                                             <ul>
-                                                <li><a href="{{ $no_ans_lead->phone }}"><img
+                                                <li><a href="tel:{{ $no_ans_lead->phone }}"><img
                                                             src="{{ asset('assets/images/icons/calling-one.svg') }}"
                                                             alt="a" class="img-fluid"></a></li>
                                                 <li><a href="mailto:{{ $no_ans_lead->email }}"><img
@@ -224,7 +224,7 @@
                                         <div class="media-body">
                                             <h5>{{ $completed_lead->name }}</h5>
                                             <ul>
-                                                <li><a href="{{ $completed_lead->phone }}"><img
+                                                <li><a href="tel:{{ $completed_lead->phone }}"><img
                                                             src="{{ asset('assets/images/icons/calling-one.svg') }}"
                                                             alt="a" class="img-fluid"></a></li>
                                                 <li><a href="mailto:{{ $completed_lead->email }}"><img
@@ -279,7 +279,7 @@
                                         <div class="media-body">
                                             <h5>{{ $lost_lead->name }}</h5>
                                             <ul>
-                                                <li><a href="{{ $lost_lead->phone }}"><img
+                                                <li><a href="tel:{{ $lost_lead->phone }}"><img
                                                             src="{{ asset('assets/images/icons/calling-one.svg') }}"
                                                             alt="a" class="img-fluid"></a></li>
                                                 <li><a href="mailto:{{ $lost_lead->email }}"><img
@@ -326,15 +326,21 @@
             $('.leads-collection').sortable({
                 connectWith: '.leads-collection',
                 update: function(event, ui) {
+
+                    var leadOrder = $(this).sortable("toArray", {
+                        attribute: "data-lead-id"
+                    });
+
+                    leadOrder = leadOrder.filter(function(item) {
+                        return item !== '';
+                    });
+
                     var leadId = ui.item.data('lead-id');
 
                     var listId = $(this).attr("id");
                     var newState = determineNewState(listId);
 
-                    console.log(leadId)
-
-                    updateLeadOrder(leadId, newState);
-
+                    updateLeadOrder(leadOrder,leadId, newState);
                 }
             }).disableSelection();
 
@@ -358,11 +364,12 @@
             }
 
             // Update lead order and state on drop
-            const updateLeadOrder = (leadId, newState) => {
+            const updateLeadOrder = (leadOrder, leadId, newState) => {
                 $.ajax({
                     url: "{{ route('lead.state.update') }}",
                     type: "POST",
                     data: {
+                        leadOrder: leadOrder,
                         leadId: leadId,
                         newState: newState,
                         _token: "{{ csrf_token() }}"
@@ -380,37 +387,4 @@
         });
     </script>
 
-    <script>
-        // $(document).ready(function() {
-        //     $(".leads-collection").sortable({
-        //         update: function(event, ui) {
-        //             var leadOrder = $(this).sortable("toArray", {
-        //                 attribute: "data-lead-id"
-        //             });
-
-        //             leadOrder = leadOrder.filter(function(item) {
-        //                 return item !== '';
-        //             });
-
-        //             console.log(leadOrder)
-
-        //             $.ajax({
-        //                 url: "{{ route('lead.sortable') }}",
-        //                 type: "POST",
-        //                 data: {
-        //                     leadOrder: leadOrder,
-        //                     _token: "{{ csrf_token() }}"
-        //                 },
-        //                 success: function(response) {
-        //                     console.log("Lead reorder successfully");
-        //                 },
-        //                 error: function(xhr, status, error) {
-        //                     console.error("Error updating lead order and state:", error);
-        //                 }
-        //             });
-
-        //         }
-        //     });
-        });
-    </script>
 @endsection

@@ -206,64 +206,77 @@ class LeadController extends Controller
     public function leadStateUpdate( Request $request ){
 
         // dd( $request->all() );
-        $lead = Lead::find($request->leadId);
-        $oldState = $lead->state;
-        $lead->state = $request->newState;
-        $lead->save();
-
-        if ($oldState == 'completed' && $request->newState !== 'completed') {
-
-            $existingCustomer = Customer::where('email', $lead->email)->first();
-            if ($existingCustomer) {
-                $existingCustomer->lead = -1;
-                $existingCustomer->save();
-            }
-            $lead->completed = 0;
+        if( $request->leadId ){
+            $lead = Lead::find($request->leadId);
+            $oldState = $lead->state;
+            $lead->state = $request->newState;
             $lead->save();
 
-        } else if( $lead->state == 'completed' ){
+            if ($oldState == 'completed' && $request->newState !== 'completed') {
 
-            $existingCustomer = Customer::where('email', $lead->email)->first();
-            if ($existingCustomer) {
-                $existingCustomer->lead = 1;
-                $existingCustomer->save();
-            } else {
-                $customer = new Customer;
-                $customer->lead_type_id = $lead->lead_type_id;
-                $customer->service_type_id = null;
-                $customer->name = $lead->name;
-                $customer->designation = $lead->name;
-                $customer->email = $lead->email;
-                $customer->phone = $lead->phone;
-                $customer->status = 'active';
-                $customer->lead = 1;
-                $customer->kvk = $lead->kvk;
-                $customer->company = $lead->company;
-                $customer->website = $lead->website;
-                $customer->details = $lead->note;
-                $customer->save();
-            }
+                $existingCustomer = Customer::where('email', $lead->email)->first();
+                if ($existingCustomer) {
+                    $existingCustomer->lead = -1;
+                    $existingCustomer->save();
+                }
+                $lead->completed = 0;
+                $lead->save();
 
-            $lead->completed = 1;
-            $lead->save();
+            } else if( $lead->state == 'completed' ){
 
-        }
+                $existingCustomer = Customer::where('email', $lead->email)->first();
+                if ($existingCustomer) {
+                    $existingCustomer->lead = 1;
+                    $existingCustomer->save();
+                } else {
+                    $customer = new Customer;
+                    $customer->lead_type_id = $lead->lead_type_id;
+                    $customer->service_type_id = null;
+                    $customer->name = $lead->name;
+                    $customer->designation = $lead->name;
+                    $customer->email = $lead->email;
+                    $customer->phone = $lead->phone;
+                    $customer->status = 'active';
+                    $customer->lead = 1;
+                    $customer->kvk = $lead->kvk;
+                    $customer->company = $lead->company;
+                    $customer->website = $lead->website;
+                    $customer->details = $lead->note;
+                    $customer->save();
+                }
 
-    }
-
-
-    public function leadSortable( Request $request ){
-        $leads = $request->input('leadOrder');
-        foreach ($leads as $index => $leadId) {
-            $lead = Lead::find($leadId);
-
-            if ($lead) {
-                $lead->lead_order = $index + 1;
+                $lead->completed = 1;
                 $lead->save();
             }
         }
-        return response()->json(['success' => true]);
+
+        if( $request->input('leadOrder') ){
+            $leads = $request->input('leadOrder');
+            foreach ($leads as $index => $leadId) {
+                $lead = Lead::find($leadId);
+
+                if ($lead) {
+                    $lead->lead_order = $index + 1;
+                    $lead->save();
+                }
+            }
+        }
+
     }
+
+
+    // public function leadSortable( Request $request ){
+    //     $leads = $request->input('leadOrder');
+    //     foreach ($leads as $index => $leadId) {
+    //         $lead = Lead::find($leadId);
+
+    //         if ($lead) {
+    //             $lead->lead_order = $index + 1;
+    //             $lead->save();
+    //         }
+    //     }
+    //     return response()->json(['success' => true]);
+    // }
 
 
 

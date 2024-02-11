@@ -186,26 +186,66 @@
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
                 <div class="analytics-card-box">
                     <div class="top">
-                        <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
-                        <p>Marketing Tax</p>
+                        @if ($fixedTax['taxCompare'] >= 0)
+                            <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @else
+                            <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @endif
+                        <p>Fixed Tax</p>
                     </div>
-                    <h4>${{ $totalTax['taxExpenses'] }}</h4>
+                    <h4>${{ $fixedTax['taxExpenses'] }}</h4>
                     <div class="bottom-text">
-                        <h5>+1.48%</h5>
-                        <p>Higher than last month</p>
+                        <h5 class="{{ $fixedTax['taxCompare'] < 0 ? 'red' : '' }}">+{{ $fixedTax['taxCompare'] }}%</h5>
+                        @php
+                            $highLess = 'Higher';
+                            if ($fixedTax['taxCompare'] < 0) {
+                                $highLess = 'Less';
+                        } @endphp
+                        @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+                            <p>{{ $highLess }} than last
+                                month</p>
+                        @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+                            <p>{{ $highLess }} than last year</p>
+                        @elseif ($selectedQuery === 'all_time')
+                            <p>All time record</p>
+                        @else
+                            <p>{{ $highLess }} than last month</p>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
                 <div class="analytics-card-box">
                     <div class="top">
-                        <img src="./assets/images/icons/money-recive.svg" alt="I" class="img-fluid money-recive">
-                        <p>Project Tax</p>
+                        @if ($variableTax['taxCompare'] >= 0)
+                            <img src="{{ asset('assets/images/icons/money-recive.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @else
+                            <img src="{{ asset('assets/images/icons/money-recive-down.svg') }}" alt="I"
+                                class="img-fluid money-recive">
+                        @endif
+                        <p>Variable Tax</p>
                     </div>
-                    <h4>$12,000</h4>
+                    <h4>${{ $variableTax['taxExpenses'] }}</h4>
                     <div class="bottom-text">
-                        <h5>+1.48%</h5>
-                        <p>Higher than last month</p>
+                        <h5 class="{{ $variableTax['taxCompare'] < 0 ? 'red' : '' }}">+{{ $variableTax['taxCompare'] }}%</h5>
+                        @php
+                            $highLess = 'Higher';
+                            if ($variableTax['taxCompare'] < 0) {
+                                $highLess = 'Less';
+                        } @endphp
+                        @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
+                            <p>{{ $highLess }} than last
+                                month</p>
+                        @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
+                            <p>{{ $highLess }} than last year</p>
+                        @elseif ($selectedQuery === 'all_time')
+                            <p>All time record</p>
+                        @else
+                            <p>{{ $highLess }} than last month</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -287,8 +327,8 @@
                             <li><i class="fas fa-circle expense"></i> Previous Year</li>
                         </ul>
                     </div>
-                    <!-- graph placeholde -->
-                    <img src="/uploads/graph/grap-03.png" alt="a" class="img-fluid d-block w-100">
+                    {{-- earning expenses graph --}}
+                    <div id="taxGraph"></div>
                 </div>
             </div>
         </div>
@@ -693,6 +733,66 @@
         chart.render();
     </script>
     <!-- total user graph js end -->
+
+
+
+    <script>
+
+        const currentTaxPerYear = @json($currentTaxPerYear);
+        const previousTaxPerYear = @json($previousTaxPerYear);
+
+        var options = {
+            series: [{
+                name: "Current Year",
+                data: [currentTaxPerYear]
+            }, {
+                name: "Previous Year",
+                data: [previousTaxPerYear]
+            }],
+            chart: {
+                height: 300,
+                type: 'area',
+                toolbar: {
+                    show: false
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            grid: {
+                show: true,
+                borderColor: '#C2C6CE',
+                borderDashArray: 4,
+                strokeDashArray: 4,
+                xaxis: {
+                    lines: {
+                        show: false
+                    }
+                },
+            },
+            colors: ['#194BFB', '#FE8111'],
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+            },
+            legend: {
+                show: false
+            },
+            toolbar: {
+                show: false
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#taxGraph"), options);
+        chart.render();
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
