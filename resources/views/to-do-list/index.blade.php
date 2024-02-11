@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/time-range.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/calender/calendar.css') }}" />
 
+    <style>
+        .single-task-box {
+            height: 35px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -184,11 +189,11 @@
                         <div class="col-sm-7 text-left">
                             {{-- Show task by date --}}
                             <div class="showTaskByDate">
-                                <div class="showEditTaskModal"></div>
+                                {{-- <div class="showEditTaskModal"></div> --}}
 
                                 <div class="task-list-box">
                                     <div class="task-list-box-inner">
-                                        <div class="single-task-box">
+                                        {{-- <div class="single-task-box">
                                             <div class="time-box">
                                                 <span class="time">8:00 AM</span>
                                             </div>
@@ -319,7 +324,7 @@
                                                 </div>
                                                 <div class="box-divider"></div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
