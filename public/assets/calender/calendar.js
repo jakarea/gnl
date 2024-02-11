@@ -112,7 +112,7 @@ function displayTasks(tasks) {
     timeSlots.forEach(function (timeSlot) {
 
         var matchingTask = tasks.find(function (task) {
-            return task.start_time === timeSlot;
+            return isTaskInTimeSlot(task, timeSlot);
         });
 
         var timeBoxHTML = '<div class="single-task-box">' +
@@ -121,10 +121,9 @@ function displayTasks(tasks) {
             '</div>' +
             '<div class="task-info-box">';
 
-
-
         // Append task information if available
         if (matchingTask) {
+
             timeBoxHTML += '<div class="task-info">' +
                 '<h4>' + matchingTask.title + '</h4>' +
                 '<div class="timespan">' + matchingTask.start_time + ' - ' + matchingTask.end_time + '</div>' +
@@ -141,5 +140,41 @@ function displayTasks(tasks) {
         // Append the HTML to the container
         taskListContainer.append(timeBoxHTML);
     });
+
+    // Task time slots
+    function isTaskInTimeSlot(task, timeSlot) {
+        var taskStartTime = parseTimeString(task.start_time);
+        var taskEndTime = parseTimeString(task.end_time);
+        var slotStartTime = parseTimeString(timeSlot);
+        var slotEndTime = addMinutes(slotStartTime, 59); // Assuming each time slot is 1 hour
+
+        return (taskStartTime >= slotStartTime && taskStartTime <= slotEndTime);
+    }
+
+    // Function to parse time string and convert it to minutes
+    function parseTimeString(timeString) {
+        var parts = timeString.split(':');
+        var hours = parseInt(parts[0], 10);
+        var minutes = parseInt(parts[1], 10);
+        return hours * 60 + minutes;
+    }
+
+    // Function to add minutes to a time represented in minutes
+    function addMinutes(timeInMinutes, minutesToAdd) {
+        return timeInMinutes + minutesToAdd;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
