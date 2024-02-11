@@ -143,26 +143,26 @@ function displayTasks(tasks) {
 
     // Task time slots
     function isTaskInTimeSlot(task, timeSlot) {
-        var taskStartTime = parseTimeString(task.start_time);
-        var taskEndTime = parseTimeString(task.end_time);
-        var slotStartTime = parseTimeString(timeSlot);
-        var slotEndTime = addMinutes(slotStartTime, 59); // Assuming each time slot is 1 hour
+    var taskStartTime = parseTimeString(task.start_time);
+    var taskEndTime = parseTimeString(task.end_time);
+    var slotStartTime = parseTimeString(timeSlot);
+    var slotEndTime = addMinutes(slotStartTime, 59); // Assuming each time slot is 1 hour
 
-        return (taskStartTime >= slotStartTime && taskStartTime <= slotEndTime);
-    }
+    return (taskStartTime >= slotStartTime && taskStartTime <= slotEndTime);
+}
 
-    // Function to parse time string and convert it to minutes
-    function parseTimeString(timeString) {
-        var parts = timeString.split(':');
-        var hours = parseInt(parts[0], 10);
-        var minutes = parseInt(parts[1], 10);
-        return hours * 60 + minutes;
-    }
+// Function to parse time string and convert it to minutes
+function parseTimeString(timeString) {
+    var parts = timeString.split(':');
+    var hours = parseInt(parts[0], 10);
+    var minutes = parseInt(parts[1], 10);
+    return hours * 60 + minutes;
+}
 
-    // Function to add minutes to a time represented in minutes
-    function addMinutes(timeInMinutes, minutesToAdd) {
-        return timeInMinutes + minutesToAdd;
-    }
+// Function to add minutes to a time represented in minutes
+function addMinutes(timeInMinutes, minutesToAdd) {
+    return timeInMinutes + minutesToAdd;
+}
 
 
 
