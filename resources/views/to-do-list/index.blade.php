@@ -72,7 +72,9 @@
                                                     class="img-fluid avatar" />
                                             @endif
                                             <div class="media-body">
-                                                <h5><a href="{{ route('customers.show', $task->customer->customer_id) }}">{{ $task->customer->name }}</a></h5>
+                                                <h5><a
+                                                        href="{{ route('customers.show', $task->customer->customer_id) }}">{{ $task->customer->name }}</a>
+                                                </h5>
                                                 <span>{{ $task->customer->designation }}</span>
                                             </div>
                                         </div>
@@ -90,7 +92,9 @@
                                             @endif
 
                                             <div class="media-body">
-                                                <h5><a href="{{ url('projects/'.$task->project->project_id) }}">{{ $task->project->title }}</a></h5>
+                                                <h5><a
+                                                        href="{{ url('projects/' . $task->project->project_id) }}">{{ $task->project->title }}</a>
+                                                </h5>
                                                 <span><img src="/assets/images/icons/close-3.svg" alt="a"
                                                         class="img-fluid "> {{ $task->project->remaining_days }} Days
                                                     Remaining</span>
@@ -179,6 +183,8 @@
                         <div class="col-sm-7 text-left">
                             {{-- Show task by date --}}
                             <div class="showTaskByDate">
+                                <div class="showEditTaskModal"></div>
+
                                 <div class="task-list-box">
                                     <div class="task-list-box-inner">
                                         <div class="single-task-box">
@@ -432,7 +438,8 @@
                                                         <div class="form-group form-error">
                                                             <label for="schedule">Schedule</label>
                                                             <div id="datetimepickerDate" class="input-group timerange">
-                                                                <input class="form-control" type="text" name="schedule" placeholder="--:- -">
+                                                                <input class="form-control" type="text"
+                                                                    name="schedule" placeholder="--:- -">
                                                                 <span class="input-group-addon">
                                                                     <i class="fa-regular fa-clock"></i>
                                                                 </span>
@@ -835,9 +842,6 @@
         </div>
     </div>
     <!-- task add modal end -->
-
-
-    <div class="showEditTaskModal"></div>
 
 @endsection
 

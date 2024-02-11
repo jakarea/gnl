@@ -58,7 +58,7 @@ $(document).ready(function () {
                 method: 'POST',
                 data: { date: selectedDate },
                 success: function (res) {
-                    $(".showTaskByDate").html(res);
+                    displayTasks(res.dateWiseTasks);
                 },
                 error: function (error) {
                     console.error('AJAX error:', error);
@@ -93,3 +93,53 @@ $(document).ready(function () {
         return monthNames[month];
     }
 });
+
+displayTasks([]);
+
+
+function displayTasks(tasks) {
+    var taskListContainer = $('.task-list-box-inner');
+    console.log(taskListContainer)
+
+    // Clear existing content
+    taskListContainer.empty();
+
+    // Define time slots
+    var timeSlots = ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
+
+
+    // Loop through time slots and dynamically create HTML
+    timeSlots.forEach(function (timeSlot) {
+
+        var matchingTask = tasks.find(function (task) {
+            return task.start_time === timeSlot;
+        });
+
+        var timeBoxHTML = '<div class="single-task-box">' +
+            '<div class="time-box">' +
+            '<span class="time">' + timeSlot + '</span>' +
+            '</div>' +
+            '<div class="task-info-box">';
+
+
+
+        // Append task information if available
+        if (matchingTask) {
+            timeBoxHTML += '<div class="task-info">' +
+                '<h4>' + matchingTask.title + '</h4>' +
+                '<div class="timespan">' + matchingTask.start_time + ' - ' + matchingTask.end_time + '</div>' +
+                '</div>' +
+                '<div class="box-divider"></div>';
+        }
+
+        timeBoxHTML += '</div>' + // Close task-info-box
+            '</div>'; // Close single-task-box
+
+
+        // console.log(timeBoxHTML)
+
+        // Append the HTML to the container
+        taskListContainer.append(timeBoxHTML);
+    });
+}
+
