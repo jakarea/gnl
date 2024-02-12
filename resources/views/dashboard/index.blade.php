@@ -32,7 +32,7 @@
                                 @elseif ($selectedQuery === 'all_time')
                                     All Time
                                 @else
-                                    This Month
+                                    All Time
                                 @endif
                             </span>
                             <i class="fas fa-angle-down"></i>
@@ -183,7 +183,7 @@
                             class="img-fluid money-recive">
                         <p>Total Customer</p>
                     </div>
-                    <h4>{{ $data['totalCustomer']['hostingcustomers'] }}</h4>
+                    <h4>{{ $data['totalCustomer']['allCustomers'] }}</h4>
                     <div class="bottom-text">
                         <h5 class="{{ $data['totalCustomer']['hostingcustomersCompare'] < 0 ? 'red' : '' }} ">
                             {{ $data['totalCustomer']['hostingcustomersCompare'] }}%</h5>

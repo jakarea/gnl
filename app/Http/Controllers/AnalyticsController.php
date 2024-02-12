@@ -110,9 +110,14 @@ class AnalyticsController extends Controller
         }
 
         // Get the counts for different project statuses
-        $in_progress = $query->where('status', 'in_progress')->count();
-        $completed = $query->where('status', 'completed')->count();
-        $cancel = $query->where('status', 'cancel')->count();
+
+        $completedQuery = clone $query;
+        $cancelQuery = clone $query;
+        $inProgressQuery = clone $query;
+
+        $completed = $completedQuery->where('status', 'completed')->count();
+        $cancel = $cancelQuery->where('status', 'cancel')->count();
+        $in_progress = $inProgressQuery->where('status', 'in_progress')->count();
 
         // Get comparison data
         $compareFilterData = $filterData['compare'];
