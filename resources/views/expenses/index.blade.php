@@ -415,7 +415,7 @@
                                             <p>${{ $expense->amount }}</p>
                                         </td>
                                         <td>
-                                            <a class="invoice" href="#">
+                                            <a class="invoice" href="{{ route('expense.invoice.download', $expense->expense_id) }}">
                                                 Invoice
                                             </a>
                                         </td>
@@ -557,6 +557,16 @@
                                             <label for="">Description</label>
                                             <textarea name="description" placeholder="Write Description" class="form-control">{{ old('description') }}</textarea>
                                             @error('description')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="invoice">Invoice</label>
+                                            <input type="file" name="file"  class="form-control"id="invoice" />
+                                            @error('file')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>

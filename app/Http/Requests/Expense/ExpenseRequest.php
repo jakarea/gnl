@@ -33,7 +33,8 @@ class ExpenseRequest extends FormRequest
             'lead_type_id' => ['required', Rule::exists('lead_types', 'lead_type_id')],
             'amount' => 'required|numeric',
             'tax' => 'required|numeric',
-            'type' => 'in:fixed,variable'
+            'type' => 'required|in:fixed,variable',
+            'file' => 'file|mimes:pdf,jpeg,png,gif|max:512000',
         ];
     }
 }

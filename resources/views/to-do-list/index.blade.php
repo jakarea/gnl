@@ -481,7 +481,7 @@
                                             </div>
                                             <!--modal left part end-->
                                             <div class="col-lg-6">
-                                                <div class="project-add-scrollbar custom-scroll-bar">
+                                                <div class="project-add-scrollbar custom-scroll-bar" style="min-height: 650px">
                                                     <div class="customer-modal-title">
                                                         <h3>Project Information</h3>
                                                     </div>
@@ -509,8 +509,9 @@
                                                                 <div class="text-danger">
                                                                     {{ $message }}</div>
                                                             @enderror
-
                                                         </div>
+
+
 
                                                         <div class="row loadProjectById"></div>
 
@@ -523,9 +524,10 @@
                                                         <div class="select-title">
                                                             <h3>Select Customer</h3>
                                                         </div>
+
+
                                                         <!-- customer search form start -->
-                                                        <div class="form-group search-by-name mt-2"
-                                                            style="grid-template-columns: 65% 35%!important">
+                                                            <div class="form-group search-by-name mt-2" style="position: relative!important; z-index:999!important; ">
                                                             <div class="search-item">
                                                                 <img src="assets/images/icons/search-ic.svg"
                                                                     alt="a" class="img-fluid search">
@@ -550,9 +552,6 @@
                                                         <div class="row" id="selectedCustomerUi"></div>
                                                         <!-- customer search form end -->
 
-                                                        <!-- selected customer start  -->
-                                                        <div class="row" id="selectedCustomerUi"></div>
-                                                        <!-- selected customer end  -->
 
                                                         <!--collapse part start-->
                                                         <div class="collapse" id="collapseTwo">
@@ -1078,7 +1077,7 @@
 
                             let customerHTML = `
                             <div class="col-lg-6 prfile-box">
-                                <div class="selected-profile-box mt-0 bg-white border-0 p-0">
+                                <div class="selected-profile-box">
                                     <div class="media">
                                         <img src="${avatar}" class="img-fluid avatar" alt="avatar">
                                         <div class="media-body">

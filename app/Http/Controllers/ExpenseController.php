@@ -120,11 +120,15 @@ class ExpenseController extends ApiController
      */
     public function store(ExpenseRequest $request)
     {
-        // dd( $request->all() );
+
         try {
 
             $data = $request->except(['file']);
+
+            // dd( $data );
+
             $expense = Expense::create($data);
+
             if ($request->hasFile('file')) {
                 $avatar = $request->file('file');
                 $filename = substr(md5(time()), 0 , 10) .'.' . $avatar->getClientOriginalExtension();
@@ -279,5 +283,18 @@ class ExpenseController extends ApiController
         return Expense::whereYear('created_at', $this->lastYear)->sum('tax');
     }
 
+
+    public function invoiceDownload($expenseId){
+        $expense = Expense::find($expenseId);
+
+        $filePath = $expense->file;
+
+        if (!$filePath) {
+            return back()->withError('File not found!');
+        }
+
+        return response()->download($filePath);
+
+    }
 }
 
