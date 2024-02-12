@@ -1,6 +1,6 @@
 @if (count($projects) > 0)
     @foreach ($projects as $project)
-        <a href="javascript:;" class="select-customer select-project mt-3" onclick="getProjectId('{{ $project->project_id }}')">
+        <a href="javascript:;" class="select-customer select-project" onclick="getProjectId('{{ $project->project_id }}')">
             <div class="selected-profile-box mt-0 bg-white border-0 p-0">
                 <div class="media">
                     @if ($project->avatar)

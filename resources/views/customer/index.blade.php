@@ -171,8 +171,6 @@
             <!-- list start -->
             <div class="row" id="customerWraper">
                 @if (count( $customers ) > 0)
-
-
                     @foreach ($customers as $customer)
                         <!-- customer start -->
                         <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mt-15">
@@ -189,13 +187,13 @@
                                 </div>
 
                                 <div class="text">
-                                    <span class="new">New Customer</span>
+                                    <span class="{{ $customer->isNew() ? 'new' : 'repeat' }}">{{ $customer->isNew() ? 'New Customer' : 'Repeat Customer' }}</span>
                                     <h4>
                                         <a href="javascript:;" data-customer-id="{{ $customer->customer_id }}"
                                             class="details customerModalDetails">{{ $customer->name }}</a>
                                     </h4>
 
-                                    <h6>Assistant</h6>
+                                    <h6>{{ $customer->designation }}</h6>
                                     <hr />
                                     <p>
                                         <i class="fa-regular fa-envelope"></i> {{ $customer->email }}

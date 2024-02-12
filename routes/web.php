@@ -139,10 +139,11 @@ Route::group(['middleware' => ['auth']], function () {
     // expense route
     Route::prefix('expenses')->name('expense.')->group(function () {
         Route::get('/', [ExpenseController::class, 'index'])->name('index');
-        Route::post('/store', [ExpenseController::class, 'store'])->name('expense.store');
-        Route::get('/{id}', [ExpenseController::class, 'show'])->name('expense.show');
-        Route::put('/{id}', [ExpenseController::class, 'update'])->name('expense.update');
-        Route::delete('/{id}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
+        Route::post('/store', [ExpenseController::class, 'store'])->name('store');
+        Route::get('/{id}', [ExpenseController::class, 'show'])->name('show');
+        Route::put('/{id}', [ExpenseController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ExpenseController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}/invoice-download', [ExpenseController::class, 'invoiceDownload'])->name('invoice.download');
     });
 
     // admin profile

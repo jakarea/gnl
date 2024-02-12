@@ -41,27 +41,27 @@
                         <li><a class="dropdown-item filterLeads" data-value="new" href="#">New Leads
                             @if ($selectedLead == 'new')
                                 <i class="fas fa-check"></i>
-                            @endif    
+                            @endif
                         </a></li>
                         <li><a class="dropdown-item filterLeads" data-value="in_progress" href="#">In Progress
                             @if ($selectedLead == 'in_progress')
                                 <i class="fas fa-check"></i>
-                            @endif    
+                            @endif
                         </a></li>
                         <li><a class="dropdown-item filterLeads" data-value="no_ans" href="#">No Answer Yet
-                        
+
                             @if ($selectedLead == 'no_ans')
                                 <i class="fas fa-check"></i>
                             @endif
                         </a></li>
                         <li><a class="dropdown-item filterLeads" data-value="completed" href="#">Completed
-                            
+
                             @if ($selectedLead == 'completed')
                             <i class="fas fa-check"></i>
                             @endif
                         </a></li>
                         <li><a class="dropdown-item filterLeads" data-value="lost" href="#">Lost Leads
-                            
+
                             @if ($selectedLead == 'lost')
                             <i class="fas fa-check"></i>
                             @endif
@@ -80,7 +80,7 @@
     </div>
     <div class="all-customer-box payment-from-copany-user">
         <div class="user-payment-table">
-             
+
             <table>
                 <tbody>
                     <tr>
@@ -143,10 +143,10 @@
                                     <a href="#" class="btn-view no-ans-btn">Lost</a>
                                     @endif
 
-                                </li> 
+                                </li>
                             </ul>
                         </td>
-                        
+
                         <td>
                             <div class="table-dropdown">
                                 <a href="#" type="button" class="dot-bttn" data-bs-toggle="dropdown"
@@ -156,12 +156,12 @@
                                     alt="">
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item lead-edit" href="#" data-id="{{ $lead->lead_id }}">Edit Lead</a> 
+                                    <a class="dropdown-item lead-edit" href="#" data-id="{{ $lead->lead_id }}">Edit Lead</a>
 
                                     <form action="{{ route('lead.destroy',$lead->lead_id) }}" class="d-inline" method="POST">
                                         @csrf
                                         <button type="submit" class="btn dropdown-item">Delete Lead</button>
-                                    </form>  
+                                    </form>
                                 </div>
                             </div>
                         </td>
@@ -170,7 +170,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div> 
+        </div>
 
         {{-- paggination wrap --}}
         <div class="row mt-5">
@@ -178,7 +178,7 @@
                 {{ $allLeads->links('pagination::bootstrap-5') }}
             </div>
         </div>
-        {{-- paggination wrap --}} 
+        {{-- paggination wrap --}}
     </div>
 </section>
 
@@ -209,13 +209,13 @@
     function fetchLeadDetails(leadId) {
 
             let currentURL = window.location.href;
-            const baseUrl = currentURL.split('/').slice(0, 3).join('/'); 
+            const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
             fetch(`${baseUrl}/leads/${leadId}/details`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
                 },
             })
             .then(function (response) {
@@ -238,7 +238,7 @@
 </script>
 
 {{-- sort js --}}
-<script> 
+<script>
     document.addEventListener("DOMContentLoaded", function() {
 
         let leadStatus = document.getElementById("leadStatus");

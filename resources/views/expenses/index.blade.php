@@ -415,7 +415,7 @@
                                             <p>${{ $expense->amount }}</p>
                                         </td>
                                         <td>
-                                            <a class="invoice" href="#">
+                                            <a class="invoice" href="{{ route('expense.invoice.download', $expense->expense_id) }}">
                                                 Invoice
                                             </a>
                                         </td>
@@ -538,7 +538,7 @@
                                                 <div class="dropdown">
                                                     <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
-                                                        <span class="setPaymentType">Active</span><i class="fas fa-angle-down"></i>
+                                                        <span class="setPaymentType">Select Type</span><i class="fas fa-angle-down"></i>
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three w-100">
                                                         <li><a onclick="paymentType('fixed')" class="dropdown-item" href="javascript:;">Fixed<i
@@ -557,6 +557,16 @@
                                             <label for="">Description</label>
                                             <textarea name="description" placeholder="Write Description" class="form-control">{{ old('description') }}</textarea>
                                             @error('description')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="invoice">Invoice</label>
+                                            <input type="file" name="file"  class="form-control"id="invoice" />
+                                            @error('file')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>

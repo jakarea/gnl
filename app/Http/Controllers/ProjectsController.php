@@ -150,8 +150,7 @@ class ProjectsController extends Controller
             'status' => true,
         ]);
 
-
-        return redirect()->back()->with('success', 'Project updated successfully');
+        return back()->with('success', 'Project updated successfully');
     }
 
     public function search(Request $request)

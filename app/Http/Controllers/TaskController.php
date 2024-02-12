@@ -219,12 +219,7 @@ class TaskController extends ApiController
 
     public function showTaskByDate( Request $request ){
         $dateWiseTasks = Task::where('date', $request->date)->get();
-
-
-return response()->json(['dateWiseTasks' => $dateWiseTasks]);
-
-
-        // return view('components.show-task-by-date', $data);
+        return response()->json(['dateWiseTasks' => $dateWiseTasks]);
     }
 
 }
