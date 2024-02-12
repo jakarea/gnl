@@ -538,7 +538,7 @@
                                                 <div class="dropdown">
                                                     <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
-                                                        <span class="setPaymentType">Active</span><i class="fas fa-angle-down"></i>
+                                                        <span class="setPaymentType">Select Type</span><i class="fas fa-angle-down"></i>
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three w-100">
                                                         <li><a onclick="paymentType('fixed')" class="dropdown-item" href="javascript:;">Fixed<i

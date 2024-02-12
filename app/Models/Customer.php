@@ -39,6 +39,13 @@ class Customer extends Model
         return $this->belongsTo(LeadType::class, 'lead_type_id');
     }
 
+
+    public function isNew()
+    {
+        $isNew = $this->created_at >= now()->subMonth();
+        return $isNew;
+    }
+
 }
 
 

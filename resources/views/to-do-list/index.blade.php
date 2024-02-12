@@ -16,6 +16,8 @@
 @endsection
 
 @section('content')
+
+
     <section class="main-page-wrapper">
         <!-- page title -->
         <div class="page-title">
@@ -42,7 +44,16 @@
                                     data-task-id="{{ $task->task_id }}"></div>
                                 <div class="task-item">
                                     <div class="top">
-                                        <span><i class="fas fa-circle"></i> {{ ucfirst($task->priority) }}</span>
+                                        @if ($task->priority == 'priority')
+                                            <span><i class="fas fa-circle"></i> {{ ucfirst($task->priority) }}</span>
+                                        @elseif($task->priority == 'important')
+                                            <span class="important"><i class="fas fa-circle"></i>
+                                                {{ ucfirst($task->priority) }}</span>
+                                        @elseif($task->priority == 'basic')
+                                            <span class="basic"><i class="fas fa-circle"></i>
+                                                {{ ucfirst($task->priority) }}</span>
+                                        @endif
+
                                         {{-- <a href="#"><i class="fas fa-ellipsis-vertical"></i></a> --}}
 
                                         <div class="btn-group dropstart">

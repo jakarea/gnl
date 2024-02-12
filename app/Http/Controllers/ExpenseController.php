@@ -120,6 +120,7 @@ class ExpenseController extends ApiController
      */
     public function store(ExpenseRequest $request)
     {
+        // dd( $request->all() );
         try {
 
             $data = $request->except(['file']);
