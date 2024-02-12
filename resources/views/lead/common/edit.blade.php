@@ -132,24 +132,19 @@
                                             <div class="dropdown dropdown-two dropdown-three">
                                                 <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
+                                                    @php
+                                                        $leadId = $lead->lead_type_id;
+                                                        $leadType = App\Models\LeadType::find($leadId);
+                                                        $leadTypeTitle = $leadType ? $leadType->name : "Select Below";
+                                                    @endphp
                                                     <div id="setLeadType2">
-                                                        @if ($lead->lead_type_id == 1)
-                                                            Hosting Lead
-                                                        @elseif ($lead->lead_type_id == 2)
-                                                            Marketing Lead
-                                                        @elseif ($lead->lead_type_id == 3)
-                                                            Project Lead
-                                                        @elseif ($lead->lead_type_id == 4)
-                                                            Website Lead
-                                                        @else
-                                                        Select Below
-                                                        @endif
+                                                       {{ ucfirst( $leadTypeTitle . ' Lead') }}
                                                         </div><i class="fas fa-angle-down"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three w-100">
                                                     @foreach ($lead_types as $leadType)
                                                     <li>
-                                                        <a class="dropdown-item dropdown-item-two lead-type-2"
+                                                        <a onclick="getLeadType('{{ $leadType->lead_type_id }}', '{{ $leadType->name.' Lead' }}')" class="dropdown-item dropdown-item-two lead-type-2"
                                                             href="javascript:;"
                                                             data-id="{{ $leadType->lead_type_id }}">{{
                                                             $leadType->name }} Lead</a>
@@ -198,6 +193,11 @@
     </div>
 </div>
 
+
+
+
+
+
 {{-- lead avatar js --}}
 <script>
     // console.log('upload');
@@ -233,15 +233,18 @@
 
 {{-- select leads type js --}}
 <script>
-    let leadTypeId2 = document.getElementById("lead_type_id2");
-    let setLeadType2 = document.getElementById("setLeadType2");
-    let leadTypes2 = document.querySelectorAll(".lead-type-2");
+    // let leadTypeId2 = document.getElementById("lead_type_id2");
+    // let setLeadType2 = document.getElementById("setLeadType2");
+    // let leadTypes2 = document.querySelectorAll(".lead-type-2");
 
-    leadTypes2.forEach(item => {
-        item.addEventListener("click", function(e) {
-            e.preventDefault();
-            setLeadType2.innerHTML = this.innerHTML;
-            leadTypeId2.value = this.getAttribute("data-id");
-        });
-    });
+    // leadTypes2.forEach(item => {
+    //     item.addEventListener("click", function(e) {
+    //         console.log(item)
+    //         e.preventDefault();
+    //         setLeadType2.innerHTML = this.innerHTML;
+    //         leadTypeId2.value = this.getAttribute("data-id");
+    //     });
+    // });
 </script>
+
+
