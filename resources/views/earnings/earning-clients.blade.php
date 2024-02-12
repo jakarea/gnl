@@ -20,7 +20,7 @@
                 </td>
                 <td>
                     <div class="media">
-                        @if ($earning->customer->avatar)
+                        @if ($earning->customer?->avatar)
                             <img src="{{ asset($earning->customer->avatar) }}" alt="avatar"
                                 class="img-fluid avatar" />
                         @else

@@ -63,9 +63,11 @@ class DashboardController extends Controller
             'totalTax'              => $this->getTotalTax($selectedQuery),
             'totalProfit'           => $this->getTotalProfit($selectedQuery),
             'totalCustomer'         => $this->getTotalCustomer($selectedQuery),
-            'totalNewCustomer'      => $this->getNewCustomer(),
+            'totalNewCustomer'      => $this->getNewCustomer($selectedQuery),
             'totalRepeatCustomer'   => $this->getRepeatCustomer(),
         ];
+
+        // dd($data);
 
         return view('dashboard/index', compact('earnings', 'tasks', 'customers', 'selectedQuery', 'data','earnExpenGraph','projectStatusGraph'));
     }
@@ -91,8 +93,8 @@ class DashboardController extends Controller
                 'compare' => ['year' => $this->lastAgoMonth->year, 'month' => $this->lastAgoMonth->month]
             ],
             'all_time' => [
-                'earning' => ['year' => 2024, 'month' => 1],
-                'compare' => ['year' => 2024, 'month' => 1]
+                'earning' => ['year' => 2024],
+                'compare' => ['year' => 2024]
             ],
             '' => [
                 'earning' => ['year' => $this->thisMonth->year, 'month' => $this->thisMonth->month],
@@ -172,14 +174,12 @@ class DashboardController extends Controller
 
         $queryMap = $this->getQueryMap();
 
-        // Count unique customers for the current period
-        $hostingCustomersCount = Earning::select('customer_id')
-            ->whereYear('created_at', $queryMap[$queryStatus]['earning']['year'])
+        $allCustomers = Customer::whereYear('created_at', $queryMap[$queryStatus]['earning']['year'])
             ->when(isset($queryMap[$queryStatus]['earning']['month']), function ($query) use ($queryMap, $queryStatus) {
                 $query->whereMonth('created_at', $queryMap[$queryStatus]['earning']['month']);
             })
-            ->distinct()
-            ->count('customer_id');
+            ->count();
+
 
         // Comparison logic
         $compareEarningYear = $queryMap[$queryStatus]['compare']['year'];
@@ -196,20 +196,17 @@ class DashboardController extends Controller
 
         // Return the counts
         return [
-            'hostingcustomers' => $hostingCustomersCount,
+            'allCustomers' => $allCustomers,
             'hostingcustomersCompare' => $compareCustomersCount
         ];
     }
 
-    private function getNewCustomer()
+    private function getNewCustomer($queryStatus)
     {
-        $sevenDaysAgo = Carbon::now()->subDays(7);
+        $queryMap = $this->getQueryMap();
 
-        $newCustomers = Earning::select('customer_id')
-            ->whereBetween('created_at', [$sevenDaysAgo, Carbon::now()])
-            ->distinct()
-            ->count('customer_id');
-
+        $sevenDaysAgo = now()->subDays(7);
+        $newCustomers = Customer::whereBetween('created_at', [$sevenDaysAgo, Carbon::now()])->count();
         return $newCustomers;
     }
 

@@ -149,9 +149,10 @@
                             </div>
                             <div id="navigation">
                                 <div id="currentMonthYear"></div>
-                                <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-
-                                <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                                <div class="calendarNextPrev">
+                                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                                </div>
                             </div>
                             <table id="calendar"></table>
 
