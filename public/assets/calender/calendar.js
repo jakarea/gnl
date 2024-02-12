@@ -107,12 +107,7 @@ function displayTasks(tasks) {
     taskListContainer.empty();
 
     // Get the current date in the format 'YYYY-MM-DD'
-    var currentDate = new Date().toISOString().split('T')[0];
 
-    // Filter tasks for the current date
-    var currentDayTasks = tasks.filter(function (task) {
-        return task.date === currentDate;
-    });
 
     // Define time slots
     var timeSlots = ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
@@ -120,15 +115,9 @@ function displayTasks(tasks) {
     // Loop through time slots and dynamically create HTML
     timeSlots.forEach(function (timeSlot) {
 
-        // var matchingTask = currentDayTasks.find(function (task) {
-        //     return isTaskInTimeSlot(task, timeSlot);
-        // });
-
-
         var matchingTask = tasks.find(function (task) {
             return isTaskInTimeSlot(task, timeSlot);
         });
-
 
         // console.log(matchingTask)
 
