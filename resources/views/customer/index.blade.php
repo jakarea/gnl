@@ -33,7 +33,7 @@
                     <h3>{{ $totalCustomer }}</h3>
                     <div class="d-flex">
                         <span>{{ $totalCustomerInc }}%</span>
-                        <p>{{ $totalCustomerInc > 0 ? "Higher" : "Less" }} than last month</p>
+                        <p>{{ $totalCustomerInc > 0 ? 'Higher' : 'Less' }} than last month</p>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <h3>{{ $newCustomer }}</h3>
                     <div class="d-flex">
                         <span>{{ $newCustomerInc }}%</span>
-                        <p>{{ $newCustomerInc > 0 ? "Higher" : "Less" }} than last month</p>
+                        <p>{{ $newCustomerInc > 0 ? 'Higher' : 'Less' }} than last month</p>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     <h3> {{ $repeatedCustomer }} </h3>
                     <div class="d-flex">
                         <span>{{ $repeatCustomerInc }}%</span>
-                        <p>{{ $repeatCustomerInc > 0 ? "Higher" : "Less" }} than last month</p>
+                        <p>{{ $repeatCustomerInc > 0 ? 'Higher' : 'Less' }} than last month</p>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                             <!-- filter item -->
                             <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ Str::ucfirst(request()->searchTypeId && request()->searchTypeId !== 'all'? optional(App\Models\ServiceType::find(request()->searchTypeId))->name : 'All Service') }}
+                                    {{ Str::ucfirst(request()->searchTypeId && request()->searchTypeId !== 'all' ? optional(App\Models\ServiceType::find(request()->searchTypeId))->name : 'All Service') }}
 
                                     <i class="fas fa-angle-down"></i>
                                 </button>
@@ -170,60 +170,67 @@
 
             <!-- list start -->
             <div class="row" id="customerWraper">
-                @foreach ($customers as $customer)
-                    <!-- customer start -->
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mt-15">
-                        <div data-delete-url="{{ route('customers.destroy', $customer->customer_id) }}"
-                            data-customer-id="{{ $customer->customer_id }}"></div>
-                        <div class="customer-person-box-wrap">
-                            <div class="avatar">
-                                @if ($customer->avatar)
-                                    <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid avatar" />
-                                @else
-                                    <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar"
-                                        class="img-fluid avatar" />
-                                @endif
-                            </div>
+                @if (count( $customers ) > 0)
 
-                            <div class="text">
-                                <span class="new">New Customer</span>
-                                <h4>
-                                    <a href="javascript:;" data-customer-id="{{ $customer->customer_id }}"
-                                        class="details customerModalDetails">{{ $customer->name }}</a>
-                                </h4>
 
-                                <h6>Assistant</h6>
-                                <hr />
-                                <p>
-                                    <i class="fa-regular fa-envelope"></i> {{ $customer->email }}
-                                </p>
-                            </div>
-                            <div class="actions">
-                                <a href="{{ route('customers.show', $customer->customer_id) }}" class="details">View
-                                    Details</a>
+                    @foreach ($customers as $customer)
+                        <!-- customer start -->
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mt-15">
+                            <div data-delete-url="{{ route('customers.destroy', $customer->customer_id) }}"
+                                data-customer-id="{{ $customer->customer_id }}"></div>
+                            <div class="customer-person-box-wrap">
+                                <div class="avatar">
+                                    @if ($customer->avatar)
+                                        <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid avatar" />
+                                    @else
+                                        <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar"
+                                            class="img-fluid avatar" />
+                                    @endif
+                                </div>
 
-                                <div class="btn-group dropstart">
-                                    <a href="#" type="button" class="ellipse dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false" aria-expanded="false"><i
-                                            class="fa-solid fa-ellipsis-vertical"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-start">
-                                        <li>
-                                            <a class="dropdown-item" href="javascript:;"
-                                                onclick="editCustomerModal('{{ $customer->customer_id }}')">Edit
-                                                Customer</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="javascript:;"
-                                                onclick="deleteCustomer()">Delete
-                                                Customer</a>
-                                        </li>
-                                    </ul>
+                                <div class="text">
+                                    <span class="new">New Customer</span>
+                                    <h4>
+                                        <a href="javascript:;" data-customer-id="{{ $customer->customer_id }}"
+                                            class="details customerModalDetails">{{ $customer->name }}</a>
+                                    </h4>
+
+                                    <h6>Assistant</h6>
+                                    <hr />
+                                    <p>
+                                        <i class="fa-regular fa-envelope"></i> {{ $customer->email }}
+                                    </p>
+                                </div>
+                                <div class="actions">
+                                    <a href="{{ route('customers.show', $customer->customer_id) }}" class="details">View
+                                        Details</a>
+
+                                    <div class="btn-group dropstart">
+                                        <a href="#" type="button" class="ellipse dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false" aria-expanded="false"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-start">
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;"
+                                                    onclick="editCustomerModal('{{ $customer->customer_id }}')">Edit
+                                                    Customer</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;"
+                                                    onclick="deleteCustomer()">Delete
+                                                    Customer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- customer end -->
-                @endforeach
+                        <!-- customer end -->
+                    @endforeach
+
+                @else
+                    @component( 'components.empty-data-component' , ['dynamicData' => 'No Task Found!'])@endcomponent
+                @endif
             </div>
             <!-- list end -->
             <!--pagination started-->

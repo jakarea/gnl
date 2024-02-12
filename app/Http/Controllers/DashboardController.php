@@ -64,7 +64,7 @@ class DashboardController extends Controller
             'totalProfit'           => $this->getTotalProfit($selectedQuery),
             'totalCustomer'         => $this->getTotalCustomer($selectedQuery),
             'totalNewCustomer'      => $this->getNewCustomer(),
-            'totalRepeatCustomer'      => $this->getRepeatCustomer(),
+            'totalRepeatCustomer'   => $this->getRepeatCustomer(),
         ];
 
         return view('dashboard/index', compact('earnings', 'tasks', 'customers', 'selectedQuery', 'data','earnExpenGraph','projectStatusGraph'));
