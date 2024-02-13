@@ -179,6 +179,10 @@ class CustomerControlller extends ApiController
     public function destroy(Request $request, $customer_id)
     {
         $customerInfo = Customer::findOrFail($customer_id);
+        $customerInfo->earnings()->delete();
+
+        $customerInfo->projects()->detach();
+
         if ($customerInfo->delete()) {
             return redirect()->route('customers.index')->withSuccess('Customers deleted successfuly!');
         }
