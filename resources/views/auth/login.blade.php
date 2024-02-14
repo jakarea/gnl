@@ -77,17 +77,19 @@
                             <div class="form-submit">
                                 <button class="btn btn-submit" type="submit">Login</button>
                             </div>
-                            {{-- <div class="options">
+                            <div class="options">
                                 <hr>
                                 <p>Or login with</p>
                             </div>
                             <div class="login-with-social">
-                                <a href="#" class="bttn me-md-3 me-2"><img src="./assets/images/auth/google.svg"
-                                        alt="G" class="img-fluid"> Google</a>
-                                <a href="#" class="bttn ms-md-3 ms-2"><img src="./assets/images/auth/apple.svg"
-                                        alt="A" class="img-fluid"> Apple</a>
+                                <a href="#" class="bttn me-md-3 me-2"><img style="width: 23px" src="./assets/images/auth/facebook.svg"
+                                        alt="G" class="img-fluid"> Facebook</a>
+                                {{-- <a href="#" class="bttn me-md-3 me-2"><img src="./assets/images/auth/google.svg"
+                                        alt="G" class="img-fluid"> Google</a> --}}
+                                {{-- <a href="#" class="bttn ms-md-3 ms-2"><img src="./assets/images/auth/apple.svg"
+                                        alt="A" class="img-fluid"> Apple</a> --}}
                             </div>
-                            <div class="already-have">
+                            {{-- <div class="already-have">
                                 <p>You're new in here? <a href="{{ url('register')}}">Create Account</a></p>
                             </div> --}}
                         </form>

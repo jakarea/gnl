@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -48,6 +49,23 @@ class AuthController extends Controller
             ->withInput($request->only('email', 'remember'))
             ->withErrors(['error' => 'Invalid credentials.']);
     }
+
+
+    // public function socialLogin($social)
+    // {
+    //     return Socialite::driver($social)->redirect();
+    // }
+
+    // public function handleProviderCallback($social)
+    // {
+
+    // }
+
+
+
+
+
+
 
     public function logout()
     {
