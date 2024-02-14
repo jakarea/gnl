@@ -147,14 +147,16 @@
                             <div class="header mb-4">
                                 <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
                             </div>
-                            <div id="navigation">
-                                <div id="currentMonthYear"></div>
-                                <div class="calendarNextPrev">
-                                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                            <div class="calendar-wrapper">
+                                <div id="navigation">
+                                    <div id="currentMonthYear"></div>
+                                    <div class="calendarNextPrev">
+                                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                                    </div>
                                 </div>
+                                <table id="calendar"></table>
                             </div>
-                            <table id="calendar"></table>
 
                             <div class="metting-notice-day">
                                 @if (count($tomorrowTasks) > 0)
