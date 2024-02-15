@@ -115,7 +115,7 @@ $(document).ready(function () {
     }
 
     function getEventsForDate(date, callback) {
-        console.log(date, callback)
+
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
