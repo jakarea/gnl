@@ -207,6 +207,54 @@
 }
 
 /* BY Tuhin */
+.calendar-wrapper {
+    border: 1px solid #E8E8E8;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.calendarNextPrev {
+    width: 66px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#prevMonth,
+#nextMonth {
+    font-size: 18px;
+}
+
+#navigation {
+    margin-bottom: 20px;
+}
+
+.calendar-wrapper table th{
+    background-color: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 17px;
+    color: #687588;
+}
+.calendar-wrapper table th,
+.calendar-wrapper table td{
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 17px;
+    color: #323B49;
+    border: none;
+    padding: 0.8rem;
+}
+
+.calendar-wrapper table{
+    border-collapse: unset;
+}
+.calendar-wrapper table td.selected {
+    background-color: rgb(67 108 255 / 20%);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(67 108 255) !important;
+}
+
 .task-list-box {
     width: 100%;
     border: 1px solid #EEF0F2;

@@ -147,14 +147,16 @@
                             <div class="header mb-4">
                                 <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
                             </div>
-                            <div id="navigation">
-                                <div id="currentMonthYear"></div>
-                                <div class="calendarNextPrev">
-                                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                            <div class="calendar-wrapper">
+                                <div id="navigation">
+                                    <div id="currentMonthYear"></div>
+                                    <div class="calendarNextPrev">
+                                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                                    </div>
                                 </div>
+                                <table id="calendar"></table>
                             </div>
-                            <table id="calendar"></table>
 
                             <div class="metting-notice-day">
                                 @if (count($tomorrowTasks) > 0)
@@ -201,142 +203,11 @@
                         <div class="col-sm-7 text-left">
                             {{-- Show task by date --}}
                             <div class="showTaskByDate">
-                                {{-- <div class="showEditTaskModal"></div> --}}
+                                <div class="showEditTaskModal"></div>
 
                                 <div class="task-list-box">
                                     <div class="task-list-box-inner">
-                                        {{-- <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">8:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">8:00 am - 9:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">9:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">9:00 am - 10:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">10:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">10:00 am - 11:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">11:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">11:00 am - 12:00 pm</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">12:00 PM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">12:00 pm - 1:00 pm</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">1:00 PM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">1:00 pm - 11:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">10:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">10:00 am - 11:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">10:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">10:00 am - 11:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">10:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">10:00 am - 11:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">10:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">10:00 am - 11:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div>
-                                        <div class="single-task-box">
-                                            <div class="time-box">
-                                                <span class="time">10:00 AM</span>
-                                            </div>
-                                            <div class="task-info-box">
-                                                <div class="task-info">
-                                                    <h4>Cloud Project Meeting</h4>
-                                                    <div class="timespan">10:00 am - 11:00 am</div>
-                                                </div>
-                                                <div class="box-divider"></div>
-                                            </div>
-                                        </div> --}}
+
                                     </div>
                                 </div>
                             </div>
@@ -482,7 +353,8 @@
                                             </div>
                                             <!--modal left part end-->
                                             <div class="col-lg-6">
-                                                <div class="project-add-scrollbar custom-scroll-bar" style="min-height: 650px">
+                                                <div class="project-add-scrollbar custom-scroll-bar"
+                                                    style="min-height: 650px">
                                                     <div class="customer-modal-title">
                                                         <h3>Project Information</h3>
                                                     </div>
@@ -528,7 +400,8 @@
 
 
                                                         <!-- customer search form start -->
-                                                            <div class="form-group search-by-name mt-2" style="position: relative!important; z-index:999!important; ">
+                                                        <div class="form-group search-by-name mt-2"
+                                                            style="position: relative!important; z-index:999!important; ">
                                                             <div class="search-item">
                                                                 <img src="assets/images/icons/search-ic.svg"
                                                                     alt="a" class="img-fluid search">

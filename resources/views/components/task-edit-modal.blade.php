@@ -137,7 +137,16 @@
                                                                 class="form-control">
                                                         </div>
                                                         <div class="projectSearch">
-                                                            @if ($task->project_id)
+
+                                                        </div>
+                                                        @error('project_id')
+                                                            <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+
+
+                                                    <div class="row loadProjectById">
+                                                        @if ($task->project_id)
                                                                 <div class="col-lg-6">
                                                                     <div class="selected-profile-box">
                                                                         <div class="media">
@@ -162,14 +171,7 @@
                                                                     </div>
                                                                 </div>
                                                             @endif
-                                                        </div>
-                                                        @error('project_id')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
                                                     </div>
-
-
-                                                    <div class="row loadProjectById"></div>
 
                                                     <div class="customer-modal-title">
                                                         <h3>Customer Information</h3>
