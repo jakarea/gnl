@@ -25,190 +25,239 @@
         </div>
         <!-- page title -->
 
-        <div class="row">
-            <div class="col-lg-3">
-                <!-- my task list box start -->
-                <div class="my-task-list-box">
-                    <div class="header">
-                        <h4>My Task</h4>
-                        <a href="#" class="add inter" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
-                                class="fas fa-plus me-2"></i>Task</a>
-                    </div>
+        <div class="calendar-main-wrapper">
+            <!-- my task list box start -->
+            <div class="my-task-list-box mr-15">
+                <div class="header">
+                    <h4>My Task</h4>
+                    <a href="#" class="add inter" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
+                            class="fas fa-plus me-2"></i>Task</a>
+                </div>
 
-                    <!-- task list -->
-                    <div class="task-list-area custom-scroll-bar" id="task-list-area">
-                        <!-- task item start -->
-                        @if (count($tasks) > 0)
-                            @foreach ($tasks as $task)
-                                <div data-delete-url="{{ url('/to-do-list/' . $task->task_id . '/delete') }}"
-                                    data-task-id="{{ $task->task_id }}"></div>
-                                <div class="task-item">
-                                    <div class="top">
-                                        @if ($task->priority == 'priority')
-                                            <span><i class="fas fa-circle"></i> {{ ucfirst($task->priority) }}</span>
-                                        @elseif($task->priority == 'important')
-                                            <span class="important"><i class="fas fa-circle"></i>
-                                                {{ ucfirst($task->priority) }}</span>
-                                        @elseif($task->priority == 'basic')
-                                            <span class="basic"><i class="fas fa-circle"></i>
-                                                {{ ucfirst($task->priority) }}</span>
+                <!-- task list -->
+                <div class="task-list-area custom-scroll-bar pe-0" id="task-list-area">
+                    <!-- task item start -->
+                    @if (count($tasks) > 0)
+                        @foreach ($tasks as $task)
+                            <div data-delete-url="{{ url('/to-do-list/' . $task->task_id . '/delete') }}"
+                                data-task-id="{{ $task->task_id }}"></div>
+                            <div class="task-item">
+                                <div class="top">
+                                    @if ($task->priority == 'priority')
+                                        <span><i class="fas fa-circle"></i> {{ ucfirst($task->priority) }}</span>
+                                    @elseif($task->priority == 'important')
+                                        <span class="important"><i class="fas fa-circle"></i>
+                                            {{ ucfirst($task->priority) }}</span>
+                                    @elseif($task->priority == 'basic')
+                                        <span class="basic"><i class="fas fa-circle"></i>
+                                            {{ ucfirst($task->priority) }}</span>
+                                    @endif
+
+                                    {{-- <a href="#"><i class="fas fa-ellipsis-vertical"></i></a> --}}
+
+                                    <div class="btn-group dropstart">
+                                        <a href="#" type="button" class="ellipse dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false" aria-expanded="false"><i
+                                                class="fa-solid fa-ellipsis-vertical"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-start">
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;"
+                                                    onclick="editTaskModal('{{ $task->task_id }}')">Edit
+                                                    Task</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;"
+                                                    onclick="deleteTask()">Delete
+                                                    Task</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4><img src="assets/images/icons/camera-2.svg" alt="a" class="img-fluid">
+                                    {{ $task->title }}</h4>
+                                <p>{{ Str::substr($task->description, 0, 48) }}</p>
+                                <hr />
+
+                                @if ($task->customer)
+                                    <div class="media">
+                                        @if ($task->customer->avatar)
+                                            <img src="{{ asset($task->customer->avatar) }}" alt="avatar"
+                                                class="img-fluid avatar" />
+                                        @else
+                                            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar"
+                                                class="img-fluid avatar" />
+                                        @endif
+                                        <div class="media-body">
+                                            <h5><a
+                                                    href="{{ route('customers.show', $task->customer->customer_id) }}">{{ $task->customer->name }}</a>
+                                            </h5>
+                                            <span>{{ $task->customer->designation }}</span>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                @endif
+
+                                @if ($task->project)
+                                    <div class="media">
+                                        @if ($task->project->thumbnail)
+                                            <img src="{{ asset($task->project->thumbnail) }}" alt="avatar"
+                                                class="img-fluid avatar" />
+                                        @else
+                                            <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a"
+                                                class="img-fluid avatar">
                                         @endif
 
-                                        {{-- <a href="#"><i class="fas fa-ellipsis-vertical"></i></a> --}}
-
-                                        <div class="btn-group dropstart">
-                                            <a href="#" type="button" class="ellipse dropdown-toggle"
-                                                data-bs-toggle="dropdown" aria-expanded="false" aria-expanded="false"><i
-                                                    class="fa-solid fa-ellipsis-vertical"></i></a>
-                                            <ul class="dropdown-menu dropdown-menu-start">
-                                                <li>
-                                                    <a class="dropdown-item" href="javascript:;"
-                                                        onclick="editTaskModal('{{ $task->task_id }}')">Edit
-                                                        Task</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="javascript:;"
-                                                        onclick="deleteTask()">Delete
-                                                        Task</a>
-                                                </li>
-                                            </ul>
+                                        <div class="media-body">
+                                            <h5><a
+                                                    href="{{ url('projects/' . $task->project->project_id) }}">{{ $task->project->title }}</a>
+                                            </h5>
+                                            <span><img src="/assets/images/icons/close-3.svg" alt="a"
+                                                    class="img-fluid "> {{ $task->project->remaining_days }} Days
+                                                Remaining</span>
                                         </div>
                                     </div>
-                                    <h4><img src="assets/images/icons/camera-2.svg" alt="a" class="img-fluid">
-                                        {{ $task->title }}</h4>
-                                    <p>{{ Str::substr($task->description, 0, 48) }}</p>
                                     <hr />
-
-                                    @if ($task->customer)
-                                        <div class="media">
-                                            @if ($task->customer->avatar)
-                                                <img src="{{ asset($task->customer->avatar) }}" alt="avatar"
-                                                    class="img-fluid avatar" />
-                                            @else
-                                                <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar"
-                                                    class="img-fluid avatar" />
-                                            @endif
-                                            <div class="media-body">
-                                                <h5><a
-                                                        href="{{ route('customers.show', $task->customer->customer_id) }}">{{ $task->customer->name }}</a>
-                                                </h5>
-                                                <span>{{ $task->customer->designation }}</span>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                    @endif
-
-                                    @if ($task->project)
-                                        <div class="media">
-                                            @if ($task->project->thumbnail)
-                                                <img src="{{ asset($task->project->thumbnail) }}" alt="avatar"
-                                                    class="img-fluid avatar" />
-                                            @else
-                                                <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a"
-                                                    class="img-fluid avatar">
-                                            @endif
-
-                                            <div class="media-body">
-                                                <h5><a
-                                                        href="{{ url('projects/' . $task->project->project_id) }}">{{ $task->project->title }}</a>
-                                                </h5>
-                                                <span><img src="/assets/images/icons/close-3.svg" alt="a"
-                                                        class="img-fluid "> {{ $task->project->remaining_days }} Days
-                                                    Remaining</span>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                    @endif
+                                @endif
 
 
-                                    <div class="ftr">
-                                        <p><img src="assets/images/icons/calendar.svg" alt="a" class="img-fluid">
-                                            {{ $task->created_at->diffForHumans() }}</p>
-                                        <p><img src="assets/images/icons/clock.svg" alt="a" class="img-fluid">
-                                            {{ $task->created_at->format('g:i A') }}
+                                <div class="ftr">
+                                    <p><img src="assets/images/icons/calendar.svg" alt="a" class="img-fluid">
+                                        {{ $task->created_at->diffForHumans() }}</p>
+                                    <p><img src="assets/images/icons/clock.svg" alt="a" class="img-fluid">
+                                        {{ $task->created_at->format('g:i A') }}
 
-                                        </p>
-                                    </div>
-
+                                    </p>
                                 </div>
-                                <!-- task item end -->
-                            @endforeach
-                        @endif
-                    </div>
-                    <!-- task list -->
+
+                            </div>
+                            <!-- task item end -->
+                        @endforeach
+                    @endif
                 </div>
-                <!-- my task list box end -->
+                <!-- task list -->
             </div>
-            <div class="col-lg-9">
-                <!-- schedule part here -->
-                <div class="schedule-part-box">
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <div class="header mb-4">
-                                <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
-                            </div>
-                            <div class="calendar-wrapper">
-                                <div id="navigation">
-                                    <div id="currentMonthYear"></div>
-                                    <div class="calendarNextPrev">
-                                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
-                                    </div>
+            <!-- my task list box end -->
+             <!-- schedule part here -->
+             <div class="schedule-part-box">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="header mb-4">
+                            <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
+                        </div>
+                        <div class="calendar-wrapper">
+                            <div id="navigation">
+                                <div id="currentMonthYear"></div>
+                                <div class="calendarNextPrev">
+                                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
                                 </div>
-                                <table id="calendar"></table>
                             </div>
-
-                            <div class="metting-notice-day">
-                                @if (count($tomorrowTasks) > 0)
-                                    <div class="notice-item">
-                                        <h4>TOMORROW {{ now()->addDay(1)->format('j/m/Y') }}</h4>
-                                        @foreach ($tomorrowTasks as $task)
-                                            <div>
-                                                <p class="m-0">{{ $task->start_time }} -
-                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
-                                                <p class="m-0">{{ $task->description }}</p>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                @if (count($nextDayOfTomorrowTasks) > 0)
-                                    <div class="notice-item">
-                                        <h4>{{ strtoupper(now()->addDay(2)->format('l j/m/Y')) }}</h4>
-                                        @foreach ($nextDayOfTomorrowTasks as $task)
-                                            <div>
-                                                <p class="m-0">{{ $task->start_time }} -
-                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
-                                                <p class="m-0">{{ $task->description }}</p>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                @if (count($afterNextDayOfTomorrowTasks) > 0)
-                                    <div class="notice-item">
-                                        <h4>{{ strtoupper(now()->addDay(3)->format('l j/m/Y')) }}</h4>
-                                        @foreach ($afterNextDayOfTomorrowTasks as $task)
-                                            <div>
-                                                <p class="m-0">{{ $task->start_time }} -
-                                                    {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
-                                                <p class="m-0">{{ $task->description }}</p>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </div>
+                            <table id="calendar"></table>
                         </div>
 
-                        <div class="col-sm-7 text-left">
-                            {{-- Show task by date --}}
-                            <div class="showTaskByDate">
-                                <div class="showEditTaskModal"></div>
+                        <div class="metting-notice-day">
+                            @if (count($tomorrowTasks) > 0)
+                                <div class="notice-item">
+                                    <h4>TOMORROW {{ now()->addDay(1)->format('j/m/Y') }}</h4>
+                                    @foreach ($tomorrowTasks as $task)
+                                        <div>
+                                            <p class="m-0">{{ $task->start_time }} -
+                                                {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                            <p class="m-0">{{ $task->description }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
 
-                                <div class="task-list-box">
-                                    <div class="task-list-box-inner">
+                            @if (count($nextDayOfTomorrowTasks) > 0)
+                                <div class="notice-item">
+                                    <h4>{{ strtoupper(now()->addDay(2)->format('l j/m/Y')) }}</h4>
+                                    @foreach ($nextDayOfTomorrowTasks as $task)
+                                        <div>
+                                            <p class="m-0">{{ $task->start_time }} -
+                                                {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                            <p class="m-0">{{ $task->description }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
 
-                                    </div>
+                            @if (count($afterNextDayOfTomorrowTasks) > 0)
+                                <div class="notice-item">
+                                    <h4>{{ strtoupper(now()->addDay(3)->format('l j/m/Y')) }}</h4>
+                                    @foreach ($afterNextDayOfTomorrowTasks as $task)
+                                        <div>
+                                            <p class="m-0">{{ $task->start_time }} -
+                                                {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
+                                            <p class="m-0">{{ $task->description }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                        
+                        {{-- schedule list start --}}
+                        <div class="schedule-list-box-wrap">
+
+                           {{-- item --}}
+                           <div class="schedule-list-item">
+                            <h5>TOMORROW  3/11/2023</h5>
+
+                            <div class="media">
+                                <i class="fas fa-circle"></i> 
+                                <div class="media-body">
+                                    <h6 class="text"> 
+                                        8:30 - 9:00 AM <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
+                                    </h6>
+                                    <p class="text">Visit to discuss improvements</p>
+                                </div>
+                            </div>
+                           </div>
+                           {{-- item --}}
+
+                           {{-- item --}}
+                           <div class="schedule-list-item">
+                            <h5>SATURDAY  3/11/2023</h5>
+
+                            <div class="media">
+                                <i class="fas fa-circle warning"></i> 
+                                <div class="media-body">
+                                    <h6 class="text"> 
+                                        8:30 - 9:00 AM <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
+                                    </h6>
+                                    <p class="text">Visit to discuss improvements</p>
+                                </div>
+                            </div>
+                           </div>
+                           {{-- item --}}
+
+                           {{-- item --}}
+                           <div class="schedule-list-item">
+                            <h5>FRIDAY  3/11/2023</h5>
+
+                            <div class="media">
+                                <i class="fas fa-circle danger"></i> 
+                                <div class="media-body">
+                                    <h6 class="text"> 
+                                        8:30 - 9:00 AM <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
+                                    </h6>
+                                    <p class="text">Visit to discuss improvements</p>
+                                </div>
+                            </div>
+                           </div>
+                           {{-- item --}}
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7 right-side-schedule-box">
+                        {{-- Show task by date --}}
+                        <div class="showTaskByDate">
+                            <div class="showEditTaskModal"></div>
+
+                            <div class="task-list-box">
+                                <div class="task-list-box-inner">
+
                                 </div>
                             </div>
                         </div>
@@ -401,7 +450,7 @@
 
                                                         <!-- customer search form start -->
                                                         <div class="form-group search-by-name mt-2"
-                                                            style="position: relative!important; z-index:999!important; ">
+                                                            style="position: relative!important; z-index:999!important; grid-template-columns: 67% 33%; ">
                                                             <div class="search-item">
                                                                 <img src="assets/images/icons/search-ic.svg"
                                                                     alt="a" class="img-fluid search">

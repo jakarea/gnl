@@ -35,3 +35,97 @@ td {
     cursor: pointer;
     outline: none;
 }
+
+.calendar-main-wrapper{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    /* gap: 1.5rem; */
+}
+
+.mr-15{
+    margin-right: 1.5rem;
+}
+
+.schedule-list-box-wrap {
+    margin-top: 1.5rem;
+}
+
+.schedule-list-item{
+    margin-top: 1.5rem;
+}
+
+.schedule-list-item h5{
+    font-size: 0.875rem;
+    line-height: 1rem;
+    font-weight: 500;
+    color: #1F2937;
+}
+
+.schedule-list-item .media{ 
+    margin-top: 1rem;
+}
+.schedule-list-item .text{
+    color: #687588;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    font-weight: 400;
+}
+
+.schedule-list-item .media h6 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.schedule-list-item .media i{
+    font-size: 12px;
+    margin-right: 8px;
+    color: #3B82F6;
+    margin-top: 4px;
+}
+
+.schedule-list-item .media h6 img{
+    width: 12px;
+    margin-left: 4px;
+}
+
+.schedule-list-item .media i.danger{
+    color: #EC4899;
+}
+.schedule-list-item .media i.warning{
+    color: #FBBF24;
+}
+
+.calendar-wrapper{
+    padding: 1.5rem 10px!important;
+}
+
+.calendar-wrapper table th, .calendar-wrapper table td {
+    padding: 10px 8px!important;
+}
+
+#navigation{
+    padding-left: 0.6rem!important;
+    padding-right: 0.875rem!important;
+}
+
+.single-task-box {
+    height: 80px!important;
+}
+
+.right-side-schedule-box .task-info-box{
+    padding: 0.25rem 0rem!important;
+}
+.right-side-schedule-box .task-info { 
+    display: block!important;  
+    width: 85%!important;
+    height: auto!important;
+}
+
+.right-side-schedule-box .task-info h4{
+    text-align: left!important;
+}
+
+.calendar-wrapper table td:hover,
+.calendar-wrapper table td.selected{
+    color: #436CFF!important;
+}
