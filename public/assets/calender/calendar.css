@@ -61,7 +61,7 @@ td {
     color: #1F2937;
 }
 
-.schedule-list-item .media{ 
+.schedule-list-item .media{
     margin-top: 1rem;
 }
 .schedule-list-item .text{
@@ -115,8 +115,8 @@ td {
 .right-side-schedule-box .task-info-box{
     padding: 0.25rem 0rem!important;
 }
-.right-side-schedule-box .task-info { 
-    display: block!important;  
+.right-side-schedule-box .task-info {
+    display: block!important;
     width: 85%!important;
     position: absolute!important;
 }
@@ -139,11 +139,49 @@ td {
 .h-255{
     height: 220px!important;
 }
-.h-340{
-    height: 300px!important;
+
+.h-340 {
+    height: 300px !important;
 }
 
+.h-425 {
+    height: 375px !important;
+}
 
+.h-510 {
+    height: 450px !important;
+}
+
+.h-595 {
+    height: 525px !important;
+}
+
+.h-680 {
+    height: 600px !important;
+}
+
+.h-765 {
+    height: 675px !important;
+}
+
+.h-850 {
+    height: 750px !important;
+}
+.h-935 {
+    height: 825px !important;
+}
+
+.h-1020 {
+    height: 900px !important;
+}
+
+.h-1105 {
+    height: 975px !important;
+}
+
+.h-1190 {
+    height: 1050px !important;
+}
 
 .timerangepicker-from, .timerangepicker-to{
     border: 1px solid #3B82F6!important;
@@ -166,7 +204,7 @@ td {
 
 .timerangepicker-display span{
     font-size: 12px!important;
-   
+
 }
 
 .timerangepicker-display .increment {
@@ -193,7 +231,7 @@ td {
     background-color: #3b82f6cf!important;
     border: 0!important;
     margin-bottom: 6px!important;
-    font-size: 16px!important; 
+    font-size: 16px!important;
     display: block!important;
     color: #fff!important;
 }

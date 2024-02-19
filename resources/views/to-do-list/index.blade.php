@@ -7,12 +7,6 @@
     <link rel="stylesheet" href="{{ url('assets/css/todo.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/time-range.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/calender/calendar.css') }}" />
-
-    <style>
-        .single-task-box {
-            height: 35px;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -154,7 +148,7 @@
                             </div>
                             <table id="calendar"></table>
                         </div>
-                        
+
                         {{-- schedule list start --}}
                         <div class="schedule-list-box-wrap">
 
@@ -165,9 +159,9 @@
 
                             @foreach ($tomorrowTasks as $task)
                             <div class="media">
-                                <i class="fas fa-circle"></i> 
+                                <i class="fas fa-circle"></i>
                                 <div class="media-body">
-                                    <h6 class="text"> 
+                                    <h6 class="text">
                                         {{ $task->start_time }} - {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }} <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
                                     </h6>
                                     <p class="text">{{ $task->description }}</p>
@@ -177,16 +171,16 @@
                            </div>
                            {{-- item --}}
                            @endif
- 
+
                             @if (count($nextDayOfTomorrowTasks) > 0)
                            {{-- item --}}
                            <div class="schedule-list-item">
                             <h5>{{ strtoupper(now()->addDay(2)->format('l j/m/Y')) }}</h5>
                             @foreach ($nextDayOfTomorrowTasks as $task)
                             <div class="media">
-                                <i class="fas fa-circle warning"></i> 
+                                <i class="fas fa-circle warning"></i>
                                 <div class="media-body">
-                                    <h6 class="text"> 
+                                    <h6 class="text">
                                         {{ $task->start_time }} - {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }} <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
                                     </h6>
                                     <p class="text">{{ $task->description }}</p>
@@ -203,9 +197,9 @@
                             <h5>{{ strtoupper(now()->addDay(3)->format('l j/m/Y')) }}</h5>
                             @foreach ($afterNextDayOfTomorrowTasks as $task)
                             <div class="media">
-                                <i class="fas fa-circle danger"></i> 
+                                <i class="fas fa-circle danger"></i>
                                 <div class="media-body">
-                                    <h6 class="text"> 
+                                    <h6 class="text">
                                         {{ $task->start_time }} - {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }} <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
                                     </h6>
                                     <p class="text">{{ $task->description }}</p>
@@ -774,6 +768,13 @@
 
         }
 
+        // Hide project search when click outside of input project
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('.search-item').length) {
+                $(".projectSearch").empty();
+            }
+        });
+
         const getProjectId = (projectId) => {
             $.ajax({
                 type: 'get',
@@ -994,6 +995,14 @@
                     });
                 });
 
+            }
+        });
+    </script>
+
+    <script>
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('.search-item').length) {
+                $(".search-suggestions-box").empty();
             }
         });
     </script>

@@ -203,4 +203,12 @@
         });
     });
 </script>
+
+    <script>
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('.search-item').length) {
+                $(".search-suggestions-box").empty();
+            }
+        });
+    </script>
 @endsection

@@ -149,7 +149,7 @@ $(document).ready(function () {
                 return isTaskInTimeSlot(task, timeSlot);
             });
 
-            
+
 
             var timeBoxHTML = '<div class="single-task-box">' +
                 '<div class="time-box">' +
@@ -163,7 +163,7 @@ $(document).ready(function () {
                 // Parse the time strings
                 let startTimeString = matchingTask.start_time;
                 let endTimeString = matchingTask.end_time;
- 
+
                 let startDate = new Date("2000-01-01 " + startTimeString);
                 let endDate = new Date("2000-01-01 " + endTimeString);
 
@@ -174,19 +174,20 @@ $(document).ready(function () {
                 let hoursDifference = Math.ceil(timeDifference / (1000 * 60 * 60));
 
                 var adjustHeight = '';
- 
-                if (hoursDifference == 2) {
-                    adjustHeight = 'h-170';
-                }else if(hoursDifference == 3){
-                    adjustHeight = 'h-255';
-                }else if(hoursDifference == 4){
-                    adjustHeight = 'h-340';
+
+                for (var i = 2; i <= 6; i++) {
+                    if (hoursDifference === i) {
+                        adjustHeight = 'h-' + (170 + (i - 2) * 85);
+                        break;
+                    }
                 }
+
+                //var adjustHeight = calculatePosition(startTimeString, endTimeString);
 
                 timeBoxHTML += `<div class="task-info ${adjustHeight}">
                 <h4> ${matchingTask.title} </h4>
-                <div class="timespan"> ${matchingTask.start_time} - ${matchingTask.end_time} </div> 
-                </div> 
+                <div class="timespan"> ${matchingTask.start_time} - ${matchingTask.end_time} </div>
+                </div>
                 <div class="box-divider"></div>`;
             }
 
@@ -226,7 +227,7 @@ $(document).ready(function () {
         }
 
         function calculatePosition(startTime, endTime) {
-            var baseHeight = 30;
+            var baseHeight = 85;
             var startTime = startTime.split(':');
             var endTime = endTime.split(':');
             var hourDifference = Math.abs(startTime[0] - endTime[0]) + 1;
