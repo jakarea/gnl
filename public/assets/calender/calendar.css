@@ -118,7 +118,7 @@ td {
 .right-side-schedule-box .task-info { 
     display: block!important;  
     width: 85%!important;
-    height: auto!important;
+    position: absolute!important;
 }
 
 .right-side-schedule-box .task-info h4{
@@ -128,4 +128,76 @@ td {
 .calendar-wrapper table td:hover,
 .calendar-wrapper table td.selected{
     color: #436CFF!important;
+}
+
+.h-85{
+    height: 75px!important;
+}
+.h-170{
+    height: 150px!important;
+}
+.h-255{
+    height: 220px!important;
+}
+.h-340{
+    height: 300px!important;
+}
+
+
+
+.timerangepicker-from, .timerangepicker-to{
+    border: 1px solid #3B82F6!important;
+    background-color: #F9F9FC!important;
+    border-radius: 6px!important;
+}
+
+.timerangepicker-display .increment, .timerangepicker-display .decrement{
+    font-size: 14px!important;
+    color: #3B82F6!important;
+}
+
+.timerangepicker-display {
+    border: 1px solid #3B82F6!important;
+    margin: 1em 0.175em;
+    border-radius: 5px!important;
+    width: 2rem;
+    height: 2rem;
+}
+
+.timerangepicker-display span{
+    font-size: 12px!important;
+   
+}
+
+.timerangepicker-display .increment {
+    left: 4px!important;
+}
+
+
+.timerangepicker-display .decrement {
+    bottom: -1.20em!important;
+    left: 5px!important;
+}
+
+.timerangepicker-display span.value{
+    position: relative;
+    top: -5px
+}
+
+.timerangepicker-from{
+    margin-right: 1rem!important;
+    padding-bottom: 0!important;
+}
+
+.timerangepicker-label{
+    background-color: #3b82f6cf!important;
+    border: 0!important;
+    margin-bottom: 6px!important;
+    font-size: 16px!important; 
+    display: block!important;
+    color: #fff!important;
+}
+
+.timerangepicker-from, .timerangepicker-to{
+    padding-bottom: 6px!important;
 }
