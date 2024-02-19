@@ -227,7 +227,7 @@ $(document).ready(function () {
         }
 
         function calculatePosition(startTime, endTime) {
-            var baseHeight = 74;
+            var baseHeight = 75;
             var startTime = startTime.split(':');
             var endTime = endTime.split(':');
             var hourDifference = Math.abs(startTime[0] - endTime[0]) + 1;
