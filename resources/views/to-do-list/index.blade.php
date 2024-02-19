@@ -142,7 +142,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="header mb-4">
-                            <a href="#"><i class="fas fa-plus me-2"></i> Schedule</a>
+                            <a href="#"  data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fas fa-plus me-2"></i> Schedule</a>
                         </div>
                         <div class="calendar-wrapper">
                             <div id="navigation">
@@ -154,98 +154,67 @@
                             </div>
                             <table id="calendar"></table>
                         </div>
-
-                        <div class="metting-notice-day">
-                            @if (count($tomorrowTasks) > 0)
-                                <div class="notice-item">
-                                    <h4>TOMORROW {{ now()->addDay(1)->format('j/m/Y') }}</h4>
-                                    @foreach ($tomorrowTasks as $task)
-                                        <div>
-                                            <p class="m-0">{{ $task->start_time }} -
-                                                {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
-                                            <p class="m-0">{{ $task->description }}</p>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-
-                            @if (count($nextDayOfTomorrowTasks) > 0)
-                                <div class="notice-item">
-                                    <h4>{{ strtoupper(now()->addDay(2)->format('l j/m/Y')) }}</h4>
-                                    @foreach ($nextDayOfTomorrowTasks as $task)
-                                        <div>
-                                            <p class="m-0">{{ $task->start_time }} -
-                                                {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
-                                            <p class="m-0">{{ $task->description }}</p>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-
-                            @if (count($afterNextDayOfTomorrowTasks) > 0)
-                                <div class="notice-item">
-                                    <h4>{{ strtoupper(now()->addDay(3)->format('l j/m/Y')) }}</h4>
-                                    @foreach ($afterNextDayOfTomorrowTasks as $task)
-                                        <div>
-                                            <p class="m-0">{{ $task->start_time }} -
-                                                {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }}</p>
-                                            <p class="m-0">{{ $task->description }}</p>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
                         
                         {{-- schedule list start --}}
                         <div class="schedule-list-box-wrap">
 
+                            @if (count($tomorrowTasks) > 0)
                            {{-- item --}}
                            <div class="schedule-list-item">
-                            <h5>TOMORROW  3/11/2023</h5>
+                            <h5>TOMORROW {{ now()->addDay(1)->format('j/m/Y') }}</h5>
 
+                            @foreach ($tomorrowTasks as $task)
                             <div class="media">
                                 <i class="fas fa-circle"></i> 
                                 <div class="media-body">
                                     <h6 class="text"> 
-                                        8:30 - 9:00 AM <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
+                                        {{ $task->start_time }} - {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }} <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
                                     </h6>
-                                    <p class="text">Visit to discuss improvements</p>
+                                    <p class="text">{{ $task->description }}</p>
                                 </div>
                             </div>
+                            @endforeach
                            </div>
                            {{-- item --}}
-
+                           @endif
+ 
+                            @if (count($nextDayOfTomorrowTasks) > 0)
                            {{-- item --}}
                            <div class="schedule-list-item">
-                            <h5>SATURDAY  3/11/2023</h5>
-
+                            <h5>{{ strtoupper(now()->addDay(2)->format('l j/m/Y')) }}</h5>
+                            @foreach ($nextDayOfTomorrowTasks as $task)
                             <div class="media">
                                 <i class="fas fa-circle warning"></i> 
                                 <div class="media-body">
                                     <h6 class="text"> 
-                                        8:30 - 9:00 AM <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
+                                        {{ $task->start_time }} - {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }} <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
                                     </h6>
-                                    <p class="text">Visit to discuss improvements</p>
+                                    <p class="text">{{ $task->description }}</p>
                                 </div>
                             </div>
+                            @endforeach
                            </div>
                            {{-- item --}}
+                           @endif
 
+                           @if (count($afterNextDayOfTomorrowTasks) > 0)
                            {{-- item --}}
                            <div class="schedule-list-item">
-                            <h5>FRIDAY  3/11/2023</h5>
-
+                            <h5>{{ strtoupper(now()->addDay(3)->format('l j/m/Y')) }}</h5>
+                            @foreach ($afterNextDayOfTomorrowTasks as $task)
                             <div class="media">
                                 <i class="fas fa-circle danger"></i> 
                                 <div class="media-body">
                                     <h6 class="text"> 
-                                        8:30 - 9:00 AM <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
+                                        {{ $task->start_time }} - {{ \Carbon\Carbon::parse($task->end_time)->format('g:i A') }} <img src="{{ asset('assets/images/icons/video.svg') }}" alt="*" class="img-fluid">
                                     </h6>
-                                    <p class="text">Visit to discuss improvements</p>
+                                    <p class="text">{{ $task->description }}</p>
                                 </div>
                             </div>
+                            @endforeach
                            </div>
                            {{-- item --}}
+                           @endif
 
                         </div>
                     </div>
@@ -447,12 +416,11 @@
                                                             <h3>Select Customer</h3>
                                                         </div>
 
-
                                                         <!-- customer search form start -->
                                                         <div class="form-group search-by-name mt-2"
                                                             style="position: relative!important; z-index:999!important; grid-template-columns: 67% 33%; ">
                                                             <div class="search-item">
-                                                                <img src="assets/images/icons/search-ic.svg"
+                                                                <img src="{{ asset('assets/images/icons/search-ic.svg') }}"
                                                                     alt="a" class="img-fluid search">
                                                                 <input type="text" placeholder="Search by name"
                                                                     id="search" class="form-control"
@@ -474,7 +442,6 @@
                                                         </div>
                                                         <div class="row" id="selectedCustomerUi"></div>
                                                         <!-- customer search form end -->
-
 
                                                         <!--collapse part start-->
                                                         <div class="collapse" id="collapseTwo">
@@ -590,8 +557,7 @@
                                                                                 </div>
                                                                                 <div class="col-xl-6">
                                                                                     <div class="form-group form-error">
-                                                                                        <label for="website">Active
-                                                                                            Status</label>
+                                                                                        <label for="website">Active Status</label>
                                                                                         <div
                                                                                             class="common-dropdown common-dropdown-two common-dropdown-three">
                                                                                             <div
