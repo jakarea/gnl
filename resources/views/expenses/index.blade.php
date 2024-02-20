@@ -412,9 +412,11 @@
                                             <p>${{ $expense->amount }}</p>
                                         </td>
                                         <td>
+                                            @if ($expense->file)
                                             <a class="invoice" href="{{ route('expense.invoice.download', $expense->expense_id) }}">
                                                 Invoice
-                                            </a>
+                                            </a> 
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -424,7 +426,6 @@
                                     <td class="text-center" colspan="7">@component( 'components.empty-data-component' , ['dynamicData' => 'No found customer history'])@endcomponent</td>
                                 </tr>
                             @endif
-                            <!-- expense single item end -->
 
                         </table>
                     </div>

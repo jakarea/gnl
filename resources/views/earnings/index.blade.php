@@ -500,9 +500,6 @@
         })
         .then(function (data) {
             document.querySelector(".showEarningDetails2").innerHTML = data;
-
-            console.log(data)
-
             const modal = new bootstrap.Modal(document.querySelector('.earning-details-modal'));
             modal.show();
 

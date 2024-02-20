@@ -30,7 +30,7 @@
                                 @if ($earning->customer->status == 'active')
                                     <a href="javascript:;" class="active">Active</a>
                                 @else
-                                    <a href="javascript:;" class="inactive">Inactive</a>
+                                    <a href="javascript:;" class="active inactive">Inactive</a>
                                 @endif
 
                             </div>
@@ -106,10 +106,12 @@
                                 </p>
                             </div>
                         @endisset
+                            
                         <!--details page end-->
                         <div class="header">
                             <h3>Customer History</h3>
-                            <span class="paid">Total Paid = ${{ $earning->where('pay_status', 'paid')->sum('amount') ?? "0.00" }}</span>
+                             
+                            <span class="paid">Total Paid = € {{ $earning->where('customer_id', $earning->customer->customer_id)->where('pay_status', 'paid')->sum('amount') }}</span>
                         </div>
                         @include('components.customer-history', ['customer' => $earning->customer])
                     </div>

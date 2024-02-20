@@ -41,7 +41,7 @@
                         <p>{{ \Carbon\Carbon::parse($payment->pay_date)->format('d M, Y') }}</p>
                     </td>
                     <td>
-                        <p>{{ $payment->amount }}</p>
+                        <p>€{{ $payment->amount }}</p>
                     </td>
                     <td>
                         <ul>
