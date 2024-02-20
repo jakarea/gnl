@@ -34,7 +34,7 @@ class ExpenseRequest extends FormRequest
             'amount' => 'required|numeric',
             'tax' => 'required|numeric',
             'type' => 'required|in:fixed,variable',
-            'file' => 'file|mimes:pdf,jpeg,png,gif|max:512000',
+            'invoice' => 'file|mimes:pdf,jpeg,png,gif|max:5120'
         ];
     }
 }

@@ -64,6 +64,7 @@ class LeadController extends Controller
     public function store(LeadStoreRequest $request)
     {
         $data = $request->all();
+        // return $data;
         if (!LeadType::where('lead_type_id', $data['lead_type_id'])->exists()) {
             return redirect()->back()->with('error','No Leads type found!');
         }

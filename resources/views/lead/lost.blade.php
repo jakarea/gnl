@@ -48,9 +48,7 @@
                             <div class="media">
                                 @if ($lead->avatar)
                                 <img src="{{ asset($lead->avatar) }}" alt="avatar" class="img-fluid avatar" />
-                                @else
-                                <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar"
-                                    class="img-fluid avatar" />
+
                                 @endif
 
                                 <div class="media-body">

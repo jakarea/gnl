@@ -60,7 +60,7 @@
                                                                         <div class="d-flex">
                                                                             <label for="avatar" class="avatar"
                                                                                 id="avatarLabel">
-                                                                                <img src="{{ url('/uploads/users/avatar-9.png') }}"
+                                                                                <img src="{{ url('/assets/users/avatar-9.png') }}"
                                                                                     alt="avatar" class="img-fluid"
                                                                                     id="avatarPreview">
                                                                                 <span class="avatar-ol">

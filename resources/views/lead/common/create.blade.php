@@ -115,7 +115,7 @@
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="company">KVK</label>
-                                        <input type="text" placeholder="Enter kvk number" id="kvk" name="kvk"
+                                        <input type="number" placeholder="Enter kvk number" id="kvk" name="kvk"
                                             class="form-control" value="{{ old('kvk') }}" />
                                         @error('kvk')
                                         <div class="text-danger">{{ $message }}</div>

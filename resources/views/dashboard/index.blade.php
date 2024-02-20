@@ -255,39 +255,36 @@
                                     <th>Amount</th>
                                 </tr>
                                 <!-- project single item start -->
-                                @if (count($customers) > 0)
-                                    @foreach ($customers as $customer)
+                                @if (count($projects) > 0)
+                                    @foreach ($projects as $project)
                                         <tr>
                                             <td>
                                                 <div class="media">
-                                                    @if ($customer->avatar)
-                                                        <img src="{{ asset($customer->avatar) }}" alt="avatar"
+                                                    @if ($project->customers->first()->avatar)
+                                                        <img src="{{ asset($project->customers->first()->avatar) }}" alt="avatar"
                                                             class="img-fluid" />
-                                                    @else
-                                                        <img src="{{ asset('uploads/users/avatar-9.png') }}"
-                                                            alt="default avatar" class="img-fluid" />
                                                     @endif
                                                     <div class="media-body">
-                                                        <h5>{{ $customer->name }}</h5>
-                                                        <span>{{ $customer->designation }}</span>
+                                                        <h5>{{ $project->customers->first()->name ?? 'N/A' }}</h5>
+                                                        <span>{{ $project->customers->first()->designation ?? 'N/A'}}</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p>{{ $customer->projects->first()->title ?? 'N/A' }}</p>
+                                                <p>{{ $project->title ?? 'N/A' }}</p>
                                             </td>
                                             <td>
                                                 @php
-                                                    $remainingDays = now()->diffInDays($customer->projects->first()->end_date);
+                                                    $remainingDays = now()->diffInDays($project->end_date);
+                                                    $daysText = $remainingDays > 0 ? ($remainingDays > 1 ? 'Days Remaining' : 'Day Remaining') : 'Today Remaining';
                                                 @endphp
                                                 <p class="danger">
-                                                    {{ $remainingDays }}
-                                                    {{ $remainingDays > 1 ? 'Days Remaining' : 'Day Remaining' }}
+                                                    {{ $remainingDays > 0 ? $remainingDays." ".$daysText: $daysText }}
                                                 </p>
 
                                             </td>
                                             <td class="text-center">
-                                                <p>${{ $customer->projects->first()->amount ?? 'N/A' }}</p>
+                                                <p>${{ $project->amount ?? 'N/A' }}</p>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -3,10 +3,10 @@
         <a href="javascript:;" class="select-customer select-project" onclick="getProjectId('{{ $project->project_id }}')">
             <div class="selected-profile-box mt-0 bg-white border-0 p-0">
                 <div class="media">
-                    @if ($project->avatar)
-                        <img src="{{ asset('storage/' . $project->thumbnail) }}" alt="avatar" class="img-fluid avatar" />
+                    @if ($project->thumbnail)
+                        <img src="{{ asset($project->thumbnail) }}" alt="avatar" class="img-fluid avatar" />
                     @else
-                    <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a" class="img-fluid avatar">
+                        <img src="{{ asset('assets/projects/project-01.png') }}" alt="a" class="img-fluid avatar">
                     @endif
 
                     <div class="media-body">

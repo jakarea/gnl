@@ -126,6 +126,8 @@
                             </div>
                             <!-- task item end -->
                         @endforeach
+                    @else
+                    @component( 'components.empty-data-component' , ['dynamicData' => 'No Task Found!'])@endcomponent
                     @endif
                 </div>
                 <!-- task list -->
@@ -456,7 +458,7 @@
                                                                                         <div class="d-flex">
                                                                                             <label for="avatar"
                                                                                                 class="avatar">
-                                                                                                <img src="./uploads/users/avatar-9.png"
+                                                                                                <img src="/assets/users/avatar-9.png"
                                                                                                     alt="avatar"
                                                                                                     class="img-fluid">
                                                                                                 <span class="avatar-ol">
@@ -596,7 +598,8 @@
                                                                                         @enderror
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-xl-6">
+
+                                                                                {{-- <div class="col-xl-6">
                                                                                     <div class="form-group form-error">
                                                                                         <label
                                                                                             for="service">Service</label>
@@ -632,38 +635,9 @@
                                                                                                 {{ $message }}</div>
                                                                                         @enderror
                                                                                     </div>
-                                                                                </div>
+                                                                                </div> --}}
+
                                                                                 <div class="col-xl-6">
-                                                                                    <div class="form-group form-error">
-                                                                                        <label
-                                                                                            for="company">Company</label>
-                                                                                        <input type="text"
-                                                                                            placeholder="Enter company name"
-                                                                                            id="company" name="company"
-                                                                                            class="form-control"
-                                                                                            value="{{ old('company') }}">
-                                                                                        @error('company')
-                                                                                            <div class="text-danger">
-                                                                                                {{ $message }}</div>
-                                                                                        @enderror
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xl-6">
-                                                                                    <div class="form-group form-error">
-                                                                                        <label
-                                                                                            for="website">Website</label>
-                                                                                        <input type="text"
-                                                                                            placeholder="Enter website"
-                                                                                            id="website" name="website"
-                                                                                            class="form-control"
-                                                                                            value="{{ old('website') }}">
-                                                                                        @error('website')
-                                                                                            <div class="text-danger">
-                                                                                                {{ $message }}</div>
-                                                                                        @enderror
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xl-12">
                                                                                     <div class="form-group form-error">
                                                                                         <label for="lead_type_id">Leads
                                                                                             Type</label>
@@ -700,6 +674,39 @@
                                                                                         @enderror
                                                                                     </div>
                                                                                 </div>
+
+                                                                                <div class="col-xl-6">
+                                                                                    <div class="form-group form-error">
+                                                                                        <label
+                                                                                            for="company">Company</label>
+                                                                                        <input type="text"
+                                                                                            placeholder="Enter company name"
+                                                                                            id="company" name="company"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('company') }}">
+                                                                                        @error('company')
+                                                                                            <div class="text-danger">
+                                                                                                {{ $message }}</div>
+                                                                                        @enderror
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xl-6">
+                                                                                    <div class="form-group form-error">
+                                                                                        <label
+                                                                                            for="website">Website</label>
+                                                                                        <input type="text"
+                                                                                            placeholder="Enter website"
+                                                                                            id="website" name="website"
+                                                                                            class="form-control"
+                                                                                            value="{{ old('website') }}">
+                                                                                        @error('website')
+                                                                                            <div class="text-danger">
+                                                                                                {{ $message }}</div>
+                                                                                        @enderror
+                                                                                    </div>
+                                                                                </div>
+
+
                                                                                 <div class="col-12">
                                                                                     <div class="form-group form-error">
                                                                                         <label
