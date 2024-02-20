@@ -155,7 +155,7 @@
                                                                                     alt="avatar"
                                                                                     class="img-fluid avatar" />
                                                                             @else
-                                                                                <img src="{{ asset('uploads/projects/project-01.png') }}"
+                                                                                <img src="{{ asset('assets/projects/project-01.png') }}"
                                                                                     alt="a"
                                                                                     class="img-fluid avatar">
                                                                             @endif
@@ -215,7 +215,7 @@
                                                                                 alt="avatar"
                                                                                 class="img-fluid avatar" />
                                                                         @else
-                                                                            <img src="{{ asset('uploads/users/avatar-9.png') }}"
+                                                                            <img src="{{ asset('assets/users/avatar-9.png') }}"
                                                                                 alt="default avatar"
                                                                                 class="img-fluid avatar" />
                                                                         @endif

@@ -376,7 +376,7 @@
               @if ($earning->customer->avatar)
               <img src="{{ asset($earning->customer->avatar) }}" alt="avatar" class="img-fluid avatar" />
               @else
-              <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar" class="img-fluid avatar" />
+              <img src="{{ asset('assets/users/avatar-9.png') }}" alt="avatar" class="img-fluid avatar" />
               @endif
 
               <div class="media-body">
@@ -450,7 +450,7 @@
 </section>
 
 {{-- client details modal start --}}
-<div class="showEarningDetails"></div>
+<div class="showEarningDetails2"></div>
 {{-- client details modal end --}}
 
 {{-- add client modal start --}}
@@ -463,6 +463,19 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 {{-- earning details js --}}
+
+
+<script>
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('.search-item').length) {
+            $(".search-suggestions-box").empty();
+        }
+    });
+</script>
+
+
+
+
 <script>
   document.addEventListener('click', function(e) {
     if (e.target.classList.contains('earningModalDetails')) {
@@ -486,7 +499,10 @@
             return response.text();
         })
         .then(function (data) {
-            document.querySelector(".showEarningDetails").innerHTML = data;
+            document.querySelector(".showEarningDetails2").innerHTML = data;
+
+            console.log(data)
+
             const modal = new bootstrap.Modal(document.querySelector('.earning-details-modal'));
             modal.show();
 

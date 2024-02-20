@@ -33,7 +33,7 @@
                     <td>
                         <div class="media">
                             <div class="media-body">
-                                <h5>{{ $customer->serviceTypes->name }}</h5>
+                                <h5>{{ $customer->leadType->name }}</h5>
                             </div>
                         </div>
                     </td>

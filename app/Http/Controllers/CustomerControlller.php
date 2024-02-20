@@ -86,6 +86,8 @@ class CustomerControlller extends ApiController
     public function store(CustomerService $addCustomer, CustomerRequest $request)
     {
 
+        return $request->dd();
+
         $customer = $addCustomer->addCustomer($request);
         Notification::create([
             'creator_id' => auth()->user()->user_id,

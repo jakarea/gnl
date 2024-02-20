@@ -38,6 +38,9 @@
                                                     class="img-fluid">Add Manually</a>
                                         </div>
                                     </div>
+                                    @error('customer_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
 
                                     <!-- selected customer start  -->
                                     <div class="row" id="selectedCustomerUi"></div>
@@ -519,7 +522,7 @@
                     <a href="javascript:;" class="select-customer" data-id="${customer.customer_id}">
                         <div class="selected-profile-box mt-0 bg-white border-0 p-0">
                         <div class="media">
-                            <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-9.png')}}'}" class="img-fluid avatar" alt="avatar">
+                            <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('assets/users/avatar-9.png')}}'}" class="img-fluid avatar" alt="avatar">
                             <div class="media-body">
                                 <h3>${customer.name}</h3>
                                 <p>${customer.designation}</p>
