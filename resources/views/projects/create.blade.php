@@ -34,7 +34,7 @@
                                                                 <div class="d-flex">
                                                                     <div class="thumbnail-preview"
                                                                         id="thumbnail-container">
-                                                                        <img src="{{ url('uploads/projects/project-01.png') }}"
+                                                                        <img src="{{ url('assets/projects/project-01.png') }}"
                                                                             alt="Upload" class="img-fluid">
                                                                     </div>
                                                                     <label for="thumbnail"

@@ -181,7 +181,7 @@
                                     @if ($customer->avatar)
                                         <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid avatar" />
                                     @else
-                                        <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar"
+                                        <img src="{{ asset('/assets/users/avatar-9.png') }}" alt="default avatar"
                                             class="img-fluid avatar" />
                                     @endif
                                 </div>
@@ -270,7 +270,7 @@
                                                 <!-- upload avatar -->
                                                 <div class="d-flex">
                                                     <label for="avatar" class="avatar" id="avatarLabel">
-                                                        <img src="{{ url('/uploads/users/avatar-9.png') }}"
+                                                        <img src="{{ url('/assets/users/avatar-9.png') }}"
                                                             alt="avatar" class="img-fluid" id="avatarPreview">
                                                         <span class="avatar-ol">
                                                             <img src="{{ url('/assets/images/icons/camera.svg') }}"
@@ -377,7 +377,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-xl-6">
+                                        {{-- <div class="col-xl-6">
                                             <div class="form-group form-error">
                                                 <label for="service">Service</label>
                                                 <input type="hidden" name="service_type_id" id="service_type_id">
@@ -404,29 +404,8 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-xl-6">
-                                            <div class="form-group form-error">
-                                                <label for="company">Company</label>
-                                                <input type="text" placeholder="Enter company name" id="company"
-                                                    name="company" class="form-control" value="{{ old('company') }}" />
-                                                @error('company')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <div class="form-group form-error">
-                                                <label for="website">Website</label>
-                                                <input type="text" placeholder="Enter website" id="website"
-                                                    name="website" class="form-control" value="{{ old('website') }}" />
-                                                @error('website')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-12">
                                             <div class="form-group form-error">
                                                 <label for="lead_type_id">Leads Type</label>
                                                 <input type="hidden" name="lead_type_id" id="lead_type_id">
@@ -455,6 +434,29 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="col-xl-6">
+                                            <div class="form-group form-error">
+                                                <label for="company">Company</label>
+                                                <input type="text" placeholder="Enter company name" id="company"
+                                                    name="company" class="form-control" value="{{ old('company') }}" />
+                                                @error('company')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="form-group form-error">
+                                                <label for="website">Website</label>
+                                                <input type="text" placeholder="Enter website" id="website"
+                                                    name="website" class="form-control" value="{{ old('website') }}" />
+                                                @error('website')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+
+
                                         <div class="col-12">
                                             <div class="form-group form-error">
                                                 <label for="details">Details</label>

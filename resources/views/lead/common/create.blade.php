@@ -23,7 +23,7 @@
                                         <!-- upload avatar -->
                                         <div class="d-flex">
                                             <label for="avatar" class="avatar" id="avatarLabel">
-                                                <img src="{{ url('/uploads/users/avatar-9.png') }}" alt="avatar"
+                                                <img src="{{ url('/assets/users/avatar-9.png') }}" alt="avatar"
                                                     class="img-fluid" id="avatarPreview">
                                                 <span class="avatar-ol">
                                                     <img src="{{ url('/assets/images/icons/camera.svg') }}" alt="camera"
@@ -219,15 +219,15 @@
 
 {{-- select leads type js --}}
 <script>
-    let leadTypeId = document.getElementById("lead_type_id"); 
-        let setLeadType = document.getElementById("setLeadType"); 
-        let leadTypes = document.querySelectorAll(".lead-type"); 
+    let leadTypeId = document.getElementById("lead_type_id");
+        let setLeadType = document.getElementById("setLeadType");
+        let leadTypes = document.querySelectorAll(".lead-type");
 
         leadTypes.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 setLeadType.innerHTML = this.innerHTML;
-                leadTypeId.value = this.getAttribute("data-id"); 
+                leadTypeId.value = this.getAttribute("data-id");
             });
-        }); 
+        });
 </script>

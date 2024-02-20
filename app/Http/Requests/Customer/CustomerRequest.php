@@ -32,7 +32,7 @@ class CustomerRequest extends FormRequest
             'email' => 'required|unique:customers,email,' . $this->route('id') . ',customer_id',
             'avatar' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
             'lead_type_id' => ['required', Rule::exists('lead_types', 'lead_type_id')],
-            'service_type_id' => ['required', Rule::exists('service_types', 'service_type_id')],
+            // 'service_type_id' => ['required', Rule::exists('service_types', 'service_type_id')],
         ];
 
         $fieldRules = [
