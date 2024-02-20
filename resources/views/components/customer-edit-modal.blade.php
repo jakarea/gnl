@@ -49,7 +49,7 @@
                                         <label for="name">Name</label>
                                         <input type="text" placeholder="Enter Name" id="name" name="name"
                                             class="form-control"
-                                            value="{{ $customer->name ? $customer->name : old('designation') }}" />
+                                            value="{{ $customer->name ?? old('name') }}" />
                                         @error('name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
