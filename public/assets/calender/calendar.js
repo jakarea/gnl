@@ -45,6 +45,10 @@ $(document).ready(function () {
         $('td', $calendar).click(function () {
             var day = $(this).text();
 
+            $('td', $calendar).css('border', 'none');
+
+            $(this).css({ 'border': '1px solid rgb(67 108 255)', 'border-radius': '0.5rem' });
+
             var selectedZone = new Date(currentYear, currentMonth, day);
 
             var selectedDate = selectedZone.getFullYear() + '-' +
@@ -149,8 +153,6 @@ $(document).ready(function () {
                 return isTaskInTimeSlot(task, timeSlot);
             });
 
-
-
             var timeBoxHTML = '<div class="single-task-box">' +
                 '<div class="time-box">' +
                 '<span class="time">' + timeSlot + '</span>' +
@@ -164,27 +166,27 @@ $(document).ready(function () {
                 let startTimeString = matchingTask.start_time;
                 let endTimeString = matchingTask.end_time;
 
-                // let startDate = new Date("2000-01-01 " + startTimeString);
-                // let endDate = new Date("2000-01-01 " + endTimeString);
+                let startDate = new Date("2000-01-01 " + startTimeString);
+                let endDate = new Date("2000-01-01 " + endTimeString);
 
-                // // Calculate the time difference in milliseconds
-                // let timeDifference = endDate - startDate;
+                // Calculate the time difference in milliseconds
+                let timeDifference = endDate - startDate;
 
-                // // Convert milliseconds to hours
-                // let hoursDifference = Math.ceil(timeDifference / (1000 * 60 * 60));
+                // Convert milliseconds to hours
+                let hoursDifference = Math.ceil(timeDifference / (1000 * 60 * 60));
 
-                // var adjustHeight = '';
+                var adjustHeight = '';
 
-                // for (var i = 2; i <= 6; i++) {
-                //     if (hoursDifference === i) {
-                //         adjustHeight = 'h-' + (170 + (i - 2) * 85);
-                //         break;
-                //     }
-                // }
+                for (var i = 2; i <= 6; i++) {
+                    if (hoursDifference === i) {
+                        adjustHeight = 'h-' + (170 + (i - 2) * 85);
+                        break;
+                    }
+                }
 
-                var adjustHeight = calculatePosition(startTimeString, endTimeString);
+                // var adjustHeight = calculatePosition(startTimeString, endTimeString);
 
-                timeBoxHTML += `<div class="task-info" style="height: ${adjustHeight}px">
+                timeBoxHTML += `<div class="task-info ${adjustHeight}">
                 <h4> ${matchingTask.title} </h4>
                 <div class="timespan"> ${matchingTask.start_time} - ${matchingTask.end_time} </div>
                 </div>
