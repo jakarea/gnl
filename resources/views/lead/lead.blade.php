@@ -23,7 +23,7 @@
     <section class="main-page-wrapper leads-page-wrapper">
         <!-- page title -->
         <div class="page-title leads-page-title">
-            <h1>Hosting Leads</h1>
+            <h1>{{ $pageTitle }}</h1>
             <!-- bttn -->
             <div class="common-bttn">
                 <a href="{{ url('leads/all') }}" class="add">View All</a>
