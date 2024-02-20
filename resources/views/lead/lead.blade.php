@@ -23,7 +23,7 @@
     <section class="main-page-wrapper leads-page-wrapper">
         <!-- page title -->
         <div class="page-title leads-page-title">
-            <h1>Hosting Leads</h1>
+            <h1>{{ $pageTitle }}</h1>
             <!-- bttn -->
             <div class="common-bttn">
                 <a href="{{ url('leads/all') }}" class="add">View All</a>
@@ -51,9 +51,6 @@
                                     <div class="media">
                                         @if ($new_lead->avatar)
                                             <img src="{{ asset($new_lead->avatar) }}" alt="avatar"
-                                                class="img-fluid avatar" />
-                                        @else
-                                            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar"
                                                 class="img-fluid avatar" />
                                         @endif
                                         <div class="media-body">
@@ -107,9 +104,6 @@
                                         @if ($in_progress_lead->avatar)
                                             <img src="{{ asset($in_progress_lead->avatar) }}" alt="avatar"
                                                 class="img-fluid avatar" />
-                                        @else
-                                            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar"
-                                                class="img-fluid avatar" />
                                         @endif
                                         <div class="media-body">
                                             <h5>{{ $in_progress_lead->name }}</h5>
@@ -161,9 +155,6 @@
                                     <div class="media">
                                         @if ($no_ans_lead->avatar)
                                             <img src="{{ asset($no_ans_lead->avatar) }}" alt="avatar"
-                                                class="img-fluid avatar" />
-                                        @else
-                                            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar"
                                                 class="img-fluid avatar" />
                                         @endif
                                         <div class="media-body">
@@ -217,9 +208,6 @@
                                         @if ($completed_lead->avatar)
                                             <img src="{{ asset($completed_lead->avatar) }}" alt="avatar"
                                                 class="img-fluid avatar" />
-                                        @else
-                                            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar"
-                                                class="img-fluid avatar" />
                                         @endif
                                         <div class="media-body">
                                             <h5>{{ $completed_lead->name }}</h5>
@@ -271,9 +259,6 @@
                                     <div class="media">
                                         @if ($lost_lead->avatar)
                                             <img src="{{ asset($lost_lead->avatar) }}" alt="avatar"
-                                                class="img-fluid avatar" />
-                                        @else
-                                            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar"
                                                 class="img-fluid avatar" />
                                         @endif
                                         <div class="media-body">

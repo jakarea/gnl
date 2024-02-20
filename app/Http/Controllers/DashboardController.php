@@ -42,9 +42,12 @@ class DashboardController extends Controller
             $selectedQuery = $queryStatus;
         }
 
-        $customers = Customer::with('projects')->whereHas('projects', function ($query) {
-            $query->whereBetween('end_date', [now(), now()->addDays(5)]);
-        })->get();
+        // $customers = Customer::with('projects')->whereHas('projects', function ($query) {
+        //     $query->whereBetween('end_date', [now(), now()->addDays(5)]);
+        // })->get();
+
+
+        $projects = Project::with('customers')->whereBetween('end_date', [now(), now()->addDays(5)])->get();
 
         $tasks = $this->getTaskUpComming();
         $earnings = Earning::with('customer')->paginate(20);
@@ -69,7 +72,7 @@ class DashboardController extends Controller
 
         // dd($data);
 
-        return view('dashboard/index', compact('earnings', 'tasks', 'customers', 'selectedQuery', 'data','earnExpenGraph','projectStatusGraph'));
+        return view('dashboard/index', compact('earnings', 'tasks', 'projects', 'selectedQuery', 'data','earnExpenGraph','projectStatusGraph'));
     }
 
     // query map for sort
@@ -285,7 +288,7 @@ class DashboardController extends Controller
     protected function getTaskUpComming()
     {
         return Task::whereDate('date', '>=', now()->toDateString())
-            ->whereDate('date', '<=', now()->addDays(2)->toDateString())
+            ->whereDate('date', '<=', now()->addDays(3)->toDateString())
             ->get();
     }
 }

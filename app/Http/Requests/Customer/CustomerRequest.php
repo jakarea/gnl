@@ -31,19 +31,13 @@ class CustomerRequest extends FormRequest
         $rules = [
             'email' => 'required|unique:customers,email,' . $this->route('id') . ',customer_id',
             'avatar' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
-            'lead_type_id' => ['required', Rule::exists('lead_types', 'lead_type_id')],
-            'service_type_id' => ['required', Rule::exists('service_types', 'service_type_id')],
         ];
 
         $fieldRules = [
             'name'        => ['required', 'string'],
             'designation' => ['required'],
+            'lead_type_id' => ['required', Rule::exists('lead_types', 'lead_type_id')],
         ];
-
-
-        // $customMessages = [
-        //     'service_type_id.required' => 'Please select a service type.',
-        // ];
 
 
         if ($this->isMethod('post')) {

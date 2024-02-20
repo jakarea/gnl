@@ -21,18 +21,18 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="avatar">Profile Image</label>
-                                        <input type="file" name="avatar" id="avatar3" class="d-none">
+                                        <input type="file" name="avatar" id="avatar2" class="d-none">
                                         <!-- upload avatar -->
                                         <div class="d-flex">
                                             <label for="avatar" class="avatar" id="avatarLabel2">
-                                                <img src="{{ $customer->avatar ? asset($customer->avatar) : asset('uploads/users/avatar-9.png') }}"
+                                                <img src="{{ $customer->avatar ? asset($customer->avatar) : asset('assets/users/avatar-9.png') }}"
                                                     alt="avatar" class="img-fluid" id="avatarPreview2">
                                                 <span class="avatar-ol">
                                                     <img src="{{ url('/assets/images/icons/camera.svg') }}"
                                                         alt="camera" class="img-fluid">
                                                 </span>
                                             </label>
-                                            <label for="avatar3">
+                                            <label for="avatar2">
                                                 <p><img src="{{ url('/assets/images/icons/anchor.svg') }}"
                                                         alt="anchor" class="img-fluid">
                                                     Upload</p>
@@ -49,7 +49,7 @@
                                         <label for="name">Name</label>
                                         <input type="text" placeholder="Enter Name" id="name" name="name"
                                             class="form-control"
-                                            value="{{ $customer->name ? $customer->name : old('designation') }}" />
+                                            value="{{ $customer->name ?? old('name') }}" />
                                         @error('name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xl-6">
+                                {{-- <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="service_type_id2">Service</label>
                                         <input type="hidden" name="service_type_id" id="service_type_id2"
@@ -189,31 +189,9 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group form-error">
-                                        <label for="company">Company</label>
-                                        <input type="text" placeholder="Enter company name" id="company"
-                                            name="company" class="form-control"
-                                            value="{{ $customer->company ? $customer->company : old('company') }}" />
-                                        @error('company')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group form-error">
-                                        <label for="website">Website</label>
-                                        <input type="text" placeholder="Enter website" id="website"
-                                            name="website" class="form-control"
-                                            value="{{ $customer->website ? $customer->website : old('website') }}" />
-                                        @error('website')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-xl-12">
+                                <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="lead_type_id">Leads Type</label>
                                         <input type="hidden" name="lead_type_id" id="lead_type_id2"
@@ -253,6 +231,29 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group form-error">
+                                        <label for="company">Company</label>
+                                        <input type="text" placeholder="Enter company name" id="company"
+                                            name="company" class="form-control"
+                                            value="{{ $customer->company ? $customer->company : old('company') }}" />
+                                        @error('company')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group form-error">
+                                        <label for="website">Website</label>
+                                        <input type="text" placeholder="Enter website" id="website"
+                                            name="website" class="form-control"
+                                            value="{{ $customer->website ? $customer->website : old('website') }}" />
+                                        @error('website')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
 
                                 <div class="col-12">
                                     <div class="form-group form-error">
@@ -298,7 +299,7 @@
 
     //   {{-- customer avatar js --}}
     // Get references to elements
-    const avatarInput2 = document.getElementById('avatar3');
+    const avatarInput2 = document.getElementById('avatar2');
     const avatarPreview2 = document.getElementById('avatarPreview2');
     const avatarLabel2 = document.getElementById('avatarLabel2');
 

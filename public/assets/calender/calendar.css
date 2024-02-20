@@ -101,6 +101,8 @@ td {
 
 .calendar-wrapper table th, .calendar-wrapper table td {
     padding: 10px 8px!important;
+    width: 20px;
+    height: 20px;
 }
 
 #navigation{

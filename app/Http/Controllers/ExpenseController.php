@@ -120,28 +120,20 @@ class ExpenseController extends ApiController
      */
     public function store(ExpenseRequest $request)
     {
+        $data = $request->except(['invoice']);
 
-        try {
+        // dd( $data);
+        $expense = Expense::create($data);
 
-            $data = $request->except(['file']);
-
-            // dd( $data );
-
-            $expense = Expense::create($data);
-
-            if ($request->hasFile('file')) {
-                $avatar = $request->file('file');
-                $filename = substr(md5(time()), 0 , 10) .'.' . $avatar->getClientOriginalExtension();
-                $avatarPath = $avatar->storeAs('expenses', $filename, 'public');
-                $expense->update(['file' => 'storage/'. $avatarPath]);
-            }
-
-            return redirect('/expenses')->withSuccess('Expenses create successfuly!');
-
-        }catch (\Exception $e) {
-
-            return back()->withErrors('Failed to cread exense!!');
+        if ($request->hasFile('invoice')) {
+            $avatar = $request->file('invoice');
+            $filename = substr(md5(time()), 0 , 10) .'.' . $avatar->getClientOriginalExtension();
+            $avatarPath = $avatar->storeAs('expenses', $filename, 'public');
+            $expense->update(['file' => 'storage/'. $avatarPath]);
         }
+
+        return redirect('/expenses')->withSuccess('Expenses create successfuly!');
+
     }
 
     /**

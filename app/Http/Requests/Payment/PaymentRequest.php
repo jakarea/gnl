@@ -5,7 +5,7 @@ namespace App\Http\Requests\Payment;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\BaseFormRequest;
-
+use Illuminate\Validation\Rule;
 class PaymentRequest extends FormRequest
 {
     /**
@@ -36,18 +36,22 @@ class PaymentRequest extends FormRequest
             'pay_type'=>'required|in:one_time,repeated',
         ];
 
-        $fieldRules = [];
+        $fieldRules = [
+            'customer_id' => ['required', Rule::exists('customers', 'customer_id')],
+        ];
 
         if ($this->input('manualyCustomer')) {
             $rules['name'] = ['required', 'string'];
             $rules['designation'] = ['required'];
             $rules['email'] = 'required|unique:customers,email';
+            unset($fieldRules['customer_id']);
         }
 
         if ($this->filled('customer_id')) {
             unset($fieldRules['name']);
             unset($fieldRules['email']);
             unset($fieldRules['designation']);
+
         }
 
 
@@ -64,7 +68,6 @@ class PaymentRequest extends FormRequest
         }
 
         return $rules;
-
     }
 
     protected function prepareForValidation()

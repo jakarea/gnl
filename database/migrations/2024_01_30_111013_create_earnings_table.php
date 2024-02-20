@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('earnings', function (Blueprint $table) {
             $table->id('earning_id')->autoIncrement();
-            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customers','customer_id')->onDelete('cascade');
             $table->decimal('amount', 8, 2);
             $table->decimal('tax', 8, 2);
             $table->string('pay_status');

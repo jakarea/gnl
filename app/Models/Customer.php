@@ -9,6 +9,8 @@ class Customer extends Model
 {
     use HasFactory;
 
+    protected $with = ['leadType','earnings'];
+
     protected $primaryKey = 'customer_id';
 
     protected $fillable = ['lead_type_id','service_type_id',

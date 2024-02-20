@@ -385,7 +385,6 @@
                                 <th>Title</th>
                                 <th>Payment Description</th>
                                 <th>Payment Date</th>
-                                <th>Service Type</th>
                                 <th>Expenses Type</th>
                                 <th>Amount</th>
                                 <th>Action</th>
@@ -405,11 +404,9 @@
                                             <p>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $expense->pay_date)->format('d M, Y') }}
                                             </p>
                                         </td>
+
                                         <td>
-                                            <p>{{ $expense->service_type }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="fixed">{{ $expense->type }}</p>
+                                            <p>{{ $expense->type }}</p>
                                         </td>
                                         <td>
                                             <p>${{ $expense->amount }}</p>
@@ -565,7 +562,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="invoice">Invoice</label>
-                                            <input type="file" name="file"  class="form-control"id="invoice" />
+                                            <input type="file" name="invoice"  class="form-control"id="invoice" />
                                             @error('file')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror

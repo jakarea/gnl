@@ -49,7 +49,7 @@
                             @if ($project->thumbnail)
                                 <img src="{{ asset($project->thumbnail) }}" alt="a" class="img-fluid">
                             @else
-                                <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a" class="img-fluid">
+                                <img src="{{ asset('assets/projects/project-01.png') }}" alt="a" class="img-fluid">
                             @endif
                         </div>
 

@@ -79,7 +79,7 @@
                     <form action="{{ route('users.update', $user) }}" class="form-box" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('PATCH')
+                        @method('PUT')
                         <div class="title">
                             <h3>Personal Info</h3>
 
@@ -90,7 +90,7 @@
                         <div class="form-group form-error">
                             <label for="name">Full Name <span>*</span></label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                placeholder="Enter Name" value="{{ $user->name }}" name="name" id="name">
+                                placeholder="Enter Name" value="{{ $user->name ?? old('name') }}" name="name" id="name">
 
                             <span class="invalid-feedback">
                                 @error('name')

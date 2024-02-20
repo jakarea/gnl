@@ -127,7 +127,7 @@
                         @if ($project->thumbnail)
                         <img src="{{ asset($project->thumbnail) }}" alt="a" class="img-fluid">
                         @else
-                        <img src="{{ asset('uploads/projects/project-01.png') }}" alt="a" class="img-fluid">
+                        <img src="{{ asset('assets/projects/project-01.png') }}" alt="a" class="img-fluid">
                         @endif
                     </div>
 
@@ -157,7 +157,7 @@
                             @if ($customer->avatar)
                             <img src="{{ asset($customer->avatar) }}" alt="a" class="img-fluid avatar">
                             @else
-                            <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="a" class="img-fluid avatar">
+                            <img src="{{ asset('assets/users/avatar-9.png') }}" alt="a" class="img-fluid avatar">
                             @endif
                             <div class="media-body">
                                 <h5><a href="{{ route('customers.show', $customer->customer_id) }}">{{ $customer->name }}</a></h5>

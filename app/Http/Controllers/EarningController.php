@@ -244,8 +244,7 @@ class EarningController extends Controller
     {
 
         if ($earningId) {
-            $earning = Earning::findOrFail($earningId);
-
+            $earning = Earning::with('customer')->findOrFail($earningId);
             return view('earnings.details',compact('earning'));
 
         } else{

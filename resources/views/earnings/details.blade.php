@@ -10,6 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+
                     <!-- customer details start -->
                     <div class="payment-from-copany-user">
                         <!--customer profile header start-->
@@ -19,7 +20,7 @@
                                     <img src="{{ asset($earning->customer->avatar) }}" alt="avatar"
                                         class="img-fluid" />
                                 @else
-                                    <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="default avatar"
+                                    <img src="{{ asset('assets/users/avatar-9.png') }}" alt="default avatar"
                                         class="img-fluid" />
                                 @endif
                                 <div class="profile-text">

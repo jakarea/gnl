@@ -12,7 +12,7 @@
         <h1>Lost Leads</h1>
         <!-- filter -->
         <div class="page-filter d-flex">
-            
+
             <div class="dropdown dropdown-category">
                 <button class="btn" type="button" data-bs-toggle="modal"
                 data-bs-target="#staticBackdropFour">
@@ -23,7 +23,7 @@
     </div>
     <div class="all-customer-box payment-from-copany-user">
         <div class="user-payment-table">
-             
+
             <table>
                 <tbody>
                     <tr>
@@ -48,9 +48,7 @@
                             <div class="media">
                                 @if ($lead->avatar)
                                 <img src="{{ asset($lead->avatar) }}" alt="avatar" class="img-fluid avatar" />
-                                @else
-                                <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="avatar"
-                                    class="img-fluid avatar" />
+
                                 @endif
 
                                 <div class="media-body">
@@ -75,10 +73,10 @@
                             <ul>
                                 <li>
                                     <a href="#" class="btn-view no-ans-btn">Lost</a>
-                                </li> 
+                                </li>
                             </ul>
                         </td>
-                        
+
                         <td>
                             <div class="table-dropdown">
                                 <div class="dot-bttn justify-content-center">
@@ -86,9 +84,9 @@
                                         @csrf
                                         <button type="submit" class="btn dropdown-item">
                                             <i class="fas fa-trash text-secondary"></i>
-                                        </button> 
-                                    </form>  
-                                </div> 
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -96,7 +94,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div> 
+        </div>
 
         {{-- paggination wrap --}}
         <div class="row mt-5">
@@ -104,16 +102,16 @@
                 {{ $lostLeads->links('pagination::bootstrap-5') }}
             </div>
         </div>
-        {{-- paggination wrap --}} 
+        {{-- paggination wrap --}}
     </div>
 </section>
 
 {{-- create leads modal start --}}
 @include('lead.common.create')
-{{-- create leads modal end --}} 
+{{-- create leads modal end --}}
 
 @endsection
 
 @section('script')
- 
+
 @endsection

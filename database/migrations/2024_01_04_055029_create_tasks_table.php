@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id('task_id')->autoIncrement();
             $table->foreignId('customer_id')->constrained('customers', 'customer_id')->cascadeOnDelete();
             $table->foreignId('project_id')->constrained('projects', 'project_id')->cascadeOnDelete();
-            $table->json('customer_id');
             $table->string('title');
             $table->string('priority');
             $table->string('date');

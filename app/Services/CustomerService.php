@@ -10,6 +10,8 @@ class CustomerService
 
     public function addCustomer($request)
     {
+        // dd( $request->all() );
+
         $data     = $request->except(['avatar']);
 
         $customer = Customer::create($data);

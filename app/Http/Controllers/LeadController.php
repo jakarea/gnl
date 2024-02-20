@@ -64,6 +64,7 @@ class LeadController extends Controller
     public function store(LeadStoreRequest $request)
     {
         $data = $request->all();
+        // return $data;
         if (!LeadType::where('lead_type_id', $data['lead_type_id'])->exists()) {
             return redirect()->back()->with('error','No Leads type found!');
         }
@@ -117,7 +118,9 @@ class LeadController extends Controller
             'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
         ];
 
-        return view('lead/hosting',compact('lead_types','leads'));
+        $pageTitle = "Hosting Leads";
+
+        return view('lead/lead',compact('lead_types','leads','pageTitle'));
     }
 
     public function marketing()
@@ -129,14 +132,16 @@ class LeadController extends Controller
         $leadType = 2;
 
         $leads = [
-            'new_leads'         => Lead::where('state', 'new')->where('lead_type_id', $leadType)->get(),
-            'in_progress_leads' => Lead::where('state', 'in_progress')->where('lead_type_id', $leadType)->get(),
-            'no_ans_leads'      => Lead::where('state', 'no_ans')->where('lead_type_id', $leadType)->get(),
-            'completed_leads'   => Lead::where('state', 'completed')->where('lead_type_id', $leadType)->get(),
-            'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->get(),
+            'new_leads'         => Lead::where('state', 'new')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'in_progress_leads' => Lead::where('state', 'in_progress')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'no_ans_leads'      => Lead::where('state', 'no_ans')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'completed_leads'   => Lead::where('state', 'completed')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
         ];
 
-        return view('lead/marketing',compact('lead_types','leads'));
+        $pageTitle = "Marketing Leads";
+
+        return view('lead/lead',compact('lead_types','leads','pageTitle'));
     }
 
     public function project()
@@ -148,14 +153,16 @@ class LeadController extends Controller
         $leadType = 3;
 
         $leads = [
-            'new_leads'         => Lead::where('state', 'new')->where('lead_type_id', $leadType)->get(),
-            'in_progress_leads' => Lead::where('state', 'in_progress')->where('lead_type_id', $leadType)->get(),
-            'no_ans_leads'      => Lead::where('state', 'no_ans')->where('lead_type_id', $leadType)->get(),
-            'completed_leads'   => Lead::where('state', 'completed')->where('lead_type_id', $leadType)->get(),
-            'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->get(),
+            'new_leads'         => Lead::where('state', 'new')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'in_progress_leads' => Lead::where('state', 'in_progress')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'no_ans_leads'      => Lead::where('state', 'no_ans')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'completed_leads'   => Lead::where('state', 'completed')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
         ];
 
-        return view('lead/project',compact('lead_types','leads'));
+        $pageTitle = "Project Leads";
+
+        return view('lead/lead',compact('lead_types','leads','pageTitle'));
     }
 
     public function website()
@@ -167,22 +174,23 @@ class LeadController extends Controller
         $leadType = 4;
 
         $leads = [
-            'new_leads'         => Lead::where('state', 'new')->where('lead_type_id', $leadType)->get(),
-            'in_progress_leads' => Lead::where('state', 'in_progress')->where('lead_type_id', $leadType)->get(),
-            'no_ans_leads'      => Lead::where('state', 'no_ans')->where('lead_type_id', $leadType)->get(),
-            'completed_leads'   => Lead::where('state', 'completed')->where('lead_type_id', $leadType)->get(),
-            'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->get(),
+            'new_leads'         => Lead::where('state', 'new')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'in_progress_leads' => Lead::where('state', 'in_progress')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'no_ans_leads'      => Lead::where('state', 'no_ans')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'completed_leads'   => Lead::where('state', 'completed')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
+            'lost_leads'        => Lead::where('state', 'lost')->where('lead_type_id', $leadType)->orderBy('lead_order')->get(),
         ];
 
-        return view('lead/website',compact('lead_types','leads'));
+        $pageTitle = "Website Leads";
+
+        return view('lead/lead',compact('lead_types','leads','pageTitle'));
     }
 
     public function lost(){
 
-         $lostLeads = Lead::orderByDesc('lead_id')->where('state','lost')->paginate(20);
-         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
-
-         return view('lead/lost',compact('lostLeads','lead_types'));
+        $lostLeads = Lead::orderByDesc('lead_id')->where('state','lost')->paginate(20);
+        $lead_types = LeadType::orderByDesc('lead_type_id')->get();
+        return view('lead/lost',compact('lostLeads','lead_types'));
     }
 
     public function destroy($lead_id)
