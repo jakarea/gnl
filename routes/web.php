@@ -143,7 +143,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}', [ExpenseController::class, 'show'])->name('show');
         Route::put('/{id}', [ExpenseController::class, 'update'])->name('update');
         Route::delete('/{id}', [ExpenseController::class, 'destroy'])->name('destroy');
-        Route::get('/{id}/invoice-download', [ExpenseController::class, 'invoiceDownload'])->name('invoice.download');
+        Route::get('invoice/download/{id}', [ExpenseController::class, 'downloadInvoice'])->name('download.invoice');
     });
 
     // admin profile
