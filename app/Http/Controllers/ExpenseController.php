@@ -276,8 +276,12 @@ class ExpenseController extends ApiController
     }
 
 
-    public function invoiceDownload($expenseId){
-        $expense = Expense::find($expenseId);
+    public function downloadInvoice($id)
+    {
+ 
+        // return $id;
+
+        $expense = Expense::find($id);
 
         $filePath = $expense->file;
 

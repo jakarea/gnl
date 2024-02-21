@@ -171,8 +171,7 @@
                                 $highLess = 'Less';
                         } @endphp
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>{{ $highLess }} than last
-                                month</p>
+                            <p>{{ $highLess }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
                             <p>{{ $highLess }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
@@ -409,11 +408,11 @@
                                             <p>{{ $expense->type }}</p>
                                         </td>
                                         <td>
-                                            <p>${{ $expense->amount }}</p>
+                                            <p>€{{ $expense->amount }}</p>
                                         </td>
                                         <td>
                                             @if ($expense->file)
-                                            <a class="invoice" href="{{ route('expense.invoice.download', $expense->expense_id) }}">
+                                            <a class="invoice" href="{{ url('expenses/invoice/download/'.$expense->expense_id) }}">
                                                 Invoice
                                             </a> 
                                             @endif
@@ -731,7 +730,7 @@
             tooltip: {
                 y: {
                     formatter: function(val) {
-                        return "$ " + val + " thousands"
+                        return "€ " + val + " thousands"
                     }
                 }
             }
