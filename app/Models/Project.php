@@ -12,14 +12,13 @@ class Project extends Model
     protected $primaryKey = 'project_id';
 
     protected $fillable = [
-        'title', 'thumbnail', 'amount', 'tax', 'start_date', 'note', 'end_date', 'priority', 'description', 'status'
+        'title', 'thumbnail', 'amount', 'tax', 'start_date', 'note', 'end_date', 'priority', 'description','links','documents', 'status'
     ];
 
     public function customers()
     {
         return $this->belongsToMany(Customer::class, 'customer_projects', 'project_id', 'customer_id');
     }
-
 
     public function getRemainingDaysAttribute()
     {

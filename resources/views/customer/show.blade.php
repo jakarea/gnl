@@ -84,21 +84,21 @@
                 <div class="service-text">
                     <p>Service:</p>
                     @if ($customer->service)
-                        <a href="#"> {{ $customer->service }}</a>
+                        <a href="#" class="pe-none"> {{ $customer->service }}</a>
                     @endif
                 </div>
 
                 @if ($customer->company)
                     <div class="service-text border-line">
                         <p class="mb-0">Company:</p>
-                        <a href="#">{{ $customer->company }}</a>
+                        <a href="javascript:;" class="pe-none">{{ $customer->company }}</a>
                     </div>
                 @endif
 
                 @if ($customer->kvk)
                     <div class="service-text border-line">
                         <p class="mb-0">KVK:</p>
-                        <a href="#"> {{ $customer->kvk }} </a>
+                        <a href="javascript:;" class="pe-none"> {{ $customer->kvk }} </a>
                     </div>
                 @endif
             </div>
@@ -191,4 +191,6 @@
         }
     </script>
     </script>
+
+
 @endsection

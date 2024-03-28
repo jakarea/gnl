@@ -265,8 +265,8 @@
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="amount">Amount</label>
-                                        <input type="number" placeholder="€0000" id="amount" name="amount"
-                                            class="form-control @error('amount') is-invalid @enderror">
+                                        <input type="number" placeholder="€0000" id="amount" name="amount" value="{{ old('amount') }}"
+                                            class="net_amount form-control @error('amount') is-invalid @enderror">
                                         @error('amount')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -277,8 +277,8 @@
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="tax">Tax</label>
-                                        <input type="number" placeholder="€0000" id="tax" name="tax"
-                                            class="form-control @error('tax') is-invalid @enderror">
+                                        <input type="text" placeholder="€0000" id="tax" name="tax" alue="{{ old('tax') }}"
+                                            class="tax_calculate form-control @error('tax') is-invalid @enderror">
                                         @error('tax')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -286,35 +286,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group form-error">
-                                        <label for="pay_status">Payment Status</label>
-                                        <input type="hidden" name="pay_status" id="pay_status">
-                                        <div class="common-dropdown">
-                                            <div class="dropdown">
-                                                <button class="btn w-100" type="button" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <div id="setPaysStatus">Select Below</div><i
-                                                        class="fas fa-angle-down"></i>
-                                                </button>
-                                                <ul class="dropdown-menu w-100">
-                                                    <li>
-                                                        <a class="dropdown-item dropdown-item-two payment-status-bttn"
-                                                            href="javascript:;" data-status="paid">Paid</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item dropdown-item-two payment-status-bttn"
-                                                            href="javascript:;" data-status="unpaid">Unpaid</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
 
-                                        @error('pay_status')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="pay_services">Services Type</label>
@@ -343,18 +315,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group form-error">
-                                        <label for="pay_date">Payment Date</label>
-                                        <input type="date" placeholder="DD-MM-YYYY" id="pay_date" name="pay_date"
-                                            class="form-control @error('pay_date') is-invalid @enderror">
-                                        @error('pay_date')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
+
                                 <div class="col-xl-6">
                                     <div class="form-group form-error">
                                         <label for="pay_type">Payment Type</label>
@@ -386,6 +347,54 @@
                                         @enderror
                                     </div>
                                 </div>
+
+
+                                <div class="col-xl-6 serviceCol12">
+                                    <div class="form-group form-error">
+                                        <label for="pay_date">Payment Date</label>
+                                        <input type="date" placeholder="DD-MM-YYYY" id="pay_date" name="pay_date"
+                                            class="form-control @error('pay_date') is-invalid @enderror">
+                                        @error('pay_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-6 removePayStatus">
+                                    <div class="form-group form-error">
+                                        <label for="pay_status">Payment Status</label>
+                                        <input type="hidden" name="pay_status" id="pay_status">
+                                        <div class="common-dropdown">
+                                            <div class="dropdown">
+                                                <button class="btn w-100" type="button" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <div id="setPaysStatus">Select Below</div><i
+                                                        class="fas fa-angle-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu w-100">
+                                                    <li>
+                                                        <a class="dropdown-item dropdown-item-two payment-status-bttn"
+                                                            href="javascript:;" data-status="paid">Paid</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item dropdown-item-two payment-status-bttn"
+                                                            href="javascript:;" data-status="unpaid">Unpaid</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        @error('pay_status')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
                                 <div class="col-xl-6">
                                     <div class="form-bttn">
                                         <button type="button" class="btn btn-cancel">Cancel</button>

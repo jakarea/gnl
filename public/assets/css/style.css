@@ -329,7 +329,7 @@ body {
 }
 
 .custom-scroll-bar::-webkit-scrollbar {
-  width: 0.375rem;  
+  width: 0.375rem;
 }
 
 .leads-vertical-scroller.custom-scroll-bar{
@@ -337,7 +337,7 @@ body {
   min-height: 75vh;
 }
 .leads-vertical-scroller.custom-scroll-bar::-webkit-scrollbar{
-  height: 0.575rem; 
+  height: 0.575rem;
 }
 
 .custom-scroll-bar::-webkit-scrollbar-track {
@@ -411,12 +411,14 @@ body {
   justify-content: flex-end;
 }
 
+.header-area .header-icons-box ul.main li.head-item .head-link ,
 .header-area .header-icons-box ul.main li.head-item a.head-link {
   display: block;
   margin-left: 1.5rem;
   position: relative;
 }
 
+.header-area .header-icons-box ul.main li.head-item .head-link span.dot ,
 .header-area .header-icons-box ul.main li.head-item a.head-link span.dot {
   display: inline-block;
   width: 0.7rem;
@@ -429,11 +431,13 @@ body {
   border: 2px solid #fff;
 }
 
+.header-area .header-icons-box ul.main li.head-item .user ,
 .header-area .header-icons-box ul.main li.head-item a.user {
   display: inline-flex;
   align-items: center;
 }
 
+.header-area .header-icons-box ul.main li.head-item .user img,
 .header-area .header-icons-box ul.main li.head-item a.user img {
   width: 2.5rem;
   height: 2.5rem;
@@ -442,6 +446,7 @@ body {
   object-fit: cover;
 }
 
+.header-area .header-icons-box ul.main li.head-item .user i,
 .header-area .header-icons-box ul.main li.head-item a.user i {
   margin-left: 0.2rem;
 }
@@ -1363,7 +1368,7 @@ body {
 
 .payment-from-copany-user #legend ul li {
   position: relative;
-} 
+}
 
 .payment-from-copany-user #legend ul li p {
   color: var(--text-light-secondary, #637381);
@@ -1402,7 +1407,7 @@ body {
   align-items: center;
 }
 
-.payment-from-copany-user .d_grid{ 
+.payment-from-copany-user .d_grid{
   display: grid;
   grid-template-columns: 60% 40%;
 }
@@ -1410,9 +1415,9 @@ body {
 .payment-from-copany-user .d_grid .pro-graph{
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   position: relative;
-} 
+}
 
 .payment-from-copany-user #projectStatus{
   z-index: 92;
@@ -1447,4 +1452,9 @@ body {
   font-style: normal;
   font-weight: 500;
   line-height: 1.375rem;
+}
+
+
+.side-item a .white-icon {
+    fill: white;
 }

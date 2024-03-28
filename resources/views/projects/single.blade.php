@@ -122,7 +122,7 @@
                                     </p>
 
                                     <ul>
-                                        <li>
+                                        {{-- <li>
                                             <a href="javascript:;" class="active"
                                                 onclick="likeComment('{{ $comment->comment_id }}')"><img
                                                     src="{{ url('/assets/images/icons/like.svg') }}" alt="a"
@@ -139,7 +139,7 @@
                                                 <span
                                                     id="dislike-count-{{ $comment->comment_id }}">{{ $comment->dislike }}</span>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                             <a href="javascript:;" onclick="toggleReplyForm('{{ $comment->comment_id }}')">
                                                 Reply </a>
@@ -222,6 +222,28 @@
 @endsection
 
 @section('script')
+<script>
+    $(document).on("click", ".addWebUrl", function() {
+        let template = `<div class="row removeWebUrl">
+                        <div class="col-12">
+                            <div class="form-group form-error">
+                                    <div class="d-flex">
+                                        <input type="url" placeholder="Input your link" id="links" name="links[]" class="form-control">
+                                        <button type="button" class="btn btn-primary ms-2 removeUrlBtn"><i class="fa-solid fa-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+
+        $(".appendWebUrl").append(template);
+    });
+
+    // Remove Company and Website Fields
+    $(document).on("click", ".removeUrlBtn", function() {
+
+        $(this).closest(".removeWebUrl").remove();
+    });
+</script>
     <script>
         const updateLikeDislikeCounts = (commentId, likes, dislikes) => {
             $('#like-count-' + commentId).text(likes);

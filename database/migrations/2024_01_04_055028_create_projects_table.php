@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('priority');
             $table->longText('description')->nullable();
             $table->string('status')->default('in_progress');
+            $table->string('documents')->nullable();
+            $table->string('links')->nullable();
             $table->timestamps();
         });
     }

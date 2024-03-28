@@ -1,10 +1,14 @@
 <header class="header-area">
     <!-- search box start -->
+
     <div class="header-search-box">
-      <img src="{{ asset('assets/images/icons/search.svg') }}" alt="S" class="img-fluid search">
-      <form action="">
-        <input type="text" name="q" class="form-control" placeholder="Search">
-      </form>
+
+        <div class="{{ !Request::is('customers','projects') ? "d-none" : '' }}">
+            <img src="{{ asset('assets/images/icons/search.svg') }}" alt="S" class="img-fluid search">
+            <form action="">
+                <input type="text" name="q" class="form-control" placeholder="Search">
+            </form>
+        </div>
     </div>
     <!-- search box end -->
 
@@ -12,7 +16,7 @@
     <div class="header-icons-box">
       <ul class="main">
         <li class="head-item">
-          <a href="javascript:;" class="head-link notify-box-area" id="notifyButton">
+          <div class="head-link notify-box-area" role="button" id="notifyButton">
             <span class="dot"></span>
             <img src="{{ asset('assets/images/icons/bell.svg') }}" alt="B" class="img-fluid">
 
@@ -20,7 +24,7 @@
             @include('partials.notifications')
             <!-- notify-list end -->
 
-          </a>
+          </div>
         </li>
         <li class="head-item">
           <div class="dropdown p-0 header-dropdown">

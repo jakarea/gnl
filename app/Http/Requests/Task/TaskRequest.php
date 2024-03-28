@@ -35,6 +35,7 @@ class TaskRequest extends FormRequest
             'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'project_id' => ['required', Rule::exists('projects', 'project_id')],
             'priority' => ['required', 'in:basic,important,priority'],
+            'customer_id' => ['required', Rule::exists('customers', 'customer_id')],
         ];
 
         $fieldRules = [
@@ -43,8 +44,8 @@ class TaskRequest extends FormRequest
             'schedule' => ['required'],
             'service_type_id' => ['required', Rule::exists('service_types', 'service_type_id')],
             'lead_type_id' => ['required', Rule::exists('lead_types', 'lead_type_id')],
-        ];
 
+        ];
 
         if ($this->input('manualyCustomer')) {
             $rules['name'] = ['required', 'string'];

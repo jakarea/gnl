@@ -39,7 +39,7 @@
         <aside class="sidebar-wrap custom-scroll-bar">
             <!-- logo -->
             <div class="logo-box">
-                <a href="dashboard.html">
+                <a href="{{ url('/') }}">
                     <img src="{{ url('/assets/images/logo.svg') }}" alt="Logo" class="img-fluid">
                 </a>
             </div>

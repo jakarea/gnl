@@ -1,5 +1,5 @@
 @if (count($notifications) > 0)
-    <div class="notify-list-box custom-scroll-bar" id="notifyList">
+    <div class="notify-list-box custom-scroll-bar" id="notifyList" style="cursor: auto">
         <!-- item -->
 
             @foreach ($notifications as $notification)
@@ -16,33 +16,32 @@
                         $routeName = $notification->action_link;
                         $routeParams = ['id' => $notification->action_id];
                         $createdAt = $notification->created_at->format('d M, Y');
-
-                        if( $notification->status ){
-                            $route = route('notification.markAsUnread', ['id' => $notification->id]);
-                        }else{
-                            $route = route('notification.markAsRead', ['id' => $notification->id]);
-                        }
-
                     @endphp
 
 
-                    <form action="{{ $route }}" method="POST">
-
+                    <form action="{{ route('notification.markAsReadUnread', $notification->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <button type="submit" class="btn btn-link"><img
-                                src="{{ asset('assets/images/icons/' . $icon . '.svg') }}" alt="I"
-                                class="fluid"></button>
+                        <button type="submit" class="btn btn-link">
+                            @if ($notification->status)
+                                <img src="{{ asset('assets/images/icons/primary.svg') }}" alt="I" class="fluid">
+                            @else
+                                <img src="{{ asset('assets/images/icons/secondary.svg') }}" alt="I" class="fluid">
+                            @endif
+                            {{-- <img src="{{ asset('assets/images/icons/' . $icon . '.svg') }}" alt="I" class="fluid"> --}}
+                        </button>
                     </form>
 
-                    <div class="media-body">
-                        <h5>{{ $notification->title }}</h5>
+
+                    <a href="{{ route($notification->action_link, $notification->action_id) }}?notificationId={{ $notification->id }}" class="media-body">
+
+                        <h5>{{ $notification->title }} {{ $notification->id }}</h5>
                         <div class="d_flex">
-                            {{-- <a href="{{ route($routeName, $routeParams) }}"></a> --}}
                             <p>{{ $notification->message }}</p>
                             <span>{{ $createdAt }}</span>
                         </div>
-                    </div>
+                    </a>
+
                 </div>
             @endforeach
 

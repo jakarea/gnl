@@ -14,7 +14,9 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CustomerControlller;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\NotificationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,9 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('/login', [AuthController::class, 'login']);
 });
 
+
+
+
 // all routes start
 Route::group(['middleware' => ['auth']], function () {
 
@@ -64,7 +69,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}/update', [CustomerControlller::class, 'update'])->name('update');
         Route::delete('/{id}/delete', [CustomerControlller::class, 'destroy'])->name('destroy');
         Route::post('/details/modal', [CustomerControlller::class, 'showCustomerWithModal'])->name('details.modal');
+        // Route::get('/export-customers', [CustomerControlller::class, 'exportCustomersToCsv']);
     });
+
+    Route::get('/export-customers', [CustomerControlller::class, 'exportCustomersToCsv'])->name('export');
 
     // todo list route
     Route::prefix('to-do-list')->name('task.')->group(function () {
@@ -143,7 +151,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}', [ExpenseController::class, 'show'])->name('show');
         Route::put('/{id}', [ExpenseController::class, 'update'])->name('update');
         Route::delete('/{id}', [ExpenseController::class, 'destroy'])->name('destroy');
-        Route::get('/{id}/invoice-download', [ExpenseController::class, 'invoiceDownload'])->name('invoice.download');
+        Route::get('invoice/download/{id}', [ExpenseController::class, 'downloadInvoice'])->name('download.invoice');
     });
 
     // admin profile
@@ -158,8 +166,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Notification
     Route::prefix('notifications')->name('notification.')->group(function () {
         Route::get('/', [NotificationController::class, 'index'])->name('index');
-        Route::put('/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('markAsRead');
-        Route::put('/mark-as-unread/{id}', [NotificationController::class, 'markAsUnRead'])->name('markAsUnread');
+        Route::put('/mark-as-readUnread/{id}', [NotificationController::class, 'markAsReadUnread'])->name('markAsReadUnread');
     });
 
     // Notification
@@ -173,6 +180,10 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
+
+    Route::prefix('marketing')->name('marketing.')->group(function () {
+        Route::get('/', [MarketingController::class, 'index'])->name('marketing.index');
+    });
 
 
     // logout route

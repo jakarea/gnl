@@ -25,11 +25,10 @@ class PaymentRequest extends FormRequest
      */
     public function rules()
     {
-
         $rules = [
             'amount' => 'required|numeric',
             'tax' => 'required|numeric|lt:amount',
-            'pay_status'=>'required|in:paid,unpaid',
+            // 'pay_status'=>'required_if:pay_type,one_time|in:paid,unpaid',
             'pay_date'=>'required',
             'pay_services'=>'required',
             'pay_date'=>'required',

@@ -10,8 +10,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('projects.update',$project->project_id) }}" class="common-form another-form" method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('projects.update', $project->project_id) }}" class="common-form another-form"
+                        method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="add-customer-form">
                             <div class="row">
@@ -34,7 +34,7 @@
                                                                 <div class="d-flex">
                                                                     <div class="thumbnail-preview"
                                                                         id="thumbnail-container">
-                                                                        <img src="{{ $project->thumbnail ? asset($project->thumbnail) : asset('uploads/projects/project-01.png') }}"
+                                                                        <img src="{{ $project->thumbnail ? asset($project->thumbnail) : asset('assets/projects/project-01.png') }}"
                                                                             alt="Upload" class="img-fluid">
                                                                     </div>
                                                                     <label for="thumbnail"
@@ -57,9 +57,9 @@
                                                             class="form-control @error('title') is-invalid @enderror">
 
                                                         @error('title')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </div>
 
@@ -72,23 +72,23 @@
                                                             class="form-control @error('amount') is-invalid @enderror">
 
                                                         @error('amount')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
                                                         <label for="tax">Tax</label>
-                                                        <input type="number" placeholder="€0000" id="tax" name="tax"
-                                                            value="{{ $project->tax }}"
+                                                        <input type="number" placeholder="€0000" id="tax"
+                                                            name="tax" value="{{ $project->tax }}"
                                                             class="form-control @error('tax') is-invalid @enderror">
 
                                                         @error('tax')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </div>
                                                 </div>
@@ -100,9 +100,9 @@
                                                             class="form-control @error('start_date') is-invalid @enderror">
 
                                                         @error('start_date')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </div>
                                                 </div>
@@ -114,9 +114,9 @@
                                                             class="form-control @error('end_date') is-invalid @enderror">
 
                                                         @error('end_date')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </div>
                                                 </div>
@@ -128,9 +128,9 @@
                                                             class="form-control @error('note') is-invalid @enderror">
 
                                                         @error('note')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
                                                     </div>
                                                 </div>
@@ -143,7 +143,8 @@
                                                             <div class="dropdown dropdown-two">
                                                                 <button class="btn" type="button"
                                                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <span class="priorityy text-capitalize">{{ $project->priority }}</span>
+                                                                    <span
+                                                                        class="priorityy text-capitalize">{{ $project->priority }}</span>
                                                                     <i class="fas fa-angle-down"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu dropdown-menu-two">
@@ -151,24 +152,25 @@
                                                                         <a class="text-primary dropdown-item dropdown-item-two filterItem"
                                                                             href="#" data-value="basic">Basic
                                                                             @if ($project->priority == 'basic')
-                                                                            <i class="fas fa-check"></i>
+                                                                                <i class="fas fa-check"></i>
                                                                             @endif
 
-                                                                            </a>
+                                                                        </a>
                                                                     </li>
                                                                     <li><a class="text-warning dropdown-item dropdown-item-two filterItem"
                                                                             href="#"
                                                                             data-value="important">Important
 
                                                                             @if ($project->priority == 'important')
-                                                                            <i class="fas fa-check"></i>
+                                                                                <i class="fas fa-check"></i>
                                                                             @endif
                                                                         </a>
                                                                     </li>
                                                                     <li><a class="text-danger dropdown-item dropdown-item-two filterItem"
-                                                                            href="#" data-value="priority">Priority
+                                                                            href="#"
+                                                                            data-value="priority">Priority
                                                                             @if ($project->priority == 'priority')
-                                                                            <i class="fas fa-check"></i>
+                                                                                <i class="fas fa-check"></i>
                                                                             @endif
                                                                         </a>
                                                                     </li>
@@ -177,9 +179,9 @@
                                                         </div>
 
                                                         @error('priority')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
 
                                                     </div>
@@ -201,19 +203,21 @@
                                                                 <ul class="dropdown-menu dropdown-menu-two">
                                                                     <li>
                                                                         <a class="text-danger dropdown-item dropdown-item-two filterProjectStatus"
-                                                                            href="#" data-value="cancel">Cancelled
+                                                                            href="#"
+                                                                            data-value="cancel">Cancelled
 
                                                                             @if ($project->status == 'cancel')
-                                                                            <i class="fas fa-check"></i>
+                                                                                <i class="fas fa-check"></i>
                                                                             @endif
                                                                         </a>
                                                                     </li>
                                                                     <li>
                                                                         <a class="text-warning dropdown-item dropdown-item-two filterProjectStatus"
-                                                                            href="#" data-value="in_progress">In Progress
+                                                                            href="#" data-value="in_progress">In
+                                                                            Progress
 
                                                                             @if ($project->status == 'in_progress')
-                                                                            <i class="fas fa-check"></i>
+                                                                                <i class="fas fa-check"></i>
                                                                             @endif
                                                                         </a>
                                                                     </li>
@@ -223,7 +227,7 @@
                                                                             data-value="completed">Completed
 
                                                                             @if ($project->status == 'completed')
-                                                                            <i class="fas fa-check"></i>
+                                                                                <i class="fas fa-check"></i>
                                                                             @endif
 
                                                                         </a>
@@ -233,24 +237,81 @@
                                                         </div>
 
                                                         @error('project_status')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
                                                         @enderror
 
                                                     </div>
                                                 </div>
+
+
+                                                @if (count($links) > 0)
+                                                    <div class="appendWebUrl">
+                                                        @foreach ($links as $link)
+                                                            <div class="row removeWebUrl">
+                                                                <div class="col-12">
+                                                                    <div class="form-group form-error">
+                                                                        <div class="d-flex">
+                                                                            <input type="url"
+                                                                                placeholder="Input your link"
+                                                                                id="links" name="links[]"
+                                                                                class="form-control"
+                                                                                value="{{ $link }}">
+                                                                            <button type="button"
+                                                                                class="btn btn-primary ms-2 removeUrlBtn"><i
+                                                                                    class="fa-solid fa-minus"></i></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <div class="col-12">
+                                                        <div class="form-group form-error">
+                                                            <label for="links"> URL</label>
+                                                            <div class="d-flex">
+                                                                <input type="url" placeholder="Input your link"
+                                                                    id="links" name="links[]"
+                                                                    class="form-control">
+                                                                <button type="button"
+                                                                    class="btn btn-primary ms-2 addWebUrl"><i
+                                                                        class="fa-solid fa-plus"></i></button>
+                                                            </div>
+
+                                                            @error('links')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="appendWebUrl"></div>
+                                                @endif
+
+
                                                 <div class="col-12">
                                                     <div class="form-group form-error">
                                                         <label for="description">Description</label>
                                                         <textarea name="description" id="description" rows="7"
-                                                            class="form-control @error('description') is-invalid @enderror"
-                                                            placeholder="Enter details">{{ $project->description }}</textarea>
+                                                            class="form-control @error('description') is-invalid @enderror" placeholder="Enter details">{{ $project->description }}</textarea>
 
                                                         @error('description')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="projectFile">Files</label>
+                                                        <input type="file" name="documents[]"
+                                                            class="form-control"id="projectFile" multiple />
+                                                        @error('file')
+                                                            <div class="text-danger">{{ $message }}</div>
                                                         @enderror
                                                     </div>
                                                 </div>
@@ -272,21 +333,23 @@
                                                         <img src="{{ url('assets/images/icons/search-ic.svg') }}"
                                                             alt="a" class="img-fluid search">
 
-                                                        <input type="text" placeholder="Search by name" id="search"
-                                                            class="form-control" autocomplete="off">
+                                                        <input type="text" placeholder="Search by name"
+                                                            id="search" class="form-control" autocomplete="off">
 
                                                         <div class="search-suggestions-box"></div>
 
 
 
-                                                        <input type="hidden" name="customer_id" value="{{ implode(', ', $project->customers->pluck('customer_id')->toArray()) }}"
+                                                        <input type="hidden" name="customer_id"
+                                                            value="{{ implode(', ', $project->customers->pluck('customer_id')->toArray()) }}"
                                                             id="customer_id">
 
                                                     </div>
                                                     <div class="avatar-btn">
-                                                        <a data-bs-toggle="collapse" href="#collapseTwo" role="button"
-                                                            aria-expanded="false" aria-controls="collapseTwo"
-                                                            type="button" id="addManualBttn">
+                                                        <a data-bs-toggle="collapse" href="#collapseTwo"
+                                                            role="button" aria-expanded="false"
+                                                            aria-controls="collapseTwo" type="button"
+                                                            id="addManualBttn">
                                                             <img src="{{ url('/assets/images/icons/user-add-two.svg') }}"
                                                                 alt="a" class="img-fluid">Add Manually</a>
                                                     </div>
@@ -295,32 +358,38 @@
 
                                                 @php
                                                     $assignedCustomersId = $project->customers->pluck('customer_id');
-                                                    $assignedCustomers = App\Models\Customer::whereIn('customer_id',$assignedCustomersId)->get();
+                                                    $assignedCustomers = App\Models\Customer::whereIn(
+                                                        'customer_id',
+                                                        $assignedCustomersId,
+                                                    )->get();
                                                 @endphp
 
                                                 <!-- selected customer start  -->
                                                 <div class="row" id="selectedCustomerUi">
                                                     @foreach ($assignedCustomers as $assignedCustomer)
-                                                    {{-- selected customer --}}
-                                                    <div class="col-lg-6 prfile-box">
-                                                        <div class="selected-profile-box">
-                                                            <div class="media">
-                                                                @if ($assignedCustomer->avatar)
-                                                                <img src="{{ asset($assignedCustomer->avatar) }}" class="img-fluid avatar" alt="avatar">
-                                                                @else
-                                                                <img src="{{ asset('uploads/users/avatar-9.png') }}" alt="a" class="img-fluid avatar">
-                                                                @endif
+                                                        {{-- selected customer --}}
+                                                        <div class="col-lg-6 prfile-box">
+                                                            <div class="selected-profile-box">
+                                                                <div class="media">
+                                                                    @if ($assignedCustomer->avatar)
+                                                                        <img src="{{ asset($assignedCustomer->avatar) }}"
+                                                                            class="img-fluid avatar" alt="avatar">
+                                                                    @else
+                                                                        <img src="{{ asset('uploads/users/avatar-9.png') }}"
+                                                                            alt="a" class="img-fluid avatar">
+                                                                    @endif
 
-                                                                <div class="media-body">
-                                                                    <h3>{{ $assignedCustomer->name }}</h3>
-                                                                    <p>{{ $assignedCustomer->designation }}</p>
+                                                                    <div class="media-body">
+                                                                        <h3>{{ $assignedCustomer->name }}</h3>
+                                                                        <p>{{ $assignedCustomer->designation }}</p>
+                                                                    </div>
+                                                                    <a href="#" class="close-customer">
+                                                                        <img src="{{ url('/assets/images/icons/close-2.svg') }}"
+                                                                            alt="a" class="img-fluid">
+                                                                    </a>
                                                                 </div>
-                                                                <a href="#" class="close-customer">
-                                                                    <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
-                                                                </a>
                                                             </div>
                                                         </div>
-                                                    </div>
                                                     @endforeach
 
                                                 </div>
@@ -342,7 +411,8 @@
                                                                                     id="avatar" class="d-none">
                                                                                 <!-- upload avatar -->
                                                                                 <div class="d-flex">
-                                                                                    <label for="avatar" class="avatar"
+                                                                                    <label for="avatar"
+                                                                                        class="avatar"
                                                                                         id="avatarLabel">
                                                                                         <img src="{{ url('/uploads/users/avatar-9.png') }}"
                                                                                             alt="avatar"
@@ -374,16 +444,16 @@
                                                                             <div class="form-group form-error">
                                                                                 <label for="name">Name</label>
                                                                                 <input type="text"
-                                                                                    placeholder="Enter Name" id="name"
-                                                                                    name="name"
+                                                                                    placeholder="Enter Name"
+                                                                                    id="name" name="name"
                                                                                     value="{{ old('name') }}"
                                                                                     class="form-control @error('name') is-invalid @enderror">
 
                                                                                 @error('name')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
@@ -393,15 +463,17 @@
                                                                                 <label
                                                                                     for="designation">Designation</label>
                                                                                 <input type="text"
-                                                                                    placeholder="Enter Designation"  value="{{ old('designation') }}"
-                                                                                    id="designation" name="designation"
+                                                                                    placeholder="Enter Designation"
+                                                                                    value="{{ old('designation') }}"
+                                                                                    id="designation"
+                                                                                    name="designation"
                                                                                     class="form-control @error('designation') is-invalid @enderror">
 
                                                                                 @error('designation')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
 
                                                                             </div>
@@ -411,14 +483,15 @@
                                                                                 <label for="email">E-mail</label>
                                                                                 <input type="email"
                                                                                     placeholder="Enter email address"
-                                                                                    id="email" name="email" value="{{ old('email') }}"
+                                                                                    id="email" name="email"
+                                                                                    value="{{ old('email') }}"
                                                                                     class="form-control @error('email') is-invalid @enderror">
 
                                                                                 @error('email')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
 
                                                                             </div>
@@ -428,14 +501,15 @@
                                                                                 <label for="phone">Phone</label>
                                                                                 <input type="number"
                                                                                     placeholder="Enter phone number"
-                                                                                    id="phone" name="phone" value="{{ old('phone') }}"
+                                                                                    id="phone" name="phone"
+                                                                                    value="{{ old('phone') }}"
                                                                                     class="form-control @error('phone') is-invalid @enderror">
 
                                                                                 @error('phone')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
 
                                                                             </div>
@@ -449,10 +523,10 @@
                                                                                     class="form-control @error('location') is-invalid @enderror">
 
                                                                                 @error('location')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
@@ -492,14 +566,16 @@
                                                                                 </div>
 
                                                                                 @error('customer_status')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
 
                                                                             </div>
                                                                         </div>
+
+
                                                                         <div class="col-xl-6">
                                                                             <div class="form-group form-error">
                                                                                 <label for="kvk">KVK</label>
@@ -509,10 +585,10 @@
                                                                                     class="form-control @error('kvk') is-invalid @enderror">
 
                                                                                 @error('kvk')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
@@ -525,10 +601,10 @@
                                                                                     class="form-control @error('company') is-invalid @enderror">
 
                                                                                 @error('company')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
@@ -541,10 +617,10 @@
                                                                                     class="form-control @error('website') is-invalid @enderror">
 
                                                                                 @error('website')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
@@ -571,67 +647,76 @@
                                                                                             class="dropdown-menu dropdown-menu-two dropdown-menu-three">
 
                                                                                             @foreach ($service_types as $serviceType)
-                                                                                            <li>
-                                                                                                <a class="dropdown-item dropdown-item-two service-type"
-                                                                                                    href="javascript:;"
-                                                                                                    data-id="{{ $serviceType->service_type_id }}">{{
-                                                                                                    $serviceType->name
-                                                                                                    }}</a>
-                                                                                            </li>
+                                                                                                <li>
+                                                                                                    <a class="dropdown-item dropdown-item-two service-type"
+                                                                                                        href="javascript:;"
+                                                                                                        data-id="{{ $serviceType->service_type_id }}">{{ $serviceType->name }}</a>
+                                                                                                </li>
                                                                                             @endforeach
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
 
                                                                                 @error('service_type_id')
-                                                                                <div class="text-danger">{{ $message }}
-                                                                                </div>
+                                                                                    <div class="text-danger">
+                                                                                        {{ $message }}
+                                                                                    </div>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-xl-12">
                                                                             <div class="form-group form-error">
-                                                                                <label for="lead_type_id">Leads Type</label>
-                                                                                <input type="hidden" name="lead_type_id" id="lead_type_id">
-                                                                                <div class="common-dropdown common-dropdown-two common-dropdown-three">
-                                                                                    <div class="dropdown dropdown-two dropdown-three">
-                                                                                        <button class="btn" type="button" data-bs-toggle="dropdown"
+                                                                                <label for="lead_type_id">Leads
+                                                                                    Type</label>
+                                                                                <input type="hidden"
+                                                                                    name="lead_type_id"
+                                                                                    id="lead_type_id">
+                                                                                <div
+                                                                                    class="common-dropdown common-dropdown-two common-dropdown-three">
+                                                                                    <div
+                                                                                        class="dropdown dropdown-two dropdown-three">
+                                                                                        <button class="btn"
+                                                                                            type="button"
+                                                                                            data-bs-toggle="dropdown"
                                                                                             aria-expanded="false">
-                                                                                            <div id="setLeadType">Select Below</div><i
+                                                                                            <div id="setLeadType">
+                                                                                                Select Below</div><i
                                                                                                 class="fas fa-angle-down"></i>
                                                                                         </button>
-                                                                                        <ul class="dropdown-menu dropdown-menu-two dropdown-menu-three">
+                                                                                        <ul
+                                                                                            class="dropdown-menu dropdown-menu-two dropdown-menu-three">
                                                                                             @foreach ($lead_types as $leadType)
-                                                                                            <li>
-                                                                                                <a class="dropdown-item dropdown-item-two lead-type"
-                                                                                                    href="javascript:;"
-                                                                                                    data-id="{{ $leadType->lead_type_id }}">
+                                                                                                <li>
+                                                                                                    <a class="dropdown-item dropdown-item-two lead-type"
+                                                                                                        href="javascript:;"
+                                                                                                        data-id="{{ $leadType->lead_type_id }}">
 
-                                                                                                    {{ $leadType->name }} Lead</a>
-                                                                                            </li>
+                                                                                                        {{ $leadType->name }}
+                                                                                                        Lead</a>
+                                                                                                </li>
                                                                                             @endforeach
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
 
                                                                                 @error('lead_type_id')
-                                                                                <div class="text-danger">{{ $message }}</div>
+                                                                                    <div class="text-danger">
+                                                                                        {{ $message }}</div>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
+
                                                                         <div class="col-12">
                                                                             <div class="form-group form-error">
                                                                                 <label for="details">Details</label>
-                                                                                <textarea name="details" id="details"
-                                                                                    rows="7"
-                                                                                    class="form-control @error('name') is-invalid @enderror"
+                                                                                <textarea name="details" id="details" rows="7" class="form-control @error('name') is-invalid @enderror"
                                                                                     placeholder="Enter details"></textarea>
 
                                                                                 @error('details')
-                                                                                <span class="invalid-feedback"
-                                                                                    role="alert">
-                                                                                    <strong>{{ $message }}</strong>
-                                                                                </span>
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
@@ -704,10 +789,10 @@
 
 {{-- thumbnail upload preview js --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var thumbnailContainer = document.getElementById('thumbnail-container');
 
-        document.getElementById('thumbnail').addEventListener('change', function (e) {
+        document.getElementById('thumbnail').addEventListener('change', function(e) {
             var input = e.target;
             var file = input.files[0];
 
@@ -728,7 +813,7 @@
                     closeIcon.id = 'close-icon';
                     closeIcon.className = 'fas fa-close close-icon';
                     closeIcon.style.cursor = 'pointer';
-                    closeIcon.addEventListener('click', function () {
+                    closeIcon.addEventListener('click', function() {
                         thumbnailPreview.src = '';
                         thumbnailContainer.removeChild(closeIcon);
                         document.getElementById('thumbnail').value = '';
@@ -737,7 +822,7 @@
                 }
 
                 var reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     thumbnailPreview.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
@@ -752,7 +837,7 @@
 
 {{-- customer search ajax request --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var searchSuggestionsBox = document.querySelector('.search-suggestions-box');
         let searchInput = document.getElementById("search");
 
@@ -769,20 +854,20 @@
             const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
             fetch(`${baseUrl}/search-customers?name=${searchTerm}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                displaySearchResults(data.message);
-            })
-            .catch(error => {
-                searchSuggestionsBox.innerHTML = '';
-                console.error('Error fetching search results:', error);
-            });
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    displaySearchResults(data.message);
+                })
+                .catch(error => {
+                    searchSuggestionsBox.innerHTML = '';
+                    console.error('Error fetching search results:', error);
+                });
         }
 
         function displaySearchResults(customers) {
@@ -795,7 +880,7 @@
                     <a href="#" class="select-customer" data-id="${customer.customer_id}">
                         <div class="selected-profile-box mt-0 bg-white border-0 p-0">
                         <div class="media">
-                            <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-9.png')}}'}" class="img-fluid avatar" alt="avatar">
+                            <img src="${customer.avatar ? baseUrl2 + '/' + customer.avatar : '{{ url('uploads/users/avatar-9.png') }}'}" class="img-fluid avatar" alt="avatar">
                             <div class="media-body">
                                 <h3>${customer.name}</h3>
                                 <p>${customer.designation}</p>
@@ -812,7 +897,7 @@
             let customer_id = document.getElementById('customer_id');
             let selectCustomers = document.querySelectorAll('.select-customer');
 
-           // Store selected customer IDs
+            // Store selected customer IDs
             var selectedCustomers = [];
 
             // Loop through each customer
@@ -863,10 +948,10 @@
 
 <script>
     document.getElementById('addManualBttn').addEventListener('click', function(e) {
-    var addManualInput = document.getElementById('addManual');
+        var addManualInput = document.getElementById('addManual');
 
-    addManualInput.value = addManualInput.value == '0' ? '1' : '0';
-});
+        addManualInput.value = addManualInput.value == '0' ? '1' : '0';
+    });
 </script>
 
 {{-- select customer status js --}}
@@ -889,32 +974,31 @@
 {{-- customer avatar js --}}
 <script>
     // Get references to elements
-const avatarInput = document.getElementById('avatar');
-const avatarPreview = document.getElementById('avatarPreview');
-const avatarLabel = document.getElementById('avatarLabel');
+    const avatarInput = document.getElementById('avatar');
+    const avatarPreview = document.getElementById('avatarPreview');
+    const avatarLabel = document.getElementById('avatarLabel');
 
-// Add event listener to file input
-avatarInput.addEventListener('change', function(event) {
-    const file = event.target.files[0]; // Get the first file selected by the user
+    // Add event listener to file input
+    avatarInput.addEventListener('change', function(event) {
+        const file = event.target.files[0]; // Get the first file selected by the user
 
-    // Check if a file is selected
-    if (file) {
-        // Read the file as a data URL
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            // Update the preview image source with the data URL
-            avatarPreview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
+        // Check if a file is selected
+        if (file) {
+            // Read the file as a data URL
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Update the preview image source with the data URL
+                avatarPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
-// Optional: Add event listener to reset the file input
-avatarLabel.addEventListener('click', function() {
-    avatarInput.value = ''; // Clear the file input
-    avatarPreview.src = '{{ url('/uploads/users/avatar-9.png') }}'; // Reset the preview image to default
-});
-
+    // Optional: Add event listener to reset the file input
+    avatarLabel.addEventListener('click', function() {
+        avatarInput.value = ''; // Clear the file input
+        avatarPreview.src = '{{ url('/uploads/users/avatar-9.png') }}'; // Reset the preview image to default
+    });
 </script>
 
 

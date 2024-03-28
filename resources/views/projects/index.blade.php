@@ -125,9 +125,10 @@
                     </div>
                     <div class="thumbnail">
                         @if ($project->thumbnail)
-                        <img src="{{ asset($project->thumbnail) }}" alt="a" class="img-fluid">
+                        <a href="{{ url('projects/'.$project->project_id) }}"><img src="{{ asset($project->thumbnail) }}" alt="a" class="img-fluid"></a>
+
                         @else
-                        <img src="{{ asset('assets/projects/project-01.png') }}" alt="a" class="img-fluid">
+                        <a href="{{ url('projects/'.$project->project_id) }}"><img src="{{ asset('assets/projects/project-01.png') }}" alt="a" class="img-fluid"></a>
                         @endif
                     </div>
 
@@ -186,6 +187,35 @@
 {{-- add custmer form end --}}
 
 @section('script')
+
+
+<script>
+    $(document).on("click", ".addWebUrl", function() {
+        let template = `<div class="row removeWebUrl">
+                        <div class="col-12">
+                            <div class="form-group form-error">
+                                    <div class="d-flex">
+                                        <input type="url" placeholder="Input your link" id="links" name="links[]" class="form-control">
+                                        <button type="button" class="btn btn-primary ms-2 removeUrlBtn"><i class="fa-solid fa-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+
+        $(".appendWebUrl").append(template);
+    });
+
+    // Remove Company and Website Fields
+    $(document).on("click", ".removeUrlBtn", function() {
+
+        $(this).closest(".removeWebUrl").remove();
+    });
+</script>
+
+
+
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 

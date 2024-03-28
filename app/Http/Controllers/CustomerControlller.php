@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests\Customer\CustomerRequest;
 
+use League\Csv\Writer;
+use League\Csv\CannotInsertRecord;
+
 class CustomerControlller extends ApiController
 {
 
@@ -23,6 +26,7 @@ class CustomerControlller extends ApiController
         $status = request()->input('status', 'all');
         $serviceTypeId = request()->input('searchTypeId','all');
         $leadTypeId = request()->input('leadTypeId','all');
+        $customer = request()->input('customer');
 
         $q = request()->input('q','');
         if ($q) {
@@ -44,6 +48,14 @@ class CustomerControlller extends ApiController
 
         if ($serviceTypeId !='all') {
             $query->where('service_type_id', $serviceTypeId);
+        }
+
+        if ($customer == 'new') {
+            $query->where('created_at', '>=', now()->subMonth());
+        }
+
+        if ($customer == 'repeat') {
+            $query->where('created_at', '<', now()->subMonth());
         }
 
         $customers = $query->orderByDesc('customer_id')->paginate(20);
@@ -86,9 +98,18 @@ class CustomerControlller extends ApiController
     public function store(CustomerService $addCustomer, CustomerRequest $request)
     {
 
-        return $request->dd();
+        // return $request->dd();
+
+        $companies = $request->input('company');
+        $websites = $request->input('website');
 
         $customer = $addCustomer->addCustomer($request);
+
+        $customer->update([
+            'company' => is_array($companies) ? implode(',', $companies) : $companies,
+            'website' => is_array($websites) ? implode(',', $websites) : $websites,
+        ]);
+
         Notification::create([
             'creator_id' => auth()->user()->user_id,
             'action_id' => $customer->customer_id,
@@ -115,8 +136,16 @@ class CustomerControlller extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($customer_id)
+    public function show(Request $request, $customer_id)
     {
+        if($request->notificationId){
+            $result = NotifyReaUnred($request->notificationId);
+
+            if (!$result) {
+                return back()->withError('This record not found or has been deleted');
+            }
+        }
+
         $data['customer'] = Customer::with('earnings')->findOrFail($customer_id);
         return view('customer.show', $data);
     }
@@ -136,6 +165,10 @@ class CustomerControlller extends ApiController
             $data['services_types'] = ServiceType::orderByDesc('service_type_id')->get();
             $data['lead_types'] = LeadType::orderByDesc('lead_type_id')->get();
             $data['customer'] = Customer::with('earnings')->findOrFail($request->customerId);
+
+            $data['companies'] = array_filter(explode(',', $data['customer']->company));
+            $data['websites'] = array_filter(explode(',', $data['customer']->website));
+
             return view('components.customer-edit-modal', $data);
         }
     }
@@ -144,7 +177,8 @@ class CustomerControlller extends ApiController
     {
         // dd($request->all());
         $customer = Customer::findOrFail($customer_id);
-        $data = $request->except(['avatar']);
+
+        $data = $request->except(['avatar', 'company', 'website']);
 
         $customer->update($data);
 
@@ -158,6 +192,14 @@ class CustomerControlller extends ApiController
             $avatarPath = $avatar->storeAs('customers', $filename, 'public');
             $customer->update(['avatar' => 'storage/'.$avatarPath]);
         }
+
+        $companies = $request->input('company');
+        $websites = $request->input('website');
+
+        $customer->update([
+            'company' => is_array($companies) ? implode(',', $companies) : $companies,
+            'website' => is_array($websites) ? implode(',', $websites) : $websites,
+        ]);
 
         Notification::create([
             'creator_id' => auth()->user()->user_id,
@@ -203,5 +245,35 @@ class CustomerControlller extends ApiController
             $data['customer'] = Customer::findOrFail($request->customerId);
             return view('components.customer-details-modal', $data);
         }
+    }
+
+    public function exportCustomersToCsv()
+    {
+        $customers = Customer::select(
+            'lead_type_id',
+            'name',
+            'avatar',
+            'designation',
+            'email',
+            'phone',
+            'location',
+            'status',
+            'kvk'
+        )->get();
+
+
+        $csvContent = "Lead Type ID,Name,Avatar,Designation,Email,Phone,Location,Status,KVK,Company,Website\n";
+
+    // Populate CSV content with customer data
+    foreach ($customers as $customer) {
+        $csvContent .= "{$customer->lead_type_id},{$customer->name},{$customer->avatar},{$customer->designation},{$customer->email},{$customer->phone},{$customer->location},   {$customer->status},{$customer->kvk}\n";
+    }
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=customers.csv',
+        ];
+
+        return response($csvContent, 200, $headers);
     }
 }

@@ -171,8 +171,7 @@
                                 $highLess = 'Less';
                         } @endphp
                         @if ($selectedQuery === 'this_month' || $selectedQuery === 'last_month')
-                            <p>{{ $highLess }} than last
-                                month</p>
+                            <p>{{ $highLess }} than last month</p>
                         @elseif ($selectedQuery === 'this_year' || $selectedQuery === 'last_year')
                             <p>{{ $highLess }} than last year</p>
                         @elseif ($selectedQuery === 'all_time')
@@ -409,12 +408,14 @@
                                             <p>{{ $expense->type }}</p>
                                         </td>
                                         <td>
-                                            <p>${{ $expense->amount }}</p>
+                                            <p>€{{ $expense->amount }}</p>
                                         </td>
                                         <td>
-                                            <a class="invoice" href="{{ route('expense.invoice.download', $expense->expense_id) }}">
+                                            @if ($expense->file)
+                                            <a class="invoice" href="{{ url('expenses/invoice/download/'.$expense->expense_id) }}">
                                                 Invoice
-                                            </a>
+                                            </a> 
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -424,7 +425,6 @@
                                     <td class="text-center" colspan="7">@component( 'components.empty-data-component' , ['dynamicData' => 'No found customer history'])@endcomponent</td>
                                 </tr>
                             @endif
-                            <!-- expense single item end -->
 
                         </table>
                     </div>
@@ -730,7 +730,7 @@
             tooltip: {
                 y: {
                     formatter: function(val) {
-                        return "$ " + val + " thousands"
+                        return "€ " + val + " thousands"
                     }
                 }
             }

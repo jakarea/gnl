@@ -3,6 +3,7 @@
 @section('title', 'Customer List Page')
 
 @section('style')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url('assets/css/customer.css') }}" />
 @endsection
 
@@ -99,7 +100,7 @@
                                         @foreach ($lead_types as $leadType)
                                             <li>
                                                 <a class="dropdown-item {{ request()->leadTypeId == $leadType->lead_type_id ? 'active' : '' }}"
-                                                    href="{{ route('customers.index', ['leadTypeId' => $leadType->lead_type_id, 'searchTypeId' => request()->searchTypeId, 'status' => request()->status]) }}">
+                                                    href="{{ route('customers.index', ['leadTypeId' => $leadType->lead_type_id, 'searchTypeId' => request()->searchTypeId, 'status' => request()->status, 'customer' => request()->customer]) }}">
                                                     {{ $leadType->name }} {!! request()->leadTypeId == $leadType->lead_type_id ? '<i class="fas fa-check"></i>' : '' !!}
                                                 </a>
                                             </li>
@@ -110,7 +111,7 @@
                             <!-- filter item -->
 
                             <!-- filter item -->
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ Str::ucfirst(request()->searchTypeId && request()->searchTypeId !== 'all' ? optional(App\Models\ServiceType::find(request()->searchTypeId))->name : 'All Service') }}
 
@@ -134,34 +135,59 @@
                                         @endforeach
                                     @endif
                                 </ul>
-                            </div>
+                            </div> --}}
                             <!-- filter item -->
 
                             <!-- filter item -->
                             <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ Str::ucfirst(request()->input('status')) ?? 'All' }} Customer <i
+                                    {{ request('status') ? ucfirst(request('status')) . " Customer" : "Customer Activity" }} <i
                                         class="fas fa-angle-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item {{ request()->input('status') === 'all' ? 'active' : '' }}"
-                                            href="{{ route('customers.index', ['status' => 'all', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId]) }}">All
+                                            href="{{ route('customers.index', ['status' => 'all', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId, 'customer' => request()->customer]) }}">All
                                             Customer {!! request()->status == 'all' ? '<i class="fas fa-check"></i>' : '' !!}</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item {{ request()->input('status') === 'active' ? 'active' : '' }}"
-                                            href="{{ route('customers.index', ['status' => 'active', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId]) }}">Active
+                                            href="{{ route('customers.index', ['status' => 'active', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId, 'customer' => request()->customer]) }}">Active
                                             Customer {!! request()->status == 'active' ? '<i class="fas fa-check"></i>' : '' !!}</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item {{ request()->input('status') === 'inactive' ? 'active' : '' }}"
-                                            href="{{ route('customers.index', ['status' => 'inactive', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId]) }}">Inactive
+                                            href="{{ route('customers.index', ['status' => 'inactive', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId, 'customer' => request()->customer]) }}">Inactive
                                             Customer {!! request()->status == 'inactive' ? '<i class="fas fa-check"></i>' : '' !!}</a>
                                     </li>
                                 </ul>
                             </div>
                             <!-- filter item -->
+
+
+
+
+
+                            <div class="dropdown">
+                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ request('customer') ? ucfirst(request('customer')) . " Customer" : "Customer Status" }}<i
+                                        class="fas fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item {{ request()->input('customer') === 'new' ? 'active' : '' }}"
+                                            href="{{ route('customers.index', ['customer' => 'new', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId, 'status' => request()->status]) }}">New
+                                            Customer {!! request()->customer == 'new' ? '<i class="fas fa-check"></i>' : '' !!}</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item {{ request()->input('customer') === 'repeat' ? 'active' : '' }}"
+                                            href="{{ route('customers.index', ['customer' => 'repeat', 'searchTypeId' => request()->searchTypeId, 'leadTypeId' => request()->leadTypeId, 'status' => request()->status]) }}">Repeat
+                                            Customer {!! request()->repeat == 'all' ? '<i class="fas fa-check"></i>' : '' !!}</a>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -170,7 +196,7 @@
 
             <!-- list start -->
             <div class="row" id="customerWraper">
-                @if (count( $customers ) > 0)
+                @if (count($customers) > 0)
                     @foreach ($customers as $customer)
                         <!-- customer start -->
                         <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mt-15">
@@ -179,7 +205,8 @@
                             <div class="customer-person-box-wrap">
                                 <div class="avatar">
                                     @if ($customer->avatar)
-                                        <img src="{{ asset($customer->avatar) }}" alt="avatar" class="img-fluid avatar" />
+                                        <img src="{{ asset($customer->avatar) }}" alt="avatar"
+                                            class="img-fluid avatar" />
                                     @else
                                         <img src="{{ asset('/assets/users/avatar-9.png') }}" alt="default avatar"
                                             class="img-fluid avatar" />
@@ -187,7 +214,16 @@
                                 </div>
 
                                 <div class="text">
-                                    <span class="{{ $customer->isNew() ? 'new' : 'repeat' }}">{{ $customer->isNew() ? 'New Customer' : 'Repeat Customer' }}</span>
+                                    @if ( request()->customer )
+                                        <span class="{{ $customer->isNew() ? 'new' : 'repeat' }}">{{ $customer->isNew() ? 'New Customer' : 'Repeat Customer' }}</span>
+                                    @else
+                                        @if ( $customer->isNew() )
+                                            <span class="{{ $customer->isNew() ? 'new' : '' }}">{{ $customer->isNew() ? 'New Customer' : '' }}</span>
+                                        @endif
+                                    @endif
+
+                                    {{-- <span class="{{ $customer->isNew() ? 'new' : 'repeat' }}">{{ $customer->isNew() ? 'New Customer' : 'Repeat Customer' }}</span> --}}
+
                                     <h4>
                                         <a href="javascript:;" data-customer-id="{{ $customer->customer_id }}"
                                             class="details customerModalDetails">{{ $customer->name }}</a>
@@ -225,9 +261,9 @@
                         </div>
                         <!-- customer end -->
                     @endforeach
-
                 @else
-                    @component( 'components.empty-data-component' , ['dynamicData' => 'No Task Found!'])@endcomponent
+                    @component('components.empty-data-component', ['dynamicData' => 'No Task Found!'])
+                    @endcomponent
                 @endif
             </div>
             <!-- list end -->
@@ -244,8 +280,13 @@
         <!-- Button trigger modal -->
 
         <div class="custom-modal">
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            {{-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> --}}
+
+            <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                aria-hidden="true">
+
+
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -257,8 +298,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="post" action="{{ route('customers.store') }}" class="common-form"
-                                enctype="multipart/form-data">
+                            <form id="insertCustomerInfo" method="post" action="{{ route('customers.store') }}"
+                                class="common-form insertCustomerInfo" enctype="multipart/form-data">
                                 <input type="hidden" name="status" id="status" value="active">
                                 @csrf
                                 <div class="add-customer-form">
@@ -270,8 +311,8 @@
                                                 <!-- upload avatar -->
                                                 <div class="d-flex">
                                                     <label for="avatar" class="avatar" id="avatarLabel">
-                                                        <img src="{{ url('/assets/users/avatar-9.png') }}"
-                                                            alt="avatar" class="img-fluid" id="avatarPreview">
+                                                        <img src="{{ url('/assets/users/avatar-9.png') }}" alt="avatar"
+                                                            class="img-fluid" id="avatarPreview">
                                                         <span class="avatar-ol">
                                                             <img src="{{ url('/assets/images/icons/camera.svg') }}"
                                                                 alt="camera" class="img-fluid">
@@ -286,9 +327,9 @@
                                                 <!-- upload avatar -->
                                             </div>
                                         </div>
-                                        <div class="col-xl-6">
+                                        <div class="col-xl-6 placeError">
                                             <div class="form-group form-error">
-                                                <label for="name">Name</label>
+                                                <label for="name">Name<sup class="text-danger fs-6">*</sup> </label>
                                                 <input type="text" placeholder="Enter Name" id="name"
                                                     name="name" class="form-control" value="{{ old('name') }}" />
                                                 @error('name')
@@ -296,9 +337,10 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-xl-6">
+                                        <div class="col-xl-6 placeError">
                                             <div class="form-group form-error">
-                                                <label for="designation">Designation</label>
+                                                <label for="designation">Designation <span
+                                                        class="text-danger">*</span></label>
                                                 <input type="text" placeholder="Enter Designation" id="designation"
                                                     name="designation" class="form-control"
                                                     value="{{ old('designation') }}" />
@@ -308,9 +350,9 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-xl-6">
+                                        <div class="col-xl-6 placeError">
                                             <div class="form-group form-error">
-                                                <label for="email">E-mail</label>
+                                                <label for="email">E-mail<sup class="text-danger fs-6">*</sup></label>
                                                 <input type="email" placeholder="Enter email address" id="email"
                                                     name="email" class="form-control" value="{{ old('email') }}" />
                                                 @error('email')
@@ -340,9 +382,9 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-xl-6">
+                                        <div class="col-xl-6 placeError">
                                             <div class="form-group form-error">
-                                                <label for="website">Active Status</label>
+                                                <label for="status">Active Status</label>
                                                 <div class="common-dropdown common-dropdown-two common-dropdown-three">
                                                     <div class="dropdown dropdown-two dropdown-three">
                                                         <button class="btn" type="button" data-bs-toggle="dropdown"
@@ -405,9 +447,10 @@
                                                 @enderror
                                             </div>
                                         </div> --}}
-                                        <div class="col-xl-6">
+                                        <div class="col-xl-6 placeError">
                                             <div class="form-group form-error">
-                                                <label for="lead_type_id">Leads Type</label>
+                                                <label for="lead_type_id">Leads Type <span
+                                                        class="text-danger">*</span></label>
                                                 <input type="hidden" name="lead_type_id" id="lead_type_id">
                                                 <div class="common-dropdown common-dropdown-two common-dropdown-three">
                                                     <div class="dropdown dropdown-two dropdown-three">
@@ -429,16 +472,27 @@
                                                     </div>
                                                 </div>
 
+
+
+                                                {{-- <select class="w-100 lead_type_id" name="lead_type_id[]" multiple="multiple">
+                                                    @foreach ($lead_types as $leadType)
+                                                        <option value="{{ $leadType->lead_type_id }}">{{ $leadType->name }}</option>
+                                                    @endforeach
+                                                </select> --}}
+
                                                 @error('lead_type_id')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
+
                                         </div>
+
                                         <div class="col-xl-6">
                                             <div class="form-group form-error">
                                                 <label for="company">Company</label>
                                                 <input type="text" placeholder="Enter company name" id="company"
-                                                    name="company" class="form-control" value="{{ old('company') }}" />
+                                                    name="company[]" class="form-control"
+                                                    value="{{ old('company') }}" />
                                                 @error('company')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -447,15 +501,23 @@
                                         <div class="col-xl-6">
                                             <div class="form-group form-error">
                                                 <label for="website">Website</label>
-                                                <input type="text" placeholder="Enter website" id="website"
-                                                    name="website" class="form-control" value="{{ old('website') }}" />
+
+                                                <div class="d-flex">
+                                                    <input type="text" placeholder="Enter website" id="website"
+                                                        name="website[]" class="form-control"
+                                                        value="{{ old('website') }}" />
+
+                                                    <button type="button" class="btn btn-primary ms-2 addCompanyWeb"><i
+                                                            class="fa-solid fa-plus"></i></button>
+                                                </div>
+
                                                 @error('website')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
 
-
+                                        <div class="appendCompayWebsite"></div>
 
                                         <div class="col-12">
                                             <div class="form-group form-error">
@@ -466,6 +528,8 @@
                                                 @enderror
                                             </div>
                                         </div>
+
+
                                         <div class="col-xl-6">
                                             <div class="form-bttn">
                                                 <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">
@@ -475,7 +539,7 @@
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="form-bttn">
-                                                <button type="submit" class="btn btn-submit">
+                                                <button type="submit" class="btn btn-submit submit-customer-info">
                                                     Submit
                                                 </button>
                                             </div>
@@ -510,7 +574,126 @@
 @endsection
 
 @section('script')
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+        integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        $(document).ready(function() {
+            $('.lead_type_id').select2();
+        });
+    </script>
+    <script>
+        customerFormValidation();
+
+        $(document).on("submit", ".insertCustomerInfo", function(e) {
+            if ($(this).valid()) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+
+        function customerFormValidation() {
+            let error_data = {
+                formId: "#insertCustomerInfo",
+                rules: {
+                    name: "required",
+                    designation: "required",
+                    // status: {
+                    //     required: true,
+                    //     inList: ["active", "inactive"]
+                    // },
+
+                    lead_type_id: {
+                        required: true,
+                        numeric: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+
+                    // phone: {
+                    //     required: true,
+                    //     minlength: 10,
+                    //     maxlength: 13,
+                    // },
+                    // password: {
+                    //     required: true,
+                    //     minlength: 8,
+                    //     maxlength: 12,
+                    // },
+                    // password_confirmation: {
+                    //     required: true,
+                    //     minlength: 8,
+                    //     maxlength: 12,
+                    //     equalTo: "#skillpassword",
+                    // },
+                },
+            };
+            show_error(error_data);
+        }
+
+
+        $(document).on("click", ".addCompanyWeb", function() {
+            let template = `<div class="row removeItemWeb">
+                            <div class="col-xl-6">
+                                <div class="form-group form-error">
+                                    <input type="text" placeholder="Enter company name" name="company[]" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group form-error">
+                                    <div class="d-flex">
+                                        <input type="text" placeholder="Enter website" name="website[]" class="form-control" />
+                                        <button type="button" class="btn btn-primary ms-2 removeCompanyWeb"><i class="fa-solid fa-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+
+            $(".appendCompayWebsite").append(template);
+        });
+
+        // Remove Company and Website Fields
+        $(document).on("click", ".removeCompanyWeb", function() {
+            $(this).closest(".removeItemWeb").remove();
+        });
+
+
+        $(document).on("click", ".addCompanyWeb", function() {
+            let template = `<div class="row removeItemWeb">
+                            <div class="col-xl-6">
+                                <div class="form-group form-error">
+                                    <input type="text" placeholder="Enter company name" name="company[]" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group form-error">
+                                    <div class="d-flex">
+                                        <input type="text" placeholder="Enter website" name="website[]" class="form-control" />
+                                        <button type="button" class="btn btn-primary ms-2 removeCompanyWeb"><i class="fa-solid fa-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+
+            $(".appendEditCompayWebsite").append(template);
+        });
+
+
+        // Remove Company  and Website Fields form edit page
+        $(document).on("click", ".editRemoveCompanyWeb", function() {
+            var webId = $(this).closest(".website-container").data("web-id");
+
+            $(".company-container[data-company-id='" + webId + "']").remove();
+            $(this).closest(".website-container").remove();
+        });
+
+
         $(document).on('click', '.customerModalDetails', function(e) {
             e.preventDefault();
             const customerId = $(this).data('customer-id');

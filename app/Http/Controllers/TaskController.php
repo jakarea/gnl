@@ -106,9 +106,17 @@ class TaskController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($task_id)
+    public function show(Request $request, $task_id)
     {
-       $task = Task::findOrFail( $task_id);
+        if($request->notificationId){
+            $result = NotifyReaUnred($request->notificationId);
+
+            if (!$result) {
+                return back()->withError('This record not found or has been deleted');
+            }
+        }
+
+        $task = Task::findOrFail( $task_id);
         return $task;
     }
 
@@ -212,7 +220,7 @@ class TaskController extends ApiController
     public function getProjectById(Request $request){
         if( $request->ajax() ){
             $data['project'] = Project::findOrFail( $request->projectId);
-            return view( 'components.load-project-by-id' , $data);
+            return view('components.load-project-by-id' , $data);
         }
     }
 

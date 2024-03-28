@@ -12,7 +12,7 @@ class CustomerService
     {
         // dd( $request->all() );
 
-        $data     = $request->except(['avatar']);
+        $data = $request->except(['avatar', 'company', 'website']);
 
         $customer = Customer::create($data);
 

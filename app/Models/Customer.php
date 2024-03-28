@@ -45,7 +45,7 @@ class Customer extends Model
     public function isNew()
     {
         $isNew = $this->created_at >= now()->subMonth();
-        return $isNew;
+        return $isNew && $this->created_at >= now()->subDays(30);
     }
 
 }

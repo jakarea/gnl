@@ -29,4 +29,62 @@ document.addEventListener('click', (event) => {
         notifyList.classList.toggle('show');
         notifyButton.classList.toggle('active');
     }
-}); 
+});
+
+
+
+$(document).ready(function () {
+    $('.net_amount').on('input', function () {
+        var amount = $(this).val();
+        if (amount !== '') {
+            var taxAmount = (parseFloat(amount) * 0.21).toFixed(2);
+            $('.tax_calculate').val(taxAmount);
+        } else {
+            $('.tax_calculate').val('');
+        }
+    });
+});
+
+$(document).ready(function () {
+
+    $('.payment-type-bttn').on('click', function () {
+        var paymentType = $(this).data('type');
+        $('#pay_type').val(paymentType);
+        togglePaymentStatus();
+    });
+
+    function togglePaymentStatus() {
+        var paymentType = $('#pay_type').val();
+
+        if (paymentType === 'one_time') {
+            $('.removePayStatus').show();
+            $(".serviceCol12").removeClass('col-xl-12').addClass('col-xl-6');
+        } else {
+            $('.removePayStatus').hide();
+            $(".serviceCol12").removeClass('col-xl-6').addClass('col-xl-12');
+        }
+    }
+});
+
+
+function show_error(error_data) {
+    let { formId, appendClass = ".placeError", rules } = error_data;
+
+    $(formId).validate({
+        rules: rules,
+        ignore: "",
+        errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback");
+            element.closest(appendClass).append(error);
+        },
+
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid");
+        },
+
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass("is-invalid");
+        }
+    });
+}
+

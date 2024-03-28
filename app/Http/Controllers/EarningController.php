@@ -211,6 +211,9 @@ class EarningController extends Controller
     // earning store method
     public function store(CustomerService $addCustomer, PaymentRequest $request)
     {
+
+        // dd($request->pay_type == 'one_time');
+
         $data = $request->all();
         if ($request->manualyCustomer == 1 || $request->manualyCustomer == "1") {
             $customer =  $addCustomer->addCustomer($request);
@@ -222,6 +225,7 @@ class EarningController extends Controller
         }
 
         $data['customer_id'] = $customerId;
+        $data['pay_status'] = $request->pay_type == 'repeated' ? 'paid' : $request->pay_type;
 
         $service = Earning::create($data);
 

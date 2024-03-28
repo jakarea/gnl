@@ -274,7 +274,7 @@
                                                     </div>
                                                     <div class="col-xl-12">
                                                         <div class="form-group form-error mt-0">
-                                                            <label for="title">Task Title</label>
+                                                            <label for="title">Task Title<sup class="text-danger fs-6">*</sup></label>
                                                             <input type="text" placeholder="Enter title"
                                                                 id="title" name="title" class="form-control"
                                                                 value="{{ old('title') }}" required>
@@ -285,7 +285,7 @@
                                                     </div>
                                                     <div class="col-xl-12">
                                                         <div class="form-group form-error">
-                                                            <label for="website">Priority</label>
+                                                            <label for="website">Priority<sup class="text-danger fs-6">*</sup></label>
                                                             <div class="common-dropdown common-dropdown-two">
                                                                 <div class="dropdown dropdown-two">
                                                                     <button class="btn" type="button"
@@ -317,7 +317,7 @@
 
                                                     <div class="col-xl-12">
                                                         <div class="form-group form-error">
-                                                            <label for="date">Date</label>
+                                                            <label for="date">Date<sup class="text-danger fs-6">*</sup></label>
                                                             <input type="date" placeholder="dd-mm-yyyy" id="date"
                                                                 name="date" class="form-control"
                                                                 value="{{ old('date') }}" required>
@@ -339,7 +339,7 @@
                                                         </div> --}}
 
                                                         <div class="form-group form-error">
-                                                            <label for="schedule">Schedule</label>
+                                                            <label for="schedule">Schedule<sup class="text-danger fs-6">*</sup></label>
                                                             <div id="datetimepickerDate" class="input-group timerange">
                                                                 <input class="form-control" type="text"
                                                                     name="schedule" placeholder="--:- -">
@@ -375,7 +375,7 @@
                                                     <hr>
                                                     <div class="col-xl-12">
                                                         <div class="select-title">
-                                                            <h3>Select Project</h3>
+                                                            <h3>Select Project<sup class="text-danger fs-6">*</sup></h3>
                                                         </div>
                                                         <!-- customer search form start -->
 
@@ -409,7 +409,7 @@
 
                                                         <!-- customer search form end -->
                                                         <div class="select-title">
-                                                            <h3>Select Customer</h3>
+                                                            <h3>Select Customer<sup class="text-danger fs-6">*</sup></h3>
                                                         </div>
 
                                                         <!-- customer search form start -->
@@ -436,6 +436,11 @@
                                                                     Manually</a>
                                                             </div>
                                                         </div>
+                                                        @error('customer_id')
+                                                            <div class="text-danger">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
                                                         <div class="row" id="selectedCustomerUi"></div>
                                                         <!-- customer search form end -->
 
@@ -758,7 +763,6 @@
     <script>
         const searchProject = (e) => {
             const searchTerm = e.target.value;
-
             $.ajax({
                 type: 'get',
                 url: "{{ route('projectsearch') }}",
@@ -772,7 +776,6 @@
                     console.error('Ajax request failed: ', error);
                 }
             });
-
         }
 
         // Hide project search when click outside of input project
@@ -837,7 +840,6 @@
             $(".setLeadLabel").html(leadLabel)
             $(".lead_type_id").val(leadTypeId)
         }
-
 
         // Show edit task modal
         const editTaskModal = (taskId) => {
@@ -953,54 +955,78 @@
                 });
 
                 // select customer from suggest
-                let selectedCustomerUi = document.getElementById('selectedCustomerUi');
-                let customer_id = document.getElementById('customer_id');
-                let selectCustomers = document.querySelectorAll('.select-customer');
+let selectedCustomerUi = document.getElementById('selectedCustomerUi');
+let customer_id = document.getElementById('customer_id');
+let selectCustomers = document.querySelectorAll('.select-customer');
 
-                // Store selected customer IDs
-                var selectedCustomers = [];
+// Store selected customer IDs
+var selectedCustomers = [];
 
-                // Loop through each customer
-                selectCustomers.forEach(customer => {
-                    customer.addEventListener('click', function(event) {
-                        var customerId = this.getAttribute('data-id');
+// Loop through each customer
+selectCustomers.forEach(customer => {
+    customer.addEventListener('click', function(event) {
+        var customerId = this.getAttribute('data-id');
 
-                        if (!selectedCustomers.includes(customerId)) {
-                            selectedCustomers.push(customerId);
+        // Split current customer_id.value into an array
+        var currentIds = customer_id.value.split(',').filter(Boolean); // Remove empty/falsy values
 
-                            var avatar = this.querySelector('.media img').getAttribute('src');
-                            var name = this.querySelector('.media-body h3').textContent;
-                            var designation = this.querySelector('.media-body p').textContent;
+        if (!currentIds.includes(customerId)) {
+            // Add new customerId to the array
+            currentIds.push(customerId);
 
-                            let customerHTML = `
-                            <div class="col-lg-6 prfile-box">
-                                <div class="selected-profile-box">
-                                    <div class="media">
-                                        <img src="${avatar}" class="img-fluid avatar" alt="avatar">
-                                        <div class="media-body">
-                                            <h3>${name}</h3>
-                                            <p>${designation}</p>
-                                        </div>
-                                        <a href="#" class="close-customer">
-                                            <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
-                                        </a>
-                                    </div>
-                                </div>
+            // Join the array back into a string and update customer_id.value
+            customer_id.value = currentIds.join(',');
+
+            selectedCustomers.push(customerId);
+
+            var avatar = this.querySelector('.media img').getAttribute('src');
+            var name = this.querySelector('.media-body h3').textContent;
+            var designation = this.querySelector('.media-body p').textContent;
+
+            let customerHTML = `
+                <div class="col-lg-6 prfile-box" data-id="${customerId}">
+                    <div class="selected-profile-box">
+                        <div class="media">
+                            <img src="${avatar}" class="img-fluid avatar" alt="avatar">
+                            <div class="media-body">
+                                <h3>${name}</h3>
+                                <p>${designation}</p>
                             </div>
-                        `;
+                            <a href="#" class="close-customer">
+                                <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
 
-                            // Append the customer HTML to the selectedCustomerUi
-                            selectedCustomerUi.innerHTML += customerHTML;
+            selectedCustomerUi.innerHTML += customerHTML;
 
-                            // Update the value of the input field
-                            if (customer_id.value !== '') {
-                                customer_id.value += ',' + customerId;
-                            } else {
-                                customer_id.value = customerId;
-                            }
+            this.removeEventListener('click', arguments.callee);
+
+            let closeCustomers = document.querySelectorAll(".close-customer");
+            closeCustomers.forEach(closeCustomer => {
+                closeCustomer.addEventListener('click',function(event){
+                    let profileBox = event.target.closest('.prfile-box');
+
+                    if (profileBox) {
+                        let customerId = profileBox.getAttribute('data-id');
+                        profileBox.remove();
+                        var currentIds = customer_id.value.split(',').filter(Boolean);
+                        var index = currentIds.indexOf(customerId);
+                        if (index > -1) {
+                            currentIds.splice(index, 1);
                         }
-                    });
+                        customer_id.value = currentIds.join(',');
+                    }
+
                 });
+            });
+        }
+    });
+});
+
+
 
             }
         });

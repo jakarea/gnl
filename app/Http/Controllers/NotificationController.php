@@ -45,23 +45,19 @@ class NotificationController extends Controller
         return view('notifications.index', $data);
     }
 
-    public function markAsRead($id)
+    public function markAsReadUnread($id)
     {
         $notification = Notification::findOrFail($id);
-        $notification->update(['status' => true]);
-        // return redirect()->route('notification.index')->with('success', 'Notification marked as read.');
-        //return redirect()->route('notification.index');
+        if( $notification->status){
+            $notification->update(['status' => 0]);
+        }else{
+            $notification->update(['status' => 1]);
+        }
         return back();
     }
 
-    public function markAsUnRead($id)
-    {
-        $notification = Notification::findOrFail($id);
-        $notification->update(['status' => false]);
-        // return redirect()->route('notification.index')->with('success', 'Notification marked as unread.');
-        //return redirect()->route('notification.index');
-        return back();
-    }
+
+
 
 
 }

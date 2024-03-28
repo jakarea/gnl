@@ -1,6 +1,9 @@
 <div class="custom-modal">
-    <div class="modal fade" id="staticBackdropProject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="staticBackdropProject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true"> --}}
+
+    <div class="modal fade" id="staticBackdropProject" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header modal-header-two">
@@ -9,9 +12,9 @@
                         <i class="fas fa-close"></i>
                     </button>
                 </div>
+
                 <div class="modal-body">
-                    <form action="{{ route('projects.store') }}" class="common-form another-form" method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('projects.store') }}" class="common-form another-form" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="add-customer-form">
                             <div class="row">
@@ -51,7 +54,7 @@
 
                                                 <div class="col-xl-12">
                                                     <div class="form-group form-error">
-                                                        <label for="title">Project Name</label>
+                                                        <label for="title">Project Name<sup class="text-danger fs-6">*</sup></label>
                                                         <input type="text" placeholder="Enter Title" id="title"
                                                             name="title" value="{{ old('title') }}"
                                                             value="{{ old('title') }}"
@@ -67,7 +70,7 @@
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
-                                                        <label for="amount">Amount</label>
+                                                        <label for="amount">Total Amount<sup class="text-danger fs-6">*</sup></label>
                                                         <input type="number" placeholder="€0000" id="amount"
                                                             name="amount" value="{{ old('amount') }}"
                                                             class="form-control @error('amount') is-invalid @enderror">
@@ -81,7 +84,7 @@
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
-                                                        <label for="tax">Tax</label>
+                                                        <label for="tax">Tax<sup class="text-danger fs-6">*</sup></label>
                                                         <input type="number" placeholder="€0000" id="tax" name="tax"
                                                             value="{{ old('tax') }}"
                                                             class="form-control @error('tax') is-invalid @enderror">
@@ -95,7 +98,7 @@
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
-                                                        <label for="start_date">Start Date</label>
+                                                        <label for="start_date">Start Date<sup class="text-danger fs-6">*</sup></label>
                                                         <input type="date" id="start_date" name="start_date"
                                                             value="{{ old('start_date') }}"
                                                             class="form-control @error('start_date') is-invalid @enderror">
@@ -109,7 +112,7 @@
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <div class="form-group form-error">
-                                                        <label for="end_date">End Date</label>
+                                                        <label for="end_date">End Date<sup class="text-danger fs-6">*</sup></label>
                                                         <input type="date" id="end_date" name="end_date"
                                                             value="{{ old('end_date') }}"
                                                             class="form-control @error('end_date') is-invalid @enderror">
@@ -212,6 +215,25 @@
 
                                                     </div>
                                                 </div>
+
+                                                <div class="col-12">
+                                                    <div class="form-group form-error">
+                                                        <label for="links"> URL</label>
+                                                        <div class="d-flex">
+                                                            <input type="url" placeholder="Input your link" id="links" name="links[]"
+                                                            class="form-control">
+                                                            <button type="button" class="btn btn-primary ms-2 addWebUrl"><i class="fa-solid fa-plus"></i></button>
+                                                        </div>
+
+                                                        @error('links')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="appendWebUrl"></div>
+
                                                 <div class="col-12">
                                                     <div class="form-group form-error">
                                                         <label for="description">Description</label>
@@ -226,6 +248,17 @@
                                                         @enderror
                                                     </div>
                                                 </div>
+
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="projectFile">Files</label>
+                                                        <input type="file" name="documents[]"  class="form-control"id="projectFile" multiple/>
+                                                        @error('file')
+                                                            <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <!--modal left part end-->
@@ -236,7 +269,7 @@
                                             <hr>
                                             <div class="col-xl-12">
                                                 <div class="select-title">
-                                                    <h3>Select Customer</h3>
+                                                    <h3>Select Customer<sup class="text-danger fs-6">*</sup></h3>
                                                 </div>
                                                 <!-- customer search form start -->
                                                 <div class="form-group search-by-name" style="grid-template-columns: 65% 35%!important">
@@ -251,8 +284,9 @@
 
                                                         <input type="hidden" name="customer_id" value=""
                                                             id="customer_id">
-
                                                     </div>
+
+
                                                     <div class="avatar-btn">
                                                         <a data-bs-toggle="collapse" href="#collapseTwo" role="button"
                                                             aria-expanded="false" aria-controls="collapseTwo"
@@ -261,6 +295,18 @@
                                                                 alt="a" class="img-fluid">Add Manually</a>
                                                     </div>
                                                 </div>
+
+                                                @error('customer_id')
+                                                    <span class="invalid-feedback d-block" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+
+                                                {{-- @error('customer_id')
+                                                    <span class="text-danger mt-2 font-bold">{{ $message }}</span>
+                                                @enderror --}}
+
+
                                                 <!-- customer search form end -->
 
                                                 <!-- selected customer start  -->
@@ -579,6 +625,7 @@
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -752,54 +799,81 @@
             });
 
             // select customer from suggest
-            let selectedCustomerUi = document.getElementById('selectedCustomerUi');
-            let customer_id = document.getElementById('customer_id');
-            let selectCustomers = document.querySelectorAll('.select-customer');
 
-           // Store selected customer IDs
-            var selectedCustomers = [];
+let selectedCustomerUi = document.getElementById('selectedCustomerUi');
+let customer_id = document.getElementById('customer_id');
+let selectCustomers = document.querySelectorAll('.select-customer');
 
-            // Loop through each customer
-            selectCustomers.forEach(customer => {
-                customer.addEventListener('click', function(event) {
-                    var customerId = this.getAttribute('data-id');
+// Store selected customer IDs
+var selectedCustomers = [];
 
-                    if (!selectedCustomers.includes(customerId)) {
-                        selectedCustomers.push(customerId);
+// Loop through each customer
+selectCustomers.forEach(customer => {
+    customer.addEventListener('click', function(event) {
+        var customerId = this.getAttribute('data-id');
 
-                        var avatar = this.querySelector('.media img').getAttribute('src');
-                        var name = this.querySelector('.media-body h3').textContent;
-                        var designation = this.querySelector('.media-body p').textContent;
+        // Split current customer_id.value into an array
+        var currentIds = customer_id.value.split(',').filter(Boolean); // Remove empty/falsy values
 
-                        let customerHTML = `
-                            <div class="col-lg-6 prfile-box">
-                                <div class="selected-profile-box">
-                                    <div class="media">
-                                        <img src="${avatar}" class="img-fluid avatar" alt="avatar">
-                                        <div class="media-body">
-                                            <h3>${name}</h3>
-                                            <p>${designation}</p>
-                                        </div>
-                                        <a href="#" class="close-customer">
-                                            <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
-                                        </a>
-                                    </div>
-                                </div>
+        if (!currentIds.includes(customerId)) {
+            // Add new customerId to the array
+            currentIds.push(customerId);
+
+            // Join the array back into a string and update customer_id.value
+            customer_id.value = currentIds.join(',');
+
+            selectedCustomers.push(customerId);
+
+            var avatar = this.querySelector('.media img').getAttribute('src');
+            var name = this.querySelector('.media-body h3').textContent;
+            var designation = this.querySelector('.media-body p').textContent;
+
+            let customerHTML = `
+                <div class="col-lg-6 prfile-box" data-id="${customerId}">
+                    <div class="selected-profile-box">
+                        <div class="media">
+                            <img src="${avatar}" class="img-fluid avatar" alt="avatar">
+                            <div class="media-body">
+                                <h3>${name}</h3>
+                                <p>${designation}</p>
                             </div>
-                        `;
+                            <a href="#" class="close-customer">
+                                <img src="{{ url('/assets/images/icons/close-2.svg') }}" alt="a" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
 
-                        // Append the customer HTML to the selectedCustomerUi
-                        selectedCustomerUi.innerHTML += customerHTML;
+            selectedCustomerUi.innerHTML += customerHTML;
 
-                        // Update the value of the input field
-                        if (customer_id.value !== '') {
-                            customer_id.value += ',' + customerId;
-                        } else {
-                            customer_id.value = customerId;
+            this.removeEventListener('click', arguments.callee);
+
+            let closeCustomers = document.querySelectorAll(".close-customer");
+            closeCustomers.forEach(closeCustomer => {
+                closeCustomer.addEventListener('click',function(event){
+                    let profileBox = event.target.closest('.prfile-box');
+
+                    if (profileBox) {
+                        let customerId = profileBox.getAttribute('data-id');
+                        profileBox.remove();
+                        var currentIds = customer_id.value.split(',').filter(Boolean);
+                        var index = currentIds.indexOf(customerId);
+                        if (index > -1) {
+                            currentIds.splice(index, 1);
                         }
+                        customer_id.value = currentIds.join(',');
                     }
+
                 });
             });
+        }
+    });
+});
+
+
+
+
 
         }
     });
@@ -895,3 +969,5 @@ avatarLabel.addEventListener('click', function() {
         });
     });
 </script>
+
+

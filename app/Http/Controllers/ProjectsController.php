@@ -62,16 +62,28 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($project_id)
+    public function show(Request $request, $project_id)
     {
+
+        if($request->notificationId){
+            $result = NotifyReaUnred($request->notificationId);
+
+            if (!$result) {
+                return back()->withError('This record not found or has been deleted');
+            }
+        }
+
         $project = Project::with(['comments' => function ($query) {
             $query->where('is_reply', false)->with('replies');
         }])->findOrFail($project_id);
 
+        $links = array_filter(explode(',', $project->links));
+
+        // dd($links);
         $lead_types = LeadType::orderByDesc('lead_type_id')->get();
         $service_types = ServiceType::orderByDesc('service_type_id')->get();
 
-        return view("projects/single", compact("project",'lead_types', 'service_types'));
+        return view("projects/single", compact("project",'lead_types', 'service_types','links'));
     }
 
     public function store(CustomerService $addCustomer, ProjectRequest $request)
@@ -85,16 +97,34 @@ class ProjectsController extends Controller
             $customerIds = $customer->customer_id;
         }
 
-        $data = $request->except(['thumbnail']);
-        $data['status'] = $request->project_status;
+        $data = $request->except(['thumbnail', 'links', 'documents']);
 
+        $data['status'] = $request->project_status;
         $project = Project::create($data);
+
+        $links = $request->input('links');
+
+        $project->update([
+            'links' => is_array($links) ? implode(',', $links) : $links,
+        ]);
 
         if ($request->hasFile('thumbnail')) {
             $avatar = $request->file('thumbnail');
             $filename = substr(md5(time()), 0, 10) . '.' . $avatar->getClientOriginalExtension();
             $avatarPath = $avatar->storeAs('projects', $filename, 'public');
             $project->update(['thumbnail' => 'storage/' . $avatarPath]);
+        }
+
+        if ($request->hasFile('documents')) {
+            $files = $request->file('documents');
+            $documentPaths = [];
+            foreach ($files as $file) {
+                $filename = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
+                $avatarPath = $file->storeAs('projects/links', $filename, 'public');
+                $documentPaths[] = 'storage/' . $avatarPath;
+            }
+
+            $project->update(['documents' => implode(',', $documentPaths)]);
         }
 
         $project->customers()->sync($customerIds);
@@ -123,9 +153,17 @@ class ProjectsController extends Controller
             $customerIds = $customer->customer_id;
         }
 
-        $data = $request->except(['thumbnail']);
+        $data = $request->except(['thumbnail', 'links', 'documents']);
+
         $data['status'] = $request->project_status;
+
+        $links = $request->input('links');
+
         $project->update( $data );
+
+        $project->update([
+            'links' => is_array($links) ? implode(',', $links) : $links,
+        ]);
 
         if ($request->hasFile('thumbnail')) {
             if ($project->thumbnail) {
@@ -136,6 +174,26 @@ class ProjectsController extends Controller
             $filename = substr(md5(time()), 0 , 10) .'.' . $file->getClientOriginalExtension();
             $thumbnailPath = $file->storeAs('projects', $filename, 'public');
             $project->update(['thumbnail' => 'storage/'.$thumbnailPath]);
+        }
+
+        if ($request->hasFile('documents')) {
+            $files = $request->file('documents');
+            $documentPaths = [];
+
+            if ($project->documents) {
+                $previousDocuments = explode(',', $project->documents);
+                foreach ($previousDocuments as $previousDocument) {
+                    Storage::disk('public')->delete(str_replace('storage/', '', $previousDocument));
+                }
+            }
+
+            foreach ($files as $file) {
+                $filename = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
+                $avatarPath = $file->storeAs('projects/links', $filename, 'public');
+                $documentPaths[] = 'storage/' . $avatarPath;
+            }
+
+            $project->update(['documents' => implode(',', $documentPaths)]);
         }
 
         $project->customers()->sync($customerIds);

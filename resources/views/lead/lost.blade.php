@@ -36,7 +36,7 @@
                         <th>Website</th>
                         <th>Code</th>
                         <th class="text-center">Status</th>
-                        <th></th>
+                        <th>Actions</th>
                     </tr>
                     @foreach ($lostLeads as $lead)
                     <!-- payment single item start -->
@@ -78,7 +78,10 @@
                         </td>
 
                         <td>
-                            <div class="table-dropdown">
+                            <div class="table-dropdown d-flex gap-2">
+                                {{-- <div class="dot-bttn justify-content-center">
+                                    <a href="{{ route('lost.lead.edit') }}"><i class="fa-solid fa-pencil"></i></a>
+                                </div> --}}
                                 <div class="dot-bttn justify-content-center">
                                     <form action="{{ route('lead.destroy',$lead->lead_id) }}" class="d-inline" method="POST">
                                         @csrf
@@ -87,6 +90,7 @@
                                         </button>
                                     </form>
                                 </div>
+
                             </div>
                         </td>
                     </tr>

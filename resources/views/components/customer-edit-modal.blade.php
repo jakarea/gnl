@@ -12,7 +12,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{ route('customers.update', $customer->customer_id) }}" class="common-form" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('customers.update', $customer->customer_id) }}"
+                        class="common-form" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <input type="hidden" name="status" id="statusEdit" value="active">
@@ -48,8 +49,7 @@
                                     <div class="form-group form-error">
                                         <label for="name">Name</label>
                                         <input type="text" placeholder="Enter Name" id="name" name="name"
-                                            class="form-control"
-                                            value="{{ $customer->name ?? old('name') }}" />
+                                            class="form-control" value="{{ $customer->name ?? old('name') }}" />
                                         @error('name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -202,9 +202,9 @@
                                                 @php
                                                     $leadTypeId = $customer->lead_type_id;
                                                     $leadType = App\Models\LeadType::find($leadTypeId);
-                                                    $leadTypeTitle = $leadType ? $leadType->name : "Select Below";
+                                                    $leadTypeTitle = $leadType ? $leadType->name : 'Select Below';
                                                 @endphp
-                                                <button class="btn" type="button" data-bs-toggle="dropdown"
+                                                <button class="btn w-100" type="button" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
                                                     <div id="setLeadType2">{{ $leadTypeTitle }}</div><i
                                                         class="fas fa-angle-down"></i>
@@ -231,29 +231,71 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group form-error">
-                                        <label for="company">Company</label>
-                                        <input type="text" placeholder="Enter company name" id="company"
-                                            name="company" class="form-control"
-                                            value="{{ $customer->company ? $customer->company : old('company') }}" />
-                                        @error('company')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group form-error">
-                                        <label for="website">Website</label>
-                                        <input type="text" placeholder="Enter website" id="website"
-                                            name="website" class="form-control"
-                                            value="{{ $customer->website ? $customer->website : old('website') }}" />
-                                        @error('website')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
 
+
+                                @if (count($companies) > 0)
+                                    <div class="appendCompayWebsite">
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                @foreach ($companies as $key => $company)
+                                                    <div class="form-group form-error company-container"
+                                                        data-company-id="{{ $key + 1 }}">
+                                                        <input type="text" placeholder="Enter company name"
+                                                            name="company[]" class="form-control"
+                                                            value="{{ $company }}">
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <div class="col-xl-6">
+                                                @foreach ($websites as $webkey => $website)
+                                                    <div class="form-group form-error website-container"
+                                                        data-web-id="{{ $webkey + 1 }}">
+                                                        <div class="d-flex">
+                                                            <input type="text" placeholder="Enter website"
+                                                                name="website[]" class="form-control"
+                                                                value="{{ $website }}">
+                                                            <button type="button"
+                                                                class="btn btn-primary ms-2 editRemoveCompanyWeb"><i
+                                                                    class="fa-solid fa-minus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="col-xl-6">
+                                        <div class="form-group form-error">
+                                            <label for="company">Company</label>
+                                            <input type="text" placeholder="Enter company name" id="company"
+                                                name="company[]" class="form-control"
+                                                value="{{ old('company') }}" />
+                                            @error('company')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group form-error">
+                                            <label for="website">Website</label>
+
+                                            <div class="d-flex">
+                                                <input type="text" placeholder="Enter website" id="website"
+                                                    name="website[]" class="form-control"
+                                                    value="{{ old('website') }}" />
+
+                                                <button type="button" class="btn btn-primary ms-2 addCompanyWeb"><i
+                                                        class="fa-solid fa-plus"></i></button>
+                                            </div>
+
+                                            @error('website')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="appendEditCompayWebsite"></div>
+                                @endif
 
                                 <div class="col-12">
                                     <div class="form-group form-error">
